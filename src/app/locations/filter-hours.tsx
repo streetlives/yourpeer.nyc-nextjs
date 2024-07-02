@@ -5,7 +5,7 @@ import {
   useSearchParams,
 } from "next/navigation";
 import classNames from "classnames";
-import { OPEN_PARAM } from "../categories";
+import { OPEN_PARAM } from "../common";
 
 function getNewUrlWithOpenParam(
   isOpen: boolean,

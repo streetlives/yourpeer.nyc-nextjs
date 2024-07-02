@@ -3,7 +3,7 @@
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import React, { ChangeEvent, useState } from "react";
-import { SEARCH_PARAM } from "../categories";
+import { SEARCH_PARAM } from "../common";
 
 function getNewUrl(
   pathname: string,

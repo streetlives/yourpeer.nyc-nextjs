@@ -1,4 +1,4 @@
-import { CATEGORIES, Category, CATEGORY_DESCRIPTION_MAP, CATEGORY_ICON_SRC_MAP, CATEGORY_TO_ROUTE_MAP, getIconPath, LOCATION_ROUTE, SearchParams, SHOW_ADVANCED_FILTERS_PARAM } from "../categories"
+import { CATEGORIES, Category, CATEGORY_DESCRIPTION_MAP, CATEGORY_ICON_SRC_MAP, CATEGORY_TO_ROUTE_MAP, getIconPath, LOCATION_ROUTE, SearchParams, SHOW_ADVANCED_FILTERS_PARAM } from "../common"
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import classNames from "classnames";

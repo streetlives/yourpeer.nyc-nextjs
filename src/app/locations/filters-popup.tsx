@@ -1,6 +1,6 @@
 "use client";
 
-import { Category, CategoryNotNull, CATEGORY_TO_ROUTE_MAP, LOCATION_ROUTE, SHOW_ADVANCED_FILTERS_PARAM } from "../categories";
+import { Category, CategoryNotNull, CATEGORY_TO_ROUTE_MAP, LOCATION_ROUTE, SHOW_ADVANCED_FILTERS_PARAM } from "../common";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import classNames from "classnames";
 import Link from "next/link";
@@ -11,7 +11,7 @@ import {
   useSearchParams,
 } from "next/navigation";
 import FilterHours from './filter-hours';
-import { AGE_PARAM } from "../categories";
+import { AGE_PARAM } from "../common";
 import FilterHousing from "./filter-housing";
 
 function getNewCategoryUrl(

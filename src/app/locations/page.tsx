@@ -1,4 +1,4 @@
-import { Category, SearchParams, parseSearchParams } from '../categories';
+import { Category, SearchParams, parseSearchParams } from '../common';
 import LocationsPageComponent, { fetchLocations } from '../locations/locations-page';
 
 export default async function LocationsPage({ searchParams }: { searchParams: SearchParams }) {

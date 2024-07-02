@@ -24,10 +24,9 @@ import {
   TAXONOMY_CATEGORIES,
   YourPeerLegacyLocationData,
   YourPeerLegacyServiceDataWrapper,
-  TAXONOMY_CATEGORIES_SET,
   setIntersection,
   TaxonomyCategory,
-} from "../categories";
+} from "../common";
 import FiltersPopup from "./filters-popup";
 import FiltersHeader from "./filters-header";
 import LocationsContainer from "./locations-container";

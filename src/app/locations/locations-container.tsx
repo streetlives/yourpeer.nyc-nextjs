@@ -1,4 +1,4 @@
-import { CATEGORIES, Category, CATEGORY_ICON_SRC_MAP, CategoryNotNull, getIconPath, YourPeerLegacyLocationData } from "../categories";
+import { CATEGORIES, Category, CATEGORY_ICON_SRC_MAP, CategoryNotNull, getIconPath, YourPeerLegacyLocationData } from "../common";
 
 export default function LocationsContainer({
   category,

@@ -5,7 +5,7 @@ import {
   useSearchParams,
 } from "next/navigation";
 import classNames from "classnames";
-import { SHELTER_PARAM, SHELTER_PARAM_SINGLE_VALUE, SHELTER_PARAM_FAMILY_VALUE, ShelterValues } from "../categories";
+import { SHELTER_PARAM, SHELTER_PARAM_SINGLE_VALUE, SHELTER_PARAM_FAMILY_VALUE, ShelterValues } from "../common";
 
 function getNewUrlWithShelterParam(
   shelterType: ShelterValues | null,
