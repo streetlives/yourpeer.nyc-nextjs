@@ -6,27 +6,7 @@ import {
 } from "next/navigation";
 import classNames from "classnames";
 import { SHELTER_PARAM, SHELTER_PARAM_SINGLE_VALUE, SHELTER_PARAM_FAMILY_VALUE, ShelterValues } from "../common";
-
-function getNewUrlWithShelterParam(
-  shelterType: ShelterValues | null,
-  pathname: string,
-  searchParams: ReadonlyURLSearchParams
-) {
-  const currentUrlSearchParams = new URLSearchParams(
-    Array.from(searchParams.entries())
-  );
-
-  if (shelterType) {
-    currentUrlSearchParams.set(SHELTER_PARAM, shelterType);
-  } else {
-    currentUrlSearchParams.delete(SHELTER_PARAM);
-  }
-
-  const newSearchParamsStr = currentUrlSearchParams.toString();
-
-  const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
-  return `${pathname}${query}`;
-}
+import { getUrlWithNewFilterParameter, getUrlWithoutFilterParameter } from "../navigation";
 
 export default function FilterHousing() {
   const router = useRouter();
@@ -57,15 +37,31 @@ export default function FilterHousing() {
   ];
 
   function handleIsAnyClick() {
-    router.push(getNewUrlWithShelterParam(null, pathname, searchParams));
+    router.push(
+      getUrlWithoutFilterParameter(pathname, searchParams, SHELTER_PARAM)
+    );
   }
 
   function handleIsSingleAdultClick() {
-    router.push(getNewUrlWithShelterParam(SHELTER_PARAM_SINGLE_VALUE, pathname, searchParams));
+    router.push(
+      getUrlWithNewFilterParameter(
+        pathname,
+        searchParams,
+        SHELTER_PARAM,
+        SHELTER_PARAM_SINGLE_VALUE
+      )
+    );
   }
 
   function handleIsFamiliesClick() {
-    router.push(getNewUrlWithShelterParam(SHELTER_PARAM_FAMILY_VALUE, pathname, searchParams));
+    router.push(
+      getUrlWithNewFilterParameter(
+        pathname,
+        searchParams,
+        SHELTER_PARAM,
+        SHELTER_PARAM_FAMILY_VALUE
+      )
+    );
   }
 
   return (
