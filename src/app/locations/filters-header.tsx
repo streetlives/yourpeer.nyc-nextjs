@@ -1,37 +1,17 @@
-import { CATEGORIES, Category, CATEGORY_DESCRIPTION_MAP, CATEGORY_ICON_SRC_MAP, CATEGORY_TO_ROUTE_MAP, getIconPath, LOCATION_ROUTE, SearchParams, SHOW_ADVANCED_FILTERS_PARAM } from "../common"
-import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  CATEGORIES,
+  Category,
+  CATEGORY_DESCRIPTION_MAP,
+  CATEGORY_ICON_SRC_MAP,
+  CATEGORY_TO_ROUTE_MAP,
+  getIconPath,
+  LOCATION_ROUTE,
+  SearchParams,
+  SHOW_ADVANCED_FILTERS_PARAM,
+} from "../common";
 import Link from "next/link";
 import classNames from "classnames";
-
-function getUrlWithFilterPopup(
-  currentCategory: Category,
-  searchParams: SearchParams
-): string {
-  const searchParamsList: string[][] = [];
-  Object.entries(searchParams).forEach(([k, v]) => {
-    if(v){
-      if (Array.isArray(v)) {
-        v.forEach((w) => {
-          searchParamsList.push([k, w]);
-        });
-      } else {
-        searchParamsList.push([k, v]);
-      }
-    }
-  })
-  const currentUrlSearchParams = new URLSearchParams(searchParamsList);
-
-  currentUrlSearchParams.set(SHOW_ADVANCED_FILTERS_PARAM, 'yes');
-
-  const newSearchParamsStr = currentUrlSearchParams.toString();
-  const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
-
-  return `/${
-    currentCategory === null
-      ? LOCATION_ROUTE
-      : CATEGORY_TO_ROUTE_MAP[currentCategory]
-  }${query}`;
-}
+import { getUrlWithNewFilterParameter } from "../navigation";
 
 export default function FiltersHeader({
   category: currentCategory,
@@ -88,7 +68,15 @@ export default function FiltersHeader({
 
         <Link
           className="inline-flex flex-shrink-0 overflow-hidden items-center space-x-2 text-dark bg-gray-300 rounded-full text-xs py-1 px-3"
-          href={getUrlWithFilterPopup(currentCategory, searchParams)}
+          href={getUrlWithNewFilterParameter(
+            `/${
+              currentCategory === null
+                ? LOCATION_ROUTE
+                : CATEGORY_TO_ROUTE_MAP[currentCategory]
+            }`,
+            searchParams,
+            SHOW_ADVANCED_FILTERS_PARAM
+          )}
         >
           <img src="/img/icons/filters.svg" className="w-4 h-4" alt="" />
           <span className="leading-3 truncate">All Filters</span>
