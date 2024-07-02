@@ -4,30 +4,12 @@ import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from
 import Link from "next/link";
 import React, { ChangeEvent, useState } from "react";
 import { SEARCH_PARAM } from "../common";
-
-function getNewUrl(
-  pathname: string,
-  currentSearch: string | null,
-  searchParams: ReadonlyURLSearchParams
-): string {
-  const currentUrlSearchParams = new URLSearchParams(
-    Array.from(searchParams.entries())
-  );
-
-  if (currentSearch) {
-    currentUrlSearchParams.set(SEARCH_PARAM, currentSearch);
-  }
-
-  const newSearchParamsStr = currentUrlSearchParams.toString();
-
-  const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
-  return `${pathname}${query}`;
-}
+import { getUrlWithNewFilterParameter } from "../navigation";
 
 function SearchPanel({ currentSearch }: { currentSearch: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const newUrl = getNewUrl(pathname, currentSearch, searchParams);
+  const newUrl = getUrlWithNewFilterParameter(pathname, searchParams, SEARCH_PARAM, currentSearch);
   console.log("currentSearch", currentSearch);
   return (
     <div
@@ -109,7 +91,16 @@ export default function SearchForm(){
         event.preventDefault();
         event.stopPropagation();
 
-        router.push(getNewUrl(pathname, search, searchParams));
+        if(search){
+          router.push(
+            getUrlWithNewFilterParameter(
+              pathname,
+              searchParams,
+              SEARCH_PARAM,
+              search
+            )
+          );
+        }
     }
 
     return (

@@ -6,27 +6,7 @@ import {
 } from "next/navigation";
 import classNames from "classnames";
 import { OPEN_PARAM } from "../common";
-
-function getNewUrlWithOpenParam(
-  isOpen: boolean,
-  pathname: string,
-  searchParams: ReadonlyURLSearchParams
-) {
-  const currentUrlSearchParams = new URLSearchParams(
-    Array.from(searchParams.entries())
-  );
-
-  if (isOpen) {
-    currentUrlSearchParams.set(OPEN_PARAM, "yes");
-  } else {
-    currentUrlSearchParams.delete(OPEN_PARAM);
-  }
-
-  const newSearchParamsStr = currentUrlSearchParams.toString();
-
-  const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
-  return `${pathname}${query}`;
-}
+import { getUrlWithNewFilterParameter, getUrlWithoutFilterParameter } from "../navigation";
 
 export default function FilterHours() {
   const router = useRouter();
@@ -54,11 +34,11 @@ export default function FilterHours() {
   ];
 
   function handleIsOpenNowClick() {
-    router.push(getNewUrlWithOpenParam(true, pathname, searchParams));
+    router.push(getUrlWithNewFilterParameter(pathname, searchParams, OPEN_PARAM));
   }
 
   function handleIsNotOpenNowClick() {
-    router.push(getNewUrlWithOpenParam(false, pathname, searchParams));
+    router.push(getUrlWithoutFilterParameter(pathname, searchParams, OPEN_PARAM));
   }
 
   return (

@@ -13,55 +13,7 @@ import {
 import FilterHours from './filter-hours';
 import { AGE_PARAM } from "../common";
 import FilterHousing from "./filter-housing";
-
-function getNewCategoryUrl(
-  newCategory: CategoryNotNull,
-  searchParams: ReadonlyURLSearchParams
-): string {
-  const currentUrlSearchParams = new URLSearchParams(
-    Array.from(searchParams.entries())
-  );
-  const newSearchParamsStr = currentUrlSearchParams.toString();
-  const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
-  return `/${CATEGORY_TO_ROUTE_MAP[newCategory]}${query}`;
-}
-
-function closeFiltersPopupUrl(
-  currentCategory: Category,
-  searchParams: ReadonlyURLSearchParams
-): string {
-  const currentUrlSearchParams = new URLSearchParams(
-    Array.from(searchParams.entries())
-  );
-  currentUrlSearchParams.delete(SHOW_ADVANCED_FILTERS_PARAM);
-  const newSearchParamsStr = currentUrlSearchParams.toString();
-  const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
-  return `/${
-    currentCategory === null
-      ? LOCATION_ROUTE
-      : CATEGORY_TO_ROUTE_MAP[currentCategory]
-  }${query}`;
-}
-
-function getAgeParamToUrl(
-    age: number,
-    pathname: string,
-    searchParams: ReadonlyURLSearchParams
-){
-  const currentUrlSearchParams = new URLSearchParams(
-    Array.from(searchParams.entries())
-  );
-
-  if (age) {
-    currentUrlSearchParams.set(AGE_PARAM, age.toString());
-  }
-
-  const newSearchParamsStr = currentUrlSearchParams.toString();
-
-  const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
-  return `${pathname}${query}`;
-
-}
+import { getUrlWithNewCategory, getUrlWithNewFilterParameter, getUrlWithoutFilterParameter } from "../navigation";
 
 function CategoryFilterLabel({
   labelCategory,
@@ -81,7 +33,7 @@ function CategoryFilterLabel({
   const router = useRouter();
 
   function handleClick(){
-    router.push(getNewCategoryUrl(labelCategory, searchParams));
+    router.push(getUrlWithNewCategory(labelCategory, searchParams));
   }
 
   return (
@@ -146,13 +98,25 @@ export default function FiltersPopup({
   function handleFilterFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (ageParam) {
-      router.push(getAgeParamToUrl(ageParam, pathname, searchParams));
+      router.push(
+        getUrlWithNewFilterParameter(
+          pathname,
+          searchParams,
+          AGE_PARAM,
+          ageParam.toString()
+        )
+      )
     }
   }
 
   function handleAgeInputBlur(e: React.FocusEvent<HTMLInputElement>) {
     router.push(
-      getAgeParamToUrl(parseInt(e.target.value, 10), pathname, searchParams)
+      getUrlWithNewFilterParameter(
+        pathname,
+        searchParams,
+        AGE_PARAM,
+        e.target.value
+      )
     );
   }
 
@@ -170,7 +134,11 @@ export default function FiltersPopup({
         <Link
           id="filters_popup_close_button"
           className="inline-block"
-          href={closeFiltersPopupUrl(category, searchParams)}
+          href={getUrlWithoutFilterParameter(
+            pathname,
+            searchParams,
+            SHOW_ADVANCED_FILTERS_PARAM
+          )}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -281,7 +249,11 @@ export default function FiltersPopup({
           Clear all
         </Link>
         <Link
-          href={closeFiltersPopupUrl(category, searchParams)}
+          href={getUrlWithoutFilterParameter(
+            pathname,
+            searchParams,
+            SHOW_ADVANCED_FILTERS_PARAM
+          )}
           className="primary-button flex-1 block flex-shrink-0 px-5 truncate"
         >
           show {numLocationResults} results
