@@ -31,6 +31,7 @@ import FiltersPopup from "./filters-popup";
 import FiltersHeader from "./filters-header";
 import LocationsContainer from "./locations-container";
 import moment from "moment";
+import LocationsMap from "./map";
 
 const GO_GETTA_PROD_URL = process.env.GO_GETTA_PROD_URL;
 const DEFAULT_PAGE_SIZE = 20;
@@ -614,34 +615,10 @@ export default function LocationsPageComponent({
                 <LocationsContainer
                   category={category}
                   yourPeerLegacyLocationData={yourPeerLegacyLocationData}
-                  />
+                />
               </div>
             </div>
-            <div
-              id="map_container"
-              className="w-full hidden md:block md:w-1/2 lg:w-2/3 bg-gray-300 h-full flex-1 relative"
-            >
-              <div id="map" className="w-full h-full"></div>
-              <div
-                id="recenter-btn"
-                className="absolute top-2 right-2 z-[1] bg-white/95 flex items-center justify-center cursor-pointer w-9 h-9 rounded"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="19"
-                  height="19"
-                  viewBox="0 0 19 19"
-                  fill="none"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M18.0294 0.0566351L0.413683 7.84112C0.144651 7.96016 -0.0198463 8.23615 0.00343285 8.52942C0.026712 8.82269 0.232687 9.06927 0.517131 9.14438L7.12859 10.8845C7.6114 11.0114 7.98859 11.3883 8.11596 11.871L9.85611 18.4824C9.93099 18.767 10.1774 18.9732 10.4707 18.9967C10.764 19.0202 11.0402 18.8558 11.1594 18.5868L18.9402 0.971044C19.0552 0.709941 18.9985 0.404985 18.7971 0.202812C18.5957 0.000638069 18.291 -0.0573878 18.0294 0.0566351Z"
-                    fill="#5A87FF"
-                  />
-                </svg>
-              </div>
-            </div>
+            <LocationsMap locationStubs={locationStubs} />
           </main>
         </div>
       </div>
