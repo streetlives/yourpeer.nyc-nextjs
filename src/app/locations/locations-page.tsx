@@ -26,6 +26,9 @@ import {
   YourPeerLegacyServiceDataWrapper,
   setIntersection,
   TaxonomyCategory,
+  FOOD_PARAM,
+  FOOD_PARAM_SOUP_KITCHEN_VALUE,
+  FOOD_PARAM_PANTRY_VALUE,
 } from "../common";
 import FiltersPopup from "./filters-popup";
 import FiltersHeader from "./filters-header";
@@ -394,6 +397,9 @@ async function getTaxonomies(
   const taxonomyResponse = await fetch(query_url).then(
     (response) => response.json() as unknown as TaxonomyResponse[]
   );
+  
+  console.log(taxonomyResponse);
+
   if (!category) return null;
   const parentTaxonomyName = CATEGORY_TO_TAXONOMY_NAME_MAP[category];
   // FIXME: currently it's only two layers deep. Technically, taxonomy can be arbitrary depth, and we should handle that case
@@ -420,6 +426,34 @@ async function getTaxonomies(
       //     query += "and t.name='Soup Kitchen'"
       // else:
       //     query += "and t.name='Food'"
+      switch (parsedSearchParams[FOOD_PARAM]) {
+        case null:
+          taxonomies = taxonomyResponse.flatMap((r) =>
+            r.name === parentTaxonomyName ? [r as Taxonomy] : []
+          );
+          break;
+        case FOOD_PARAM_SOUP_KITCHEN_VALUE:
+          taxonomies = taxonomyResponse.flatMap((r) =>
+            !r.children
+              ? []
+              : r.children.filter(
+                  (t) =>
+                    t.parent_name === parentTaxonomyName &&
+                    t.name === "Soup Kitchen"
+                )
+          );
+        case FOOD_PARAM_PANTRY_VALUE:
+          taxonomies = taxonomyResponse.flatMap((r) =>
+            !r.children
+              ? []
+              : r.children.filter(
+                  (t) =>
+                    t.parent_name === parentTaxonomyName &&
+                    t.name === "Food Pantry"
+                )
+          );
+          break;
+      }
       break;
     case "health-care":
     //    query = TAXONOMIES_BASE_SQL + " and (t.name='Health' or t.parent_name = 'Health')"
@@ -500,6 +534,7 @@ export async function fetchLocations(
   parsedSearchParams: YourPeerSearchParams
 ): Promise<AllLocationsData> {
   const taxonomies = await getTaxonomies(category, parsedSearchParams);
+  console.log(taxonomies);
   return {
     ...(await fetchLocationsData({
       ...parsedSearchParams,

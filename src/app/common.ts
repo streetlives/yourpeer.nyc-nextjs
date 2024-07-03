@@ -55,11 +55,19 @@ export type ShelterValues =
   | typeof SHELTER_PARAM_FAMILY_VALUE; 
 export const SHOW_ADVANCED_FILTERS_PARAM = 'adv'
 
+export const FOOD_PARAM = 'food'
+export const FOOD_PARAM_SOUP_KITCHEN_VALUE = 'kitchen'
+export const FOOD_PARAM_PANTRY_VALUE = 'pantry'
+export type FoodValues =
+  | typeof FOOD_PARAM_SOUP_KITCHEN_VALUE
+  | typeof FOOD_PARAM_PANTRY_VALUE; 
+
 export const URL_PARAM_NAMES = [
   SEARCH_PARAM,
   AGE_PARAM,
   OPEN_PARAM,
   SHELTER_PARAM,
+  FOOD_PARAM,
   SHOW_ADVANCED_FILTERS_PARAM
 ] as const
 
@@ -72,6 +80,7 @@ export interface YourPeerSearchParams {
   [AGE_PARAM]: number | null;
   [OPEN_PARAM]: boolean | null;
   [SHELTER_PARAM]: ShelterValues | null;
+  [FOOD_PARAM]: FoodValues | null;
   [SHOW_ADVANCED_FILTERS_PARAM]: boolean;
 }
 
@@ -96,6 +105,12 @@ export function parseSearchParams(
         searchParams[SHELTER_PARAM] === SHELTER_PARAM_SINGLE_VALUE) ||
       searchParams[SHELTER_PARAM] === SHELTER_PARAM_FAMILY_VALUE
         ? (searchParams[SHELTER_PARAM] as ShelterValues)
+        : null,
+    [FOOD_PARAM]:
+      (typeof searchParams[FOOD_PARAM] === "string" &&
+        searchParams[FOOD_PARAM] === FOOD_PARAM_SOUP_KITCHEN_VALUE) ||
+      searchParams[FOOD_PARAM] === FOOD_PARAM_PANTRY_VALUE
+        ? (searchParams[FOOD_PARAM] as FoodValues)
         : null,
     [SHOW_ADVANCED_FILTERS_PARAM]: !!searchParams[SHOW_ADVANCED_FILTERS_PARAM],
   };
