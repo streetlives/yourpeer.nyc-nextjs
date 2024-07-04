@@ -476,7 +476,13 @@ async function getTaxonomies(
       }
       break;
     case "health-care":
-    //    query = TAXONOMIES_BASE_SQL + " and (t.name='Health' or t.parent_name = 'Health')"
+       //    query = TAXONOMIES_BASE_SQL + " and (t.name='Health' or t.parent_name = 'Health')"
+      taxonomies = taxonomyResponse.flatMap((r) =>
+        r.name === parentTaxonomyName
+          ? [r as Taxonomy].concat(r.children ? r.children : [])
+          : []
+      );
+      break;
     case "other":
       //query = TAXONOMIES_BASE_SQL + " and (t.name = 'Other service' or t.parent_name = 'Other service')"
       taxonomies = taxonomyResponse.flatMap((r) =>
@@ -504,6 +510,9 @@ async function getTaxonomies(
       //         conditions.append('Restrooms')
       //    conditions_in_quotes = [f"'{c}'" for c in conditions]
       //    query += f" and t.parent_name = 'Personal Care' and t.name in ({','.join(conditions_in_quotes) })"
+      taxonomies = taxonomyResponse.flatMap((r) =>
+        r.name === parentTaxonomyName ? [r as Taxonomy] : []
+      );
       break;
     case "shelters-housing":
       // if is_single:
