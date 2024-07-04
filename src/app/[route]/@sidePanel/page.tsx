@@ -1,4 +1,4 @@
-import { Category, SHOW_ADVANCED_FILTERS_PARAM, SearchParams, parseSearchParams } from '../../common';
+import { Category, SHOW_ADVANCED_FILTERS_PARAM, SearchParams, parseCategoryFromRoute, parseSearchParams } from '../../common';
 import FiltersHeader from '../filters-header';
 import FiltersPopup from '../filters-popup';
 import LocationsContainer from '../locations-container';
@@ -6,10 +6,12 @@ import { fetchLocations, map_gogetta_to_yourpeer } from '../streetlives-api-serv
 
 export default async function SidePanelPage({
   searchParams,
+  params: { route },
 }: {
   searchParams: SearchParams;
+  params: { route: string };
 }) {
-  const category: Category = null; // TODO: get category from the route
+  const category = parseCategoryFromRoute(route);
   const parsedSearchParams = parseSearchParams(searchParams);
   const { locations, numberOfPages, resultCount } = await fetchLocations(
     category,

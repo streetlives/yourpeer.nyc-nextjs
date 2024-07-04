@@ -5,9 +5,10 @@ export default function LocationsLayout({
   mapContainer,
   sidePanel,
 }: {
-  mapContainer: React.ReactNode
-  sidePanel: React.ReactNode
+  mapContainer: React.ReactNode;
+  sidePanel: React.ReactNode;
 }) {
+  // TODO: handle the other top-level routes that are not the category routes
   return (
     <>
       <div className="h-[100dvh] w-full">
@@ -66,11 +67,11 @@ export default function LocationsLayout({
             </nav>
           </div>
           <main className="flex-1 overflow-hidden flex flex-col md:flex-row">
-              {sidePanel}
-              {mapContainer}
+            {sidePanel}
+            {mapContainer}
           </main>
         </div>
       </div>
     </>
-  )
+  );
 }

@@ -1,9 +1,15 @@
-import { Category, SearchParams, parseSearchParams } from '../../common';
+import { Category, SearchParams, parseCategoryFromRoute, parseSearchParams } from '../../common';
 import LocationsMap from "../map";
 import { fetchLocations } from '../streetlives-api-service';
 
-export default async function MapContainerPage({ searchParams }: { searchParams: SearchParams }) {
-    const category:Category = null; // TODO: get category from the route
+export default async function MapContainerPage({ 
+  searchParams, 
+  params: { route },
+}: { 
+  searchParams: SearchParams,
+  params: { route: string };
+}) {
+    const category = parseCategoryFromRoute(route);
     const parsedSearchParams = parseSearchParams(searchParams);
     const { locationStubs } = await fetchLocations(
       category,

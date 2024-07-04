@@ -7,6 +7,8 @@ export const CATEGORIES = [
   "other",
 ] as const
 
+// TODO: other pages
+
 export type CategoryNotNull = typeof CATEGORIES[number]
 
 export type Category = CategoryNotNull | null;
@@ -19,6 +21,23 @@ export const CATEGORY_TO_ROUTE_MAP: Record<CategoryNotNull, string> = {
   clothing: "clothing",
   "personal-care": "personal-care",
 };
+
+
+export const ROUTE_TO_CATEGORY_MAP: Record<string, CategoryNotNull> =
+  Object.fromEntries(
+    Object.entries(CATEGORY_TO_ROUTE_MAP).map(([k, v]) => [v, k as CategoryNotNull])
+  );
+
+
+export function parseCategoryFromRoute(route: string): Category {
+  console.log(route, ROUTE_TO_CATEGORY_MAP)
+  if (route === LOCATION_ROUTE) {
+    return null;
+  } else if (route in ROUTE_TO_CATEGORY_MAP) {
+    return ROUTE_TO_CATEGORY_MAP[route];
+  }
+  throw new Error('Received unexpected route: '+ route)
+}
 
 export const CATEGORY_DESCRIPTION_MAP: Record<CategoryNotNull, string> = {
   "health-care": "Health",
