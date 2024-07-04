@@ -29,6 +29,9 @@ import {
   FOOD_PARAM,
   FOOD_PARAM_SOUP_KITCHEN_VALUE,
   FOOD_PARAM_PANTRY_VALUE,
+  CLOTHING_PARAM,
+  CLOTHING_PARAM_CASUAL_VALUE,
+  CLOTHING_PARAM_PROFESSIONAL_VALUE,
 } from "../common";
 import FiltersPopup from "./filters-popup";
 import FiltersHeader from "./filters-header";
@@ -416,6 +419,23 @@ async function getTaxonomies(
       //     taxonomy_specific_attributes.append('clothingOccasion')
       //     taxonomy_specific_attributes.append('interview')
 
+      switch (parsedSearchParams[CLOTHING_PARAM]) {
+        case null:
+          taxonomies = taxonomyResponse.flatMap((r) =>
+            r.name === parentTaxonomyName ? [r as Taxonomy] : []
+          );
+          break;
+          case CLOTHING_PARAM_CASUAL_VALUE:
+            taxonomies = taxonomyResponse.flatMap((r) =>
+              r.name === parentTaxonomyName ? [r as Taxonomy] : []
+            );
+            break
+          case CLOTHING_PARAM_PROFESSIONAL_VALUE:
+            taxonomies = taxonomyResponse.flatMap((r) =>
+              r.name === parentTaxonomyName ? [r as Taxonomy] : []
+            );
+          break;    
+      }
       break;
     case "food":
       // TODO: do this after we finish the other filters
@@ -521,6 +541,7 @@ async function getTaxonomies(
           break;
       }
   }
+  console.log(taxonomies)
   return taxonomies.map((t) => t.id);
 }
 

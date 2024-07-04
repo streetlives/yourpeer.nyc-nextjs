@@ -62,12 +62,21 @@ export type FoodValues =
   | typeof FOOD_PARAM_SOUP_KITCHEN_VALUE
   | typeof FOOD_PARAM_PANTRY_VALUE; 
 
+export const CLOTHING_PARAM = 'clothing'
+export const CLOTHING_PARAM_CASUAL_VALUE = 'casual'
+export const CLOTHING_PARAM_PROFESSIONAL_VALUE = 'professional'
+export type ClothingValues =
+  | typeof CLOTHING_PARAM_PROFESSIONAL_VALUE
+  | typeof CLOTHING_PARAM_CASUAL_VALUE;
+  
+
 export const URL_PARAM_NAMES = [
   SEARCH_PARAM,
   AGE_PARAM,
   OPEN_PARAM,
   SHELTER_PARAM,
   FOOD_PARAM,
+  CLOTHING_PARAM,
   SHOW_ADVANCED_FILTERS_PARAM
 ] as const
 
@@ -81,6 +90,7 @@ export interface YourPeerSearchParams {
   [OPEN_PARAM]: boolean | null;
   [SHELTER_PARAM]: ShelterValues | null;
   [FOOD_PARAM]: FoodValues | null;
+  [CLOTHING_PARAM]: ClothingValues | null;
   [SHOW_ADVANCED_FILTERS_PARAM]: boolean;
 }
 
@@ -112,6 +122,12 @@ export function parseSearchParams(
       searchParams[FOOD_PARAM] === FOOD_PARAM_PANTRY_VALUE
         ? (searchParams[FOOD_PARAM] as FoodValues)
         : null,
+      [CLOTHING_PARAM]:
+        (typeof searchParams[CLOTHING_PARAM] === "string" &&
+          searchParams[CLOTHING_PARAM] === CLOTHING_PARAM_CASUAL_VALUE) ||
+        searchParams[CLOTHING_PARAM] === CLOTHING_PARAM_PROFESSIONAL_VALUE
+          ? (searchParams[CLOTHING_PARAM] as ClothingValues)
+          : null,
     [SHOW_ADVANCED_FILTERS_PARAM]: !!searchParams[SHOW_ADVANCED_FILTERS_PARAM],
   };
 }
