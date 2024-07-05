@@ -3,6 +3,7 @@ import {
   Category,
   CATEGORY_ICON_SRC_MAP,
   getIconPath,
+  getServicesWrapper,
   YourPeerLegacyLocationData,
 } from "../common";
 
@@ -13,25 +14,6 @@ export default function LocationsContainer({
   category: Category;
   yourPeerLegacyLocationData: YourPeerLegacyLocationData[];
 }) {
-  function getServicesWrapper(
-    serviceCategory: Category,
-    location: YourPeerLegacyLocationData
-  ) {
-    switch (serviceCategory) {
-      case "clothing":
-        return location.clothing_services;
-      case "food":
-        return location.food_services;
-      case "health-care":
-        return location.health_services;
-      case "other":
-        return location.other_services;
-      case "personal-care":
-        return location.personal_care_services;
-      case "shelters-housing":
-        return location.accommodation_services;
-    }
-  }
 
   return (
     <div

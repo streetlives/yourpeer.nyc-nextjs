@@ -1,3 +1,4 @@
+import _ from 'underscore'
 import {
   AGE_PARAM,
   Category,
@@ -31,7 +32,7 @@ import LocationsContainer from "./locations-container";
 import moment from "moment";
 import LocationsMap from "./map";
 
-const GO_GETTA_PROD_URL = process.env.GO_GETTA_PROD_URL;
+const NEXT_PUBLIC_GO_GETTA_PROD_URL = process.env.NEXT_PUBLIC_GO_GETTA_PROD_URL;
 const DEFAULT_PAGE_SIZE = 20;
 
 export interface LocationsDataResponse<T extends SimplifiedLocationData> {
@@ -69,7 +70,7 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
 }): Promise<LocationsDataResponse<T>> {
   // TODO: handle shelter type by looking up the appropriate taxonomy
   // TODO: maybe convert this function to use a url parse library, as opposed to string concatenation
-  let query_url = `${GO_GETTA_PROD_URL}/locations?occasion=COVID19`;
+  let query_url = `${NEXT_PUBLIC_GO_GETTA_PROD_URL}/locations?occasion=COVID19`;
   if (page_num !== undefined && page_size !== undefined) {
     query_url += `&pageNumber=${page_num}&pageSize=${page_size}`;
   }
@@ -228,7 +229,7 @@ export async function getFullLocationData({
 }
 
 function filter_services_by_name(
-  d: FullLocationData,
+  d: FullLocationData | LocationDetailData,
   is_location_detail: boolean,
   category_name: Category
 ): YourPeerLegacyServiceDataWrapper {
@@ -257,6 +258,7 @@ function filter_services_by_name(
         }
       }
       services.push({
+        id: service.id,
         name: service["name"],
         description: service["description"],
         category: service["Taxonomies"][0]["parent_name"],
@@ -265,7 +267,19 @@ function filter_services_by_name(
           (information) => information !== null
         ),
         closed: !!service?.HolidaySchedules?.filter((x) => x.closed).length,
-        schedule: {}, // TODO
+        schedule: Object.fromEntries(
+          Object.entries(
+            _.groupBy(
+              service.HolidaySchedules.filter(
+                (schedule) => schedule.opens_at && schedule.closes_at
+              ),
+              "weekday"
+            )
+          ).map(([k, v]) => [
+            k,
+            v.sort((time1, time2) => (time1 < time2 ? 1 : -1)),   // sort the times
+          ])
+        ),
         docs: is_location_detail
           ? service.RequiredDocuments.filter(
               (doc) => doc.document && doc.document != "None"
@@ -301,20 +315,34 @@ function filter_services_by_name(
 }
 
 export function map_gogetta_to_yourpeer(
-  d: FullLocationData,
+  d: FullLocationData | LocationDetailData,
   is_location_detail: boolean
 ): YourPeerLegacyLocationData {
   const org_name = d["Organization"]["name"];
-  const address = d["PhysicalAddresses"][0];
+  let address, street, zip, state;
+  if(is_location_detail){
+    let locationDetailData = d as LocationDetailData
+    address = locationDetailData.address;
+    street = address.street;
+    zip = address.postalCode;
+    state = address.state;
+  }else{
+    let fullLocationData = d as FullLocationData;
+    address = fullLocationData.PhysicalAddresses[0]
+    street = address.address_1;
+    zip = address.postal_code;
+    state = address.state_province;
+  }
   const updated_at = d["last_validated_at"];
   return {
     id: d.id,
+    email: d.Organization.email,
     location_name: d["name"],
-    address: address.address_1,
+    address: street,
     city: address.city,
     region: address.region,
-    state: address.state_province,
-    zip: address.postal_code,
+    state,
+    zip,
     lat: d["position"]["coordinates"][1],
     lng: d["position"]["coordinates"][0],
     area: address.neighborhood,
@@ -382,7 +410,7 @@ async function getTaxonomies(
   category: Category,
   parsedSearchParams: YourPeerSearchParams
 ): Promise<string[] | null> {
-  const query_url = `${GO_GETTA_PROD_URL}/taxonomy`;
+  const query_url = `${NEXT_PUBLIC_GO_GETTA_PROD_URL}/taxonomy`;
   const taxonomyResponse = await fetch(query_url).then(
     (response) => response.json() as unknown as TaxonomyResponse[]
   );
@@ -502,4 +530,12 @@ export async function fetchLocations(
       taxonomies,
     }),
   };
+}
+
+// fetch the location data for a particular slug
+export async function fetchLocationsDetailData(
+  slug: string
+): Promise<LocationDetailData> {
+  const query_url = `${NEXT_PUBLIC_GO_GETTA_PROD_URL}/locations-by-slug/${slug}`;
+  return fetch(query_url).then((response) => response.json());
 }

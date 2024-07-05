@@ -11,8 +11,9 @@ import {
   Pin,
   useMap,
 } from "@vis.gl/react-google-maps";
-import { SimplifiedLocationData } from "../common";
+import { LOCATION_ROUTE, SimplifiedLocationData } from "../common";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface Position {
   lat: number;
@@ -159,6 +160,7 @@ function MapWrapper({
 }: {
   locationStubs: SimplifiedLocationData[];
 }){
+  const router = useRouter()
   const [userPosition, setUserPosition] = useState<GeolocationPosition>();
   const [mapCenter, setMapCenter] = useLocalStorage<Position>(
     "map-center",
@@ -267,7 +269,7 @@ function MapWrapper({
             lng: locationStub.position.coordinates[0],
           }}
           clickable={true}
-          onClick={() => alert("marker was clicked!")}
+          onClick={() => router.push(`/${LOCATION_ROUTE}/${locationStub.slug}`)}
           title={locationStub.name}
           icon={locationStub.closed ? closedMarker : markerIcon}
         />
@@ -278,8 +280,7 @@ function MapWrapper({
             lat: userPosition.coords.latitude,
             lng: userPosition.coords.longitude,
           }}
-          clickable={true}
-          onClick={() => alert("marker was clicked!")}
+          clickable={false}
           title="You are here!"
           icon={myLocationIcon}
         />

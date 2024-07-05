@@ -139,6 +139,22 @@ export interface SimplifiedLocationData {
   closed: boolean;
 }
 
+export interface ScheduleData {
+  id: string;
+  closed: boolean;
+  opens_at: string;
+  closes_at: string;
+  start_date: string | null;
+  end_date: string | null;
+  weekday: number | null;
+  occasion: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  location_id: string | null;
+  service_id: string | null;
+  service_at_location_id: string | null;
+}
+
 export interface ServiceData {
   id: string;
   name: string | null;
@@ -191,21 +207,7 @@ export interface ServiceData {
     };
   }[];
   RegularSchedules: [];
-  HolidaySchedules: {
-    id: string;
-    closed: boolean;
-    opens_at: string;
-    closes_at: string;
-    start_date: string | null;
-    end_date: string | null;
-    weekday: number | null;
-    occasion: string | null;
-    createdAt: Date;
-    updatedAt: Date;
-    location_id: string | null;
-    service_id: string | null;
-    service_at_location_id: string | null;
-  }[];
+  HolidaySchedules: ScheduleData[];
   Languages: {
     id: string;
     language: string;
@@ -363,14 +365,17 @@ export interface AgeEligibility {
   // TODO: the toher properties for age eligibility
 }
 
+export type YourPeerLegacyScheduleData = Record<number, ScheduleData[]>;
+
 export interface YourPeerLegacyServiceData {
+  id: string;
   name: string | null;
   description: string | null;
   category: TaxonomyCategory | null;
   subcategory: TaxonomyCategory | null;
   info: string[];
   closed: boolean;
-  schedule: {};
+  schedule: YourPeerLegacyScheduleData;
   docs: string[] | null;
   referral_letter: boolean | null;
   eligibility: string[] | null;
@@ -385,6 +390,7 @@ export interface YourPeerLegacyServiceDataWrapper {
 export interface YourPeerLegacyLocationData {
   id: string;
   location_name: string | null;
+  email: string | null;
   address: string | null;
   city: string | null;
   region: string | null;
@@ -407,4 +413,27 @@ export interface YourPeerLegacyLocationData {
   health_services: YourPeerLegacyServiceDataWrapper;
   other_services: YourPeerLegacyServiceDataWrapper;
   closed: boolean;
+}
+
+export function getServicesWrapper(
+  serviceCategory: Category,
+  location: YourPeerLegacyLocationData
+): YourPeerLegacyServiceDataWrapper {
+  switch (serviceCategory) {
+    case "clothing":
+      return location.clothing_services;
+    case "food":
+      return location.food_services;
+    case "health-care":
+      return location.health_services;
+    case "other":
+      return location.other_services;
+    case "personal-care":
+      return location.personal_care_services;
+    case "shelters-housing":
+      return location.accommodation_services;
+  }
+  throw new Error(
+    "Received unexpected value for serviceCategory " + serviceCategory
+  );
 }
