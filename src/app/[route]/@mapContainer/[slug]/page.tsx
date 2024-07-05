@@ -1,10 +1,14 @@
+import { Category, SearchParams, parseCategoryFromRoute, parseSearchParams } from '../../../common';
+import LocationsMap from "../../map";
+import { fetchLocations, fetchLocationsDetailData, map_gogetta_to_yourpeer } from '../../streetlives-api-service';
+
 export default async function MapDetail({
-  params: { slug },
+  params: { route, slug },
 }: {
-  params: { slug: string },
+  params: { route: string; slug: string };
 }) {
-  return <div>
-    Hello {slug}
-  </div>
+  const location = await fetchLocationsDetailData(slug);
+  return <LocationsMap locationDetailStub={location} />;
 }
+
 

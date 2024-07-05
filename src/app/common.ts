@@ -360,9 +360,10 @@ export const CATEGORY_TO_TAXONOMY_NAME_MAP: Record<CategoryNotNull, TaxonomyCate
 };
 
 export interface AgeEligibility {
-  minAge: number | null
-  maxAge: number | null
-  // TODO: the toher properties for age eligibility
+  age_min: number | null
+  age_max: number | null
+  all_ages: string | null
+  population_served: string | null
 }
 
 export type YourPeerLegacyScheduleData = Record<number, ScheduleData[]>;

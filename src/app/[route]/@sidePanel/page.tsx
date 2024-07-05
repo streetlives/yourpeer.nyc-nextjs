@@ -22,22 +22,17 @@ export default async function SidePanelPage({
   );
   return (
     <div
-      className="relative w-full md:w-1/2 lg:w-1/3 bg-white overflow-hidden"
-      id="left_panel"
+      className="w-full h-full md:h-full flex flex-col"
+      id="filters_and_list_screen"
     >
-      <div
-        className="w-full h-full md:h-full flex flex-col"
-        id="filters_and_list_screen"
-      >
-        {parsedSearchParams[SHOW_ADVANCED_FILTERS_PARAM] ? (
-          <FiltersPopup category={category} numLocationResults={resultCount} />
-        ) : undefined}
-        <FiltersHeader category={category} searchParams={searchParams} />
-        <LocationsContainer
-          category={category}
-          yourPeerLegacyLocationData={yourPeerLegacyLocationData}
-        />
-      </div>
+      {parsedSearchParams[SHOW_ADVANCED_FILTERS_PARAM] ? (
+        <FiltersPopup category={category} numLocationResults={resultCount} />
+      ) : undefined}
+      <FiltersHeader category={category} searchParams={searchParams} />
+      <LocationsContainer
+        category={category}
+        yourPeerLegacyLocationData={yourPeerLegacyLocationData}
+      />
     </div>
   );
 }
