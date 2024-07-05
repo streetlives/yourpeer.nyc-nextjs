@@ -68,6 +68,23 @@ export const CLOTHING_PARAM_PROFESSIONAL_VALUE = 'professional'
 export type ClothingValues =
   | typeof CLOTHING_PARAM_PROFESSIONAL_VALUE
   | typeof CLOTHING_PARAM_CASUAL_VALUE;
+
+
+export const FILTERS_THAT_APPLY_TO_ALL_CATEGORIES = [
+ SEARCH_PARAM,
+ AGE_PARAM,
+ OPEN_PARAM,
+ SHOW_ADVANCED_FILTERS_PARAM 
+]
+
+export const CATEGORY_SPECIFIC_FILTERS_MAP: Record<CategoryNotNull, string[]> = {
+  "shelters-housing": [SHELTER_PARAM_FAMILY_VALUE, SHELTER_PARAM_SINGLE_VALUE],
+  "food": [FOOD_PARAM_PANTRY_VALUE, FOOD_PARAM_SOUP_KITCHEN_VALUE],
+  "clothing": [CLOTHING_PARAM_CASUAL_VALUE, CLOTHING_PARAM_PROFESSIONAL_VALUE],
+  "personal-care": [],
+  "health-care": [],
+  "other": [],
+}
   
 
 export const URL_PARAM_NAMES = [

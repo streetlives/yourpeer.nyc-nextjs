@@ -1,5 +1,5 @@
 import { ReadonlyURLSearchParams } from "next/navigation";
-import { CATEGORY_TO_ROUTE_MAP, CategoryNotNull, LOCATION_ROUTE, SearchParams, UrlParamName } from "./common";
+import { CATEGORY_SPECIFIC_FILTERS_MAP, CATEGORY_TO_ROUTE_MAP, CategoryNotNull, FILTERS_THAT_APPLY_TO_ALL_CATEGORIES, LOCATION_ROUTE, SearchParams, UrlParamName } from "./common";
 
 // Change category
 export function getUrlWithNewCategory(
@@ -7,8 +7,16 @@ export function getUrlWithNewCategory(
   searchParams: ReadonlyURLSearchParams
 ): string {
   const currentUrlSearchParams = new URLSearchParams(
-    Array.from(searchParams.entries())
+    Array.from(
+      searchParams
+        .entries()
+    ).filter(
+      ([k, v]) =>
+        CATEGORY_SPECIFIC_FILTERS_MAP[newCategory].includes(k) ||
+        FILTERS_THAT_APPLY_TO_ALL_CATEGORIES.includes(k)
+    )
   );
+
   const newSearchParamsStr = currentUrlSearchParams.toString();
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `/${CATEGORY_TO_ROUTE_MAP[newCategory]}${query}`;
