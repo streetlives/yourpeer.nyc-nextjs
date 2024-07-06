@@ -32,6 +32,7 @@ import {
   CLOTHING_PARAM,
   CLOTHING_PARAM_CASUAL_VALUE,
   CLOTHING_PARAM_PROFESSIONAL_VALUE,
+  REQUIREMENT_PARAM,
 } from "../common";
 import FiltersPopup from "./filters-popup";
 import FiltersHeader from "./filters-header";
@@ -59,9 +60,9 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
   page_size = DEFAULT_PAGE_SIZE,
   taxonomies = null,
   taxonomySpecificAttributes = null,
-  no_requirement = undefined,
-  referral_required = undefined,
-  membership = undefined,
+  noRequirement,
+  referralRequired,
+  membershipRequired,
   open = false,
   search = undefined,
   location_fields_only,
@@ -72,9 +73,9 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
   page_size?: number;
   taxonomies: string[] | null;
   taxonomySpecificAttributes?: string[] | null;
-  no_requirement?: boolean | null;
-  referral_required?: boolean | null;
-  membership?: boolean | null;
+  noRequirement: boolean;
+  referralRequired: boolean;
+  membershipRequired: boolean; 
   open?: boolean | null;
   search?: string | null;
   location_fields_only?: boolean;
@@ -103,19 +104,18 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
         .map((a, i) => `taxonomySpecificAttribute[${i}]=${a}`)
         .join("&");
   }
-  if (no_requirement) {
-    if (!referral_required) {
-      query_url += `&referralRequired=false`;
-    }
-    if (!membership) {
-      query_url += `&membership=false`;
-    }
-  } else {
-    if (referral_required !== undefined) {
-      query_url += `&referralRequired=${referral_required}`;
-    }
-    if (membership !== undefined) {
-      query_url += `&membership=${membership}`;
+
+  // one of these needs to be selected to apply filter logic
+  if(noRequirement || referralRequired || membershipRequired){
+    if (noRequirement) {
+      if (!referralRequired) {
+        query_url += `&referralRequired=false`;
+      }
+      if (!membershipRequired) {
+        query_url += `&membership=false`;
+      }
+    } else {
+      query_url += `&referralRequired=${referralRequired}&membership=${membershipRequired}`;
     }
   }
 
@@ -164,9 +164,9 @@ function recursiveParseUpdatedAt<T extends SimplifiedLocationData>(
 export async function getSimplifiedLocationData({
   taxonomies,
   taxonomySpecificAttributes = null,
-  no_requirement = undefined,
-  referral_required = undefined,
-  membership = undefined,
+  noRequirement,
+  referralRequired,
+  membershipRequired,
   open = false,
   search = undefined,
   age = undefined,
@@ -176,9 +176,9 @@ export async function getSimplifiedLocationData({
   page_size?: number;
   taxonomies: string[] | null;
   taxonomySpecificAttributes: string[] | null;
-  no_requirement?: boolean | null;
-  referral_required?: boolean | null;
-  membership?: boolean | null;
+  noRequirement: boolean;
+  referralRequired: boolean;
+  membershipRequired: boolean;
   open?: boolean | null;
   search?: string | null;
   age?: number | null;
@@ -188,9 +188,9 @@ export async function getSimplifiedLocationData({
     await fetchLocationsData<SimplifiedLocationData>({
       taxonomies,
       taxonomySpecificAttributes,
-      no_requirement,
-      referral_required,
-      membership,
+      noRequirement,
+      referralRequired,
+      membershipRequired,
       open,
       search,
       age,
@@ -205,9 +205,9 @@ export async function getFullLocationData({
   page_size = DEFAULT_PAGE_SIZE,
   taxonomies,
   taxonomySpecificAttributes = undefined,
-  no_requirement = undefined,
-  referral_required = undefined,
-  membership = undefined,
+  noRequirement,
+  referralRequired,
+  membershipRequired,
   open = false,
   search = undefined,
   age = undefined,
@@ -217,9 +217,9 @@ export async function getFullLocationData({
   page_size?: number;
   taxonomies: string[] | null;
   taxonomySpecificAttributes?: string[];
-  no_requirement?: boolean | null;
-  referral_required?: boolean | null;
-  membership?: boolean | null;
+  noRequirement: boolean;
+  referralRequired: boolean;
+  membershipRequired: boolean;
   open?: boolean | null;
   search?: string | null;
   age?: number | null;
@@ -230,9 +230,9 @@ export async function getFullLocationData({
     page_size,
     taxonomies,
     taxonomySpecificAttributes,
-    no_requirement,
-    referral_required,
-    membership,
+    noRequirement,
+    referralRequired,
+    membershipRequired,
     open,
     search,
     age,
@@ -565,10 +565,12 @@ export async function fetchLocations(
   return {
     ...(await fetchLocationsData({
       ...parsedSearchParams,
+      ...parsedSearchParams[REQUIREMENT_PARAM],
       ...taxonomiesResults,
     })),
     locationStubs: await getSimplifiedLocationData({
       ...parsedSearchParams,
+      ...parsedSearchParams[REQUIREMENT_PARAM],
       ...taxonomiesResults,
     }),
   };

@@ -69,6 +69,30 @@ export type ClothingValues =
   | typeof CLOTHING_PARAM_PROFESSIONAL_VALUE
   | typeof CLOTHING_PARAM_CASUAL_VALUE;
 
+export const REQUIREMENT_PARAM = 'requirement'
+export const REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE = 'no'
+export const REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE = 'referral-letter'
+export const REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE = 'registered-client'
+export type RequirementValue =
+  | typeof REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE 
+  | typeof REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE
+  | typeof REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE;
+
+export const REQUIREMENT_PARAM_CANONICAL_ORDERING = [
+  REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE,
+  REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE,
+  REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE,
+];
+
+export function parseRequirementParam(
+  requirementParam: string | null | undefined
+): RequirementValue[] {
+  return requirementParam
+    ? (requirementParam.split(" ") as RequirementValue[])
+    : [];
+}
+
+// TODO: apply canonical ordering to the query params? 
 
 export const FILTERS_THAT_APPLY_TO_ALL_CATEGORIES = [
  SEARCH_PARAM,
@@ -109,6 +133,13 @@ export interface YourPeerSearchParams {
   [FOOD_PARAM]: FoodValues | null;
   [CLOTHING_PARAM]: ClothingValues | null;
   [SHOW_ADVANCED_FILTERS_PARAM]: boolean;
+  [REQUIREMENT_PARAM]: ParsedRequirements
+}
+
+export interface ParsedRequirements {
+  noRequirement: boolean;
+  referralRequired: boolean;
+  membershipRequired: boolean;
 }
 
 export function parseSearchParams(
@@ -116,6 +147,7 @@ export function parseSearchParams(
 ): YourPeerSearchParams {
   // TODO: validate searchParams with Joi
   // TODO: return 400 on validation error
+  const parsedRequirements = parseRequirementParam(searchParams[REQUIREMENT_PARAM] as string)
   return {
     [SEARCH_PARAM]:
       typeof searchParams[SEARCH_PARAM] === "string"
@@ -139,13 +171,24 @@ export function parseSearchParams(
       searchParams[FOOD_PARAM] === FOOD_PARAM_PANTRY_VALUE
         ? (searchParams[FOOD_PARAM] as FoodValues)
         : null,
-      [CLOTHING_PARAM]:
-        (typeof searchParams[CLOTHING_PARAM] === "string" &&
-          searchParams[CLOTHING_PARAM] === CLOTHING_PARAM_CASUAL_VALUE) ||
-        searchParams[CLOTHING_PARAM] === CLOTHING_PARAM_PROFESSIONAL_VALUE
-          ? (searchParams[CLOTHING_PARAM] as ClothingValues)
-          : null,
+    [CLOTHING_PARAM]:
+      (typeof searchParams[CLOTHING_PARAM] === "string" &&
+        searchParams[CLOTHING_PARAM] === CLOTHING_PARAM_CASUAL_VALUE) ||
+      searchParams[CLOTHING_PARAM] === CLOTHING_PARAM_PROFESSIONAL_VALUE
+        ? (searchParams[CLOTHING_PARAM] as ClothingValues)
+        : null,
     [SHOW_ADVANCED_FILTERS_PARAM]: !!searchParams[SHOW_ADVANCED_FILTERS_PARAM],
+    [REQUIREMENT_PARAM]: {
+      noRequirement: parsedRequirements.includes(
+        REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE
+      ),
+      referralRequired: parsedRequirements.includes(
+        REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE
+      ),
+      membershipRequired: parsedRequirements.includes(
+        REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE
+      ),
+    },
   };
 }
 

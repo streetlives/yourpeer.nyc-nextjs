@@ -1,5 +1,5 @@
 import { ReadonlyURLSearchParams } from "next/navigation";
-import { CATEGORY_SPECIFIC_FILTERS_MAP, CATEGORY_TO_ROUTE_MAP, CategoryNotNull, FILTERS_THAT_APPLY_TO_ALL_CATEGORIES, LOCATION_ROUTE, SearchParams, UrlParamName } from "./common";
+import { CATEGORY_SPECIFIC_FILTERS_MAP, CATEGORY_TO_ROUTE_MAP, CategoryNotNull, FILTERS_THAT_APPLY_TO_ALL_CATEGORIES, LOCATION_ROUTE, parseRequirementParam, REQUIREMENT_PARAM, REQUIREMENT_PARAM_CANONICAL_ORDERING, RequirementValue, SearchParams, UrlParamName } from "./common";
 
 // Change category
 export function getUrlWithNewCategory(
@@ -72,8 +72,54 @@ export function getUrlWithoutFilterParameter(
   return `${pathname}${query}`;
 }
 
-
 // Clear all filter parameters
 export function getUrlWithoutFilterParameters(): string {
     return `/${LOCATION_ROUTE}`
+}
+
+export function getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
+  pathname: string,
+  searchParams: ReadonlyURLSearchParams | SearchParams,
+  newRequirementTypeToAddOrRemove: RequirementValue,
+  addRequirementType: boolean
+): string {
+  const searchParamsList: string[][] = getSearchParamsList(searchParams);
+
+  const currentUrlSearchParams = new URLSearchParams(searchParamsList);
+
+  const currentRequirementValue = currentUrlSearchParams.get(REQUIREMENT_PARAM);
+
+  const parsedRequirements: RequirementValue[] = parseRequirementParam(
+    currentRequirementValue
+  );
+
+  const newParsedRequirements = addRequirementType
+    ? !parsedRequirements.includes(newRequirementTypeToAddOrRemove)
+      ? parsedRequirements
+          .concat(newRequirementTypeToAddOrRemove)
+          .sort(
+            (a, b) =>
+              REQUIREMENT_PARAM_CANONICAL_ORDERING.indexOf(a) -
+              REQUIREMENT_PARAM_CANONICAL_ORDERING.indexOf(b)
+          )
+      : parsedRequirements
+    : parsedRequirements.filter(
+        (requirement) => requirement !== newRequirementTypeToAddOrRemove
+      );
+
+  if(newParsedRequirements.length){
+    const serializedNewParsedRequirements = newParsedRequirements.join(" ");
+
+    currentUrlSearchParams.set(
+      REQUIREMENT_PARAM,
+      serializedNewParsedRequirements
+    );
+  }else{
+    currentUrlSearchParams.delete(REQUIREMENT_PARAM);
+  }
+
+  const newSearchParamsStr = currentUrlSearchParams.toString();
+
+  const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
+  return `${pathname}${query}`;
 }
