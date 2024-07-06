@@ -14,6 +14,8 @@ import FilterHours from './filter-hours';
 import { AGE_PARAM } from "../common";
 import FilterHousing from "./filter-housing";
 import { getUrlWithNewCategory, getUrlWithNewFilterParameter, getUrlWithoutFilterParameter } from "../navigation";
+import FilterFood from "./filter-food";
+import FilterClothing from "./filter-clothing";
 
 function CategoryFilterLabel({
   labelCategory,
@@ -240,6 +242,8 @@ export default function FiltersPopup({
         </fieldset>
         <FilterHours />
         {category === "shelters-housing" ? <FilterHousing /> : undefined}
+        {category === "food" ? <FilterFood /> : undefined}
+        {category === "clothing" ? <FilterClothing /> : undefined}
       </form>
       <div className="p-4 flex items-center gap-x-4">
         <Link
