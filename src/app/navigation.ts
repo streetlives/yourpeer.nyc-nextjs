@@ -1,5 +1,5 @@
 import { ReadonlyURLSearchParams } from "next/navigation";
-import { CATEGORY_SPECIFIC_FILTERS_MAP, CATEGORY_TO_ROUTE_MAP, CategoryNotNull, FILTERS_THAT_APPLY_TO_ALL_CATEGORIES, LOCATION_ROUTE, parseRequirementParam, REQUIREMENT_PARAM, REQUIREMENT_PARAM_CANONICAL_ORDERING, RequirementValue, SearchParams, UrlParamName } from "./common";
+import { CATEGORY_TO_ROUTE_MAP, CategoryNotNull, FILTERS_THAT_APPLY_TO_ALL_CATEGORIES, LOCATION_ROUTE, parseRequirementParam, REQUIREMENT_PARAM, REQUIREMENT_PARAM_CANONICAL_ORDERING, RequirementValue, SearchParams, UrlParamName } from "./common";
 
 // Change category
 export function getUrlWithNewCategory(
@@ -12,7 +12,6 @@ export function getUrlWithNewCategory(
         .entries()
     ).filter(
       ([k, v]) =>
-        CATEGORY_SPECIFIC_FILTERS_MAP[newCategory].includes(k) ||
         FILTERS_THAT_APPLY_TO_ALL_CATEGORIES.includes(k)
     )
   );

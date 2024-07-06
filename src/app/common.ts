@@ -101,16 +101,6 @@ export const FILTERS_THAT_APPLY_TO_ALL_CATEGORIES = [
  SHOW_ADVANCED_FILTERS_PARAM 
 ]
 
-export const CATEGORY_SPECIFIC_FILTERS_MAP: Record<CategoryNotNull, string[]> = {
-  "shelters-housing": [SHELTER_PARAM_FAMILY_VALUE, SHELTER_PARAM_SINGLE_VALUE],
-  "food": [FOOD_PARAM_PANTRY_VALUE, FOOD_PARAM_SOUP_KITCHEN_VALUE],
-  "clothing": [CLOTHING_PARAM_CASUAL_VALUE, CLOTHING_PARAM_PROFESSIONAL_VALUE],
-  "personal-care": [],
-  "health-care": [],
-  "other": [],
-}
-  
-
 export const URL_PARAM_NAMES = [
   SEARCH_PARAM,
   AGE_PARAM,
