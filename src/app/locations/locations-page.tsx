@@ -57,8 +57,8 @@ export interface LocationsDataResponse<T extends SimplifiedLocationData> {
 async function fetchLocationsData<T extends SimplifiedLocationData>({
   page_num = 0,
   page_size = DEFAULT_PAGE_SIZE,
-  taxonomies,
-  taxonomy_specific_attributes = undefined,
+  taxonomies = null,
+  taxonomySpecificAttributes = null,
   no_requirement = undefined,
   referral_required = undefined,
   membership = undefined,
@@ -71,7 +71,7 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
   page_num?: number;
   page_size?: number;
   taxonomies: string[] | null;
-  taxonomy_specific_attributes?: string[];
+  taxonomySpecificAttributes?: string[] | null;
   no_requirement?: boolean | null;
   referral_required?: boolean | null;
   membership?: boolean | null;
@@ -96,10 +96,10 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
   if (taxonomies && taxonomies.length) {
     query_url += `&taxonomyId=${taxonomies.join(",")}`;
   }
-  if (taxonomy_specific_attributes) {
+  if (taxonomySpecificAttributes) {
     query_url +=
       "&" +
-      taxonomy_specific_attributes
+      taxonomySpecificAttributes
         .map((a, i) => `taxonomySpecificAttribute[${i}]=${a}`)
         .join("&");
   }
@@ -163,7 +163,7 @@ function recursiveParseUpdatedAt<T extends SimplifiedLocationData>(
 
 export async function getSimplifiedLocationData({
   taxonomies,
-  taxonomy_specific_attributes = undefined,
+  taxonomySpecificAttributes = null,
   no_requirement = undefined,
   referral_required = undefined,
   membership = undefined,
@@ -175,7 +175,7 @@ export async function getSimplifiedLocationData({
   page_num?: number;
   page_size?: number;
   taxonomies: string[] | null;
-  taxonomy_specific_attributes?: string[];
+  taxonomySpecificAttributes: string[] | null;
   no_requirement?: boolean | null;
   referral_required?: boolean | null;
   membership?: boolean | null;
@@ -187,7 +187,7 @@ export async function getSimplifiedLocationData({
   const response: LocationsDataResponse<SimplifiedLocationData> =
     await fetchLocationsData<SimplifiedLocationData>({
       taxonomies,
-      taxonomy_specific_attributes,
+      taxonomySpecificAttributes,
       no_requirement,
       referral_required,
       membership,
@@ -204,7 +204,7 @@ export async function getFullLocationData({
   page_num = 0,
   page_size = DEFAULT_PAGE_SIZE,
   taxonomies,
-  taxonomy_specific_attributes = undefined,
+  taxonomySpecificAttributes = undefined,
   no_requirement = undefined,
   referral_required = undefined,
   membership = undefined,
@@ -216,7 +216,7 @@ export async function getFullLocationData({
   page_num?: number;
   page_size?: number;
   taxonomies: string[] | null;
-  taxonomy_specific_attributes?: string[];
+  taxonomySpecificAttributes?: string[];
   no_requirement?: boolean | null;
   referral_required?: boolean | null;
   membership?: boolean | null;
@@ -229,7 +229,7 @@ export async function getFullLocationData({
     page_num,
     page_size,
     taxonomies,
-    taxonomy_specific_attributes,
+    taxonomySpecificAttributes,
     no_requirement,
     referral_required,
     membership,
@@ -390,12 +390,17 @@ function map_gogetta_to_yourpeer(
   };
 }
 
+interface TaxonomiesResult {
+  taxonomies: string[] | null;
+  taxonomySpecificAttributes: string[] | null;
+}
+
 // TODO: we probably don't want to look this up every time. We probably at least want to cache it
 // TODO: add support for HTTP caching (e.g. ETag or Last-Modified headers) on streetlives-api
 async function getTaxonomies(
   category: Category,
   parsedSearchParams: YourPeerSearchParams
-): Promise<string[] | null> {
+): Promise<TaxonomiesResult> {
   const query_url = `${GO_GETTA_PROD_URL}/taxonomy`;
   const taxonomyResponse = await fetch(query_url).then(
     (response) => response.json() as unknown as TaxonomyResponse[]
@@ -403,10 +408,14 @@ async function getTaxonomies(
   
   console.log(taxonomyResponse);
 
-  if (!category) return null;
+  if (!category) return {
+    taxonomies: null,
+    taxonomySpecificAttributes: null
+  };
   const parentTaxonomyName = CATEGORY_TO_TAXONOMY_NAME_MAP[category];
   // FIXME: currently it's only two layers deep. Technically, taxonomy can be arbitrary depth, and we should handle that case
   let taxonomies: Taxonomy[] = [];
+  let taxonomySpecificAttributes: string[] | null = null;
   switch (category) {
     case "clothing":
       // TODO: do this after we finish the other filters
@@ -419,27 +428,20 @@ async function getTaxonomies(
       //     taxonomy_specific_attributes.append('clothingOccasion')
       //     taxonomy_specific_attributes.append('interview')
 
+      taxonomies = taxonomyResponse.flatMap((r) =>
+        r.name === parentTaxonomyName ? [r as Taxonomy] : []
+      );
+      // FIXME: specifying taxonomySpecificAttributes does not seem to have any effect on the returned results
       switch (parsedSearchParams[CLOTHING_PARAM]) {
-        case null:
-          taxonomies = taxonomyResponse.flatMap((r) =>
-            r.name === parentTaxonomyName ? [r as Taxonomy] : []
-          );
+        case CLOTHING_PARAM_CASUAL_VALUE:
+          taxonomySpecificAttributes = ["clothingOccasion", "everyday"];
           break;
-          case CLOTHING_PARAM_CASUAL_VALUE:
-            taxonomies = taxonomyResponse.flatMap((r) =>
-              r.name === parentTaxonomyName ? [r as Taxonomy] : []
-            );
-            break
-          case CLOTHING_PARAM_PROFESSIONAL_VALUE:
-            taxonomies = taxonomyResponse.flatMap((r) =>
-              r.name === parentTaxonomyName ? [r as Taxonomy] : []
-            );
-          break;    
+        case CLOTHING_PARAM_PROFESSIONAL_VALUE:
+          taxonomySpecificAttributes = ["clothingOccasion", "interview"];
+          break;
       }
       break;
     case "food":
-      // TODO: do this after we finish the other filters
-
       // if food_pantry:
       //     query += "and t.name='Food Pantry'"
       // elif soup_kitchen:
@@ -456,21 +458,14 @@ async function getTaxonomies(
           taxonomies = taxonomyResponse.flatMap((r) =>
             !r.children
               ? []
-              : r.children.filter(
-                  (t) =>
-                    t.parent_name === parentTaxonomyName &&
-                    t.name === "Soup Kitchen"
-                )
+              : r.children.filter((t) => t.name === "Soup Kitchen")
           );
+          break;
         case FOOD_PARAM_PANTRY_VALUE:
           taxonomies = taxonomyResponse.flatMap((r) =>
             !r.children
               ? []
-              : r.children.filter(
-                  (t) =>
-                    t.parent_name === parentTaxonomyName &&
-                    t.name === "Food Pantry"
-                )
+              : r.children.filter((t) => t.name === "Food Pantry")
           );
           break;
       }
@@ -550,8 +545,10 @@ async function getTaxonomies(
           break;
       }
   }
-  console.log(taxonomies)
-  return taxonomies.map((t) => t.id);
+  return {
+    taxonomies: taxonomies.map((t) => t.id),
+    taxonomySpecificAttributes,
+  };
 }
 
 export interface AllLocationsData
@@ -563,16 +560,16 @@ export async function fetchLocations(
   category: Category,
   parsedSearchParams: YourPeerSearchParams
 ): Promise<AllLocationsData> {
-  const taxonomies = await getTaxonomies(category, parsedSearchParams);
-  console.log(taxonomies);
+  const taxonomiesResults = await getTaxonomies(category, parsedSearchParams);
+  console.log(taxonomiesResults);
   return {
     ...(await fetchLocationsData({
       ...parsedSearchParams,
-      taxonomies,
+      ...taxonomiesResults,
     })),
     locationStubs: await getSimplifiedLocationData({
       ...parsedSearchParams,
-      taxonomies,
+      ...taxonomiesResults,
     }),
   };
 }

@@ -67,7 +67,7 @@ export default function FilterClothing() {
   return (
     <fieldset className="mt-6">
       <legend className="text-xs font-semibold leading-6 text-dark">
-        Food type
+        Clothing type
       </legend>
       <div className="mt-2 flex w-full">
         <label
