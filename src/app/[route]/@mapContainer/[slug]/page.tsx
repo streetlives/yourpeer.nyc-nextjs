@@ -1,4 +1,4 @@
-import { Category, SearchParams, parseCategoryFromRoute, parseSearchParams } from '../../../common';
+import { Category, SearchParams, parseCategoryFromRoute } from '../../../common';
 import LocationsMap from "../../map";
 import { fetchLocations, fetchLocationsDetailData, map_gogetta_to_yourpeer } from '../../streetlives-api-service';
 

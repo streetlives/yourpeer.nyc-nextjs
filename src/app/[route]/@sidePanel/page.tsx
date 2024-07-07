@@ -12,7 +12,8 @@ export default async function SidePanelPage({
   params: { route: string };
 }) {
   const category = parseCategoryFromRoute(route);
-  const parsedSearchParams = parseSearchParams(searchParams);
+  // FIXME: the string composition in the next line is a bit ugly. I should clean up the type used in this interface
+  const parsedSearchParams = parseSearchParams(`/${route}`, searchParams);
   const { locations, numberOfPages, resultCount } = await fetchLocations(
     category,
     parsedSearchParams

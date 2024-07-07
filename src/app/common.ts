@@ -217,6 +217,7 @@ export interface YourPeerSearchParams {
   [CLOTHING_PARAM]: ClothingValues | null;
   [SHOW_ADVANCED_FILTERS_PARAM]: boolean;
   [REQUIREMENT_PARAM]: ParsedRequirements
+  [AMENITIES_PARAM]: ParsedAmenities
 }
 
 export interface ParsedRequirements {
@@ -225,12 +226,24 @@ export interface ParsedRequirements {
   membershipRequired: boolean;
 }
 
+export interface ParsedAmenities {
+  [AMENITIES_PARAM_LAUNDRY_VALUE]: boolean;
+  [AMENITIES_PARAM_RESTROOM_VALUE]: boolean;
+  [AMENITIES_PARAM_SHOWER_VALUE]: boolean;
+  [AMENITIES_PARAM_TOILETRIES_VALUE]: boolean;
+}
+
 export function parseSearchParams(
+  pathname: string,
   searchParams: SearchParams
 ): YourPeerSearchParams {
   // TODO: validate searchParams with Joi
   // TODO: return 400 on validation error
   const parsedRequirements = parseRequirementParam(searchParams[REQUIREMENT_PARAM] as string)
+  const parsedAmenitiesParam = getParsedAmenities(
+    pathname,
+    searchParams[AMENITIES_PARAM] as string
+  );
   return {
     [SEARCH_PARAM]:
       typeof searchParams[SEARCH_PARAM] === "string"
@@ -270,6 +283,20 @@ export function parseSearchParams(
       ),
       membershipRequired: parsedRequirements.includes(
         REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE
+      ),
+    },
+    [AMENITIES_PARAM]: {
+      [AMENITIES_PARAM_LAUNDRY_VALUE]: parsedAmenitiesParam.includes(
+        AMENITIES_PARAM_LAUNDRY_VALUE
+      ),
+      [AMENITIES_PARAM_RESTROOM_VALUE]: parsedAmenitiesParam.includes(
+        AMENITIES_PARAM_RESTROOM_VALUE
+      ),
+      [AMENITIES_PARAM_SHOWER_VALUE]: parsedAmenitiesParam.includes(
+        AMENITIES_PARAM_SHOWER_VALUE
+      ),
+      [AMENITIES_PARAM_TOILETRIES_VALUE]: parsedAmenitiesParam.includes(
+        AMENITIES_PARAM_TOILETRIES_VALUE
       ),
     },
   };
@@ -499,7 +526,20 @@ export const TAXONOMY_CATEGORIES = [
   "Personal Care",
 ] as const
 
+
+const TOILETRIES_TAXONOMY = "Toiletries";
+const SHOWER_TAXONOMY =   "Shower";
+const LAUNDRY_TAXONOMY =   "Laundry";
+const RESTROOM_TAXONOMY =   "Restrooms";
+export const TAXONOMY_SUBCATEGORIES = [
+  TOILETRIES_TAXONOMY,
+  SHOWER_TAXONOMY,
+  LAUNDRY_TAXONOMY,
+  RESTROOM_TAXONOMY
+] as const;
+
 export type TaxonomyCategory = typeof TAXONOMY_CATEGORIES[number]
+export type TaxonomySubCategory = typeof TAXONOMY_SUBCATEGORIES[number]
 
 export function setIntersection<T>(set1: Set<T>, set2: Set<T>): Set<T>{
   return new Set<T>(Array.from(set1).filter((x) => set2.has(x)));
@@ -512,6 +552,14 @@ export const CATEGORY_TO_TAXONOMY_NAME_MAP: Record<CategoryNotNull, TaxonomyCate
   food: "Food",
   clothing: "Clothing",
   "personal-care": "Personal Care",
+};
+
+
+export const AMENITY_TO_TAXONOMY_NAME_MAP: Record<AmenitiesSubCategory, TaxonomySubCategory> = {
+  [AMENITIES_PARAM_LAUNDRY_VALUE]: LAUNDRY_TAXONOMY,
+  [AMENITIES_PARAM_RESTROOM_VALUE]: RESTROOM_TAXONOMY,
+  [AMENITIES_PARAM_SHOWER_VALUE]: SHOWER_TAXONOMY,
+  [AMENITIES_PARAM_TOILETRIES_VALUE]: TOILETRIES_TAXONOMY,
 };
 
 export interface AgeEligibility {

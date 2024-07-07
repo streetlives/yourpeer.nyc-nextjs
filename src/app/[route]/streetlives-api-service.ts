@@ -32,6 +32,10 @@ import {
   CLOTHING_PARAM_CASUAL_VALUE,
   CLOTHING_PARAM_PROFESSIONAL_VALUE,
   REQUIREMENT_PARAM,
+  AMENITIES_PARAM,
+  AmenitiesSubCategory,
+  AMENITY_TO_TAXONOMY_NAME_MAP,
+  TaxonomySubCategory,
 } from "../common";
 import FiltersPopup from "./filters-popup";
 import FiltersHeader from "./filters-header";
@@ -120,7 +124,7 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
     query_url += `&openAt=${new Date().toISOString()}`;
   }
 
-  //console.log("query_url", query_url);
+  console.log("query_url", query_url);
 
   const gogetta_response = await fetch(query_url);
   const numberOfPages = parseInt(
@@ -422,17 +426,40 @@ async function getTaxonomies(
   parsedSearchParams: YourPeerSearchParams
 ): Promise<TaxonomiesResult> {
   const query_url = `${NEXT_PUBLIC_GO_GETTA_PROD_URL}/taxonomy`;
-  const taxonomyResponse = await fetch(query_url).then(
-    (response) => response.json() as unknown as TaxonomyResponse[]
+  const taxonomyResponse = (
+    await fetch(query_url).then(
+      (response) => response.json() as unknown as TaxonomyResponse[]
+    )
+  ).flatMap((taxonomyResponse) =>
+    [taxonomyResponse].concat(taxonomyResponse.children || [])
   );
-  
-  //console.log(taxonomyResponse);
 
   if (!category) return {
     taxonomies: null,
     taxonomySpecificAttributes: null
   };
   const parentTaxonomyName = CATEGORY_TO_TAXONOMY_NAME_MAP[category];
+
+  const selectedAmenities = Object.entries(
+    parsedSearchParams[AMENITIES_PARAM]
+  )
+    .filter(([k, v]) => v)
+    .map(([k, v]) => k) as AmenitiesSubCategory[];
+  let hasSelectedSomeAmenities = !!selectedAmenities.length;
+
+  const selectedAmenityTaxonomies = selectedAmenities.map(
+    (amenity) => AMENITY_TO_TAXONOMY_NAME_MAP[amenity]
+  );
+
+  console.log(
+    "taxonomyResponse",
+    taxonomyResponse.map((r) => r.name),
+    "selectedAmenities",
+    selectedAmenities,
+    "selectedAmenityTaxonomies",
+    selectedAmenityTaxonomies
+  );
+
   // FIXME: currently it's only two layers deep. Technically, taxonomy can be arbitrary depth, and we should handle that case
   let taxonomies: Taxonomy[] = [];
   let taxonomySpecificAttributes: string[] | null = null;
@@ -525,9 +552,18 @@ async function getTaxonomies(
       //         conditions.append('Restrooms')
       //    conditions_in_quotes = [f"'{c}'" for c in conditions]
       //    query += f" and t.parent_name = 'Personal Care' and t.name in ({','.join(conditions_in_quotes) })"
-      taxonomies = taxonomyResponse.flatMap((r) =>
-        r.name === parentTaxonomyName ? [r as Taxonomy] : []
-      );
+      
+      taxonomies = hasSelectedSomeAmenities
+        ? taxonomyResponse.flatMap((r) => {
+            return selectedAmenityTaxonomies.includes(
+              r.name as TaxonomySubCategory
+            )
+              ? [r as Taxonomy]
+              : [];
+          })
+        : taxonomyResponse.flatMap((r) =>
+            r.name === parentTaxonomyName ? [r as Taxonomy] : []
+          );
       break;
     case "shelters-housing":
       // if is_single:
@@ -565,6 +601,10 @@ async function getTaxonomies(
           break;
       }
   }
+  console.log(
+    "taxonomies",
+    taxonomies.map((t) => t.id)
+  ); 
   return {
     taxonomies: taxonomies.map((t) => t.id),
     taxonomySpecificAttributes,

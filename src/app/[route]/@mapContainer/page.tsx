@@ -10,7 +10,7 @@ export default async function MapContainerPage({
   params: { route: string };
 }) {
     const category = parseCategoryFromRoute(route);
-    const parsedSearchParams = parseSearchParams(searchParams);
+    const parsedSearchParams = parseSearchParams(`/${route}`, searchParams);
     // TODO: break fetchLocations out into two API calls
     const { locationStubs } = await fetchLocations(
       category,
