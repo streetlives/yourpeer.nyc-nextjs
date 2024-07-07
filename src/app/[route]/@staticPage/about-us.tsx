@@ -45,9 +45,9 @@ export function AboutUsPage() {
               Our information is peer-validated
             </h2>
             <p className="text-dark text-base text-center">
-              YourPeer's social service information is validated by our
+              YourPeer&apos;s social service information is validated by our
               information specialists who all have lived experiences navigating
-              the support system. They work hard to collect social services'
+              the support system. They work hard to collect social services&apos;
               information and keep them up-to-date.
             </p>
           </div>
@@ -155,7 +155,7 @@ export function AboutUsPage() {
                   Liz (she/her)
                 </h3>
                 <div className="text-base text-gray-800 text-center">
-                  I'm naturally eager to support my community because I want the
+                  I&apos;m naturally eager to support my community because I want the
                   future generation to avoid facing my predicament.
                 </div>
               </div>

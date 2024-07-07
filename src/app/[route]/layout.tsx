@@ -1,6 +1,6 @@
 import SearchForm from "./search-form";
 import QuickExit from "./quick-exit";
-import { COMPANY_ROUTES, RESOURCE_ROUTES } from "../common";
+import { COMPANY_ROUTES, CompanyRoute, RESOURCE_ROUTES } from "../common";
 import { Footer } from "../footer";
 
 export default function LocationsLayout({
@@ -14,7 +14,7 @@ export default function LocationsLayout({
   staticPage: React.ReactNode,
   params: { route: string };
 }) {
-  console.log("route", route);
+  //console.log("route", route);
   // TODO: handle the other top-level routes that are not the category routes
   return RESOURCE_ROUTES.includes(route) ? (
     <>
@@ -88,7 +88,7 @@ export default function LocationsLayout({
         </div>
       </div>
     </>
-  ) : COMPANY_ROUTES.includes(route) ? (
+  ) : COMPANY_ROUTES.includes(route as CompanyRoute) ? (
     <>
       <header className="fixed top-0 inset-x-0 z-10 bg-amber-300" id="header">
         <nav className="flex items-center justify-between px-5 py-5 h-16 max-w-5xl mx-auto w-full">
@@ -104,9 +104,9 @@ export default function LocationsLayout({
                 className="w-5 h-5"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
             </button>

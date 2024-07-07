@@ -370,13 +370,13 @@ export function TermsPage() {
                 alt=""
               />
               <h2 className="text-4xl text-dark mb-10 text-center font-light">
-                You're not alone in this journey
+                You&apos;re not alone in this journey
               </h2>
               <p className="text-center text-gray-800 text-sm px-2 mb-5">
                 People rely on social services for many reasons. Our information
                 specialists all have lived experiences navigating the support
                 system and apply their knowledge collecting the information you
-                find here. We’re building YourPeer so it's easier for you to
+                find here. We’re building YourPeer so it&apos;s easier for you to
                 find the right service.
               </p>
               <div>

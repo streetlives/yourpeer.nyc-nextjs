@@ -186,7 +186,7 @@ function MapWrapper({
 
   const handleCameraChange = useCallback(
     (ev: MapCameraChangedEvent) => {
-      console.log("camera changed: ", ev.detail);
+      //console.log("camera changed: ", ev.detail);
       const center = ev.map.getCenter();
       if (center) {
         setMapCenter({

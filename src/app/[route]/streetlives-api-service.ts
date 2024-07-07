@@ -120,7 +120,7 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
     query_url += `&openAt=${new Date().toISOString()}`;
   }
 
-  console.log("query_url", query_url);
+  //console.log("query_url", query_url);
 
   const gogetta_response = await fetch(query_url);
   const numberOfPages = parseInt(
@@ -426,7 +426,7 @@ async function getTaxonomies(
     (response) => response.json() as unknown as TaxonomyResponse[]
   );
   
-  console.log(taxonomyResponse);
+  //console.log(taxonomyResponse);
 
   if (!category) return {
     taxonomies: null,
@@ -581,7 +581,7 @@ export async function fetchLocations(
   parsedSearchParams: YourPeerSearchParams
 ): Promise<AllLocationsData> {
   const taxonomiesResults = await getTaxonomies(category, parsedSearchParams);
-  console.log(taxonomiesResults);
+  //console.log(taxonomiesResults);
   return {
     ...(await fetchLocationsData({
       ...parsedSearchParams,

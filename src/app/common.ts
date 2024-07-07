@@ -30,10 +30,6 @@ export const ROUTE_TO_CATEGORY_MAP: Record<string, CategoryNotNull> =
 
 export const LOCATION_ROUTE = 'locations'
 
-export const RESOURCE_ROUTES = Object.keys(ROUTE_TO_CATEGORY_MAP).concat(
-  LOCATION_ROUTE
-);
-
 export const COMPANY_ROUTES = [
   "about-us",
   "contact-us",
@@ -45,13 +41,19 @@ export const COMPANY_ROUTES = [
 export type CompanyRoute = typeof COMPANY_ROUTES[number]
 
 export function parseCategoryFromRoute(route: string): Category {
-  console.log(route, ROUTE_TO_CATEGORY_MAP)
+  //console.log(route, ROUTE_TO_CATEGORY_MAP)
   if (route === LOCATION_ROUTE) {
     return null;
   } else if (route in ROUTE_TO_CATEGORY_MAP) {
     return ROUTE_TO_CATEGORY_MAP[route];
+  } else if (
+    AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
+      route as AmenitiesSubCategory
+    )
+  ){
+    return PERSONAL_CARE_CATEGORY;
   }
-  throw new Error('Received unexpected route: '+ route)
+    throw new Error("Received unexpected route: " + route);
 }
 
 export const CATEGORY_DESCRIPTION_MAP: Record<CategoryNotNull, string> = {
@@ -123,6 +125,65 @@ export function parseRequirementParam(
     ? (requirementParam.split(" ") as RequirementValue[])
     : [];
 }
+
+
+export const PERSONAL_CARE_CATEGORY = CATEGORIES[3]
+export const AMENITIES_PARAM = PERSONAL_CARE_CATEGORY 
+export const AMENITIES_PARAM_LAUNDRY_VALUE = 'laundry-services'
+export const AMENITIES_PARAM_RESTROOM_VALUE = 'restrooms'
+export const AMENITIES_PARAM_SHOWER_VALUE = 'showers'
+export const AMENITIES_PARAM_TOILETRIES_VALUE = 'toiletries'
+export type PersonalCareValue =
+  | typeof AMENITIES_PARAM_LAUNDRY_VALUE 
+  | typeof AMENITIES_PARAM_RESTROOM_VALUE
+  | typeof AMENITIES_PARAM_SHOWER_VALUE
+  | typeof AMENITIES_PARAM_TOILETRIES_VALUE;
+
+export const AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING = [
+  AMENITIES_PARAM_LAUNDRY_VALUE,
+  AMENITIES_PARAM_RESTROOM_VALUE,
+  AMENITIES_PARAM_SHOWER_VALUE,
+  AMENITIES_PARAM_TOILETRIES_VALUE,
+] as const;
+
+export type AmenitiesSubCategory =
+  (typeof AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING)[number];
+
+export function parseAmenitiesQueryParam(
+  amenitiesParam: string | null | undefined
+): AmenitiesSubCategory[] {
+  return amenitiesParam
+    ? (amenitiesParam.split(" ") as AmenitiesSubCategory[])
+    : [];
+}
+
+export function getParsedAmenities(
+  pathname: string,
+  amenitiesQueryParam: string | null | undefined
+): AmenitiesSubCategory[] {
+  const firstPathComponent = pathname.split("/")[1]
+  let firstAmenityFromPath: AmenitiesSubCategory | undefined =
+    firstPathComponent != PERSONAL_CARE_CATEGORY
+      ? (firstPathComponent as AmenitiesSubCategory)
+      : undefined; 
+
+  const parsedAmenitiesFromQueryParam: AmenitiesSubCategory[] =
+    parseAmenitiesQueryParam(
+      amenitiesQueryParam
+    );
+
+  const combinedParsedAmenitiesFromPathAndQueryParams = (
+    firstAmenityFromPath ? [firstAmenityFromPath] : []
+  ).concat(parsedAmenitiesFromQueryParam);
+
+  return combinedParsedAmenitiesFromPathAndQueryParams;
+}
+
+//1. Laundry
+//2. Restroom
+//3. Shower
+//4. Toiletries
+
 
 // TODO: apply canonical ordering to the query params? 
 
@@ -532,3 +593,7 @@ export function getServicesWrapper(
     "Received unexpected value for serviceCategory " + serviceCategory
   );
 }
+
+export const RESOURCE_ROUTES = Object.keys(ROUTE_TO_CATEGORY_MAP).concat(
+  LOCATION_ROUTE
+).concat(AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING);

@@ -291,7 +291,7 @@ export function PrivacyPage() {
               People rely on social services for many reasons. Our information
               specialists all have lived experiences navigating the support
               system and apply their knowledge collecting the information you
-              find here. We’re building YourPeer so it's easier for you to find
+              find here. We’re building YourPeer so it&apos;s easier for you to find
               the right service.
             </p>
             <div>
