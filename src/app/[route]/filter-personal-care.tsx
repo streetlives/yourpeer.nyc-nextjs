@@ -31,6 +31,7 @@ import {
   getUrlWithoutFilterParameter,
 } from "../navigation";
 import { ChangeEvent } from "react";
+import { RequirementFieldset } from "./requirements-fieldset";
 
 // TODO: route should get a type enum
 export default function FilterPersonalCare() {
@@ -139,6 +140,7 @@ export default function FilterPersonalCare() {
           />
         </div>
       </fieldset>
+      <RequirementFieldset />
     </>
   );
 }
