@@ -28,6 +28,21 @@ export const ROUTE_TO_CATEGORY_MAP: Record<string, CategoryNotNull> =
     Object.entries(CATEGORY_TO_ROUTE_MAP).map(([k, v]) => [v, k as CategoryNotNull])
   );
 
+export const LOCATION_ROUTE = 'locations'
+
+export const RESOURCE_ROUTES = Object.keys(ROUTE_TO_CATEGORY_MAP).concat(
+  LOCATION_ROUTE
+);
+
+export const COMPANY_ROUTES = [
+  "about-us",
+  "contact-us",
+  "donate",
+  "terms-of-use",
+  "privacy-policy",
+] as const;
+
+export type CompanyRoute = typeof COMPANY_ROUTES[number]
 
 export function parseCategoryFromRoute(route: string): Category {
   console.log(route, ROUTE_TO_CATEGORY_MAP)
@@ -60,8 +75,6 @@ export const CATEGORY_ICON_SRC_MAP: Record<CategoryNotNull, string> = {
 export function getIconPath(iconName: string): string {
   return `/img/icons/${iconName}.svg`;
 }
-
-export const LOCATION_ROUTE = 'locations'
 
 export const SEARCH_PARAM = 'search'
 export const AGE_PARAM = 'age'

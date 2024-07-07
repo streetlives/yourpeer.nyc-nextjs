@@ -425,9 +425,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <footer className="bg-black px-5 py-8">
-        <Footer />
-      </footer>
+      <Footer />
     </>
   );
 }
