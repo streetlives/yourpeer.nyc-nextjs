@@ -1,5 +1,6 @@
 import { ReadonlyURLSearchParams } from "next/navigation";
 import {
+  AGE_PARAM,
   AMENITIES_PARAM,
   AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING,
   AmenitiesSubCategory,
@@ -8,6 +9,8 @@ import {
   FILTERS_THAT_APPLY_TO_ALL_CATEGORIES,
   getParsedAmenities,
   LOCATION_ROUTE,
+  PAGE_PARAM,
+  parsePageParam,
   parsePathnameToCategoryAndSubCategory,
   parseRequirementParam,
   PERSONAL_CARE_CATEGORY,
@@ -30,6 +33,10 @@ export function getUrlWithNewCategory(
   );
 
   const newSearchParamsStr = currentUrlSearchParams.toString();
+  // always delete the current page
+  currentUrlSearchParams.delete(
+    PAGE_PARAM
+  );
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `/${CATEGORY_TO_ROUTE_MAP[newCategory]}${query}`;
 }
@@ -60,6 +67,10 @@ export function getUrlWithNewFilterParameter(
   currentUrlSearchParams.set(urlParamName, urlParamValue);
 
   const newSearchParamsStr = currentUrlSearchParams.toString();
+  // always delete the current page
+  currentUrlSearchParams.delete(
+    PAGE_PARAM
+  );
 
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `${pathname}${query}`;
@@ -77,6 +88,10 @@ export function getUrlWithoutFilterParameter(
   currentUrlSearchParams.delete(urlParamName);
 
   const newSearchParamsStr = currentUrlSearchParams.toString();
+  // always delete the current page
+  currentUrlSearchParams.delete(
+    PAGE_PARAM
+  );
 
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `${pathname}${query}`;
@@ -128,6 +143,10 @@ export function getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
     currentUrlSearchParams.delete(REQUIREMENT_PARAM);
   }
 
+  // always delete the current page
+  currentUrlSearchParams.delete(
+    PAGE_PARAM
+  );
   const newSearchParamsStr = currentUrlSearchParams.toString();
 
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
@@ -198,6 +217,11 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
     newPath = `/${PERSONAL_CARE_CATEGORY}`;
   }
 
+  // always delete the current page
+  currentUrlSearchParams.delete(
+    PAGE_PARAM
+  );
+
   const newSearchParamsStr = currentUrlSearchParams.toString();
 
   console.log(
@@ -208,4 +232,44 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
 
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `${newPath}${query}`;
+}
+
+export function getUrlToNextOrPreviousPage(
+  pathname: string,
+  searchParams: ReadonlyURLSearchParams | SearchParams,
+  nextPage: boolean 
+){
+  const searchParamsList: string[][] = getSearchParamsList(searchParams);
+
+  const currentUrlSearchParams = new URLSearchParams(searchParamsList);
+
+  const currentPageValueStr = currentUrlSearchParams.get(PAGE_PARAM);
+  const currentPageValue = parsePageParam(currentPageValueStr);
+  
+  let newPageValue;
+  if(nextPage){
+    newPageValue = currentPageValue + 1;
+  }else{
+    if(currentPageValue > 0){
+      newPageValue = currentPageValue - 1;
+    } else {
+      throw new Error('Cannot get previous page when current page is 0')
+    }
+  }
+
+  if(newPageValue > 0){
+    currentUrlSearchParams.set(
+      PAGE_PARAM,
+      (newPageValue + 1).toString()
+    );
+  }else{
+    currentUrlSearchParams.delete(
+      PAGE_PARAM
+    );
+  }
+
+  const newSearchParamsStr = currentUrlSearchParams.toString();
+
+  const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
+  return `${pathname}${query}`;
 }

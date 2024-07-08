@@ -53,8 +53,8 @@ export interface LocationsDataResponse<T extends SimplifiedLocationData> {
 }
 
 async function fetchLocationsData<T extends SimplifiedLocationData>({
-  page_num = 0,
-  page_size = DEFAULT_PAGE_SIZE,
+  page = 0,
+  pageSize = DEFAULT_PAGE_SIZE,
   taxonomies = null,
   taxonomySpecificAttributes = null,
   noRequirement,
@@ -66,8 +66,8 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
   age = undefined,
   shelter = undefined,
 }: {
-  page_num?: number;
-  page_size?: number;
+  page?: number;
+  pageSize?: number;
   taxonomies: string[] | null;
   taxonomySpecificAttributes?: string[] | null;
   noRequirement: boolean;
@@ -82,8 +82,8 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
   // TODO: handle shelter type by looking up the appropriate taxonomy
   // TODO: maybe convert this function to use a url parse library, as opposed to string concatenation
   let query_url = `${NEXT_PUBLIC_GO_GETTA_PROD_URL}/locations?occasion=COVID19`;
-  if (page_num !== undefined && page_size !== undefined) {
-    query_url += `&pageNumber=${page_num}&pageSize=${page_size}`;
+  if (page !== undefined && pageSize !== undefined) {
+    query_url += `&pageNumber=${page}&pageSize=${pageSize}`;
   }
   if (location_fields_only) {
     query_url += `&locationFieldsOnly=true`;
@@ -130,7 +130,7 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
   const numberOfPages = parseInt(
     gogetta_response.headers.get("Pagination-Count") || "0",
     10
-  );
+  ) - 1;  // FIXME: I think there's a bug where it's returning the wrong number of pages, so decrement by 1 here
   const resultCount = parseInt(
     gogetta_response.headers.get("Total-Count") || "0",
     10
@@ -169,8 +169,8 @@ export async function getSimplifiedLocationData({
   age = undefined,
   shelter = undefined,
 }: {
-  page_num?: number;
-  page_size?: number;
+  page?: number;
+  pageSize?: number;
   taxonomies: string[] | null;
   taxonomySpecificAttributes: string[] | null;
   noRequirement: boolean;
@@ -198,8 +198,8 @@ export async function getSimplifiedLocationData({
 }
 
 export async function getFullLocationData({
-  page_num = 0,
-  page_size = DEFAULT_PAGE_SIZE,
+  page = 0,
+  pageSize = DEFAULT_PAGE_SIZE,
   taxonomies,
   taxonomySpecificAttributes = undefined,
   noRequirement,
@@ -210,8 +210,8 @@ export async function getFullLocationData({
   age = undefined,
   shelter = undefined,
 }: {
-  page_num?: number;
-  page_size?: number;
+  page?: number;
+  pageSize?: number;
   taxonomies: string[] | null;
   taxonomySpecificAttributes?: string[];
   noRequirement: boolean;
@@ -223,8 +223,8 @@ export async function getFullLocationData({
   shelter?: string | null;
 }): Promise<LocationsDataResponse<FullLocationData>> {
   return fetchLocationsData<FullLocationData>({
-    page_num,
-    page_size,
+    page,
+    pageSize,
     taxonomies,
     taxonomySpecificAttributes,
     noRequirement,

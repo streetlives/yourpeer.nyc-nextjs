@@ -1,5 +1,7 @@
 import {
+  AGE_PARAM,
   Category,
+  PAGE_PARAM,
   RouteParams,
   SHOW_ADVANCED_FILTERS_PARAM,
   SearchParams,
@@ -73,6 +75,9 @@ export function SidePanelComponent({
       ) : undefined}
       <FiltersHeader category={category} searchParams={searchParams} />
       <LocationsContainer
+        resultCount={resultCount}
+        numberOfPages={numberOfPages}
+        currentPage={parsedSearchParams[PAGE_PARAM]}
         category={category}
         yourPeerLegacyLocationData={yourPeerLegacyLocationData}
       />

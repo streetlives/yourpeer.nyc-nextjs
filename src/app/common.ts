@@ -212,6 +212,7 @@ export interface YourPeerParsedRequestParams {
   [SHOW_ADVANCED_FILTERS_PARAM]: boolean;
   [REQUIREMENT_PARAM]: ParsedRequirements;
   [AMENITIES_PARAM]: ParsedAmenities;
+  [PAGE_PARAM]: number;
 }
 
 export interface ParsedRequirements {
@@ -260,7 +261,7 @@ function parseRouteParamsToCategoryAndSubCategory(
 ): CategoryAndSubCategory {
   let category,
     subcategory = null;
-  assert(params.route in ROUTE_TO_CATEGORY_MAP);
+  assert(RESOURCE_ROUTES.includes(params.route));
   category = params.route as Category;
   const subRouteParams: SubRouteParams = params as SubRouteParams;
   // we want to get a category and subcategory out of this
@@ -274,6 +275,17 @@ function parseRouteParamsToCategoryAndSubCategory(
       subRouteParams.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory;
   }
   return [category, subcategory];
+}
+
+export function parsePageParam(
+  currentPageValueStr: string | string[] | undefined | null
+): number {
+  if (Array.isArray(currentPageValueStr)) {
+    throw new Error("Did not expect to receive multiple page params");
+  }
+  return currentPageValueStr && !isNaN(parseInt(currentPageValueStr, 10))
+    ? parseInt(currentPageValueStr, 10) - 1
+    : 0;
 }
 
 
@@ -361,6 +373,7 @@ export function parseRequest({
         AMENITIES_PARAM_TOILETRIES_VALUE
       ),
     },
+    [PAGE_PARAM]: parsePageParam(searchParams[PAGE_PARAM])
   };
 }
 
@@ -707,6 +720,8 @@ export function getServicesWrapper(
   );
 }
 
-export const RESOURCE_ROUTES = Object.keys(ROUTE_TO_CATEGORY_MAP)
-  .concat(LOCATION_ROUTE)
-  .concat(AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING);
+export const RESOURCE_ROUTES = Object.keys(ROUTE_TO_CATEGORY_MAP).concat(
+  LOCATION_ROUTE
+);
+
+export const PAGE_PARAM = 'page'
