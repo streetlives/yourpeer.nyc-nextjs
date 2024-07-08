@@ -23,6 +23,7 @@ import {
   PersonalCareValue,
   AMENITIES_PARAM_RESTROOM_VALUE,
   AMENITIES_PARAM_SHOWER_VALUE,
+  parsePathnameToCategoryAndSubCategory,
 } from "../common";
 import {
   getUrlWithNewFilterParameter,
@@ -39,7 +40,8 @@ export default function FilterPersonalCare() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const personalCareParam = searchParams.get(PERSONAL_CARE_CATEGORY);
-  const parsedAmenities = getParsedAmenities(pathname, personalCareParam);
+  const [category, amenitiesSubCategory] = parsePathnameToCategoryAndSubCategory(pathname)
+  const parsedAmenities = getParsedAmenities(amenitiesSubCategory, personalCareParam);
 
   function handleToiletriesChange(e: ChangeEvent) {
     router.push(

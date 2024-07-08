@@ -8,6 +8,7 @@ import {
   FILTERS_THAT_APPLY_TO_ALL_CATEGORIES,
   getParsedAmenities,
   LOCATION_ROUTE,
+  parsePathnameToCategoryAndSubCategory,
   parseRequirementParam,
   PERSONAL_CARE_CATEGORY,
   REQUIREMENT_PARAM,
@@ -146,8 +147,10 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
   const currentAmenitiesSubCategoryFromQueryParam =
     currentUrlSearchParams.get(AMENITIES_PARAM);
 
+  const [category, amenitiesSubCategory] = parsePathnameToCategoryAndSubCategory(pathname)
+
   const parsedAmenitiesFromQueryParam = getParsedAmenities(
-    pathname,
+    amenitiesSubCategory,
     currentAmenitiesSubCategoryFromQueryParam
   )
 
@@ -176,7 +179,7 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
           AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.indexOf(a) -
           AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.indexOf(b)
       );
-    newPath = amenitySubCategory;
+    newPath = `/${PERSONAL_CARE_CATEGORY}/${amenitySubCategory}`;
 
     if (newAmenitiesQueryParams.length) {
       const serializedNewParsedAmenitiesQueryParam =
@@ -192,7 +195,7 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
     // no more amenities parameter
     // just back to the personal care category.
     currentUrlSearchParams.delete(AMENITIES_PARAM);
-    newPath = PERSONAL_CARE_CATEGORY;
+    newPath = `/${PERSONAL_CARE_CATEGORY}`;
   }
 
   const newSearchParamsStr = currentUrlSearchParams.toString();

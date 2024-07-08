@@ -1,4 +1,4 @@
-import _ from 'underscore'
+import _ from "underscore";
 import {
   AGE_PARAM,
   Category,
@@ -11,7 +11,7 @@ import {
   SHELTER_PARAM,
   SHELTER_PARAM_FAMILY_VALUE,
   SHELTER_PARAM_SINGLE_VALUE,
-  YourPeerSearchParams,
+  YourPeerParsedRequestParams,
   TaxonomyResponse,
   Taxonomy,
   SHOW_ADVANCED_FILTERS_PARAM,
@@ -72,7 +72,7 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
   taxonomySpecificAttributes?: string[] | null;
   noRequirement: boolean;
   referralRequired: boolean;
-  membershipRequired: boolean; 
+  membershipRequired: boolean;
   open?: boolean | null;
   search?: string | null;
   location_fields_only?: boolean;
@@ -103,7 +103,7 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
   }
 
   // one of these needs to be selected to apply filter logic
-  if(noRequirement || referralRequired || membershipRequired){
+  if (noRequirement || referralRequired || membershipRequired) {
     if (noRequirement) {
       if (!referralRequired) {
         query_url += `&referralRequired=false`;
@@ -149,7 +149,7 @@ function recursiveParseUpdatedAt<T extends SimplifiedLocationData>(
   gogetta_response: any
 ): T[] {
   Object.entries(gogetta_response).forEach(([k, v]) => {
-    if (k === "updatedAt" || k === 'last_validated_at') {
+    if (k === "updatedAt" || k === "last_validated_at") {
       gogetta_response[k] = new Date(v as string);
     } else if (typeof v === "object" && v) {
       recursiveParseUpdatedAt(v);
@@ -250,9 +250,8 @@ function filter_services_by_name(
       service.Taxonomies.flatMap((taxonomy) => [
         taxonomy.name,
         taxonomy.parent_name,
-      ])
-      .filter(t => t !== null)
-    )
+      ]).filter((t) => t !== null)
+    );
     if (
       !category_name ||
       taxonomiesForService.has(CATEGORY_TO_TAXONOMY_NAME_MAP[category_name])
@@ -287,7 +286,7 @@ function filter_services_by_name(
             )
           ).map(([k, v]) => [
             k,
-            v.sort((time1, time2) => (time1 < time2 ? 1 : -1)),   // sort the times
+            v.sort((time1, time2) => (time1 < time2 ? 1 : -1)), // sort the times
           ])
         ),
         docs: is_location_detail
@@ -330,15 +329,15 @@ export function map_gogetta_to_yourpeer(
 ): YourPeerLegacyLocationData {
   const org_name = d["Organization"]["name"];
   let address, street, zip, state;
-  if(is_location_detail){
-    let locationDetailData = d as LocationDetailData
+  if (is_location_detail) {
+    let locationDetailData = d as LocationDetailData;
     address = locationDetailData.address;
     street = address.street;
     zip = address.postalCode;
     state = address.state;
-  }else{
+  } else {
     let fullLocationData = d as FullLocationData;
-    address = fullLocationData.PhysicalAddresses[0]
+    address = fullLocationData.PhysicalAddresses[0];
     street = address.address_1;
     zip = address.postal_code;
     state = address.state_province;
@@ -389,26 +388,24 @@ export function map_gogetta_to_yourpeer(
         d,
         is_location_detail,
         null
-      ).services.filter(
-        (service) => {
-          const serviceCategorySet = new Set([
-            service.category,
-            service.subcategory,
-          ]);
-          return !Array.from(
-            setIntersection(
-              serviceCategorySet,
-              new Set<TaxonomyCategory>([
-                "Health",
-                "Shelter",
-                "Food",
-                "Clothing",
-                "Personal Care",
-              ])
-            )
-          ).length;
-        }
-      ),
+      ).services.filter((service) => {
+        const serviceCategorySet = new Set([
+          service.category,
+          service.subcategory,
+        ]);
+        return !Array.from(
+          setIntersection(
+            serviceCategorySet,
+            new Set<TaxonomyCategory>([
+              "Health",
+              "Shelter",
+              "Food",
+              "Clothing",
+              "Personal Care",
+            ])
+          )
+        ).length;
+      }),
     },
     closed: d["closed"],
   };
@@ -423,7 +420,7 @@ interface TaxonomiesResult {
 // TODO: add support for HTTP caching (e.g. ETag or Last-Modified headers) on streetlives-api
 async function getTaxonomies(
   category: Category,
-  parsedSearchParams: YourPeerSearchParams
+  parsedSearchParams: YourPeerParsedRequestParams
 ): Promise<TaxonomiesResult> {
   const query_url = `${NEXT_PUBLIC_GO_GETTA_PROD_URL}/taxonomy`;
   const taxonomyResponse = (
@@ -434,15 +431,14 @@ async function getTaxonomies(
     [taxonomyResponse].concat(taxonomyResponse.children || [])
   );
 
-  if (!category) return {
-    taxonomies: null,
-    taxonomySpecificAttributes: null
-  };
+  if (!category)
+    return {
+      taxonomies: null,
+      taxonomySpecificAttributes: null,
+    };
   const parentTaxonomyName = CATEGORY_TO_TAXONOMY_NAME_MAP[category];
 
-  const selectedAmenities = Object.entries(
-    parsedSearchParams[AMENITIES_PARAM]
-  )
+  const selectedAmenities = Object.entries(parsedSearchParams[AMENITIES_PARAM])
     .filter(([k, v]) => v)
     .map(([k, v]) => k) as AmenitiesSubCategory[];
   let hasSelectedSomeAmenities = !!selectedAmenities.length;
@@ -518,7 +514,7 @@ async function getTaxonomies(
       }
       break;
     case "health-care":
-       //    query = TAXONOMIES_BASE_SQL + " and (t.name='Health' or t.parent_name = 'Health')"
+      //    query = TAXONOMIES_BASE_SQL + " and (t.name='Health' or t.parent_name = 'Health')"
       taxonomies = taxonomyResponse.flatMap((r) =>
         r.name === parentTaxonomyName
           ? [r as Taxonomy].concat(r.children ? r.children : [])
@@ -552,7 +548,7 @@ async function getTaxonomies(
       //         conditions.append('Restrooms')
       //    conditions_in_quotes = [f"'{c}'" for c in conditions]
       //    query += f" and t.parent_name = 'Personal Care' and t.name in ({','.join(conditions_in_quotes) })"
-      
+
       taxonomies = hasSelectedSomeAmenities
         ? taxonomyResponse.flatMap((r) => {
             return selectedAmenityTaxonomies.includes(
@@ -604,7 +600,7 @@ async function getTaxonomies(
   console.log(
     "taxonomies",
     taxonomies.map((t) => t.id)
-  ); 
+  );
   return {
     taxonomies: taxonomies.map((t) => t.id),
     taxonomySpecificAttributes,
@@ -618,7 +614,7 @@ export interface AllLocationsData
 
 export async function fetchLocations(
   category: Category,
-  parsedSearchParams: YourPeerSearchParams
+  parsedSearchParams: YourPeerParsedRequestParams
 ): Promise<AllLocationsData> {
   const taxonomiesResults = await getTaxonomies(category, parsedSearchParams);
   //console.log(taxonomiesResults);

@@ -1,3 +1,5 @@
+import assert from "assert";
+
 export const CATEGORIES = [
   "shelters-housing",
   "food",
@@ -5,11 +7,11 @@ export const CATEGORIES = [
   "personal-care",
   "health-care",
   "other",
-] as const
+] as const;
 
 // TODO: other pages
 
-export type CategoryNotNull = typeof CATEGORIES[number]
+export type CategoryNotNull = (typeof CATEGORIES)[number];
 
 export type Category = CategoryNotNull | null;
 
@@ -22,13 +24,15 @@ export const CATEGORY_TO_ROUTE_MAP: Record<CategoryNotNull, string> = {
   "personal-care": "personal-care",
 };
 
-
 export const ROUTE_TO_CATEGORY_MAP: Record<string, CategoryNotNull> =
   Object.fromEntries(
-    Object.entries(CATEGORY_TO_ROUTE_MAP).map(([k, v]) => [v, k as CategoryNotNull])
+    Object.entries(CATEGORY_TO_ROUTE_MAP).map(([k, v]) => [
+      v,
+      k as CategoryNotNull,
+    ])
   );
 
-export const LOCATION_ROUTE = 'locations'
+export const LOCATION_ROUTE = "locations";
 
 export const COMPANY_ROUTES = [
   "about-us",
@@ -38,7 +42,7 @@ export const COMPANY_ROUTES = [
   "privacy-policy",
 ] as const;
 
-export type CompanyRoute = typeof COMPANY_ROUTES[number]
+export type CompanyRoute = (typeof COMPANY_ROUTES)[number];
 
 export function parseCategoryFromRoute(route: string): Category {
   //console.log(route, ROUTE_TO_CATEGORY_MAP)
@@ -50,10 +54,10 @@ export function parseCategoryFromRoute(route: string): Category {
     AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
       route as AmenitiesSubCategory
     )
-  ){
+  ) {
     return PERSONAL_CARE_CATEGORY;
   }
-    throw new Error("Received unexpected route: " + route);
+  throw new Error("Received unexpected route: " + route);
 }
 
 export const CATEGORY_DESCRIPTION_MAP: Record<CategoryNotNull, string> = {
@@ -78,37 +82,37 @@ export function getIconPath(iconName: string): string {
   return `/img/icons/${iconName}.svg`;
 }
 
-export const SEARCH_PARAM = 'search'
-export const AGE_PARAM = 'age'
-export const OPEN_PARAM = 'open'
-export const SHELTER_PARAM = 'shelter'
-export const SHELTER_PARAM_SINGLE_VALUE = 'single'
-export const SHELTER_PARAM_FAMILY_VALUE = 'family'
+export const SEARCH_PARAM = "search";
+export const AGE_PARAM = "age";
+export const OPEN_PARAM = "open";
+export const SHELTER_PARAM = "shelter";
+export const SHELTER_PARAM_SINGLE_VALUE = "single";
+export const SHELTER_PARAM_FAMILY_VALUE = "family";
 export type ShelterValues =
   | typeof SHELTER_PARAM_SINGLE_VALUE
-  | typeof SHELTER_PARAM_FAMILY_VALUE; 
-export const SHOW_ADVANCED_FILTERS_PARAM = 'adv'
+  | typeof SHELTER_PARAM_FAMILY_VALUE;
+export const SHOW_ADVANCED_FILTERS_PARAM = "adv";
 
-export const FOOD_PARAM = 'food'
-export const FOOD_PARAM_SOUP_KITCHEN_VALUE = 'kitchen'
-export const FOOD_PARAM_PANTRY_VALUE = 'pantry'
+export const FOOD_PARAM = "food";
+export const FOOD_PARAM_SOUP_KITCHEN_VALUE = "kitchen";
+export const FOOD_PARAM_PANTRY_VALUE = "pantry";
 export type FoodValues =
   | typeof FOOD_PARAM_SOUP_KITCHEN_VALUE
-  | typeof FOOD_PARAM_PANTRY_VALUE; 
+  | typeof FOOD_PARAM_PANTRY_VALUE;
 
-export const CLOTHING_PARAM = 'clothing'
-export const CLOTHING_PARAM_CASUAL_VALUE = 'casual'
-export const CLOTHING_PARAM_PROFESSIONAL_VALUE = 'professional'
+export const CLOTHING_PARAM = "clothing";
+export const CLOTHING_PARAM_CASUAL_VALUE = "casual";
+export const CLOTHING_PARAM_PROFESSIONAL_VALUE = "professional";
 export type ClothingValues =
   | typeof CLOTHING_PARAM_PROFESSIONAL_VALUE
   | typeof CLOTHING_PARAM_CASUAL_VALUE;
 
-export const REQUIREMENT_PARAM = 'requirement'
-export const REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE = 'no'
-export const REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE = 'referral-letter'
-export const REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE = 'registered-client'
+export const REQUIREMENT_PARAM = "requirement";
+export const REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE = "no";
+export const REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE = "referral-letter";
+export const REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE = "registered-client";
 export type RequirementValue =
-  | typeof REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE 
+  | typeof REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE
   | typeof REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE
   | typeof REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE;
 
@@ -126,15 +130,14 @@ export function parseRequirementParam(
     : [];
 }
 
-
-export const PERSONAL_CARE_CATEGORY = CATEGORIES[3]
-export const AMENITIES_PARAM = PERSONAL_CARE_CATEGORY 
-export const AMENITIES_PARAM_LAUNDRY_VALUE = 'laundry-services'
-export const AMENITIES_PARAM_RESTROOM_VALUE = 'restrooms'
-export const AMENITIES_PARAM_SHOWER_VALUE = 'showers'
-export const AMENITIES_PARAM_TOILETRIES_VALUE = 'toiletries'
+export const PERSONAL_CARE_CATEGORY = CATEGORIES[3];
+export const AMENITIES_PARAM = PERSONAL_CARE_CATEGORY;
+export const AMENITIES_PARAM_LAUNDRY_VALUE = "laundry-services";
+export const AMENITIES_PARAM_RESTROOM_VALUE = "restrooms";
+export const AMENITIES_PARAM_SHOWER_VALUE = "showers";
+export const AMENITIES_PARAM_TOILETRIES_VALUE = "toiletries";
 export type PersonalCareValue =
-  | typeof AMENITIES_PARAM_LAUNDRY_VALUE 
+  | typeof AMENITIES_PARAM_LAUNDRY_VALUE
   | typeof AMENITIES_PARAM_RESTROOM_VALUE
   | typeof AMENITIES_PARAM_SHOWER_VALUE
   | typeof AMENITIES_PARAM_TOILETRIES_VALUE;
@@ -158,22 +161,14 @@ export function parseAmenitiesQueryParam(
 }
 
 export function getParsedAmenities(
-  pathname: string,
+  amenitiesSubCategory: AmenitiesSubCategory | null,
   amenitiesQueryParam: string | null | undefined
 ): AmenitiesSubCategory[] {
-  const firstPathComponent = pathname.split("/")[1]
-  let firstAmenityFromPath: AmenitiesSubCategory | undefined =
-    firstPathComponent != PERSONAL_CARE_CATEGORY
-      ? (firstPathComponent as AmenitiesSubCategory)
-      : undefined; 
-
   const parsedAmenitiesFromQueryParam: AmenitiesSubCategory[] =
-    parseAmenitiesQueryParam(
-      amenitiesQueryParam
-    );
+    parseAmenitiesQueryParam(amenitiesQueryParam);
 
   const combinedParsedAmenitiesFromPathAndQueryParams = (
-    firstAmenityFromPath ? [firstAmenityFromPath] : []
+    amenitiesSubCategory ? [amenitiesSubCategory] : []
   ).concat(parsedAmenitiesFromQueryParam);
 
   return combinedParsedAmenitiesFromPathAndQueryParams;
@@ -184,15 +179,14 @@ export function getParsedAmenities(
 //3. Shower
 //4. Toiletries
 
-
-// TODO: apply canonical ordering to the query params? 
+// TODO: apply canonical ordering to the query params?
 
 export const FILTERS_THAT_APPLY_TO_ALL_CATEGORIES = [
- SEARCH_PARAM,
- AGE_PARAM,
- OPEN_PARAM,
- SHOW_ADVANCED_FILTERS_PARAM 
-]
+  SEARCH_PARAM,
+  AGE_PARAM,
+  OPEN_PARAM,
+  SHOW_ADVANCED_FILTERS_PARAM,
+];
 
 export const URL_PARAM_NAMES = [
   SEARCH_PARAM,
@@ -201,14 +195,14 @@ export const URL_PARAM_NAMES = [
   SHELTER_PARAM,
   FOOD_PARAM,
   CLOTHING_PARAM,
-  SHOW_ADVANCED_FILTERS_PARAM
-] as const
+  SHOW_ADVANCED_FILTERS_PARAM,
+] as const;
 
-export type UrlParamName = typeof URL_PARAM_NAMES[number]
+export type UrlParamName = (typeof URL_PARAM_NAMES)[number];
 
-export type SearchParams =  { [key: string]: string | string[] | undefined }
+export type SearchParams = { [key: string]: string | string[] | undefined };
 
-export interface YourPeerSearchParams {
+export interface YourPeerParsedRequestParams {
   [SEARCH_PARAM]: string | null;
   [AGE_PARAM]: number | null;
   [OPEN_PARAM]: boolean | null;
@@ -216,8 +210,8 @@ export interface YourPeerSearchParams {
   [FOOD_PARAM]: FoodValues | null;
   [CLOTHING_PARAM]: ClothingValues | null;
   [SHOW_ADVANCED_FILTERS_PARAM]: boolean;
-  [REQUIREMENT_PARAM]: ParsedRequirements
-  [AMENITIES_PARAM]: ParsedAmenities
+  [REQUIREMENT_PARAM]: ParsedRequirements;
+  [AMENITIES_PARAM]: ParsedAmenities;
 }
 
 export interface ParsedRequirements {
@@ -233,15 +227,83 @@ export interface ParsedAmenities {
   [AMENITIES_PARAM_TOILETRIES_VALUE]: boolean;
 }
 
-export function parseSearchParams(
-  pathname: string,
-  searchParams: SearchParams
-): YourPeerSearchParams {
+type CategoryAndSubCategory = [Category, AmenitiesSubCategory | null]
+
+export function parsePathnameToCategoryAndSubCategory(
+  pathname: string
+): CategoryAndSubCategory {
+  const pathComponents = pathname.split("/");
+  const [_, firstPathComponent, secondPathComponent] = pathComponents;
+  assert(firstPathComponent in ROUTE_TO_CATEGORY_MAP);
+  assert(
+    secondPathComponent === undefined ||
+      AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
+        secondPathComponent as AmenitiesSubCategory
+      )
+  );
+  return [
+    ROUTE_TO_CATEGORY_MAP[firstPathComponent],
+    secondPathComponent ? (secondPathComponent as AmenitiesSubCategory) : null,
+  ];
+}
+
+export interface RouteParams {
+  route: string
+}
+
+export interface SubRouteParams extends RouteParams {
+  locationSlugOrPersonalCareSubCategory: string
+}
+
+function parseRouteParamsToCategoryAndSubCategory(
+  params: RouteParams | SubRouteParams
+): CategoryAndSubCategory {
+  let category,
+    subcategory = null;
+  assert(params.route in ROUTE_TO_CATEGORY_MAP);
+  category = params.route as Category;
+  const subRouteParams: SubRouteParams = params as SubRouteParams;
+  // we want to get a category and subcategory out of this
+  if (subRouteParams.locationSlugOrPersonalCareSubCategory) {
+    assert(
+      AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
+        subRouteParams.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory
+      )
+    );
+    subcategory =
+      subRouteParams.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory;
+  }
+  return [category, subcategory];
+}
+
+
+// the idea here is we pass in all the raw request stuff that we can get from nextjs
+// this can either be the pathname, if we in a client component, and can use usePathname()
+// or it can be the route and locationSlugOrPersonalCareSubCategory params which we get as page params from nextjs
+// We then parse it to the form that is used in the search
+export function parseRequest({
+  pathname,
+  searchParams,
+  params
+}: {
+  pathname?: string;
+  searchParams: SearchParams;
+  params: RouteParams | SubRouteParams
+}): YourPeerParsedRequestParams {
+  assert.ok(pathname !== undefined || params !== undefined);
   // TODO: validate searchParams with Joi
   // TODO: return 400 on validation error
-  const parsedRequirements = parseRequirementParam(searchParams[REQUIREMENT_PARAM] as string)
+
+  // if we got a pathname, first parse it to category, subcategory
+  const [category, amenitiesSubCategory] = pathname
+    ? parsePathnameToCategoryAndSubCategory(pathname)
+    : parseRouteParamsToCategoryAndSubCategory(params);
+
+  const parsedRequirements = parseRequirementParam(
+    searchParams[REQUIREMENT_PARAM] as string
+  );
   const parsedAmenitiesParam = getParsedAmenities(
-    pathname,
+    amenitiesSubCategory,
     searchParams[AMENITIES_PARAM] as string
   );
   return {
@@ -301,7 +363,6 @@ export function parseSearchParams(
     },
   };
 }
-
 
 // TODO: this should get exported by the streetlives-api REST API or a shared types library, rather than being embedded here
 export interface SimplifiedLocationData {
@@ -514,7 +575,7 @@ export interface Taxonomy {
 }
 
 export interface TaxonomyResponse extends Taxonomy {
-  children?: Taxonomy[]
+  children?: Taxonomy[];
 }
 
 export const TAXONOMY_CATEGORIES = [
@@ -524,28 +585,30 @@ export const TAXONOMY_CATEGORIES = [
   "Food",
   "Clothing",
   "Personal Care",
-] as const
-
+] as const;
 
 const TOILETRIES_TAXONOMY = "Toiletries";
-const SHOWER_TAXONOMY =   "Shower";
-const LAUNDRY_TAXONOMY =   "Laundry";
-const RESTROOM_TAXONOMY =   "Restrooms";
+const SHOWER_TAXONOMY = "Shower";
+const LAUNDRY_TAXONOMY = "Laundry";
+const RESTROOM_TAXONOMY = "Restrooms";
 export const TAXONOMY_SUBCATEGORIES = [
   TOILETRIES_TAXONOMY,
   SHOWER_TAXONOMY,
   LAUNDRY_TAXONOMY,
-  RESTROOM_TAXONOMY
+  RESTROOM_TAXONOMY,
 ] as const;
 
-export type TaxonomyCategory = typeof TAXONOMY_CATEGORIES[number]
-export type TaxonomySubCategory = typeof TAXONOMY_SUBCATEGORIES[number]
+export type TaxonomyCategory = (typeof TAXONOMY_CATEGORIES)[number];
+export type TaxonomySubCategory = (typeof TAXONOMY_SUBCATEGORIES)[number];
 
-export function setIntersection<T>(set1: Set<T>, set2: Set<T>): Set<T>{
+export function setIntersection<T>(set1: Set<T>, set2: Set<T>): Set<T> {
   return new Set<T>(Array.from(set1).filter((x) => set2.has(x)));
 }
 
-export const CATEGORY_TO_TAXONOMY_NAME_MAP: Record<CategoryNotNull, TaxonomyCategory> = {
+export const CATEGORY_TO_TAXONOMY_NAME_MAP: Record<
+  CategoryNotNull,
+  TaxonomyCategory
+> = {
   "health-care": "Health",
   other: "Other service",
   "shelters-housing": "Shelter",
@@ -554,8 +617,10 @@ export const CATEGORY_TO_TAXONOMY_NAME_MAP: Record<CategoryNotNull, TaxonomyCate
   "personal-care": "Personal Care",
 };
 
-
-export const AMENITY_TO_TAXONOMY_NAME_MAP: Record<AmenitiesSubCategory, TaxonomySubCategory> = {
+export const AMENITY_TO_TAXONOMY_NAME_MAP: Record<
+  AmenitiesSubCategory,
+  TaxonomySubCategory
+> = {
   [AMENITIES_PARAM_LAUNDRY_VALUE]: LAUNDRY_TAXONOMY,
   [AMENITIES_PARAM_RESTROOM_VALUE]: RESTROOM_TAXONOMY,
   [AMENITIES_PARAM_SHOWER_VALUE]: SHOWER_TAXONOMY,
@@ -563,10 +628,10 @@ export const AMENITY_TO_TAXONOMY_NAME_MAP: Record<AmenitiesSubCategory, Taxonomy
 };
 
 export interface AgeEligibility {
-  age_min: number | null
-  age_max: number | null
-  all_ages: string | null
-  population_served: string | null
+  age_min: number | null;
+  age_max: number | null;
+  all_ages: string | null;
+  population_served: string | null;
 }
 
 export type YourPeerLegacyScheduleData = Record<number, ScheduleData[]>;
@@ -588,7 +653,7 @@ export interface YourPeerLegacyServiceData {
 }
 
 export interface YourPeerLegacyServiceDataWrapper {
-  services : YourPeerLegacyServiceData[]
+  services: YourPeerLegacyServiceData[];
 }
 
 export interface YourPeerLegacyLocationData {
@@ -642,6 +707,6 @@ export function getServicesWrapper(
   );
 }
 
-export const RESOURCE_ROUTES = Object.keys(ROUTE_TO_CATEGORY_MAP).concat(
-  LOCATION_ROUTE
-).concat(AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING);
+export const RESOURCE_ROUTES = Object.keys(ROUTE_TO_CATEGORY_MAP)
+  .concat(LOCATION_ROUTE)
+  .concat(AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING);

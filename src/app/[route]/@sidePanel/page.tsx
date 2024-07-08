@@ -1,19 +1,39 @@
-import { Category, SHOW_ADVANCED_FILTERS_PARAM, SearchParams, parseCategoryFromRoute, parseSearchParams } from '../../common';
-import FiltersHeader from '../filters-header';
-import FiltersPopup from '../filters-popup';
-import LocationsContainer from '../locations-container';
-import { fetchLocations, map_gogetta_to_yourpeer } from '../streetlives-api-service';
+import {
+  Category,
+  RouteParams,
+  SHOW_ADVANCED_FILTERS_PARAM,
+  SearchParams,
+  YourPeerLegacyLocationData,
+  YourPeerParsedRequestParams,
+  parseCategoryFromRoute,
+  parseRequest,
+} from "../../common";
+import FiltersHeader from "../filters-header";
+import FiltersPopup from "../filters-popup";
+import LocationsContainer from "../locations-container";
+import {
+  fetchLocations,
+  map_gogetta_to_yourpeer,
+} from "../streetlives-api-service";
 
-export default async function SidePanelPage({
+interface SidePanelComponentData {
+  parsedSearchParams: YourPeerParsedRequestParams;
+  category: Category;
+  resultCount: number;
+  numberOfPages: number;
+  yourPeerLegacyLocationData: YourPeerLegacyLocationData[];
+}
+
+export async function getSidePanelComponentData({
   searchParams,
-  params: { route },
+  params
 }: {
   searchParams: SearchParams;
-  params: { route: string };
-}) {
-  const category = parseCategoryFromRoute(route);
+  params: RouteParams;
+}): Promise<SidePanelComponentData>{
+  const category = parseCategoryFromRoute(params.route);
   // FIXME: the string composition in the next line is a bit ugly. I should clean up the type used in this interface
-  const parsedSearchParams = parseSearchParams(`/${route}`, searchParams);
+  const parsedSearchParams = parseRequest({ params, searchParams });
   const { locations, numberOfPages, resultCount } = await fetchLocations(
     category,
     parsedSearchParams
@@ -21,6 +41,28 @@ export default async function SidePanelPage({
   const yourPeerLegacyLocationData = locations.map((location) =>
     map_gogetta_to_yourpeer(location, false)
   );
+  return {
+    parsedSearchParams,
+    category,
+    resultCount,
+    numberOfPages,
+    yourPeerLegacyLocationData
+  }
+}
+
+export function SidePanelComponent({
+  searchParams,
+  sidePanelComponentData: {
+    parsedSearchParams,
+    category,
+    resultCount,
+    numberOfPages,
+    yourPeerLegacyLocationData,
+  },
+}: {
+  searchParams: SearchParams;
+  sidePanelComponentData: SidePanelComponentData;
+}) {
   return (
     <div
       className="w-full h-full md:h-full flex flex-col"
@@ -36,4 +78,20 @@ export default async function SidePanelPage({
       />
     </div>
   );
+}
+
+export default async function SidePanelPage({
+  searchParams,
+  params
+}: {
+  searchParams: SearchParams;
+  params: RouteParams;
+}) {
+  return <SidePanelComponent
+    searchParams={searchParams}
+    sidePanelComponentData={await getSidePanelComponentData({
+      searchParams,
+      params,
+    })}
+  />;
 }
