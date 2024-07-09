@@ -1,8 +1,13 @@
 import SearchForm from "./search-form";
 import QuickExit from "./quick-exit";
-import { COMPANY_ROUTES, CompanyRoute, RESOURCE_ROUTES } from "../common";
+import { AMENITIES_PARAM_LAUNDRY_VALUE, AMENITIES_PARAM_RESTROOM_VALUE, AMENITIES_PARAM_SHOWER_VALUE, AMENITIES_PARAM_TOILETRIES_VALUE, CATEGORY_TO_ROUTE_MAP, COMPANY_ROUTES, CompanyRoute, LOCATION_ROUTE, PAGE_PARAM, RESOURCE_ROUTES, RouteParams, SubRouteParams } from "../common";
 import { Footer } from "../footer";
 import { LocationsNavbarCompanyRoutes, LocationsNavbarResourceRoutes } from "./locations-navbar";
+import { Metadata, ResolvingMetadata } from "next";
+import { notFound } from "next/navigation";
+
+
+
 
 export default function LocationsLayout({
   mapContainer,
@@ -43,5 +48,5 @@ export default function LocationsLayout({
       {staticPage}
       <Footer />
     </>
-  ) : undefined;
+  ) : notFound();
 }

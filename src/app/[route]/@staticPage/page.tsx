@@ -1,9 +1,10 @@
-import { CompanyRoute } from "@/app/common";
+import { ABOUT_US_ROUTE, CompanyRoute, CONTACT_US_ROUTE, DONATE_ROUTE, PRIVACY_POLICY_ROUTE, TERMS_OF_USE_ROUTE } from "@/app/common";
 import { AboutUsPage } from "./about-us";
 import { ContactUsPage } from "./contact-us";
 import { DonationPage } from "./dontate";
 import { TermsPage } from "./terms";
 import { PrivacyPage } from "./privacy";
+import { notFound } from "next/navigation";
 
 export default async function StaticPage({
   params: { route },
@@ -12,15 +13,17 @@ export default async function StaticPage({
 }) {
     const companyRoute: CompanyRoute = route as CompanyRoute;
     switch(companyRoute){
-        case "about-us":
+        case ABOUT_US_ROUTE:
             return <AboutUsPage />;
-        case "contact-us":
+        case CONTACT_US_ROUTE:
             return <ContactUsPage />;
-        case "donate":
+        case DONATE_ROUTE:
             return <DonationPage />;
-        case "terms-of-use":
+        case TERMS_OF_USE_ROUTE:
             return <TermsPage />;
-        case "privacy-policy":
+        case PRIVACY_POLICY_ROUTE:
             return <PrivacyPage />;
+        default:
+            return notFound();
     }
 }

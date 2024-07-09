@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CATEGORY_TO_ROUTE_MAP, LOCATION_ROUTE } from "./common";
+import { ABOUT_US_ROUTE, CATEGORY_TO_ROUTE_MAP, CONTACT_US_ROUTE, DONATE_ROUTE, LOCATION_ROUTE, PRIVACY_POLICY_ROUTE, TERMS_OF_USE_ROUTE } from "./common";
 
 export function Footer() {
   return (
@@ -14,7 +14,7 @@ export function Footer() {
               <div className="grid grid-cols-2 gap-y-2 gap-x-5 ">
                 <div>
                   <Link
-                    href="/about-us"
+                    href={`/${ABOUT_US_ROUTE}`}
                     className="text-gray-300 text-base font-normal"
                   >
                     About
@@ -22,7 +22,7 @@ export function Footer() {
                 </div>
                 <div>
                   <Link
-                    href="/terms-of-use"
+                    href={`/${TERMS_OF_USE_ROUTE}`}
                     className="text-gray-300 text-base font-normal"
                   >
                     Terms
@@ -30,7 +30,7 @@ export function Footer() {
                 </div>
                 <div>
                   <Link
-                    href="/contact-us"
+                    href={`/${CONTACT_US_ROUTE}`}
                     className="text-gray-300 text-base font-normal"
                   >
                     Contact
@@ -38,7 +38,7 @@ export function Footer() {
                 </div>
                 <div>
                   <Link
-                    href="/privacy-policy"
+                    href={`/${PRIVACY_POLICY_ROUTE}`}
                     className="text-gray-300 text-base font-normal"
                   >
                     Privacy
@@ -46,7 +46,7 @@ export function Footer() {
                 </div>
                 <div>
                   <Link
-                    href="/donate"
+                    href={`/${DONATE_ROUTE}`}
                     className="text-gray-300 text-base font-normal"
                   >
                     Donate

@@ -2,19 +2,10 @@
 
 import { useState } from "react";
 import {
-    AgeEligibility,
-  CATEGORIES,
-  CATEGORY_DESCRIPTION_MAP,
-  CategoryNotNull,
-  getIconPath,
-  getServicesWrapper,
-  LocationDetailData,
+  AgeEligibility,
   YourPeerLegacyScheduleData,
   YourPeerLegacyServiceData,
-  YourPeerLegacyServiceDataWrapper,
 } from "../../../common";
-import { fetchLocationsDetailData, map_gogetta_to_yourpeer } from "../../streetlives-api-service";
-import customStreetViews from "./custom-streetviews";
 
 const moment = require('moment-strftime');
 

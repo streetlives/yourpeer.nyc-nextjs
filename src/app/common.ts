@@ -34,12 +34,18 @@ export const ROUTE_TO_CATEGORY_MAP: Record<string, CategoryNotNull> =
 
 export const LOCATION_ROUTE = "locations";
 
+export const ABOUT_US_ROUTE = "about-us"
+export const CONTACT_US_ROUTE = "contact-us"
+export const DONATE_ROUTE = "donate"
+export const TERMS_OF_USE_ROUTE = "terms-of-use"
+export const PRIVACY_POLICY_ROUTE = "privacy-policy"
+
 export const COMPANY_ROUTES = [
-  "about-us",
-  "contact-us",
-  "donate",
-  "terms-of-use",
-  "privacy-policy",
+  ABOUT_US_ROUTE,
+  CONTACT_US_ROUTE,
+  DONATE_ROUTE,
+  TERMS_OF_USE_ROUTE,
+  PRIVACY_POLICY_ROUTE
 ] as const;
 
 export type CompanyRoute = (typeof COMPANY_ROUTES)[number];

@@ -52,7 +52,7 @@ export interface LocationsDataResponse<T extends SimplifiedLocationData> {
   resultCount: number;
 }
 
-async function fetchLocationsData<T extends SimplifiedLocationData>({
+export async function fetchLocationsData<T extends SimplifiedLocationData>({
   page = 0,
   pageSize = DEFAULT_PAGE_SIZE,
   taxonomies = null,
@@ -127,6 +127,12 @@ async function fetchLocationsData<T extends SimplifiedLocationData>({
   console.log("query_url", query_url);
 
   const gogetta_response = await fetch(query_url);
+  if(gogetta_response.status !== 200){
+    if(gogetta_response.status === 404){
+      throw new Error404Response()
+    }
+    throw new Error5XXResponse()
+  }
   const numberOfPages = parseInt(
     gogetta_response.headers.get("Pagination-Count") || "0",
     10
@@ -201,7 +207,7 @@ export async function getFullLocationData({
   page = 0,
   pageSize = DEFAULT_PAGE_SIZE,
   taxonomies,
-  taxonomySpecificAttributes = undefined,
+  taxonomySpecificAttributes,
   noRequirement,
   referralRequired,
   membershipRequired,
@@ -213,7 +219,7 @@ export async function getFullLocationData({
   page?: number;
   pageSize?: number;
   taxonomies: string[] | null;
-  taxonomySpecificAttributes?: string[];
+  taxonomySpecificAttributes?: string[] | null;
   noRequirement: boolean;
   referralRequired: boolean;
   membershipRequired: boolean;
@@ -418,7 +424,7 @@ interface TaxonomiesResult {
 
 // TODO: we probably don't want to look this up every time. We probably at least want to cache it
 // TODO: add support for HTTP caching (e.g. ETag or Last-Modified headers) on streetlives-api
-async function getTaxonomies(
+export async function getTaxonomies(
   category: Category,
   parsedSearchParams: YourPeerParsedRequestParams
 ): Promise<TaxonomiesResult> {
@@ -612,30 +618,21 @@ export interface AllLocationsData
   locationStubs: SimplifiedLocationData[];
 }
 
-export async function fetchLocations(
-  category: Category,
-  parsedSearchParams: YourPeerParsedRequestParams
-): Promise<AllLocationsData> {
-  const taxonomiesResults = await getTaxonomies(category, parsedSearchParams);
-  //console.log(taxonomiesResults);
-  return {
-    ...(await fetchLocationsData({
-      ...parsedSearchParams,
-      ...parsedSearchParams[REQUIREMENT_PARAM],
-      ...taxonomiesResults,
-    })),
-    locationStubs: await getSimplifiedLocationData({
-      ...parsedSearchParams,
-      ...parsedSearchParams[REQUIREMENT_PARAM],
-      ...taxonomiesResults,
-    }),
-  };
-}
-
 // fetch the location data for a particular slug
 export async function fetchLocationsDetailData(
   slug: string
 ): Promise<LocationDetailData> {
   const query_url = `${NEXT_PUBLIC_GO_GETTA_PROD_URL}/locations-by-slug/${slug}`;
-  return fetch(query_url).then((response) => response.json());
+  const response = await fetch(query_url)
+  if(response.status !== 200){
+    if(response.status === 404){
+      throw new Error404Response()
+    }
+    throw new Error5XXResponse()
+  }
+  return response.json();
 }
+
+export class Error404Response extends Error {}
+
+export class Error5XXResponse extends Error {}
