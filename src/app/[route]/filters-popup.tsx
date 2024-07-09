@@ -16,6 +16,7 @@ import FilterHousing from "./filter-housing";
 import { getUrlWithNewCategory, getUrlWithNewFilterParameter, getUrlWithoutFilterParameter } from "../navigation";
 import FilterFood from "./filter-food";
 import FilterClothing from "./filter-clothing";
+import FilterPersonalCare from "./filter-personal-care";
 
 function CategoryFilterLabel({
   labelCategory,
@@ -244,6 +245,7 @@ export default function FiltersPopup({
         {category === "shelters-housing" ? <FilterHousing /> : undefined}
         {category === "food" ? <FilterFood /> : undefined}
         {category === "clothing" ? <FilterClothing /> : undefined}
+        {category === "personal-care" ? <FilterPersonalCare /> : undefined}
       </form>
       <div className="p-4 flex items-center gap-x-4">
         <Link

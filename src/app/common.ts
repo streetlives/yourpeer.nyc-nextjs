@@ -1,3 +1,5 @@
+import assert from "assert";
+
 export const CATEGORIES = [
   "shelters-housing",
   "food",
@@ -5,9 +7,11 @@ export const CATEGORIES = [
   "personal-care",
   "health-care",
   "other",
-] as const
+] as const;
 
-export type CategoryNotNull = typeof CATEGORIES[number]
+// TODO: other pages
+
+export type CategoryNotNull = (typeof CATEGORIES)[number];
 
 export type Category = CategoryNotNull | null;
 
@@ -19,6 +23,42 @@ export const CATEGORY_TO_ROUTE_MAP: Record<CategoryNotNull, string> = {
   clothing: "clothing",
   "personal-care": "personal-care",
 };
+
+export const ROUTE_TO_CATEGORY_MAP: Record<string, CategoryNotNull> =
+  Object.fromEntries(
+    Object.entries(CATEGORY_TO_ROUTE_MAP).map(([k, v]) => [
+      v,
+      k as CategoryNotNull,
+    ])
+  );
+
+export const LOCATION_ROUTE = "locations";
+
+export const COMPANY_ROUTES = [
+  "about-us",
+  "contact-us",
+  "donate",
+  "terms-of-use",
+  "privacy-policy",
+] as const;
+
+export type CompanyRoute = (typeof COMPANY_ROUTES)[number];
+
+export function parseCategoryFromRoute(route: string): Category {
+  //console.log(route, ROUTE_TO_CATEGORY_MAP)
+  if (route === LOCATION_ROUTE) {
+    return null;
+  } else if (route in ROUTE_TO_CATEGORY_MAP) {
+    return ROUTE_TO_CATEGORY_MAP[route];
+  } else if (
+    AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
+      route as AmenitiesSubCategory
+    )
+  ) {
+    return PERSONAL_CARE_CATEGORY;
+  }
+  throw new Error("Received unexpected route: " + route);
+}
 
 export const CATEGORY_DESCRIPTION_MAP: Record<CategoryNotNull, string> = {
   "health-care": "Health",
@@ -42,39 +82,37 @@ export function getIconPath(iconName: string): string {
   return `/img/icons/${iconName}.svg`;
 }
 
-export const LOCATION_ROUTE = 'locations'
-
-export const SEARCH_PARAM = 'search'
-export const AGE_PARAM = 'age'
-export const OPEN_PARAM = 'open'
-export const SHELTER_PARAM = 'shelter'
-export const SHELTER_PARAM_SINGLE_VALUE = 'single'
-export const SHELTER_PARAM_FAMILY_VALUE = 'family'
+export const SEARCH_PARAM = "search";
+export const AGE_PARAM = "age";
+export const OPEN_PARAM = "open";
+export const SHELTER_PARAM = "shelter";
+export const SHELTER_PARAM_SINGLE_VALUE = "single";
+export const SHELTER_PARAM_FAMILY_VALUE = "family";
 export type ShelterValues =
   | typeof SHELTER_PARAM_SINGLE_VALUE
-  | typeof SHELTER_PARAM_FAMILY_VALUE; 
-export const SHOW_ADVANCED_FILTERS_PARAM = 'adv'
+  | typeof SHELTER_PARAM_FAMILY_VALUE;
+export const SHOW_ADVANCED_FILTERS_PARAM = "adv";
 
-export const FOOD_PARAM = 'food'
-export const FOOD_PARAM_SOUP_KITCHEN_VALUE = 'kitchen'
-export const FOOD_PARAM_PANTRY_VALUE = 'pantry'
+export const FOOD_PARAM = "food";
+export const FOOD_PARAM_SOUP_KITCHEN_VALUE = "kitchen";
+export const FOOD_PARAM_PANTRY_VALUE = "pantry";
 export type FoodValues =
   | typeof FOOD_PARAM_SOUP_KITCHEN_VALUE
-  | typeof FOOD_PARAM_PANTRY_VALUE; 
+  | typeof FOOD_PARAM_PANTRY_VALUE;
 
-export const CLOTHING_PARAM = 'clothing'
-export const CLOTHING_PARAM_CASUAL_VALUE = 'casual'
-export const CLOTHING_PARAM_PROFESSIONAL_VALUE = 'professional'
+export const CLOTHING_PARAM = "clothing";
+export const CLOTHING_PARAM_CASUAL_VALUE = "casual";
+export const CLOTHING_PARAM_PROFESSIONAL_VALUE = "professional";
 export type ClothingValues =
   | typeof CLOTHING_PARAM_PROFESSIONAL_VALUE
   | typeof CLOTHING_PARAM_CASUAL_VALUE;
 
-export const REQUIREMENT_PARAM = 'requirement'
-export const REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE = 'no'
-export const REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE = 'referral-letter'
-export const REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE = 'registered-client'
+export const REQUIREMENT_PARAM = "requirement";
+export const REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE = "no";
+export const REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE = "referral-letter";
+export const REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE = "registered-client";
 export type RequirementValue =
-  | typeof REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE 
+  | typeof REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE
   | typeof REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE
   | typeof REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE;
 
@@ -92,14 +130,63 @@ export function parseRequirementParam(
     : [];
 }
 
-// TODO: apply canonical ordering to the query params? 
+export const PERSONAL_CARE_CATEGORY = CATEGORIES[3];
+export const AMENITIES_PARAM = PERSONAL_CARE_CATEGORY;
+export const AMENITIES_PARAM_LAUNDRY_VALUE = "laundry-services";
+export const AMENITIES_PARAM_RESTROOM_VALUE = "restrooms";
+export const AMENITIES_PARAM_SHOWER_VALUE = "showers";
+export const AMENITIES_PARAM_TOILETRIES_VALUE = "toiletries";
+export type PersonalCareValue =
+  | typeof AMENITIES_PARAM_LAUNDRY_VALUE
+  | typeof AMENITIES_PARAM_RESTROOM_VALUE
+  | typeof AMENITIES_PARAM_SHOWER_VALUE
+  | typeof AMENITIES_PARAM_TOILETRIES_VALUE;
+
+export const AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING = [
+  AMENITIES_PARAM_LAUNDRY_VALUE,
+  AMENITIES_PARAM_RESTROOM_VALUE,
+  AMENITIES_PARAM_SHOWER_VALUE,
+  AMENITIES_PARAM_TOILETRIES_VALUE,
+] as const;
+
+export type AmenitiesSubCategory =
+  (typeof AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING)[number];
+
+export function parseAmenitiesQueryParam(
+  amenitiesParam: string | null | undefined
+): AmenitiesSubCategory[] {
+  return amenitiesParam
+    ? (amenitiesParam.split(" ") as AmenitiesSubCategory[])
+    : [];
+}
+
+export function getParsedAmenities(
+  amenitiesSubCategory: AmenitiesSubCategory | null,
+  amenitiesQueryParam: string | null | undefined
+): AmenitiesSubCategory[] {
+  const parsedAmenitiesFromQueryParam: AmenitiesSubCategory[] =
+    parseAmenitiesQueryParam(amenitiesQueryParam);
+
+  const combinedParsedAmenitiesFromPathAndQueryParams = (
+    amenitiesSubCategory ? [amenitiesSubCategory] : []
+  ).concat(parsedAmenitiesFromQueryParam);
+
+  return combinedParsedAmenitiesFromPathAndQueryParams;
+}
+
+//1. Laundry
+//2. Restroom
+//3. Shower
+//4. Toiletries
+
+// TODO: apply canonical ordering to the query params?
 
 export const FILTERS_THAT_APPLY_TO_ALL_CATEGORIES = [
- SEARCH_PARAM,
- AGE_PARAM,
- OPEN_PARAM,
- SHOW_ADVANCED_FILTERS_PARAM 
-]
+  SEARCH_PARAM,
+  AGE_PARAM,
+  OPEN_PARAM,
+  SHOW_ADVANCED_FILTERS_PARAM,
+];
 
 export const URL_PARAM_NAMES = [
   SEARCH_PARAM,
@@ -108,14 +195,14 @@ export const URL_PARAM_NAMES = [
   SHELTER_PARAM,
   FOOD_PARAM,
   CLOTHING_PARAM,
-  SHOW_ADVANCED_FILTERS_PARAM
-] as const
+  SHOW_ADVANCED_FILTERS_PARAM,
+] as const;
 
-export type UrlParamName = typeof URL_PARAM_NAMES[number]
+export type UrlParamName = (typeof URL_PARAM_NAMES)[number];
 
-export type SearchParams =  { [key: string]: string | string[] | undefined }
+export type SearchParams = { [key: string]: string | string[] | undefined };
 
-export interface YourPeerSearchParams {
+export interface YourPeerParsedRequestParams {
   [SEARCH_PARAM]: string | null;
   [AGE_PARAM]: number | null;
   [OPEN_PARAM]: boolean | null;
@@ -123,7 +210,9 @@ export interface YourPeerSearchParams {
   [FOOD_PARAM]: FoodValues | null;
   [CLOTHING_PARAM]: ClothingValues | null;
   [SHOW_ADVANCED_FILTERS_PARAM]: boolean;
-  [REQUIREMENT_PARAM]: ParsedRequirements
+  [REQUIREMENT_PARAM]: ParsedRequirements;
+  [AMENITIES_PARAM]: ParsedAmenities;
+  [PAGE_PARAM]: number;
 }
 
 export interface ParsedRequirements {
@@ -132,12 +221,103 @@ export interface ParsedRequirements {
   membershipRequired: boolean;
 }
 
-export function parseSearchParams(
-  searchParams: SearchParams
-): YourPeerSearchParams {
+export interface ParsedAmenities {
+  [AMENITIES_PARAM_LAUNDRY_VALUE]: boolean;
+  [AMENITIES_PARAM_RESTROOM_VALUE]: boolean;
+  [AMENITIES_PARAM_SHOWER_VALUE]: boolean;
+  [AMENITIES_PARAM_TOILETRIES_VALUE]: boolean;
+}
+
+type CategoryAndSubCategory = [Category, AmenitiesSubCategory | null]
+
+export function parsePathnameToCategoryAndSubCategory(
+  pathname: string
+): CategoryAndSubCategory {
+  const pathComponents = pathname.split("/");
+  const [_, firstPathComponent, secondPathComponent] = pathComponents;
+  assert(firstPathComponent in ROUTE_TO_CATEGORY_MAP);
+  assert(
+    secondPathComponent === undefined ||
+      AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
+        secondPathComponent as AmenitiesSubCategory
+      )
+  );
+  return [
+    ROUTE_TO_CATEGORY_MAP[firstPathComponent],
+    secondPathComponent ? (secondPathComponent as AmenitiesSubCategory) : null,
+  ];
+}
+
+export interface RouteParams {
+  route: string
+}
+
+export interface SubRouteParams extends RouteParams {
+  locationSlugOrPersonalCareSubCategory: string
+}
+
+function parseRouteParamsToCategoryAndSubCategory(
+  params: RouteParams | SubRouteParams
+): CategoryAndSubCategory {
+  let category,
+    subcategory = null;
+  assert(RESOURCE_ROUTES.includes(params.route));
+  category = params.route as Category;
+  const subRouteParams: SubRouteParams = params as SubRouteParams;
+  // we want to get a category and subcategory out of this
+  if (subRouteParams.locationSlugOrPersonalCareSubCategory) {
+    assert(
+      AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
+        subRouteParams.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory
+      )
+    );
+    subcategory =
+      subRouteParams.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory;
+  }
+  return [category, subcategory];
+}
+
+export function parsePageParam(
+  currentPageValueStr: string | string[] | undefined | null
+): number {
+  if (Array.isArray(currentPageValueStr)) {
+    throw new Error("Did not expect to receive multiple page params");
+  }
+  return currentPageValueStr && !isNaN(parseInt(currentPageValueStr, 10))
+    ? parseInt(currentPageValueStr, 10) - 1
+    : 0;
+}
+
+
+// the idea here is we pass in all the raw request stuff that we can get from nextjs
+// this can either be the pathname, if we in a client component, and can use usePathname()
+// or it can be the route and locationSlugOrPersonalCareSubCategory params which we get as page params from nextjs
+// We then parse it to the form that is used in the search
+export function parseRequest({
+  pathname,
+  searchParams,
+  params
+}: {
+  pathname?: string;
+  searchParams: SearchParams;
+  params: RouteParams | SubRouteParams
+}): YourPeerParsedRequestParams {
+  assert.ok(pathname !== undefined || params !== undefined);
   // TODO: validate searchParams with Joi
   // TODO: return 400 on validation error
-  const parsedRequirements = parseRequirementParam(searchParams[REQUIREMENT_PARAM] as string)
+
+  // if we got a pathname, first parse it to category, subcategory
+  const [category, amenitiesSubCategory] = pathname
+    ? parsePathnameToCategoryAndSubCategory(pathname)
+    : parseRouteParamsToCategoryAndSubCategory(params);
+
+  const parsedRequirements = parseRequirementParam(
+    searchParams[REQUIREMENT_PARAM] as string
+  );
+  const parsedAmenitiesParam = getParsedAmenities(
+    amenitiesSubCategory,
+    searchParams[AMENITIES_PARAM] as string
+  );
   return {
     [SEARCH_PARAM]:
       typeof searchParams[SEARCH_PARAM] === "string"
@@ -179,9 +359,23 @@ export function parseSearchParams(
         REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE
       ),
     },
+    [AMENITIES_PARAM]: {
+      [AMENITIES_PARAM_LAUNDRY_VALUE]: parsedAmenitiesParam.includes(
+        AMENITIES_PARAM_LAUNDRY_VALUE
+      ),
+      [AMENITIES_PARAM_RESTROOM_VALUE]: parsedAmenitiesParam.includes(
+        AMENITIES_PARAM_RESTROOM_VALUE
+      ),
+      [AMENITIES_PARAM_SHOWER_VALUE]: parsedAmenitiesParam.includes(
+        AMENITIES_PARAM_SHOWER_VALUE
+      ),
+      [AMENITIES_PARAM_TOILETRIES_VALUE]: parsedAmenitiesParam.includes(
+        AMENITIES_PARAM_TOILETRIES_VALUE
+      ),
+    },
+    [PAGE_PARAM]: parsePageParam(searchParams[PAGE_PARAM])
   };
 }
-
 
 // TODO: this should get exported by the streetlives-api REST API or a shared types library, rather than being embedded here
 export interface SimplifiedLocationData {
@@ -199,6 +393,22 @@ export interface SimplifiedLocationData {
   updatedAt: Date;
   organization_id: string;
   closed: boolean;
+}
+
+export interface ScheduleData {
+  id: string;
+  closed: boolean;
+  opens_at: string;
+  closes_at: string;
+  start_date: string | null;
+  end_date: string | null;
+  weekday: number | null;
+  occasion: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  location_id: string | null;
+  service_id: string | null;
+  service_at_location_id: string | null;
 }
 
 export interface ServiceData {
@@ -253,21 +463,7 @@ export interface ServiceData {
     };
   }[];
   RegularSchedules: [];
-  HolidaySchedules: {
-    id: string;
-    closed: boolean;
-    opens_at: string;
-    closes_at: string;
-    start_date: string | null;
-    end_date: string | null;
-    weekday: number | null;
-    occasion: string | null;
-    createdAt: Date;
-    updatedAt: Date;
-    location_id: string | null;
-    service_id: string | null;
-    service_at_location_id: string | null;
-  }[];
+  HolidaySchedules: ScheduleData[];
   Languages: {
     id: string;
     language: string;
@@ -392,7 +588,7 @@ export interface Taxonomy {
 }
 
 export interface TaxonomyResponse extends Taxonomy {
-  children?: Taxonomy[]
+  children?: Taxonomy[];
 }
 
 export const TAXONOMY_CATEGORIES = [
@@ -402,15 +598,30 @@ export const TAXONOMY_CATEGORIES = [
   "Food",
   "Clothing",
   "Personal Care",
-] as const
+] as const;
 
-export type TaxonomyCategory = typeof TAXONOMY_CATEGORIES[number]
+const TOILETRIES_TAXONOMY = "Toiletries";
+const SHOWER_TAXONOMY = "Shower";
+const LAUNDRY_TAXONOMY = "Laundry";
+const RESTROOM_TAXONOMY = "Restrooms";
+export const TAXONOMY_SUBCATEGORIES = [
+  TOILETRIES_TAXONOMY,
+  SHOWER_TAXONOMY,
+  LAUNDRY_TAXONOMY,
+  RESTROOM_TAXONOMY,
+] as const;
 
-export function setIntersection<T>(set1: Set<T>, set2: Set<T>): Set<T>{
+export type TaxonomyCategory = (typeof TAXONOMY_CATEGORIES)[number];
+export type TaxonomySubCategory = (typeof TAXONOMY_SUBCATEGORIES)[number];
+
+export function setIntersection<T>(set1: Set<T>, set2: Set<T>): Set<T> {
   return new Set<T>(Array.from(set1).filter((x) => set2.has(x)));
 }
 
-export const CATEGORY_TO_TAXONOMY_NAME_MAP: Record<CategoryNotNull, TaxonomyCategory> = {
+export const CATEGORY_TO_TAXONOMY_NAME_MAP: Record<
+  CategoryNotNull,
+  TaxonomyCategory
+> = {
   "health-care": "Health",
   other: "Other service",
   "shelters-housing": "Shelter",
@@ -419,20 +630,34 @@ export const CATEGORY_TO_TAXONOMY_NAME_MAP: Record<CategoryNotNull, TaxonomyCate
   "personal-care": "Personal Care",
 };
 
+export const AMENITY_TO_TAXONOMY_NAME_MAP: Record<
+  AmenitiesSubCategory,
+  TaxonomySubCategory
+> = {
+  [AMENITIES_PARAM_LAUNDRY_VALUE]: LAUNDRY_TAXONOMY,
+  [AMENITIES_PARAM_RESTROOM_VALUE]: RESTROOM_TAXONOMY,
+  [AMENITIES_PARAM_SHOWER_VALUE]: SHOWER_TAXONOMY,
+  [AMENITIES_PARAM_TOILETRIES_VALUE]: TOILETRIES_TAXONOMY,
+};
+
 export interface AgeEligibility {
-  minAge: number | null
-  maxAge: number | null
-  // TODO: the toher properties for age eligibility
+  age_min: number | null;
+  age_max: number | null;
+  all_ages: string | null;
+  population_served: string | null;
 }
 
+export type YourPeerLegacyScheduleData = Record<number, ScheduleData[]>;
+
 export interface YourPeerLegacyServiceData {
+  id: string;
   name: string | null;
   description: string | null;
   category: TaxonomyCategory | null;
   subcategory: TaxonomyCategory | null;
   info: string[];
   closed: boolean;
-  schedule: {};
+  schedule: YourPeerLegacyScheduleData;
   docs: string[] | null;
   referral_letter: boolean | null;
   eligibility: string[] | null;
@@ -441,12 +666,13 @@ export interface YourPeerLegacyServiceData {
 }
 
 export interface YourPeerLegacyServiceDataWrapper {
-  services : YourPeerLegacyServiceData[]
+  services: YourPeerLegacyServiceData[];
 }
 
 export interface YourPeerLegacyLocationData {
   id: string;
   location_name: string | null;
+  email: string | null;
   address: string | null;
   city: string | null;
   region: string | null;
@@ -470,3 +696,32 @@ export interface YourPeerLegacyLocationData {
   other_services: YourPeerLegacyServiceDataWrapper;
   closed: boolean;
 }
+
+export function getServicesWrapper(
+  serviceCategory: Category,
+  location: YourPeerLegacyLocationData
+): YourPeerLegacyServiceDataWrapper {
+  switch (serviceCategory) {
+    case "clothing":
+      return location.clothing_services;
+    case "food":
+      return location.food_services;
+    case "health-care":
+      return location.health_services;
+    case "other":
+      return location.other_services;
+    case "personal-care":
+      return location.personal_care_services;
+    case "shelters-housing":
+      return location.accommodation_services;
+  }
+  throw new Error(
+    "Received unexpected value for serviceCategory " + serviceCategory
+  );
+}
+
+export const RESOURCE_ROUTES = Object.keys(ROUTE_TO_CATEGORY_MAP).concat(
+  LOCATION_ROUTE
+);
+
+export const PAGE_PARAM = 'page'

@@ -5,18 +5,22 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p $PORT",
     "lint": "next lint",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.2",
-    "@heroicons/react": "^2.1.4",
+    "@vis.gl/react-google-maps": "^1.1.0",
     "moment": "^2.30.1",
+    "moment-strftime": "^0.5.0",
     "momentjs": "^2.0.0",
     "next": "14.2.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "swiper": "^11.1.4",
+    "underscore": "^1.13.6",
+    "usehooks-ts": "^3.1.0"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
@@ -25,6 +29,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/underscore": "^1.11.15",
     "classnames": "^2.5.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",

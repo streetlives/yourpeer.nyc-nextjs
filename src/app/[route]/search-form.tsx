@@ -10,7 +10,7 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const newUrl = getUrlWithNewFilterParameter(pathname, searchParams, SEARCH_PARAM, currentSearch);
-  console.log("currentSearch", currentSearch);
+  //console.log("currentSearch", currentSearch);
   return (
     <div
       className="bg-white fixed z-40 md:absolute bottom-0 md:bottom-auto w-full top-[49.6px] md:top-full inset-x-0 rounded border md:border-gray-300"
