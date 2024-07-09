@@ -267,6 +267,15 @@ function MapWrapper({
           );
           bounds.extend(latLng);
         });
+        // make sure user position is shown on the map
+        if(userPosition){
+          bounds.extend(
+            new google.maps.LatLng(
+              userPosition.coords.latitude,
+              userPosition.coords.longitude
+            )
+          );
+        }
         googleMap.fitBounds(bounds);
       }
     }
