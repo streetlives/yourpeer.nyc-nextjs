@@ -58,7 +58,7 @@ export default function Navbar({ background = true }) {
             </a>
           </div>
           <div className="flex items-center space-x-2">
-            {/* <div className="gtranslate_wrapper"></div> */}
+            <div className="gtranslate_wrapper"></div>
             <button
               className="inline-flex items-center text-[13px] sm:text-xs font-medium text-black space-x-1"
               id="quickExitLink"

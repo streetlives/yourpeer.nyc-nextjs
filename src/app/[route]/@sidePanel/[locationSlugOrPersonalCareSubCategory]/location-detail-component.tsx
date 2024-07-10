@@ -89,7 +89,7 @@ export default function LocationDetailComponent({
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="1.5"
+            strokeWidth="1.5"
             stroke="currentColor"
             className="w-6 h-6"
           >
@@ -193,7 +193,7 @@ export default function LocationDetailComponent({
                 <span translate="no">{location.address}</span> <br />
                 <span translate="no">{location.city}</span>,{" "}
                 <span translate="no">{location.zip}</span> <br />
-                {location.closed ? (
+                {!location.closed ? (
                   <a
                     href={`https://www.google.com/maps/dir/?api=1&destination=${location.address},${location.city},${location.zip}`}
                     target="_blank"
@@ -275,7 +275,7 @@ export default function LocationDetailComponent({
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-6 h-6"
               >
@@ -296,7 +296,7 @@ export default function LocationDetailComponent({
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-6 h-6"
               >
@@ -319,6 +319,7 @@ export default function LocationDetailComponent({
               );
               return servicesWrapper?.services.length ? (
                 <LocationService
+                  key={serviceCategory}
                   serviceInfo={servicesWrapper}
                   name={CATEGORY_DESCRIPTION_MAP[serviceCategory]}
                   icon={CATEGORY_ICON_SRC_MAP[serviceCategory]}

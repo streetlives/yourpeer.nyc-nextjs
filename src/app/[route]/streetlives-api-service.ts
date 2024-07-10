@@ -40,7 +40,7 @@ export interface LocationsDataResponse<T extends SimplifiedLocationData> {
 
 export async function fetchLocationsData<T extends SimplifiedLocationData>({
   page = 0,
-  pageSize = DEFAULT_PAGE_SIZE,
+  pageSize,
   taxonomies = null,
   taxonomySpecificAttributes = null,
   noRequirement,
@@ -56,9 +56,9 @@ export async function fetchLocationsData<T extends SimplifiedLocationData>({
   pageSize?: number;
   taxonomies: string[] | null;
   taxonomySpecificAttributes?: string[] | null;
-  noRequirement: boolean;
-  referralRequired: boolean;
-  membershipRequired: boolean;
+  noRequirement?: boolean;
+  referralRequired?: boolean;
+  membershipRequired?: boolean;
   open?: boolean | null;
   search?: string | null;
   location_fields_only?: boolean;
@@ -163,9 +163,9 @@ export async function getSimplifiedLocationData({
   pageSize?: number;
   taxonomies: string[] | null;
   taxonomySpecificAttributes: string[] | null;
-  noRequirement: boolean;
-  referralRequired: boolean;
-  membershipRequired: boolean;
+  noRequirement?: boolean;
+  referralRequired?: boolean;
+  membershipRequired?: boolean;
   open?: boolean | null;
   search?: string | null;
   age?: number | null;

@@ -122,7 +122,10 @@ export default function Service({
       className="flex items-start pl-3 pr-6 pt-2 pb-4 overflow-hidden relative"
     >
       {hasSomethingToShow && !service.closed ? (
-        <button className="flex-shrink-0 collapseButton absolute left-3 top-2">
+        <button
+          onClick={toggleIsExpanded}
+          className="flex-shrink-0 collapseButton absolute left-3 top-2"
+        >
           <img
             src="/img/icons/arrow-down.svg"
             className="arrow w-7 h-7 object-contain max-h-7 transition -rotate-90"

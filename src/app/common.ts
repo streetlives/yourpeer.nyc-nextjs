@@ -85,7 +85,7 @@ export const CATEGORY_ICON_SRC_MAP: Record<CategoryNotNull, string> = {
 };
 
 export function getIconPath(iconName: string): string {
-  return `/img/icons/${iconName}.svg`;
+  return `/img/icons/${iconName}.png`;
 }
 
 export const SEARCH_PARAM = "search";
