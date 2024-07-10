@@ -10,8 +10,10 @@ import {
   parseRequest,
 } from "../../common";
 import LocationsMap from "../map";
-import { getSimplifiedLocationData, getTaxonomies } from "../streetlives-api-service";
-
+import {
+  getSimplifiedLocationData,
+  getTaxonomies,
+} from "../streetlives-api-service";
 
 export async function getMapContainerData({
   searchParams,
@@ -19,16 +21,16 @@ export async function getMapContainerData({
 }: {
   searchParams: SearchParams;
   params: RouteParams;
-}): Promise<SimplifiedLocationData[]>{
+}): Promise<SimplifiedLocationData[]> {
   const category = parseCategoryFromRoute(params.route);
   const parsedSearchParams = parseRequest({ params, searchParams });
   const taxonomiesResults = await getTaxonomies(category, parsedSearchParams);
-  const locationStubs  = await getSimplifiedLocationData({
-      ...parsedSearchParams,
-      ...parsedSearchParams[REQUIREMENT_PARAM],
-      ...taxonomiesResults,
-    })
-  return locationStubs 
+  const locationStubs = await getSimplifiedLocationData({
+    ...parsedSearchParams,
+    ...parsedSearchParams[REQUIREMENT_PARAM],
+    ...taxonomiesResults,
+  });
+  return locationStubs;
 }
 
 export default async function MapContainerPage({
@@ -45,5 +47,7 @@ export default async function MapContainerPage({
         params,
       })}
     />
-  ) : notFound();
+  ) : (
+    notFound()
+  );
 }

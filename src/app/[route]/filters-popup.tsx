@@ -1,6 +1,12 @@
 "use client";
 
-import { Category, CategoryNotNull, CATEGORY_TO_ROUTE_MAP, LOCATION_ROUTE, SHOW_ADVANCED_FILTERS_PARAM } from "../common";
+import {
+  Category,
+  CategoryNotNull,
+  CATEGORY_TO_ROUTE_MAP,
+  LOCATION_ROUTE,
+  SHOW_ADVANCED_FILTERS_PARAM,
+} from "../common";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import classNames from "classnames";
 import Link from "next/link";
@@ -10,10 +16,14 @@ import {
   useRouter,
   useSearchParams,
 } from "next/navigation";
-import FilterHours from './filter-hours';
+import FilterHours from "./filter-hours";
 import { AGE_PARAM } from "../common";
 import FilterHousing from "./filter-housing";
-import { getUrlWithNewCategory, getUrlWithNewFilterParameter, getUrlWithoutFilterParameter } from "../navigation";
+import {
+  getUrlWithNewCategory,
+  getUrlWithNewFilterParameter,
+  getUrlWithoutFilterParameter,
+} from "../navigation";
 import FilterFood from "./filter-food";
 import FilterClothing from "./filter-clothing";
 import FilterPersonalCare from "./filter-personal-care";
@@ -35,7 +45,7 @@ function CategoryFilterLabel({
   const isActive = labelCategory == currentCategory;
   const router = useRouter();
 
-  function handleClick(){
+  function handleClick() {
     router.push(getUrlWithNewCategory(labelCategory, searchParams));
   }
 
@@ -57,14 +67,10 @@ function CategoryFilterLabel({
         "rounded",
         isActive
           ? { "bg-primary": true, "border-black": true }
-          : { "bg-white": true, "border-gray-300": true }
+          : { "bg-white": true, "border-gray-300": true },
       )}
     >
-      <input
-        type="radio"
-        className="sr-only"
-        onClick={handleClick}
-      />
+      <input type="radio" className="sr-only" onClick={handleClick} />
       <img
         src={isActive ? activeImgSrc : imgSrc}
         className="max-h-8 w-8 h-8 object-contain"
@@ -106,9 +112,9 @@ export default function FiltersPopup({
           pathname,
           searchParams,
           AGE_PARAM,
-          ageParam.toString()
-        )
-      )
+          ageParam.toString(),
+        ),
+      );
     }
   }
 
@@ -118,8 +124,8 @@ export default function FiltersPopup({
         pathname,
         searchParams,
         AGE_PARAM,
-        e.target.value
-      )
+        e.target.value,
+      ),
     );
   }
 
@@ -140,7 +146,7 @@ export default function FiltersPopup({
           href={getUrlWithoutFilterParameter(
             pathname,
             searchParams,
-            SHOW_ADVANCED_FILTERS_PARAM
+            SHOW_ADVANCED_FILTERS_PARAM,
           )}
         >
           <svg
@@ -258,7 +264,7 @@ export default function FiltersPopup({
           href={getUrlWithoutFilterParameter(
             pathname,
             searchParams,
-            SHOW_ADVANCED_FILTERS_PARAM
+            SHOW_ADVANCED_FILTERS_PARAM,
           )}
           className="primary-button flex-1 block flex-shrink-0 px-5 truncate"
         >

@@ -6,7 +6,10 @@ import {
 } from "next/navigation";
 import classNames from "classnames";
 import { OPEN_PARAM } from "../common";
-import { getUrlWithNewFilterParameter, getUrlWithoutFilterParameter } from "../navigation";
+import {
+  getUrlWithNewFilterParameter,
+  getUrlWithoutFilterParameter,
+} from "../navigation";
 
 export default function FilterHours() {
   const router = useRouter();
@@ -28,17 +31,18 @@ export default function FilterHours() {
     "focus:outline-none",
   ];
   const selectedClasses = ["bg-primary", "border-black"];
-  const notSelectedClasses = [
-    "bg-white",
-    "border-gray-300",
-  ];
+  const notSelectedClasses = ["bg-white", "border-gray-300"];
 
   function handleIsOpenNowClick() {
-    router.push(getUrlWithNewFilterParameter(pathname, searchParams, OPEN_PARAM));
+    router.push(
+      getUrlWithNewFilterParameter(pathname, searchParams, OPEN_PARAM),
+    );
   }
 
   function handleIsNotOpenNowClick() {
-    router.push(getUrlWithoutFilterParameter(pathname, searchParams, OPEN_PARAM));
+    router.push(
+      getUrlWithoutFilterParameter(pathname, searchParams, OPEN_PARAM),
+    );
   }
 
   return (
@@ -52,7 +56,7 @@ export default function FilterHours() {
             null,
             commonClasses
               .concat("rounded-l-lg")
-              .concat(isOpenNow ? notSelectedClasses : selectedClasses)
+              .concat(isOpenNow ? notSelectedClasses : selectedClasses),
           )}
         >
           <input
@@ -72,7 +76,7 @@ export default function FilterHours() {
             null,
             commonClasses
               .concat("rounded-r-lg")
-              .concat(isOpenNow ? selectedClasses : notSelectedClasses)
+              .concat(isOpenNow ? selectedClasses : notSelectedClasses),
           )}
         >
           <input

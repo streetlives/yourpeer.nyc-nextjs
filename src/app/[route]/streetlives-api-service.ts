@@ -127,22 +127,20 @@ export async function fetchLocationsData<T extends SimplifiedLocationData>({
   console.log("query_url", query_url);
 
   const gogetta_response = await fetch(query_url);
-  if(gogetta_response.status !== 200){
-    if(gogetta_response.status === 404){
-      throw new Error404Response()
+  if (gogetta_response.status !== 200) {
+    if (gogetta_response.status === 404) {
+      throw new Error404Response();
     }
-    throw new Error5XXResponse()
+    throw new Error5XXResponse();
   }
-  const numberOfPages = parseInt(
-    gogetta_response.headers.get("Pagination-Count") || "0",
-    10
-  ) - 1;  // FIXME: I think there's a bug where it's returning the wrong number of pages, so decrement by 1 here
+  const numberOfPages =
+    parseInt(gogetta_response.headers.get("Pagination-Count") || "0", 10) - 1; // FIXME: I think there's a bug where it's returning the wrong number of pages, so decrement by 1 here
   const resultCount = parseInt(
     gogetta_response.headers.get("Total-Count") || "0",
-    10
+    10,
   );
   const locations = recursiveParseUpdatedAt<T>(
-    (await gogetta_response.json()) as unknown
+    (await gogetta_response.json()) as unknown,
   );
   return {
     locations,
@@ -152,7 +150,7 @@ export async function fetchLocationsData<T extends SimplifiedLocationData>({
 }
 
 function recursiveParseUpdatedAt<T extends SimplifiedLocationData>(
-  gogetta_response: any
+  gogetta_response: any,
 ): T[] {
   Object.entries(gogetta_response).forEach(([k, v]) => {
     if (k === "updatedAt" || k === "last_validated_at") {
@@ -247,7 +245,7 @@ export async function getFullLocationData({
 function filter_services_by_name(
   d: FullLocationData | LocationDetailData,
   is_location_detail: boolean,
-  category_name: Category
+  category_name: Category,
 ): YourPeerLegacyServiceDataWrapper {
   const services: YourPeerLegacyServiceData[] = [];
   for (let service of d.Services) {
@@ -256,7 +254,7 @@ function filter_services_by_name(
       service.Taxonomies.flatMap((taxonomy) => [
         taxonomy.name,
         taxonomy.parent_name,
-      ]).filter((t) => t !== null)
+      ]).filter((t) => t !== null),
     );
     if (
       !category_name ||
@@ -279,35 +277,35 @@ function filter_services_by_name(
         category: service["Taxonomies"][0]["parent_name"],
         subcategory: service["Taxonomies"][0]["name"],
         info: service?.EventRelatedInfos?.map((x) => x.information).filter(
-          (information) => information !== null
+          (information) => information !== null,
         ),
         closed: !!service?.HolidaySchedules?.filter((x) => x.closed).length,
         schedule: Object.fromEntries(
           Object.entries(
             _.groupBy(
               service.HolidaySchedules.filter(
-                (schedule) => schedule.opens_at && schedule.closes_at
+                (schedule) => schedule.opens_at && schedule.closes_at,
               ),
-              "weekday"
-            )
+              "weekday",
+            ),
           ).map(([k, v]) => [
             k,
             v.sort((time1, time2) => (time1 < time2 ? 1 : -1)), // sort the times
-          ])
+          ]),
         ),
         docs: is_location_detail
           ? service.RequiredDocuments.filter(
-              (doc) => doc.document && doc.document != "None"
+              (doc) => doc.document && doc.document != "None",
             ).map((doc) => doc.document)
           : null,
         referral_letter: is_location_detail
           ? !!service.RequiredDocuments.filter((doc) =>
-              doc.document.toLowerCase().includes("referral letter")
+              doc.document.toLowerCase().includes("referral letter"),
             ).length
           : null,
         eligibility: is_location_detail
           ? service.Eligibilities.map(
-              (eligibility) => eligibility.description
+              (eligibility) => eligibility.description,
             ).filter((description) => description !== null)
           : null,
         membership: is_location_detail
@@ -319,7 +317,7 @@ function filter_services_by_name(
                 eligibility.eligible_values.length &&
                 !eligibility.eligible_values
                   .map((elig_value) => elig_value.toLowerCase())
-                  .includes("false")
+                  .includes("false"),
             ).length
           : null,
         age: age_eligibilities,
@@ -331,7 +329,7 @@ function filter_services_by_name(
 
 export function map_gogetta_to_yourpeer(
   d: FullLocationData | LocationDetailData,
-  is_location_detail: boolean
+  is_location_detail: boolean,
 ): YourPeerLegacyLocationData {
   const org_name = d["Organization"]["name"];
   let address, street, zip, state;
@@ -371,29 +369,29 @@ export function map_gogetta_to_yourpeer(
     accommodation_services: filter_services_by_name(
       d,
       is_location_detail,
-      "shelters-housing"
+      "shelters-housing",
     ),
     food_services: filter_services_by_name(d, is_location_detail, "food"),
     clothing_services: filter_services_by_name(
       d,
       is_location_detail,
-      "clothing"
+      "clothing",
     ),
     personal_care_services: filter_services_by_name(
       d,
       is_location_detail,
-      "personal-care"
+      "personal-care",
     ),
     health_services: filter_services_by_name(
       d,
       is_location_detail,
-      "health-care"
+      "health-care",
     ),
     other_services: {
       services: filter_services_by_name(
         d,
         is_location_detail,
-        null
+        null,
       ).services.filter((service) => {
         const serviceCategorySet = new Set([
           service.category,
@@ -408,8 +406,8 @@ export function map_gogetta_to_yourpeer(
               "Food",
               "Clothing",
               "Personal Care",
-            ])
-          )
+            ]),
+          ),
         ).length;
       }),
     },
@@ -426,15 +424,15 @@ interface TaxonomiesResult {
 // TODO: add support for HTTP caching (e.g. ETag or Last-Modified headers) on streetlives-api
 export async function getTaxonomies(
   category: Category,
-  parsedSearchParams: YourPeerParsedRequestParams
+  parsedSearchParams: YourPeerParsedRequestParams,
 ): Promise<TaxonomiesResult> {
   const query_url = `${NEXT_PUBLIC_GO_GETTA_PROD_URL}/taxonomy`;
   const taxonomyResponse = (
     await fetch(query_url).then(
-      (response) => response.json() as unknown as TaxonomyResponse[]
+      (response) => response.json() as unknown as TaxonomyResponse[],
     )
   ).flatMap((taxonomyResponse) =>
-    [taxonomyResponse].concat(taxonomyResponse.children || [])
+    [taxonomyResponse].concat(taxonomyResponse.children || []),
   );
 
   if (!category)
@@ -450,7 +448,7 @@ export async function getTaxonomies(
   let hasSelectedSomeAmenities = !!selectedAmenities.length;
 
   const selectedAmenityTaxonomies = selectedAmenities.map(
-    (amenity) => AMENITY_TO_TAXONOMY_NAME_MAP[amenity]
+    (amenity) => AMENITY_TO_TAXONOMY_NAME_MAP[amenity],
   );
 
   console.log(
@@ -459,7 +457,7 @@ export async function getTaxonomies(
     "selectedAmenities",
     selectedAmenities,
     "selectedAmenityTaxonomies",
-    selectedAmenityTaxonomies
+    selectedAmenityTaxonomies,
   );
 
   // FIXME: currently it's only two layers deep. Technically, taxonomy can be arbitrary depth, and we should handle that case
@@ -478,7 +476,7 @@ export async function getTaxonomies(
       //     taxonomy_specific_attributes.append('interview')
 
       taxonomies = taxonomyResponse.flatMap((r) =>
-        r.name === parentTaxonomyName ? [r as Taxonomy] : []
+        r.name === parentTaxonomyName ? [r as Taxonomy] : [],
       );
       // FIXME: specifying taxonomySpecificAttributes does not seem to have any effect on the returned results
       switch (parsedSearchParams[CLOTHING_PARAM]) {
@@ -500,21 +498,21 @@ export async function getTaxonomies(
       switch (parsedSearchParams[FOOD_PARAM]) {
         case null:
           taxonomies = taxonomyResponse.flatMap((r) =>
-            r.name === parentTaxonomyName ? [r as Taxonomy] : []
+            r.name === parentTaxonomyName ? [r as Taxonomy] : [],
           );
           break;
         case FOOD_PARAM_SOUP_KITCHEN_VALUE:
           taxonomies = taxonomyResponse.flatMap((r) =>
             !r.children
               ? []
-              : r.children.filter((t) => t.name === "Soup Kitchen")
+              : r.children.filter((t) => t.name === "Soup Kitchen"),
           );
           break;
         case FOOD_PARAM_PANTRY_VALUE:
           taxonomies = taxonomyResponse.flatMap((r) =>
             !r.children
               ? []
-              : r.children.filter((t) => t.name === "Food Pantry")
+              : r.children.filter((t) => t.name === "Food Pantry"),
           );
           break;
       }
@@ -524,7 +522,7 @@ export async function getTaxonomies(
       taxonomies = taxonomyResponse.flatMap((r) =>
         r.name === parentTaxonomyName
           ? [r as Taxonomy].concat(r.children ? r.children : [])
-          : []
+          : [],
       );
       break;
     case "other":
@@ -532,7 +530,7 @@ export async function getTaxonomies(
       taxonomies = taxonomyResponse.flatMap((r) =>
         r.name === parentTaxonomyName
           ? [r as Taxonomy].concat(r.children ? r.children : [])
-          : []
+          : [],
       );
       break;
     case "personal-care":
@@ -558,13 +556,13 @@ export async function getTaxonomies(
       taxonomies = hasSelectedSomeAmenities
         ? taxonomyResponse.flatMap((r) => {
             return selectedAmenityTaxonomies.includes(
-              r.name as TaxonomySubCategory
+              r.name as TaxonomySubCategory,
             )
               ? [r as Taxonomy]
               : [];
           })
         : taxonomyResponse.flatMap((r) =>
-            r.name === parentTaxonomyName ? [r as Taxonomy] : []
+            r.name === parentTaxonomyName ? [r as Taxonomy] : [],
           );
       break;
     case "shelters-housing":
@@ -577,7 +575,7 @@ export async function getTaxonomies(
       switch (parsedSearchParams[SHELTER_PARAM]) {
         case null:
           taxonomies = taxonomyResponse.flatMap((r) =>
-            r.name === parentTaxonomyName ? [r as Taxonomy] : []
+            r.name === parentTaxonomyName ? [r as Taxonomy] : [],
           );
           break;
         case SHELTER_PARAM_FAMILY_VALUE:
@@ -587,8 +585,8 @@ export async function getTaxonomies(
               : r.children.filter(
                   (t) =>
                     t.parent_name === parentTaxonomyName &&
-                    t.name === "Families"
-                )
+                    t.name === "Families",
+                ),
           );
         case SHELTER_PARAM_SINGLE_VALUE:
           taxonomies = taxonomyResponse.flatMap((r) =>
@@ -597,15 +595,15 @@ export async function getTaxonomies(
               : r.children.filter(
                   (t) =>
                     t.parent_name === parentTaxonomyName &&
-                    t.name === "Single Adult"
-                )
+                    t.name === "Single Adult",
+                ),
           );
           break;
       }
   }
   console.log(
     "taxonomies",
-    taxonomies.map((t) => t.id)
+    taxonomies.map((t) => t.id),
   );
   return {
     taxonomies: taxonomies.map((t) => t.id),
@@ -620,15 +618,15 @@ export interface AllLocationsData
 
 // fetch the location data for a particular slug
 export async function fetchLocationsDetailData(
-  slug: string
+  slug: string,
 ): Promise<LocationDetailData> {
   const query_url = `${NEXT_PUBLIC_GO_GETTA_PROD_URL}/locations-by-slug/${slug}`;
-  const response = await fetch(query_url)
-  if(response.status !== 200){
-    if(response.status === 404){
-      throw new Error404Response()
+  const response = await fetch(query_url);
+  if (response.status !== 200) {
+    if (response.status === 404) {
+      throw new Error404Response();
     }
-    throw new Error5XXResponse()
+    throw new Error5XXResponse();
   }
   return response.json();
 }

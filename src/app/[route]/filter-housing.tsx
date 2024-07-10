@@ -5,8 +5,16 @@ import {
   useSearchParams,
 } from "next/navigation";
 import classNames from "classnames";
-import { SHELTER_PARAM, SHELTER_PARAM_SINGLE_VALUE, SHELTER_PARAM_FAMILY_VALUE, ShelterValues } from "../common";
-import { getUrlWithNewFilterParameter, getUrlWithoutFilterParameter } from "../navigation";
+import {
+  SHELTER_PARAM,
+  SHELTER_PARAM_SINGLE_VALUE,
+  SHELTER_PARAM_FAMILY_VALUE,
+  ShelterValues,
+} from "../common";
+import {
+  getUrlWithNewFilterParameter,
+  getUrlWithoutFilterParameter,
+} from "../navigation";
 
 export default function FilterHousing() {
   const router = useRouter();
@@ -31,14 +39,11 @@ export default function FilterHousing() {
   //rounded-l-lg
   //rounded-r-lg
   const selectedClasses = ["bg-primary", "border-black"];
-  const notSelectedClasses = [
-    "bg-white",
-    "border-gray-300",
-  ];
+  const notSelectedClasses = ["bg-white", "border-gray-300"];
 
   function handleIsAnyClick() {
     router.push(
-      getUrlWithoutFilterParameter(pathname, searchParams, SHELTER_PARAM)
+      getUrlWithoutFilterParameter(pathname, searchParams, SHELTER_PARAM),
     );
   }
 
@@ -48,8 +53,8 @@ export default function FilterHousing() {
         pathname,
         searchParams,
         SHELTER_PARAM,
-        SHELTER_PARAM_SINGLE_VALUE
-      )
+        SHELTER_PARAM_SINGLE_VALUE,
+      ),
     );
   }
 
@@ -59,8 +64,8 @@ export default function FilterHousing() {
         pathname,
         searchParams,
         SHELTER_PARAM,
-        SHELTER_PARAM_FAMILY_VALUE
-      )
+        SHELTER_PARAM_FAMILY_VALUE,
+      ),
     );
   }
 
@@ -75,7 +80,7 @@ export default function FilterHousing() {
             null,
             commonClasses
               .concat("rounded-l-lg")
-              .concat(!shelterParam ? selectedClasses : notSelectedClasses)
+              .concat(!shelterParam ? selectedClasses : notSelectedClasses),
           )}
         >
           <input
@@ -96,8 +101,8 @@ export default function FilterHousing() {
             commonClasses.concat(
               shelterParam == SHELTER_PARAM_SINGLE_VALUE
                 ? selectedClasses
-                : notSelectedClasses
-            )
+                : notSelectedClasses,
+            ),
           )}
         >
           <input
@@ -122,8 +127,8 @@ export default function FilterHousing() {
               .concat(
                 shelterParam == SHELTER_PARAM_FAMILY_VALUE
                   ? selectedClasses
-                  : notSelectedClasses
-              )
+                  : notSelectedClasses,
+              ),
           )}
         >
           <input
@@ -144,4 +149,3 @@ export default function FilterHousing() {
     </fieldset>
   );
 }
-

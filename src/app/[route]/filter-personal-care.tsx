@@ -40,8 +40,12 @@ export default function FilterPersonalCare() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const personalCareParam = searchParams.get(PERSONAL_CARE_CATEGORY);
-  const [category, amenitiesSubCategory] = parsePathnameToCategoryAndSubCategory(pathname)
-  const parsedAmenities = getParsedAmenities(amenitiesSubCategory, personalCareParam);
+  const [category, amenitiesSubCategory] =
+    parsePathnameToCategoryAndSubCategory(pathname);
+  const parsedAmenities = getParsedAmenities(
+    amenitiesSubCategory,
+    personalCareParam,
+  );
 
   function handleToiletriesChange(e: ChangeEvent) {
     router.push(
@@ -49,8 +53,8 @@ export default function FilterPersonalCare() {
         pathname,
         searchParams,
         AMENITIES_PARAM_TOILETRIES_VALUE,
-        (e.target as HTMLFormElement).checked
-      )
+        (e.target as HTMLFormElement).checked,
+      ),
     );
   }
 
@@ -60,8 +64,8 @@ export default function FilterPersonalCare() {
         pathname,
         searchParams,
         AMENITIES_PARAM_RESTROOM_VALUE,
-        (e.target as HTMLFormElement).checked
-      )
+        (e.target as HTMLFormElement).checked,
+      ),
     );
   }
 
@@ -71,8 +75,8 @@ export default function FilterPersonalCare() {
         pathname,
         searchParams,
         AMENITIES_PARAM_SHOWER_VALUE,
-        (e.target as HTMLFormElement).checked
-      )
+        (e.target as HTMLFormElement).checked,
+      ),
     );
   }
 
@@ -82,8 +86,8 @@ export default function FilterPersonalCare() {
         pathname,
         searchParams,
         AMENITIES_PARAM_LAUNDRY_VALUE,
-        (e.target as HTMLFormElement).checked
-      )
+        (e.target as HTMLFormElement).checked,
+      ),
     );
   }
 
@@ -91,12 +95,12 @@ export default function FilterPersonalCare() {
     amenitiesSubCategory,
     onChange,
     label,
-    subLabel
+    subLabel,
   }: {
     amenitiesSubCategory: AmenitiesSubCategory;
-    onChange:(e: ChangeEvent) => void;
+    onChange: (e: ChangeEvent) => void;
     label: string;
-    subLabel?: string
+    subLabel?: string;
   }) {
     return (
       <label className="relative flex-1 flex space-x-2 cursor-pointer">
@@ -108,7 +112,6 @@ export default function FilterPersonalCare() {
         />
         <span className="text-xs text-dark mt-0.5">{label}</span>
         {subLabel ? <p className="text-gray-600">{subLabel}</p> : undefined}
-        
       </label>
     );
   }

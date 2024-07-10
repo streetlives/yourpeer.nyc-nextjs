@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import {
@@ -7,7 +7,7 @@ import {
   YourPeerLegacyServiceData,
 } from "../../../common";
 
-const moment = require('moment-strftime');
+const moment = require("moment-strftime");
 
 function formatAgeMaxSuffix(age_max: number): string {
   const remainder = age_max % 10;
@@ -30,7 +30,7 @@ function renderAgeEligibility(ageReq: AgeEligibility) {
     s = `${ageReq["age_min"]}-${
       ageReq["age_max"]
     } (until your ${ageMaxPlusOne}${formatAgeMaxSuffix(
-      ageMaxPlusOne
+      ageMaxPlusOne,
     )} birthday)`;
   } else if (ageReq.age_min !== null) {
     s = `${ageReq["age_min"]}+`;
@@ -53,17 +53,17 @@ function renderSchedule(schedule: YourPeerLegacyScheduleData): string {
     "Friday",
     "Saturday",
     "Sunday",
-  ]
+  ];
 
-  function day_number_to_name(weekday: number): string{
-    return weekdays[weekday - 1]
+  function day_number_to_name(weekday: number): string {
+    return weekdays[weekday - 1];
   }
 
-  function format_hour(time:string): string{
-    if(time === '23:59:00' || time === '00:00:00'){
-      return "midnight"
-    } 
-    return moment(time, "hh:mm:ss").strftime("%-I %p")
+  function format_hour(time: string): string {
+    if (time === "23:59:00" || time === "00:00:00") {
+      return "midnight";
+    }
+    return moment(time, "hh:mm:ss").strftime("%-I %p");
   }
 
   function format_hours(opens: string, closes: string): string {
@@ -77,42 +77,43 @@ function renderSchedule(schedule: YourPeerLegacyScheduleData): string {
       .flatMap((s) => s)
       .every(
         (schedule) =>
-          schedule.opens_at === "00:00:00" && schedule.closes_at === "23:59:00"
+          schedule.opens_at === "00:00:00" && schedule.closes_at === "23:59:00",
       )
   ) {
-    return "Open 24/7"
+    return "Open 24/7";
   }
-  
+
   // hour range string -> list of weekdays
-  const days_grouped_by_hours: Record<string, number[]> = {}
+  const days_grouped_by_hours: Record<string, number[]> = {};
   Object.entries(schedule).forEach(([weekday, hours]) => {
-    hours.forEach(hour => {
-      const formattedHours = format_hours(
-        hour.opens_at,
-        hour.closes_at
-      )
-      if(!days_grouped_by_hours[formattedHours]){
-        days_grouped_by_hours[formattedHours] = []
+    hours.forEach((hour) => {
+      const formattedHours = format_hours(hour.opens_at, hour.closes_at);
+      if (!days_grouped_by_hours[formattedHours]) {
+        days_grouped_by_hours[formattedHours] = [];
       }
       days_grouped_by_hours[formattedHours].push(parseInt(weekday, 10));
-    })
-  })
+    });
+  });
 
   const group_strings: string[] = Object.entries(days_grouped_by_hours).map(
     ([k, v]) =>
-      `${v.map((weekday) => day_number_to_name(weekday)).join(" & ")}, ${k}`
+      `${v.map((weekday) => day_number_to_name(weekday)).join(" & ")}, ${k}`,
   );
 
   return `Open ${group_strings.join(";")}`;
 }
 
-export default function Service({ service }: { service: YourPeerLegacyServiceData }) {
+export default function Service({
+  service,
+}: {
+  service: YourPeerLegacyServiceData;
+}) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   //console.log('isExpanded', isExpanded)
   const hasSomethingToShow =
     service.description || service.info || service.docs || service.schedule;
 
-  function toggleIsExpanded(){
+  function toggleIsExpanded() {
     setIsExpanded(!isExpanded);
   }
   return (

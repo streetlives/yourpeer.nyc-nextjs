@@ -24,32 +24,30 @@ import {
 // Change category
 export function getUrlWithNewCategory(
   newCategory: CategoryNotNull,
-  searchParams: ReadonlyURLSearchParams
+  searchParams: ReadonlyURLSearchParams,
 ): string {
   const currentUrlSearchParams = new URLSearchParams(
     Array.from(searchParams.entries()).filter(([k, v]) =>
-      FILTERS_THAT_APPLY_TO_ALL_CATEGORIES.includes(k)
-    )
+      FILTERS_THAT_APPLY_TO_ALL_CATEGORIES.includes(k),
+    ),
   );
 
   const newSearchParamsStr = currentUrlSearchParams.toString();
   // always delete the current page
-  currentUrlSearchParams.delete(
-    PAGE_PARAM
-  );
+  currentUrlSearchParams.delete(PAGE_PARAM);
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `/${CATEGORY_TO_ROUTE_MAP[newCategory]}${query}`;
 }
 
 function getSearchParamsList(
-  searchParams: ReadonlyURLSearchParams | SearchParams
+  searchParams: ReadonlyURLSearchParams | SearchParams,
 ): string[][] {
   return searchParams instanceof ReadonlyURLSearchParams
     ? Array.from(searchParams.entries())
     : (Object.entries(searchParams)
         .filter(([k, v]) => v !== undefined)
         .flatMap(([k, v]) =>
-          Array.isArray(v) ? v.map((w) => [k, w]) : [[k, v]]
+          Array.isArray(v) ? v.map((w) => [k, w]) : [[k, v]],
         ) as string[][]);
 }
 
@@ -58,7 +56,7 @@ export function getUrlWithNewFilterParameter(
   pathname: string,
   searchParams: ReadonlyURLSearchParams | SearchParams,
   urlParamName: UrlParamName,
-  urlParamValue: string = "yes"
+  urlParamValue: string = "yes",
 ): string {
   const searchParamsList: string[][] = getSearchParamsList(searchParams);
 
@@ -68,9 +66,7 @@ export function getUrlWithNewFilterParameter(
 
   const newSearchParamsStr = currentUrlSearchParams.toString();
   // always delete the current page
-  currentUrlSearchParams.delete(
-    PAGE_PARAM
-  );
+  currentUrlSearchParams.delete(PAGE_PARAM);
 
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `${pathname}${query}`;
@@ -79,7 +75,7 @@ export function getUrlWithNewFilterParameter(
 export function getUrlWithoutFilterParameter(
   pathname: string,
   searchParams: ReadonlyURLSearchParams | SearchParams,
-  urlParamName: UrlParamName
+  urlParamName: UrlParamName,
 ): string {
   const searchParamsList: string[][] = getSearchParamsList(searchParams);
 
@@ -89,9 +85,7 @@ export function getUrlWithoutFilterParameter(
 
   const newSearchParamsStr = currentUrlSearchParams.toString();
   // always delete the current page
-  currentUrlSearchParams.delete(
-    PAGE_PARAM
-  );
+  currentUrlSearchParams.delete(PAGE_PARAM);
 
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `${pathname}${query}`;
@@ -106,7 +100,7 @@ export function getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
   pathname: string,
   searchParams: ReadonlyURLSearchParams | SearchParams,
   newRequirementTypeToAddOrRemove: RequirementValue,
-  addRequirementType: boolean
+  addRequirementType: boolean,
 ): string {
   const searchParamsList: string[][] = getSearchParamsList(searchParams);
 
@@ -115,7 +109,7 @@ export function getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
   const currentRequirementValue = currentUrlSearchParams.get(REQUIREMENT_PARAM);
 
   const parsedRequirements: RequirementValue[] = parseRequirementParam(
-    currentRequirementValue
+    currentRequirementValue,
   );
 
   const newParsedRequirements = addRequirementType
@@ -125,11 +119,11 @@ export function getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
           .sort(
             (a, b) =>
               REQUIREMENT_PARAM_CANONICAL_ORDERING.indexOf(a) -
-              REQUIREMENT_PARAM_CANONICAL_ORDERING.indexOf(b)
+              REQUIREMENT_PARAM_CANONICAL_ORDERING.indexOf(b),
           )
       : parsedRequirements
     : parsedRequirements.filter(
-        (requirement) => requirement !== newRequirementTypeToAddOrRemove
+        (requirement) => requirement !== newRequirementTypeToAddOrRemove,
       );
 
   if (newParsedRequirements.length) {
@@ -137,16 +131,14 @@ export function getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
 
     currentUrlSearchParams.set(
       REQUIREMENT_PARAM,
-      serializedNewParsedRequirements
+      serializedNewParsedRequirements,
     );
   } else {
     currentUrlSearchParams.delete(REQUIREMENT_PARAM);
   }
 
   // always delete the current page
-  currentUrlSearchParams.delete(
-    PAGE_PARAM
-  );
+  currentUrlSearchParams.delete(PAGE_PARAM);
   const newSearchParamsStr = currentUrlSearchParams.toString();
 
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
@@ -157,7 +149,7 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
   pathname: string,
   searchParams: ReadonlyURLSearchParams | SearchParams,
   newAmenityToAddOrRemove: AmenitiesSubCategory,
-  addAmenity: boolean
+  addAmenity: boolean,
 ): string {
   const searchParamsList: string[][] = getSearchParamsList(searchParams);
 
@@ -166,23 +158,20 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
   const currentAmenitiesSubCategoryFromQueryParam =
     currentUrlSearchParams.get(AMENITIES_PARAM);
 
-  const [category, amenitiesSubCategory] = parsePathnameToCategoryAndSubCategory(pathname)
+  const [category, amenitiesSubCategory] =
+    parsePathnameToCategoryAndSubCategory(pathname);
 
   const parsedAmenitiesFromQueryParam = getParsedAmenities(
     amenitiesSubCategory,
-    currentAmenitiesSubCategoryFromQueryParam
-  )
+    currentAmenitiesSubCategoryFromQueryParam,
+  );
 
   const newParsedAmenities = addAmenity
-    ? !parsedAmenitiesFromQueryParam.includes(
-        newAmenityToAddOrRemove
-      )
-      ? parsedAmenitiesFromQueryParam.concat(
-          newAmenityToAddOrRemove
-        )
+    ? !parsedAmenitiesFromQueryParam.includes(newAmenityToAddOrRemove)
+      ? parsedAmenitiesFromQueryParam.concat(newAmenityToAddOrRemove)
       : parsedAmenitiesFromQueryParam
     : parsedAmenitiesFromQueryParam.filter(
-        (amenity) => amenity !== newAmenityToAddOrRemove
+        (amenity) => amenity !== newAmenityToAddOrRemove,
       );
 
   // mutate the query params, and get the new path
@@ -196,7 +185,7 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
       newParsedAmenities.sort(
         (a, b) =>
           AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.indexOf(a) -
-          AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.indexOf(b)
+          AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.indexOf(b),
       );
     newPath = `/${PERSONAL_CARE_CATEGORY}/${amenitySubCategory}`;
 
@@ -205,7 +194,7 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
         newAmenitiesQueryParams.join(" ");
       currentUrlSearchParams.set(
         AMENITIES_PARAM,
-        serializedNewParsedAmenitiesQueryParam
+        serializedNewParsedAmenitiesQueryParam,
       );
     } else {
       currentUrlSearchParams.delete(AMENITIES_PARAM);
@@ -218,17 +207,15 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
   }
 
   // always delete the current page
-  currentUrlSearchParams.delete(
-    PAGE_PARAM
-  );
+  currentUrlSearchParams.delete(PAGE_PARAM);
 
   const newSearchParamsStr = currentUrlSearchParams.toString();
 
   console.log(
-    'newPath, currentUrlSearchParams',
-    newPath, 
-    currentUrlSearchParams
-  )
+    "newPath, currentUrlSearchParams",
+    newPath,
+    currentUrlSearchParams,
+  );
 
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `${newPath}${query}`;
@@ -237,35 +224,30 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
 export function getUrlToNextOrPreviousPage(
   pathname: string,
   searchParams: ReadonlyURLSearchParams | SearchParams,
-  nextPage: boolean 
-){
+  nextPage: boolean,
+) {
   const searchParamsList: string[][] = getSearchParamsList(searchParams);
 
   const currentUrlSearchParams = new URLSearchParams(searchParamsList);
 
   const currentPageValueStr = currentUrlSearchParams.get(PAGE_PARAM);
   const currentPageValue = parsePageParam(currentPageValueStr);
-  
+
   let newPageValue;
-  if(nextPage){
+  if (nextPage) {
     newPageValue = currentPageValue + 1;
-  }else{
-    if(currentPageValue > 0){
+  } else {
+    if (currentPageValue > 0) {
       newPageValue = currentPageValue - 1;
     } else {
-      throw new Error('Cannot get previous page when current page is 0')
+      throw new Error("Cannot get previous page when current page is 0");
     }
   }
 
-  if(newPageValue > 0){
-    currentUrlSearchParams.set(
-      PAGE_PARAM,
-      (newPageValue + 1).toString()
-    );
-  }else{
-    currentUrlSearchParams.delete(
-      PAGE_PARAM
-    );
+  if (newPageValue > 0) {
+    currentUrlSearchParams.set(PAGE_PARAM, (newPageValue + 1).toString());
+  } else {
+    currentUrlSearchParams.delete(PAGE_PARAM);
   }
 
   const newSearchParamsStr = currentUrlSearchParams.toString();

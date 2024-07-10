@@ -1,10 +1,7 @@
 import Link from "next/link";
 import { LocationsNavbarCompanyRoutes } from "./[route]/locations-navbar";
 import { Footer } from "./footer";
-import {
-  CATEGORY_TO_ROUTE_MAP,
-  LOCATION_ROUTE,
-} from "./common";
+import { CATEGORY_TO_ROUTE_MAP, LOCATION_ROUTE } from "./common";
 
 export default function CustomNotFoundPage() {
   return (

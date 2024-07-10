@@ -31,7 +31,7 @@ import {
 } from "../streetlives-api-service";
 import { notFound } from "next/navigation";
 
-export {generateMetadata} from '../metadata'
+export { generateMetadata } from "../metadata";
 
 interface SidePanelComponentData {
   parsedSearchParams: YourPeerParsedRequestParams;
@@ -41,14 +41,13 @@ interface SidePanelComponentData {
   yourPeerLegacyLocationData: YourPeerLegacyLocationData[];
 }
 
-
 export async function getSidePanelComponentData({
   searchParams,
-  params
+  params,
 }: {
   searchParams: SearchParams;
   params: RouteParams;
-}): Promise<SidePanelComponentData>{
+}): Promise<SidePanelComponentData> {
   const category = parseCategoryFromRoute(params.route);
   // FIXME: the string composition in the next line is a bit ugly. I should clean up the type used in this interface
   const parsedSearchParams = parseRequest({ params, searchParams });
@@ -60,15 +59,15 @@ export async function getSidePanelComponentData({
       ...taxonomiesResults,
     });
   const yourPeerLegacyLocationData = locations.map((location) =>
-    map_gogetta_to_yourpeer(location, false)
+    map_gogetta_to_yourpeer(location, false),
   );
   return {
     parsedSearchParams,
     category,
     resultCount,
     numberOfPages,
-    yourPeerLegacyLocationData
-  }
+    yourPeerLegacyLocationData,
+  };
 }
 
 export function SidePanelComponent({
@@ -106,7 +105,7 @@ export function SidePanelComponent({
 
 export default async function SidePanelPage({
   searchParams,
-  params
+  params,
 }: {
   searchParams: SearchParams;
   params: RouteParams;
@@ -119,5 +118,7 @@ export default async function SidePanelPage({
         params,
       })}
     />
-  ) : notFound();
+  ) : (
+    notFound()
+  );
 }

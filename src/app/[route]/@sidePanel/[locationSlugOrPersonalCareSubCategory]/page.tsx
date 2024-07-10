@@ -15,13 +15,17 @@ import {
   YourPeerLegacyServiceData,
   YourPeerLegacyServiceDataWrapper,
 } from "../../../common";
-import { Error404Response, fetchLocationsDetailData, map_gogetta_to_yourpeer } from "../../streetlives-api-service";
+import {
+  Error404Response,
+  fetchLocationsDetailData,
+  map_gogetta_to_yourpeer,
+} from "../../streetlives-api-service";
 import { getSidePanelComponentData, SidePanelComponent } from "../page";
 import customStreetViews from "./custom-streetviews";
 import LocationDetailComponent from "./location-detail-component";
 import Service from "./service-component";
 
-export {generateMetadata} from '../../metadata'
+export { generateMetadata } from "../../metadata";
 
 export default async function LocationDetail({
   params,
@@ -34,7 +38,7 @@ export default async function LocationDetail({
     if (
       params.route === PERSONAL_CARE_CATEGORY &&
       AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
-        params.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory
+        params.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory,
       )
     ) {
       return (
@@ -49,9 +53,9 @@ export default async function LocationDetail({
     } else {
       const location = map_gogetta_to_yourpeer(
         await fetchLocationsDetailData(
-          params.locationSlugOrPersonalCareSubCategory
+          params.locationSlugOrPersonalCareSubCategory,
         ),
-        true
+        true,
       );
 
       return (

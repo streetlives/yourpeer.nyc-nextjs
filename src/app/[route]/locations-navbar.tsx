@@ -68,7 +68,6 @@ export const LocationsNavbarResourceRoutes = () => {
   );
 };
 
-
 export const LocationsNavbarCompanyRoutes = () => {
   const [open, setOpen] = useState(false);
   return (

@@ -1,11 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-} from "@headlessui/react";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import Link from "next/link";
 
 interface OffCanvasMenuProps {
@@ -121,7 +117,7 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                           All Services
                         </Link>
                         <Link
-                          href={'/shelters-housing'}
+                          href={"/shelters-housing"}
                           className="text-xl text-dark hover:text-gray-800 transition inline-flex space-x-1 items-center"
                         >
                           Shelter & Housing
@@ -139,19 +135,19 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                           Clothing
                         </Link>
                         <Link
-                          href={'/personal-care'}
+                          href={"/personal-care"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
                           Personal Care
                         </Link>
                         <Link
-                          href={'/health-care'}
+                          href={"/health-care"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
                           Health Care
                         </Link>
                         <Link
-                          href={'/other-services'}
+                          href={"/other-services"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
                           Other Services

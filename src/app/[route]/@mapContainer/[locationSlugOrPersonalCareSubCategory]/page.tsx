@@ -27,7 +27,7 @@ export default async function MapDetail({
     if (
       params.route === PERSONAL_CARE_CATEGORY &&
       AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
-        params.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory
+        params.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory,
       )
     ) {
       return (
@@ -40,7 +40,7 @@ export default async function MapDetail({
       );
     } else {
       const location = await fetchLocationsDetailData(
-        params.locationSlugOrPersonalCareSubCategory
+        params.locationSlugOrPersonalCareSubCategory,
       );
       return <LocationsMap locationDetailStub={location} />;
     }

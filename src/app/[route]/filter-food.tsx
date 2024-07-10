@@ -5,8 +5,18 @@ import {
   useSearchParams,
 } from "next/navigation";
 import classNames from "classnames";
-import { FOOD_PARAM, SHELTER_PARAM_SINGLE_VALUE, SHELTER_PARAM_FAMILY_VALUE, ShelterValues, FOOD_PARAM_SOUP_KITCHEN_VALUE, FOOD_PARAM_PANTRY_VALUE } from "../common";
-import { getUrlWithNewFilterParameter, getUrlWithoutFilterParameter } from "../navigation";
+import {
+  FOOD_PARAM,
+  SHELTER_PARAM_SINGLE_VALUE,
+  SHELTER_PARAM_FAMILY_VALUE,
+  ShelterValues,
+  FOOD_PARAM_SOUP_KITCHEN_VALUE,
+  FOOD_PARAM_PANTRY_VALUE,
+} from "../common";
+import {
+  getUrlWithNewFilterParameter,
+  getUrlWithoutFilterParameter,
+} from "../navigation";
 
 export default function FilterFood() {
   const router = useRouter();
@@ -31,14 +41,11 @@ export default function FilterFood() {
   //rounded-l-lg
   //rounded-r-lg
   const selectedClasses = ["bg-primary", "border-black"];
-  const notSelectedClasses = [
-    "bg-white",
-    "border-gray-300",
-  ];
+  const notSelectedClasses = ["bg-white", "border-gray-300"];
 
   function handleIsAnyClick() {
     router.push(
-      getUrlWithoutFilterParameter(pathname, searchParams, FOOD_PARAM)
+      getUrlWithoutFilterParameter(pathname, searchParams, FOOD_PARAM),
     );
   }
 
@@ -48,8 +55,8 @@ export default function FilterFood() {
         pathname,
         searchParams,
         FOOD_PARAM,
-        FOOD_PARAM_SOUP_KITCHEN_VALUE
-      )
+        FOOD_PARAM_SOUP_KITCHEN_VALUE,
+      ),
     );
   }
 
@@ -59,8 +66,8 @@ export default function FilterFood() {
         pathname,
         searchParams,
         FOOD_PARAM,
-        FOOD_PARAM_PANTRY_VALUE
-      )
+        FOOD_PARAM_PANTRY_VALUE,
+      ),
     );
   }
 
@@ -75,7 +82,7 @@ export default function FilterFood() {
             null,
             commonClasses
               .concat("rounded-l-lg")
-              .concat(!foodParam ? selectedClasses : notSelectedClasses)
+              .concat(!foodParam ? selectedClasses : notSelectedClasses),
           )}
         >
           <input
@@ -96,8 +103,8 @@ export default function FilterFood() {
             commonClasses.concat(
               foodParam == FOOD_PARAM_SOUP_KITCHEN_VALUE
                 ? selectedClasses
-                : notSelectedClasses
-            )
+                : notSelectedClasses,
+            ),
           )}
         >
           <input
@@ -120,17 +127,15 @@ export default function FilterFood() {
               .concat(
                 foodParam == FOOD_PARAM_PANTRY_VALUE
                   ? selectedClasses
-                  : notSelectedClasses
-              )
+                  : notSelectedClasses,
+              ),
           )}
         >
           <input
             type="radio"
             id="filter_food_type_pantry"
             name="accommodationType"
-            value={
-              foodParam == FOOD_PARAM_PANTRY_VALUE ? "true" : undefined
-            }
+            value={foodParam == FOOD_PARAM_PANTRY_VALUE ? "true" : undefined}
             className="sr-only"
             onClick={handleIsPantryClick}
           />
@@ -140,4 +145,3 @@ export default function FilterFood() {
     </fieldset>
   );
 }
-

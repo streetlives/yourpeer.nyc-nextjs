@@ -1,5 +1,13 @@
 import Link from "next/link";
-import { ABOUT_US_ROUTE, CATEGORY_TO_ROUTE_MAP, CONTACT_US_ROUTE, DONATE_ROUTE, LOCATION_ROUTE, PRIVACY_POLICY_ROUTE, TERMS_OF_USE_ROUTE } from "./common";
+import {
+  ABOUT_US_ROUTE,
+  CATEGORY_TO_ROUTE_MAP,
+  CONTACT_US_ROUTE,
+  DONATE_ROUTE,
+  LOCATION_ROUTE,
+  PRIVACY_POLICY_ROUTE,
+  TERMS_OF_USE_ROUTE,
+} from "./common";
 
 export function Footer() {
   return (

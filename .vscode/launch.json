@@ -7,9 +7,9 @@
       "request": "launch",
       "command": "npm run dev -- --experimental-https",
       "env": {
-        "NEXT_PUBLIC_GO_GETTA_PROD_URL":"https://w6pkliozjh.execute-api.us-east-1.amazonaws.com/prod"
+        "NEXT_PUBLIC_GO_GETTA_PROD_URL": "https://w6pkliozjh.execute-api.us-east-1.amazonaws.com/prod"
       },
-      "envFile": "${workspaceFolder}/.env.local",
+      "envFile": "${workspaceFolder}/.env.local"
     },
     {
       "name": "Next.js: debug server-side (http)",
@@ -17,9 +17,9 @@
       "request": "launch",
       "command": "npm run dev",
       "env": {
-        "NEXT_PUBLIC_GO_GETTA_PROD_URL":"https://w6pkliozjh.execute-api.us-east-1.amazonaws.com/prod"
+        "NEXT_PUBLIC_GO_GETTA_PROD_URL": "https://w6pkliozjh.execute-api.us-east-1.amazonaws.com/prod"
       },
-      "envFile": "${workspaceFolder}/.env.local",
+      "envFile": "${workspaceFolder}/.env.local"
     },
     {
       "name": "Next.js: debug client-side",
