@@ -2,13 +2,11 @@
 
 import { ChangeEvent } from "react";
 import {
-  ParsedRequirements,
   parseRequirementParam,
   REQUIREMENT_PARAM,
   REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE,
   REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE,
   REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE,
-  RequirementValue,
 } from "../common";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved } from "../navigation";

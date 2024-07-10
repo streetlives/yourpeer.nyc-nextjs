@@ -1,4 +1,4 @@
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import {
   ABOUT_US_ROUTE,
   AMENITIES_PARAM_LAUNDRY_VALUE,

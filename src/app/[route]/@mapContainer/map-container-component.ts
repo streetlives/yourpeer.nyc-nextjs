@@ -1,15 +1,11 @@
-import { notFound } from "next/navigation";
 import {
-  Category,
   REQUIREMENT_PARAM,
-  RESOURCE_ROUTES,
   RouteParams,
   SearchParams,
   SimplifiedLocationData,
   parseCategoryFromRoute,
   parseRequest,
 } from "../../common";
-import LocationsMap from "../map";
 import {
   getSimplifiedLocationData,
   getTaxonomies,

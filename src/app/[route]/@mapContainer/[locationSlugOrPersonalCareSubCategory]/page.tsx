@@ -2,11 +2,9 @@ import { notFound } from "next/navigation";
 import {
   AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING,
   AmenitiesSubCategory,
-  Category,
   PERSONAL_CARE_CATEGORY,
   SearchParams,
   SubRouteParams,
-  parseCategoryFromRoute,
 } from "../../../common";
 import LocationsMap from "../../map";
 import {

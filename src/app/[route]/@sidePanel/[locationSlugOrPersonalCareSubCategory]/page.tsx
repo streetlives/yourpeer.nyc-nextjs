@@ -2,18 +2,9 @@ import { notFound } from "next/navigation";
 import {
   AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING,
   AmenitiesSubCategory,
-  CATEGORIES,
-  CATEGORY_DESCRIPTION_MAP,
-  CategoryNotNull,
-  getIconPath,
-  getServicesWrapper,
-  LocationDetailData,
   PERSONAL_CARE_CATEGORY,
   SearchParams,
   SubRouteParams,
-  YourPeerLegacyScheduleData,
-  YourPeerLegacyServiceData,
-  YourPeerLegacyServiceDataWrapper,
 } from "../../../common";
 import {
   Error404Response,
@@ -24,9 +15,7 @@ import {
   getSidePanelComponentData,
   SidePanelComponent,
 } from "../side-panel-component";
-import customStreetViews from "./custom-streetviews";
 import LocationDetailComponent from "./location-detail-component";
-import Service from "./service-component";
 
 export { generateMetadata } from "../../metadata";
 

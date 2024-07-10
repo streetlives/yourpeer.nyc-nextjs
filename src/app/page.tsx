@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Footer } from "./footer";
 import Link from "next/link";
-import OffCanvasMenu from "@/components/OffCanvasMenu";
 import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {

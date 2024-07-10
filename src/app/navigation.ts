@@ -1,6 +1,5 @@
 import { ReadonlyURLSearchParams } from "next/navigation";
 import {
-  AGE_PARAM,
   AMENITIES_PARAM,
   AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING,
   AmenitiesSubCategory,
@@ -20,7 +19,6 @@ import {
   SearchParams,
   UrlParamName,
 } from "./common";
-import { assert } from "console";
 
 // Change category
 export function getUrlWithNewCategory(
