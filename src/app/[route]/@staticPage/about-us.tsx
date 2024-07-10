@@ -54,7 +54,7 @@ export function AboutUsPage() {
 
           <Swiper
             id="aboutSwiperContainer"
-            className="w-full h-auto"
+            className="w-full h-auto !py-12 carousel-wrapper"
             modules={[Pagination]}
             spaceBetween={50}
             slidesPerView={3}

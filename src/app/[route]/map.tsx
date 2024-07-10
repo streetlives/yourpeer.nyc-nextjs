@@ -20,7 +20,7 @@ interface Position {
   lng: number;
 }
 
-const MAX_NUM_LOCATIONS_TO_INCLUDE_IN_BOUNDS = 5
+const MAX_NUM_LOCATIONS_TO_INCLUDE_IN_BOUNDS = 5;
 
 const GOOGLE_MAPS_API_KEY = (
   process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string
@@ -157,12 +157,12 @@ interface SimplifiedLocationDataWithDistance extends SimplifiedLocationData {
 // this exists because useMap hook must be inside of APIWrapper in order to work
 function MapWrapper({
   locationStubs,
-  locationDetailStub
+  locationDetailStub,
 }: {
   locationStubs?: SimplifiedLocationData[];
   locationDetailStub?: SimplifiedLocationData;
-}){
-  const router = useRouter()
+}) {
+  const router = useRouter();
   const [userPosition, setUserPosition] = useState<GeolocationPosition>();
   const [mapCenter, setMapCenter] = useLocalStorage<Position>(
     "map-center",
@@ -233,9 +233,20 @@ function MapWrapper({
     );
   }, [locationDetailStub, setMapCenter]);
 
+  const centerTheMap = () => {
+    if (userPosition) {
+      setMapCenter({
+        lat: userPosition.coords.latitude,
+        lng: userPosition.coords.longitude,
+      });
+    } else {
+      setMapCenter(centralPark);
+    }
+  };
+
   // when we get new locationStubs AND the user's location is set,
   // then pan/zoom the map to contain 25 locations
-  // FIXME: do we want to set a maximum distance? 
+  // FIXME: do we want to set a maximum distance?
   useEffect(() => {
     if (userPosition && locationStubs && locationStubs.length) {
       const simplifiedLocationDataWithDistance: SimplifiedLocationDataWithDistance[] =
@@ -273,84 +284,64 @@ function MapWrapper({
   }, [userPosition, locationStubs, googleMap]);
 
   return (
-    <Map
-      defaultZoom={defaultZoom}
-      gestureHandling={"greedy"}
-      streetViewControl={false}
-      mapTypeControl={false}
-      fullscreenControl={false}
-      center={mapCenter}
-      onCameraChanged={handleCameraChange}
-      styles={mapStyles}
-    >
-      {locationStubs
-        ? locationStubs.map((locationStub) => (
-            <Marker
-              key={locationStub.id}
-              position={{
-                lat: locationStub.position.coordinates[1],
-                lng: locationStub.position.coordinates[0],
-              }}
-              clickable={true}
-              onClick={() =>
-                router.push(`/${LOCATION_ROUTE}/${locationStub.slug}`)
-              }
-              title={locationStub.name}
-              icon={locationStub.closed ? closedMarker : markerIcon}
-            />
-          ))
-        : undefined}
-      {locationDetailStub?
-            <Marker
-              position={{
-                lat: locationDetailStub.position.coordinates[1],
-                lng: locationDetailStub.position.coordinates[0],
-              }}
-              clickable={true}
-              onClick={() =>
-                router.push(`/${LOCATION_ROUTE}/${locationDetailStub.slug}`)
-              }
-              title={locationDetailStub.name}
-              icon={activeMarkerIcon}
-            />
-        : undefined}
-      {userPosition ? (
-        <Marker
-          position={{
-            lat: userPosition.coords.latitude,
-            lng: userPosition.coords.longitude,
-          }}
-          clickable={false}
-          title="You are here!"
-          icon={myLocationIcon}
-        />
-      ) : undefined}
-    </Map>
-  );
-}
-
-export default function LocationsMap({
-  locationStubs,
-  locationDetailStub
-}: {
-  locationStubs?: SimplifiedLocationData[];
-  locationDetailStub?: SimplifiedLocationData;
-}) {
-  return (
-    <div
-      id="map_container"
-      className="w-full hidden md:block md:w-1/2 lg:w-2/3 bg-gray-300 h-full flex-1 relative"
-    >
-      <div id="map" className="w-full h-full">
-        <APIProvider apiKey={GOOGLE_MAPS_API_KEY} libraries={["marker"]}>
-          <MapWrapper
-            locationStubs={locationStubs}
-            locationDetailStub={locationDetailStub}
+    <>
+      <Map
+        defaultZoom={defaultZoom}
+        gestureHandling={"greedy"}
+        streetViewControl={false}
+        mapTypeControl={false}
+        fullscreenControl={false}
+        center={mapCenter}
+        onCameraChanged={handleCameraChange}
+        styles={mapStyles}
+      >
+        {locationStubs
+          ? locationStubs.map((locationStub) => (
+              <Marker
+                key={locationStub.id}
+                position={{
+                  lat: locationStub.position.coordinates[1],
+                  lng: locationStub.position.coordinates[0],
+                }}
+                clickable={true}
+                onClick={() =>
+                  router.push(`/${LOCATION_ROUTE}/${locationStub.slug}`)
+                }
+                title={locationStub.name}
+                icon={locationStub.closed ? closedMarker : markerIcon}
+              />
+            ))
+          : undefined}
+        {locationDetailStub ? (
+          <Marker
+            position={{
+              lat: locationDetailStub.position.coordinates[1],
+              lng: locationDetailStub.position.coordinates[0],
+            }}
+            clickable={true}
+            onClick={() =>
+              router.push(`/${LOCATION_ROUTE}/${locationDetailStub.slug}`)
+            }
+            title={locationDetailStub.name}
+            icon={activeMarkerIcon}
           />
-        </APIProvider>
-      </div>
+        ) : undefined}
+        {userPosition ? (
+          <Marker
+            position={{
+              lat: userPosition.coords.latitude,
+              lng: userPosition.coords.longitude,
+            }}
+            clickable={false}
+            title="You are here!"
+            icon={myLocationIcon}
+          />
+        ) : undefined}
+      </Map>
+
       <div
         id="recenter-btn"
+        onClick={centerTheMap}
         className="absolute top-2 right-2 z-[1] bg-white/95 flex items-center justify-center cursor-pointer w-9 h-9 rounded"
       >
         <svg
@@ -367,6 +358,30 @@ export default function LocationsMap({
             fill="#5A87FF"
           />
         </svg>
+      </div>
+    </>
+  );
+}
+
+export default function LocationsMap({
+  locationStubs,
+  locationDetailStub,
+}: {
+  locationStubs?: SimplifiedLocationData[];
+  locationDetailStub?: SimplifiedLocationData;
+}) {
+  return (
+    <div
+      id="map_container"
+      className="w-full hidden md:block md:w-1/2 lg:w-2/3 bg-gray-300 h-full flex-1 relative"
+    >
+      <div id="map" className="w-full h-full">
+        <APIProvider apiKey={GOOGLE_MAPS_API_KEY} libraries={["marker"]}>
+          <MapWrapper
+            locationStubs={locationStubs}
+            locationDetailStub={locationDetailStub}
+          />
+        </APIProvider>
       </div>
     </div>
   );
