@@ -14,24 +14,8 @@ import {
   getSimplifiedLocationData,
   getTaxonomies,
 } from "../streetlives-api-service";
+import { getMapContainerData } from "./map-container-component";
 
-export async function getMapContainerData({
-  searchParams,
-  params,
-}: {
-  searchParams: SearchParams;
-  params: RouteParams;
-}): Promise<SimplifiedLocationData[]> {
-  const category = parseCategoryFromRoute(params.route);
-  const parsedSearchParams = parseRequest({ params, searchParams });
-  const taxonomiesResults = await getTaxonomies(category, parsedSearchParams);
-  const locationStubs = await getSimplifiedLocationData({
-    ...parsedSearchParams,
-    ...parsedSearchParams[REQUIREMENT_PARAM],
-    ...taxonomiesResults,
-  });
-  return locationStubs;
-}
 
 export default async function MapContainerPage({
   searchParams,

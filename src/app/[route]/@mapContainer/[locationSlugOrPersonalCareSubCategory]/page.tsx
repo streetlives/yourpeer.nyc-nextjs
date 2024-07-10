@@ -13,7 +13,7 @@ import {
   Error404Response,
   fetchLocationsDetailData,
 } from "../../streetlives-api-service";
-import { getMapContainerData } from "../page";
+import { getMapContainerData } from "../map-container-component";
 
 export default async function MapDetail({
   searchParams,

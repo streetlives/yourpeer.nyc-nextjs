@@ -20,7 +20,7 @@ import {
   fetchLocationsDetailData,
   map_gogetta_to_yourpeer,
 } from "../../streetlives-api-service";
-import { getSidePanelComponentData, SidePanelComponent } from "../page";
+import { getSidePanelComponentData, SidePanelComponent } from "../side-panel-component";
 import customStreetViews from "./custom-streetviews";
 import LocationDetailComponent from "./location-detail-component";
 import Service from "./service-component";
