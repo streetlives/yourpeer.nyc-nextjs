@@ -1,15 +1,9 @@
-import {
-  ReadonlyURLSearchParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import classNames from "classnames";
 import {
   SHELTER_PARAM,
   SHELTER_PARAM_SINGLE_VALUE,
   SHELTER_PARAM_FAMILY_VALUE,
-  ShelterValues,
 } from "../common";
 import {
   getUrlWithNewFilterParameter,

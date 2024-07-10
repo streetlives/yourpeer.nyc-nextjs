@@ -1,19 +1,7 @@
 import { notFound } from "next/navigation";
-import {
-  Category,
-  REQUIREMENT_PARAM,
-  RESOURCE_ROUTES,
-  RouteParams,
-  SearchParams,
-  SimplifiedLocationData,
-  parseCategoryFromRoute,
-  parseRequest,
-} from "../../common";
+import { RESOURCE_ROUTES, RouteParams, SearchParams } from "../../common";
 import LocationsMap from "../map";
-import {
-  getSimplifiedLocationData,
-  getTaxonomies,
-} from "../streetlives-api-service";
+
 import { getMapContainerData } from "./map-container-component";
 
 export default async function MapContainerPage({

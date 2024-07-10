@@ -1,9 +1,4 @@
-import {
-  ReadonlyURLSearchParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import classNames from "classnames";
 import { OPEN_PARAM } from "../common";
 import {

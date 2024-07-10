@@ -2,17 +2,14 @@
 
 import { useLocalStorage } from "usehooks-ts";
 import {
-  AdvancedMarker,
   APIProvider,
-  InfoWindow,
   Map,
   MapCameraChangedEvent,
   Marker,
-  Pin,
   useMap,
 } from "@vis.gl/react-google-maps";
 import { LOCATION_ROUTE, SimplifiedLocationData } from "../common";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface Position {

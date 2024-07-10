@@ -1,15 +1,7 @@
-import {
-  ReadonlyURLSearchParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import classNames from "classnames";
 import {
   FOOD_PARAM,
-  SHELTER_PARAM_SINGLE_VALUE,
-  SHELTER_PARAM_FAMILY_VALUE,
-  ShelterValues,
   FOOD_PARAM_SOUP_KITCHEN_VALUE,
   FOOD_PARAM_PANTRY_VALUE,
 } from "../common";

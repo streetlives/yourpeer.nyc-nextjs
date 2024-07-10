@@ -1,26 +1,17 @@
 import _ from "underscore";
 import {
-  AGE_PARAM,
   Category,
   CATEGORY_TO_TAXONOMY_NAME_MAP,
   LocationDetailData,
-  OPEN_PARAM,
-  SearchParams,
-  SEARCH_PARAM,
-  ShelterValues,
   SHELTER_PARAM,
   SHELTER_PARAM_FAMILY_VALUE,
   SHELTER_PARAM_SINGLE_VALUE,
   YourPeerParsedRequestParams,
   TaxonomyResponse,
   Taxonomy,
-  SHOW_ADVANCED_FILTERS_PARAM,
   SimplifiedLocationData,
   FullLocationData,
-  ServiceData,
-  CategoryNotNull,
   YourPeerLegacyServiceData,
-  TAXONOMY_CATEGORIES,
   YourPeerLegacyLocationData,
   YourPeerLegacyServiceDataWrapper,
   setIntersection,
@@ -31,17 +22,12 @@ import {
   CLOTHING_PARAM,
   CLOTHING_PARAM_CASUAL_VALUE,
   CLOTHING_PARAM_PROFESSIONAL_VALUE,
-  REQUIREMENT_PARAM,
   AMENITIES_PARAM,
   AmenitiesSubCategory,
   AMENITY_TO_TAXONOMY_NAME_MAP,
   TaxonomySubCategory,
 } from "../common";
-import FiltersPopup from "./filters-popup";
-import FiltersHeader from "./filters-header";
-import LocationsContainer from "./locations-container";
 import moment from "moment";
-import LocationsMap from "./map";
 
 const NEXT_PUBLIC_GO_GETTA_PROD_URL = process.env.NEXT_PUBLIC_GO_GETTA_PROD_URL;
 const DEFAULT_PAGE_SIZE = 20;

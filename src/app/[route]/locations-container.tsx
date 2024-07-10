@@ -5,7 +5,6 @@ import {
   CATEGORY_ICON_SRC_MAP,
   getIconPath,
   getServicesWrapper,
-  LOCATION_ROUTE,
   YourPeerLegacyLocationData,
 } from "../common";
 import { LocationsContainerPager } from "./locations-container-pager";

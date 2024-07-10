@@ -1,26 +1,14 @@
-import {
-  ReadonlyURLSearchParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import classNames from "classnames";
 import {
   CLOTHING_PARAM_CASUAL_VALUE,
   CLOTHING_PARAM,
   CLOTHING_PARAM_PROFESSIONAL_VALUE,
-  REQUIREMENT_PARAM,
-  parseRequirementParam,
-  REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE,
-  REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE,
-  REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE,
 } from "../common";
 import {
   getUrlWithNewFilterParameter,
-  getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved,
   getUrlWithoutFilterParameter,
 } from "../navigation";
-import { ChangeEvent } from "react";
 import { RequirementFieldset } from "./requirements-fieldset";
 
 export default function FilterClothing() {

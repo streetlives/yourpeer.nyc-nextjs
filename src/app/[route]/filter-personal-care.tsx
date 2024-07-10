@@ -1,36 +1,15 @@
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
-  ReadonlyURLSearchParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
-import classNames from "classnames";
-import {
-  CLOTHING_PARAM_CASUAL_VALUE,
-  CLOTHING_PARAM,
-  CLOTHING_PARAM_PROFESSIONAL_VALUE,
-  REQUIREMENT_PARAM,
-  parseRequirementParam,
-  REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE,
-  REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE,
-  REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE,
-  AMENITIES_PARAM,
   AmenitiesSubCategory,
   AMENITIES_PARAM_LAUNDRY_VALUE,
   AMENITIES_PARAM_TOILETRIES_VALUE,
   getParsedAmenities,
   PERSONAL_CARE_CATEGORY,
-  PersonalCareValue,
   AMENITIES_PARAM_RESTROOM_VALUE,
   AMENITIES_PARAM_SHOWER_VALUE,
   parsePathnameToCategoryAndSubCategory,
 } from "../common";
-import {
-  getUrlWithNewFilterParameter,
-  getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved,
-  getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved,
-  getUrlWithoutFilterParameter,
-} from "../navigation";
+import { getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved } from "../navigation";
 import { ChangeEvent } from "react";
 import { RequirementFieldset } from "./requirements-fieldset";
 
