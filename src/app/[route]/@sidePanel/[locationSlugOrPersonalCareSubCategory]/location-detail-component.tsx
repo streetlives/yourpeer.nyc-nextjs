@@ -124,7 +124,6 @@ export default function LocationDetailComponent({
               <span translate="no" className="truncate">
                 {location.area}
               </span>
-              <span>•</span>
               <span className="text-green truncate">✓</span>
               <span className="text-green truncate">
                 <span>
