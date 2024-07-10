@@ -25,12 +25,12 @@ import { assert } from "console";
 // Change category
 export function getUrlWithNewCategory(
   newCategory: CategoryNotNull,
-  searchParams: ReadonlyURLSearchParams | Map<string, string>
+  searchParams: ReadonlyURLSearchParams | Map<string, string>,
 ): string {
   const currentUrlSearchParams = new URLSearchParams(
     Array.from(searchParams.entries()).filter(([k, v]) =>
-      FILTERS_THAT_APPLY_TO_ALL_CATEGORIES.includes(k)
-    )
+      FILTERS_THAT_APPLY_TO_ALL_CATEGORIES.includes(k),
+    ),
   );
 
   const newSearchParamsStr = currentUrlSearchParams.toString();
@@ -237,7 +237,7 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
 export function getUrlToNextOrPreviousPage(
   pathname: string | null,
   searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
-  nextPage: boolean
+  nextPage: boolean,
 ) {
   if (!pathname) {
     throw new Error("Expected pathname to not be null");

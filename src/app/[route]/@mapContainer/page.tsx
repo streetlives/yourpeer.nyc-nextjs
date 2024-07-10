@@ -16,7 +16,6 @@ import {
 } from "../streetlives-api-service";
 import { getMapContainerData } from "./map-container-component";
 
-
 export default async function MapContainerPage({
   searchParams,
   params,

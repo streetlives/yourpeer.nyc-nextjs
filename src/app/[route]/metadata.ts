@@ -36,7 +36,7 @@ export async function generateMetadata({
       if ((params as SubRouteParams).locationSlugOrPersonalCareSubCategory) {
         try {
           let locationDetailsResponse = await fetchLocationsDetailData(
-            (params as SubRouteParams).locationSlugOrPersonalCareSubCategory
+            (params as SubRouteParams).locationSlugOrPersonalCareSubCategory,
           );
           title = locationDetailsResponse.address.neighborhood;
           description = locationDetailsResponse.Organization.name
@@ -53,14 +53,14 @@ export async function generateMetadata({
       break;
     case CATEGORY_TO_ROUTE_MAP["health-care"]:
       title = attachSuffix(
-        "Health Care Services & Centers For Unhoused People"
+        "Health Care Services & Centers For Unhoused People",
       );
       description =
         "Find health care services and centers for unhoused people in NYC. Take advantage of our support network and prioritize your health and well-being. ";
       break;
     case CATEGORY_TO_ROUTE_MAP["other"]:
       title = attachSuffix(
-        "Other Resources & Services For Unhoused People In NYC"
+        "Other Resources & Services For Unhoused People In NYC",
       );
       description =
         "Discover information about all resources and services offered by locations hosted on YourPeer in NYC. ";
@@ -85,7 +85,7 @@ export async function generateMetadata({
       break;
     case CATEGORY_TO_ROUTE_MAP["personal-care"]:
       title = attachSuffix(
-        "Personal Care Resources For Unhoused People In NYC"
+        "Personal Care Resources For Unhoused People In NYC",
       );
       description =
         "Find personal care resources for unhoused individuals in NYC through YourPeer. Discover a range of services and resources for additional support. ";
@@ -94,7 +94,7 @@ export async function generateMetadata({
       ) {
         case AMENITIES_PARAM_LAUNDRY_VALUE:
           title = attachSuffix(
-            "Free Laundry Services For Unhoused People In NYC"
+            "Free Laundry Services For Unhoused People In NYC",
           );
           description =
             "YourPeer connects unhoused individuals in NYC with free laundry services and locations. Explore our resources to find nearby laundry facilities.";
@@ -133,7 +133,7 @@ export async function generateMetadata({
       break;
     default:
       title = attachSuffix(
-        "New York City Services & Resources For Unhoused People"
+        "New York City Services & Resources For Unhoused People",
       );
   }
   // TODO: sitemap

@@ -30,7 +30,10 @@ import {
   map_gogetta_to_yourpeer,
 } from "../streetlives-api-service";
 import { notFound } from "next/navigation";
-import { getSidePanelComponentData, SidePanelComponent } from "./side-panel-component";
+import {
+  getSidePanelComponentData,
+  SidePanelComponent,
+} from "./side-panel-component";
 
 export { generateMetadata } from "../metadata";
 
