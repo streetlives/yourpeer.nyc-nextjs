@@ -4,7 +4,6 @@ import {
   CATEGORIES,
   CATEGORY_DESCRIPTION_MAP,
   CategoryNotNull,
-  getIconPath,
   getServicesWrapper,
   LOCATION_ROUTE,
   YourPeerLegacyLocationData,
@@ -12,6 +11,11 @@ import {
 } from "@/app/common";
 import Service from "./service-component";
 import customStreetViews from "./custom-streetviews";
+
+
+export function getIconPath(iconName: string): string {
+  return `/img/icons/${iconName}.png`;
+}
 
 const GOOGLE_MAPS_API_KEY = (
   process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string
