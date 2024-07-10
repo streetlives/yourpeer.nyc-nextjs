@@ -29,17 +29,23 @@ export const ROUTE_TO_CATEGORY_MAP: Record<string, CategoryNotNull> =
     Object.entries(CATEGORY_TO_ROUTE_MAP).map(([k, v]) => [
       v,
       k as CategoryNotNull,
-    ])
+    ]),
   );
 
 export const LOCATION_ROUTE = "locations";
 
+export const ABOUT_US_ROUTE = "about-us";
+export const CONTACT_US_ROUTE = "contact-us";
+export const DONATE_ROUTE = "donate";
+export const TERMS_OF_USE_ROUTE = "terms-of-use";
+export const PRIVACY_POLICY_ROUTE = "privacy-policy";
+
 export const COMPANY_ROUTES = [
-  "about-us",
-  "contact-us",
-  "donate",
-  "terms-of-use",
-  "privacy-policy",
+  ABOUT_US_ROUTE,
+  CONTACT_US_ROUTE,
+  DONATE_ROUTE,
+  TERMS_OF_USE_ROUTE,
+  PRIVACY_POLICY_ROUTE,
 ] as const;
 
 export type CompanyRoute = (typeof COMPANY_ROUTES)[number];
@@ -52,7 +58,7 @@ export function parseCategoryFromRoute(route: string): Category {
     return ROUTE_TO_CATEGORY_MAP[route];
   } else if (
     AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
-      route as AmenitiesSubCategory
+      route as AmenitiesSubCategory,
     )
   ) {
     return PERSONAL_CARE_CATEGORY;
@@ -123,7 +129,7 @@ export const REQUIREMENT_PARAM_CANONICAL_ORDERING = [
 ];
 
 export function parseRequirementParam(
-  requirementParam: string | null | undefined
+  requirementParam: string | null | undefined,
 ): RequirementValue[] {
   return requirementParam
     ? (requirementParam.split(" ") as RequirementValue[])
@@ -153,7 +159,7 @@ export type AmenitiesSubCategory =
   (typeof AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING)[number];
 
 export function parseAmenitiesQueryParam(
-  amenitiesParam: string | null | undefined
+  amenitiesParam: string | null | undefined,
 ): AmenitiesSubCategory[] {
   return amenitiesParam
     ? (amenitiesParam.split(" ") as AmenitiesSubCategory[])
@@ -162,7 +168,7 @@ export function parseAmenitiesQueryParam(
 
 export function getParsedAmenities(
   amenitiesSubCategory: AmenitiesSubCategory | null,
-  amenitiesQueryParam: string | null | undefined
+  amenitiesQueryParam: string | null | undefined,
 ): AmenitiesSubCategory[] {
   const parsedAmenitiesFromQueryParam: AmenitiesSubCategory[] =
     parseAmenitiesQueryParam(amenitiesQueryParam);
@@ -228,10 +234,10 @@ export interface ParsedAmenities {
   [AMENITIES_PARAM_TOILETRIES_VALUE]: boolean;
 }
 
-type CategoryAndSubCategory = [Category, AmenitiesSubCategory | null]
+type CategoryAndSubCategory = [Category, AmenitiesSubCategory | null];
 
 export function parsePathnameToCategoryAndSubCategory(
-  pathname: string
+  pathname: string,
 ): CategoryAndSubCategory {
   const pathComponents = pathname.split("/");
   const [_, firstPathComponent, secondPathComponent] = pathComponents;
@@ -239,8 +245,8 @@ export function parsePathnameToCategoryAndSubCategory(
   assert(
     secondPathComponent === undefined ||
       AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
-        secondPathComponent as AmenitiesSubCategory
-      )
+        secondPathComponent as AmenitiesSubCategory,
+      ),
   );
   return [
     ROUTE_TO_CATEGORY_MAP[firstPathComponent],
@@ -249,15 +255,15 @@ export function parsePathnameToCategoryAndSubCategory(
 }
 
 export interface RouteParams {
-  route: string
+  route: string;
 }
 
 export interface SubRouteParams extends RouteParams {
-  locationSlugOrPersonalCareSubCategory: string
+  locationSlugOrPersonalCareSubCategory: string;
 }
 
 function parseRouteParamsToCategoryAndSubCategory(
-  params: RouteParams | SubRouteParams
+  params: RouteParams | SubRouteParams,
 ): CategoryAndSubCategory {
   let category,
     subcategory = null;
@@ -268,8 +274,8 @@ function parseRouteParamsToCategoryAndSubCategory(
   if (subRouteParams.locationSlugOrPersonalCareSubCategory) {
     assert(
       AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
-        subRouteParams.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory
-      )
+        subRouteParams.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory,
+      ),
     );
     subcategory =
       subRouteParams.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory;
@@ -278,7 +284,7 @@ function parseRouteParamsToCategoryAndSubCategory(
 }
 
 export function parsePageParam(
-  currentPageValueStr: string | string[] | undefined | null
+  currentPageValueStr: string | string[] | undefined | null,
 ): number {
   if (Array.isArray(currentPageValueStr)) {
     throw new Error("Did not expect to receive multiple page params");
@@ -288,7 +294,6 @@ export function parsePageParam(
     : 0;
 }
 
-
 // the idea here is we pass in all the raw request stuff that we can get from nextjs
 // this can either be the pathname, if we in a client component, and can use usePathname()
 // or it can be the route and locationSlugOrPersonalCareSubCategory params which we get as page params from nextjs
@@ -296,11 +301,11 @@ export function parsePageParam(
 export function parseRequest({
   pathname,
   searchParams,
-  params
+  params,
 }: {
   pathname?: string;
   searchParams: SearchParams;
-  params: RouteParams | SubRouteParams
+  params: RouteParams | SubRouteParams;
 }): YourPeerParsedRequestParams {
   assert.ok(pathname !== undefined || params !== undefined);
   // TODO: validate searchParams with Joi
@@ -312,11 +317,11 @@ export function parseRequest({
     : parseRouteParamsToCategoryAndSubCategory(params);
 
   const parsedRequirements = parseRequirementParam(
-    searchParams[REQUIREMENT_PARAM] as string
+    searchParams[REQUIREMENT_PARAM] as string,
   );
   const parsedAmenitiesParam = getParsedAmenities(
     amenitiesSubCategory,
-    searchParams[AMENITIES_PARAM] as string
+    searchParams[AMENITIES_PARAM] as string,
   );
   return {
     [SEARCH_PARAM]:
@@ -350,30 +355,30 @@ export function parseRequest({
     [SHOW_ADVANCED_FILTERS_PARAM]: !!searchParams[SHOW_ADVANCED_FILTERS_PARAM],
     [REQUIREMENT_PARAM]: {
       noRequirement: parsedRequirements.includes(
-        REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE
+        REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE,
       ),
       referralRequired: parsedRequirements.includes(
-        REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE
+        REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE,
       ),
       membershipRequired: parsedRequirements.includes(
-        REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE
+        REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE,
       ),
     },
     [AMENITIES_PARAM]: {
       [AMENITIES_PARAM_LAUNDRY_VALUE]: parsedAmenitiesParam.includes(
-        AMENITIES_PARAM_LAUNDRY_VALUE
+        AMENITIES_PARAM_LAUNDRY_VALUE,
       ),
       [AMENITIES_PARAM_RESTROOM_VALUE]: parsedAmenitiesParam.includes(
-        AMENITIES_PARAM_RESTROOM_VALUE
+        AMENITIES_PARAM_RESTROOM_VALUE,
       ),
       [AMENITIES_PARAM_SHOWER_VALUE]: parsedAmenitiesParam.includes(
-        AMENITIES_PARAM_SHOWER_VALUE
+        AMENITIES_PARAM_SHOWER_VALUE,
       ),
       [AMENITIES_PARAM_TOILETRIES_VALUE]: parsedAmenitiesParam.includes(
-        AMENITIES_PARAM_TOILETRIES_VALUE
+        AMENITIES_PARAM_TOILETRIES_VALUE,
       ),
     },
-    [PAGE_PARAM]: parsePageParam(searchParams[PAGE_PARAM])
+    [PAGE_PARAM]: parsePageParam(searchParams[PAGE_PARAM]),
   };
 }
 
@@ -699,7 +704,7 @@ export interface YourPeerLegacyLocationData {
 
 export function getServicesWrapper(
   serviceCategory: Category,
-  location: YourPeerLegacyLocationData
+  location: YourPeerLegacyLocationData,
 ): YourPeerLegacyServiceDataWrapper {
   switch (serviceCategory) {
     case "clothing":
@@ -716,12 +721,12 @@ export function getServicesWrapper(
       return location.accommodation_services;
   }
   throw new Error(
-    "Received unexpected value for serviceCategory " + serviceCategory
+    "Received unexpected value for serviceCategory " + serviceCategory,
   );
 }
 
 export const RESOURCE_ROUTES = Object.keys(ROUTE_TO_CATEGORY_MAP).concat(
-  LOCATION_ROUTE
+  LOCATION_ROUTE,
 );
 
-export const PAGE_PARAM = 'page'
+export const PAGE_PARAM = "page";

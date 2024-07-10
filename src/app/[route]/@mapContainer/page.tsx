@@ -1,5 +1,8 @@
+import { notFound } from "next/navigation";
 import {
   Category,
+  REQUIREMENT_PARAM,
+  RESOURCE_ROUTES,
   RouteParams,
   SearchParams,
   SimplifiedLocationData,
@@ -7,22 +10,11 @@ import {
   parseRequest,
 } from "../../common";
 import LocationsMap from "../map";
-import { fetchLocations } from "../streetlives-api-service";
-
-
-export async function getMapContainerData({
-  searchParams,
-  params,
-}: {
-  searchParams: SearchParams;
-  params: RouteParams;
-}): Promise<SimplifiedLocationData[]>{
-  const category = parseCategoryFromRoute(params.route);
-  const parsedSearchParams = parseRequest({ params, searchParams });
-  // TODO: break fetchLocations out into two API calls
-  const { locationStubs } = await fetchLocations(category, parsedSearchParams);
-  return locationStubs 
-}
+import {
+  getSimplifiedLocationData,
+  getTaxonomies,
+} from "../streetlives-api-service";
+import { getMapContainerData } from "./map-container-component";
 
 export default async function MapContainerPage({
   searchParams,
@@ -31,12 +23,14 @@ export default async function MapContainerPage({
   searchParams: SearchParams;
   params: RouteParams;
 }) {
-  return (
+  return RESOURCE_ROUTES.includes(params.route) ? (
     <LocationsMap
       locationStubs={await getMapContainerData({
         searchParams,
         params,
       })}
     />
+  ) : (
+    notFound()
   );
 }

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
 import { getUrlToNextOrPreviousPage } from "../navigation";
@@ -13,7 +13,7 @@ export function LocationsContainerPager({
   currentPage: number;
 }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
   const hasPreviousPage = currentPage > 0;
   const hasNextPage = currentPage < numberOfPages;
 

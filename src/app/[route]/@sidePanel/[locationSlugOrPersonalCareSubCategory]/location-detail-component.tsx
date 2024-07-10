@@ -1,6 +1,15 @@
-'use client';
+"use client";
 
-import { CATEGORIES, CATEGORY_DESCRIPTION_MAP, CategoryNotNull, getIconPath, getServicesWrapper, LOCATION_ROUTE, YourPeerLegacyLocationData, YourPeerLegacyServiceDataWrapper } from "@/app/common";
+import {
+  CATEGORIES,
+  CATEGORY_DESCRIPTION_MAP,
+  CategoryNotNull,
+  getIconPath,
+  getServicesWrapper,
+  LOCATION_ROUTE,
+  YourPeerLegacyLocationData,
+  YourPeerLegacyServiceDataWrapper,
+} from "@/app/common";
 import Service from "./service-component";
 import customStreetViews from "./custom-streetviews";
 
@@ -25,7 +34,6 @@ const CATEGORY_ICON_SRC_MAP: Record<CategoryNotNull, string> = {
   clothing: "clothing-icon",
   "personal-care": "personal-care-icon",
 };
-
 
 function LocationService({
   serviceInfo,
@@ -55,7 +63,6 @@ function LocationService({
   );
 }
 
-
 export default function LocationDetailComponent({
   location,
   slug,
@@ -72,7 +79,7 @@ export default function LocationDetailComponent({
           className="text-dark hover:text-black transition flex-shrink-0"
           id="details_back"
           onClick={() => {
-            const url = `/${LOCATION_ROUTE}`
+            const url = `/${LOCATION_ROUTE}`;
             //console.log('url', url, window.history.length)
             window.location.replace(`/${LOCATION_ROUTE}`);
           }}
@@ -308,7 +315,7 @@ export default function LocationDetailComponent({
             {CATEGORIES.map((serviceCategory) => {
               const servicesWrapper = getServicesWrapper(
                 serviceCategory,
-                location
+                location,
               );
               return servicesWrapper?.services.length ? (
                 <LocationService

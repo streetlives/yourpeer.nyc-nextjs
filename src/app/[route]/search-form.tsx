@@ -1,15 +1,25 @@
-'use client';
+"use client";
 
-import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  ReadonlyURLSearchParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import Link from "next/link";
 import React, { ChangeEvent, useState } from "react";
 import { SEARCH_PARAM } from "../common";
 import { getUrlWithNewFilterParameter } from "../navigation";
 
 function SearchPanel({ currentSearch }: { currentSearch: string }) {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
   const pathname = usePathname();
-  const newUrl = getUrlWithNewFilterParameter(pathname, searchParams, SEARCH_PARAM, currentSearch);
+  const newUrl = getUrlWithNewFilterParameter(
+    pathname,
+    searchParams,
+    SEARCH_PARAM,
+    currentSearch,
+  );
   //console.log("currentSearch", currentSearch);
   return (
     <div
@@ -66,65 +76,64 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
   );
 }
 
-export default function SearchForm(){
+export default function SearchForm() {
+  const searchParams = useSearchParams() || new Map();
+  const [search, setSearch] = useState(searchParams.get(SEARCH_PARAM));
+  const [inputHasFocus, setInputHasFocus] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
-    const searchParams = useSearchParams();
-    const [search, setSearch] = useState(searchParams.get(SEARCH_PARAM));
-    const [inputHasFocus, setInputHasFocus] = useState(false);
-    const router = useRouter();
-    const pathname = usePathname();
+  function doSetSearch(e: ChangeEvent) {
+    setSearch((e.target as HTMLFormElement).value);
+  }
 
-    function doSetSearch(e: ChangeEvent){
-        setSearch((e.target as HTMLFormElement).value);
+  function handleFocus(e: React.FocusEvent<HTMLInputElement>) {
+    setInputHasFocus(true);
+  }
+
+  function handleBlur(e: React.FocusEvent<HTMLInputElement>) {
+    // we add a small delay to allow time for page to navigate
+    setTimeout(() => setInputHasFocus(false), 250);
+  }
+
+  function doSearchSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (search) {
+      router.push(
+        getUrlWithNewFilterParameter(
+          pathname,
+          searchParams,
+          SEARCH_PARAM,
+          search,
+        ),
+      );
     }
+  }
 
-    function handleFocus(e: React.FocusEvent<HTMLInputElement>){
-        setInputHasFocus(true);
-    }
-
-    function handleBlur(e: React.FocusEvent<HTMLInputElement>){
-        // we add a small delay to allow time for page to navigate
-        setTimeout(() => setInputHasFocus(false), 250);
-    }
-
-    function doSearchSubmit(event: React.FormEvent<HTMLFormElement>){
-        event.preventDefault();
-        event.stopPropagation();
-
-        if(search){
-          router.push(
-            getUrlWithNewFilterParameter(
-              pathname,
-              searchParams,
-              SEARCH_PARAM,
-              search
-            )
-          );
-        }
-    }
-
-    return (
-      <>
-        <form
-          className="md:flex items-center ml-2 relative flex-1"
-          id="search_form"
-          onSubmit={doSearchSubmit}
-        >
-          <input
-            className="text-xs md:pl-3 sm:text-sm text-gray-600 w-full border-none p-0 focus:ring-0 block mt-0"
-            type="text"
-            placeholder="Search"
-            id="search_input"
-            name="search"
-            onChange={doSetSearch}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            value={search || ""}
-          />
-        </form>
-        {inputHasFocus && search ? (
-          <SearchPanel currentSearch={search} />
-        ) : undefined}
-      </>
-    );
+  return (
+    <>
+      <form
+        className="md:flex items-center ml-2 relative flex-1"
+        id="search_form"
+        onSubmit={doSearchSubmit}
+      >
+        <input
+          className="text-xs md:pl-3 sm:text-sm text-gray-600 w-full border-none p-0 focus:ring-0 block mt-0"
+          type="text"
+          placeholder="Search"
+          id="search_input"
+          name="search"
+          onChange={doSetSearch}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          value={search || ""}
+        />
+      </form>
+      {inputHasFocus && search ? (
+        <SearchPanel currentSearch={search} />
+      ) : undefined}
+    </>
+  );
 }

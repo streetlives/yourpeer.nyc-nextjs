@@ -20,7 +20,7 @@ interface Position {
   lng: number;
 }
 
-const MAX_NUM_LOCATIONS_TO_INCLUDE_IN_BOUNDS = 5
+const MAX_NUM_LOCATIONS_TO_INCLUDE_IN_BOUNDS = 5;
 
 const GOOGLE_MAPS_API_KEY = (
   process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string
@@ -129,7 +129,7 @@ function calculateDistanceInMiles(
   lat1: number,
   lng1: number,
   lat2: number,
-  lng2: number
+  lng2: number,
 ): number {
   const earthRadiusMiles = 3958.8; // Earth's radius in miles
   const dLat = toRad(lat2 - lat1);
@@ -157,12 +157,12 @@ interface SimplifiedLocationDataWithDistance extends SimplifiedLocationData {
 // this exists because useMap hook must be inside of APIWrapper in order to work
 function MapWrapper({
   locationStubs,
-  locationDetailStub
+  locationDetailStub,
 }: {
   locationStubs?: SimplifiedLocationData[];
   locationDetailStub?: SimplifiedLocationData;
-}){
-  const router = useRouter()
+}) {
+  const router = useRouter();
   const [userPosition, setUserPosition] = useState<GeolocationPosition>();
   const [mapCenter, setMapCenter] = useLocalStorage<Position>(
     "map-center",
@@ -171,7 +171,7 @@ function MapWrapper({
           lat: locationDetailStub.position.coordinates[1],
           lng: locationDetailStub.position.coordinates[0],
         }
-      : centralPark
+      : centralPark,
   );
   const googleMap = useMap();
 
@@ -195,7 +195,7 @@ function MapWrapper({
         });
       }
     },
-    [setMapCenter]
+    [setMapCenter],
   );
 
   useEffect(() => {
@@ -208,7 +208,7 @@ function MapWrapper({
           pos.coords.latitude,
           pos.coords.longitude,
           centralPark.lat,
-          centralPark.lng
+          centralPark.lng,
         );
 
         if (locationDetailStub) {
@@ -229,13 +229,13 @@ function MapWrapper({
       },
       (error) => {
         console.log("unable to get user position", error);
-      }
+      },
     );
   }, [locationDetailStub, setMapCenter]);
 
   // when we get new locationStubs AND the user's location is set,
   // then pan/zoom the map to contain 25 locations
-  // FIXME: do we want to set a maximum distance? 
+  // FIXME: do we want to set a maximum distance?
   useEffect(() => {
     if (userPosition && locationStubs && locationStubs.length) {
       const simplifiedLocationDataWithDistance: SimplifiedLocationDataWithDistance[] =
@@ -246,7 +246,7 @@ function MapWrapper({
               userPosition.coords.latitude,
               userPosition.coords.longitude,
               locationStub.position.coordinates[1],
-              locationStub.position.coordinates[0]
+              locationStub.position.coordinates[0],
             ),
           }))
           .sort((a, b) => a.distanceMiles - b.distanceMiles);
@@ -254,8 +254,8 @@ function MapWrapper({
         0,
         Math.min(
           simplifiedLocationDataWithDistance.length,
-          MAX_NUM_LOCATIONS_TO_INCLUDE_IN_BOUNDS
-        )
+          MAX_NUM_LOCATIONS_TO_INCLUDE_IN_BOUNDS,
+        ),
       );
 
       if (googleMap) {
@@ -263,10 +263,19 @@ function MapWrapper({
         closest25Locations.forEach(function (loc) {
           var latLng = new google.maps.LatLng(
             loc.position.coordinates[1],
-            loc.position.coordinates[0]
+            loc.position.coordinates[0],
           );
           bounds.extend(latLng);
         });
+        // make sure user position is shown on the map
+        if (userPosition) {
+          bounds.extend(
+            new google.maps.LatLng(
+              userPosition.coords.latitude,
+              userPosition.coords.longitude,
+            ),
+          );
+        }
         googleMap.fitBounds(bounds);
       }
     }
@@ -300,20 +309,20 @@ function MapWrapper({
             />
           ))
         : undefined}
-      {locationDetailStub?
-            <Marker
-              position={{
-                lat: locationDetailStub.position.coordinates[1],
-                lng: locationDetailStub.position.coordinates[0],
-              }}
-              clickable={true}
-              onClick={() =>
-                router.push(`/${LOCATION_ROUTE}/${locationDetailStub.slug}`)
-              }
-              title={locationDetailStub.name}
-              icon={activeMarkerIcon}
-            />
-        : undefined}
+      {locationDetailStub ? (
+        <Marker
+          position={{
+            lat: locationDetailStub.position.coordinates[1],
+            lng: locationDetailStub.position.coordinates[0],
+          }}
+          clickable={true}
+          onClick={() =>
+            router.push(`/${LOCATION_ROUTE}/${locationDetailStub.slug}`)
+          }
+          title={locationDetailStub.name}
+          icon={activeMarkerIcon}
+        />
+      ) : undefined}
       {userPosition ? (
         <Marker
           position={{
@@ -331,7 +340,7 @@ function MapWrapper({
 
 export default function LocationsMap({
   locationStubs,
-  locationDetailStub
+  locationDetailStub,
 }: {
   locationStubs?: SimplifiedLocationData[];
   locationDetailStub?: SimplifiedLocationData;
