@@ -20,16 +20,17 @@ import {
   SearchParams,
   UrlParamName,
 } from "./common";
+import { assert } from "console";
 
 // Change category
 export function getUrlWithNewCategory(
   newCategory: CategoryNotNull,
-  searchParams: ReadonlyURLSearchParams,
+  searchParams: ReadonlyURLSearchParams | Map<string, string>
 ): string {
   const currentUrlSearchParams = new URLSearchParams(
     Array.from(searchParams.entries()).filter(([k, v]) =>
-      FILTERS_THAT_APPLY_TO_ALL_CATEGORIES.includes(k),
-    ),
+      FILTERS_THAT_APPLY_TO_ALL_CATEGORIES.includes(k)
+    )
   );
 
   const newSearchParamsStr = currentUrlSearchParams.toString();
@@ -40,7 +41,7 @@ export function getUrlWithNewCategory(
 }
 
 function getSearchParamsList(
-  searchParams: ReadonlyURLSearchParams | SearchParams,
+  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
 ): string[][] {
   return searchParams instanceof ReadonlyURLSearchParams
     ? Array.from(searchParams.entries())
@@ -53,11 +54,14 @@ function getSearchParamsList(
 
 // Add filter parameter
 export function getUrlWithNewFilterParameter(
-  pathname: string,
-  searchParams: ReadonlyURLSearchParams | SearchParams,
+  pathname: string | null,
+  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
   urlParamName: UrlParamName,
   urlParamValue: string = "yes",
 ): string {
+  if (!pathname) {
+    throw new Error("Expected pathname to not be null");
+  }
   const searchParamsList: string[][] = getSearchParamsList(searchParams);
 
   const currentUrlSearchParams = new URLSearchParams(searchParamsList);
@@ -73,10 +77,13 @@ export function getUrlWithNewFilterParameter(
 }
 
 export function getUrlWithoutFilterParameter(
-  pathname: string,
-  searchParams: ReadonlyURLSearchParams | SearchParams,
+  pathname: string | null,
+  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
   urlParamName: UrlParamName,
 ): string {
+  if (!pathname) {
+    throw new Error("Expected pathname to not be null");
+  }
   const searchParamsList: string[][] = getSearchParamsList(searchParams);
 
   const currentUrlSearchParams = new URLSearchParams(searchParamsList);
@@ -97,11 +104,14 @@ export function getUrlWithoutFilterParameters(): string {
 }
 
 export function getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
-  pathname: string,
-  searchParams: ReadonlyURLSearchParams | SearchParams,
+  pathname: string | null,
+  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
   newRequirementTypeToAddOrRemove: RequirementValue,
   addRequirementType: boolean,
 ): string {
+  if (!pathname) {
+    throw new Error("Expected pathname to not be null");
+  }
   const searchParamsList: string[][] = getSearchParamsList(searchParams);
 
   const currentUrlSearchParams = new URLSearchParams(searchParamsList);
@@ -146,11 +156,14 @@ export function getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
 }
 
 export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved(
-  pathname: string,
-  searchParams: ReadonlyURLSearchParams | SearchParams,
+  pathname: string | null,
+  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
   newAmenityToAddOrRemove: AmenitiesSubCategory,
   addAmenity: boolean,
 ): string {
+  if (!pathname) {
+    throw new Error("Expected pathname to not be null");
+  }
   const searchParamsList: string[][] = getSearchParamsList(searchParams);
 
   const currentUrlSearchParams = new URLSearchParams(searchParamsList);
@@ -222,10 +235,13 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
 }
 
 export function getUrlToNextOrPreviousPage(
-  pathname: string,
-  searchParams: ReadonlyURLSearchParams | SearchParams,
-  nextPage: boolean,
+  pathname: string | null,
+  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
+  nextPage: boolean
 ) {
+  if (!pathname) {
+    throw new Error("Expected pathname to not be null");
+  }
   const searchParamsList: string[][] = getSearchParamsList(searchParams);
 
   const currentUrlSearchParams = new URLSearchParams(searchParamsList);

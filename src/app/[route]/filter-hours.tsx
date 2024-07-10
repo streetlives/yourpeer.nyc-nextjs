@@ -14,7 +14,7 @@ import {
 export default function FilterHours() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
   const isOpenNow = !!searchParams.get(OPEN_PARAM);
   const commonClasses = [
     "text-xs",

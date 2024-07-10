@@ -21,7 +21,7 @@ import {
 export default function FilterFood() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
   const foodParam = searchParams.get(FOOD_PARAM);
   const commonClasses = [
     "text-xs",

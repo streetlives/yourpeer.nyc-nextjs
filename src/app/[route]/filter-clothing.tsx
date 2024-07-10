@@ -26,7 +26,7 @@ import { RequirementFieldset } from "./requirements-fieldset";
 export default function FilterClothing() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
   const clothingParam = searchParams.get(CLOTHING_PARAM);
   const commonClasses = [
     "text-xs",

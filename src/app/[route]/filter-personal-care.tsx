@@ -38,7 +38,10 @@ import { RequirementFieldset } from "./requirements-fieldset";
 export default function FilterPersonalCare() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
+  if (!pathname) {
+    throw new Error("Expected pathname to not be null");
+  }
   const personalCareParam = searchParams.get(PERSONAL_CARE_CATEGORY);
   const [category, amenitiesSubCategory] =
     parsePathnameToCategoryAndSubCategory(pathname);

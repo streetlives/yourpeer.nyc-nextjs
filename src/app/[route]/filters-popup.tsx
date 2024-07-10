@@ -41,7 +41,7 @@ function CategoryFilterLabel({
   activeImgSrc: string;
   labelText: string;
 }) {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
   const isActive = labelCategory == currentCategory;
   const router = useRouter();
 
@@ -92,7 +92,7 @@ export default function FiltersPopup({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
   const [ageParam, setAgeParam] = useState<number>();
 
   useEffect(() => {

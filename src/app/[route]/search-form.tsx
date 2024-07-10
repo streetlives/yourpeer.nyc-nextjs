@@ -12,7 +12,7 @@ import { SEARCH_PARAM } from "../common";
 import { getUrlWithNewFilterParameter } from "../navigation";
 
 function SearchPanel({ currentSearch }: { currentSearch: string }) {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
   const pathname = usePathname();
   const newUrl = getUrlWithNewFilterParameter(
     pathname,
@@ -77,7 +77,7 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
 }
 
 export default function SearchForm() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
   const [search, setSearch] = useState(searchParams.get(SEARCH_PARAM));
   const [inputHasFocus, setInputHasFocus] = useState(false);
   const router = useRouter();
