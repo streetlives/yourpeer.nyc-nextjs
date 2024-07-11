@@ -1,28 +1,33 @@
-'use client';
+"use client";
 
-import { CATEGORIES, getServicesWrapper, LocationDetailData, YourPeerLegacyLocationData } from "@/app/common";
+import {
+  CATEGORIES,
+  getServicesWrapper,
+  LocationDetailData,
+  YourPeerLegacyLocationData,
+} from "@/app/common";
 import { useState } from "react";
 
-export function ReportCompletedView(){
-    return (
-      <div
-        id="reportCompletedView"
-        className="flex items-center flex-col justify-center w-2/3 mx-auto mt-10"
-      >
-        <div className="text-center text-dark font-medium text-base mb-2">
-          Thank you so much!
-        </div>
-        <p className="text-sm tex-dark font-normal mb-4 text-center">
-          You're helping everyone to get more reliable information and making it
-          easier for people to get the help they need.
-        </p>
-        <div className="flex justify-center">
-          <button className="primary-button">
-            <span>Done</span>
-          </button>
-        </div>
+export function ReportCompletedView() {
+  return (
+    <div
+      id="reportCompletedView"
+      className="flex items-center flex-col justify-center w-2/3 mx-auto mt-10"
+    >
+      <div className="text-center text-dark font-medium text-base mb-2">
+        Thank you so much!
       </div>
-    );
+      <p className="text-sm tex-dark font-normal mb-4 text-center">
+        You're helping everyone to get more reliable information and making it
+        easier for people to get the help they need.
+      </p>
+      <div className="flex justify-center">
+        <button className="primary-button">
+          <span>Done</span>
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export function ReportIssueForm({
@@ -37,7 +42,7 @@ export function ReportIssueForm({
     event.preventDefault();
     event.stopPropagation();
     const checks = (event.target as HTMLFormElement).querySelectorAll(
-      "input[type=checkbox]"
+      "input[type=checkbox]",
     );
     const currentUrl = window.location.href;
     let issues = currentUrl + "\n";
@@ -48,7 +53,7 @@ export function ReportIssueForm({
     }
     issues += (
       (event.target as HTMLFormElement).querySelector(
-        "#reportContent"
+        "#reportContent",
       ) as HTMLInputElement
     ).value;
     fetch("/api/report", {
@@ -88,13 +93,13 @@ export function ReportIssueForm({
               {CATEGORIES.filter((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location
+                  location,
                 );
                 return servicesWrapper.services.length;
               }).map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location
+                  location,
                 );
                 return (
                   <div>

@@ -11,7 +11,14 @@ import {
 import { LOCATION_ROUTE, SimplifiedLocationData } from "../common";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { activeMarkerIcon, closedMarker, defaultZoom, mapStyles, markerIcon, myLocationIcon } from "@/map-common";
+import {
+  activeMarkerIcon,
+  closedMarker,
+  defaultZoom,
+  mapStyles,
+  markerIcon,
+  myLocationIcon,
+} from "@/map-common";
 
 interface Position {
   lat: number;
@@ -114,8 +121,8 @@ function MapWrapper({
           centralPark.lat,
           centralPark.lng,
         );
-        
-        console.log('distanceInMiles', distanceInMiles)
+
+        console.log("distanceInMiles", distanceInMiles);
 
         if (locationDetailStub) {
           setMapCenter({
@@ -144,7 +151,6 @@ function MapWrapper({
   // FIXME: do we want to set a maximum distance?
   useEffect(() => {
     if (userPosition && locationStubs && locationStubs.length) {
-
       // TODO: eliminate duplicate code
       const distanceInMiles = calculateDistanceInMiles(
         userPosition.coords.latitude,
@@ -186,7 +192,7 @@ function MapWrapper({
         closest25Locations.forEach(function (loc) {
           var latLng = new google.maps.LatLng(
             loc.position.coordinates[1],
-            loc.position.coordinates[0]
+            loc.position.coordinates[0],
           );
           bounds.extend(latLng);
         });
@@ -195,8 +201,8 @@ function MapWrapper({
           bounds.extend(
             new google.maps.LatLng(
               userPosition.coords.latitude,
-              userPosition.coords.longitude
-            )
+              userPosition.coords.longitude,
+            ),
           );
         }
         googleMap.fitBounds(bounds);

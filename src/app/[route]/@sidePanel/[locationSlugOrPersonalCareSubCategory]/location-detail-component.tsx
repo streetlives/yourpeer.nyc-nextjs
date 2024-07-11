@@ -16,7 +16,6 @@ import { activeMarkerIcon, defaultZoom, mapStyles } from "@/map-common";
 import { useState } from "react";
 import { ReportIssueForm } from "./report-issue";
 
-
 export function getIconPath(iconName: string): string {
   return `/img/icons/${iconName}.png`;
 }
@@ -82,7 +81,7 @@ export default function LocationDetailComponent({
     customStreetViews[slug] || `${location.lat},${location.lng}`;
   const [isShowingReportIssueForm, setIsShowingReportIssueForm] =
     useState(false);
-  function hideReportIssueForm(){
+  function hideReportIssueForm() {
     setIsShowingReportIssueForm(false);
   }
   return (
@@ -115,7 +114,10 @@ export default function LocationDetailComponent({
         </a>
       </div>
       {isShowingReportIssueForm ? (
-        <ReportIssueForm location={location} hideReportIssueForm={hideReportIssueForm}/>
+        <ReportIssueForm
+          location={location}
+          hideReportIssueForm={hideReportIssueForm}
+        />
       ) : (
         <div id="locationDetailsContainer">
           <div className="px-4 pb-4 shadow">
@@ -366,7 +368,7 @@ export default function LocationDetailComponent({
               {CATEGORIES.map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location
+                  location,
                 );
                 return servicesWrapper?.services.length ? (
                   <LocationService

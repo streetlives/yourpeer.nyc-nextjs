@@ -1,4 +1,3 @@
-
 export const defaultZoom = 14;
 
 export const markerIcon =
