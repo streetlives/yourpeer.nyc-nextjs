@@ -82,6 +82,9 @@ export default function LocationDetailComponent({
     customStreetViews[slug] || `${location.lat},${location.lng}`;
   const [isShowingReportIssueForm, setIsShowingReportIssueForm] =
     useState(false);
+  function hideReportIssueForm(){
+    setIsShowingReportIssueForm(false);
+  }
   return (
     <div className="details-screen bg-white md:block z-40 fixed md:absolute inset-0 w-full h-full overflow-y-auto scrollbar-hide">
       <div className="h-14 px-4 gap-x-2 flex justify-between md:justify-start items-center bg-white sticky top-0 left-0 w-full right-0 z-10">
@@ -112,7 +115,7 @@ export default function LocationDetailComponent({
         </a>
       </div>
       {isShowingReportIssueForm ? (
-        <ReportIssueForm location={location} />
+        <ReportIssueForm location={location} hideReportIssueForm={hideReportIssueForm}/>
       ) : (
         <div id="locationDetailsContainer">
           <div className="px-4 pb-4 shadow">

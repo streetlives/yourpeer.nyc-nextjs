@@ -1,4 +1,7 @@
+'use client';
+
 import { CATEGORIES, getServicesWrapper, LocationDetailData, YourPeerLegacyLocationData } from "@/app/common";
+import { useState } from "react";
 
 export function ReportCompletedView(){
     return (
@@ -22,9 +25,48 @@ export function ReportCompletedView(){
     );
 }
 
-export function ReportIssueForm({location}:{location:YourPeerLegacyLocationData}){
+export function ReportIssueForm({
+  location,
+  hideReportIssueForm,
+}: {
+  location: YourPeerLegacyLocationData;
+  hideReportIssueForm: () => void;
+}) {
+  const [isShowingSuccessForm, setIsShowingSuccessForm] = useState(false);
+  function sendEmailReport(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    const checks = (event.target as HTMLFormElement).querySelectorAll(
+      "input[type=checkbox]"
+    );
+    const currentUrl = window.location.href;
+    let issues = currentUrl + "\n";
+    for (let i = 0; i < checks.length; i++) {
+      if ((checks[i] as HTMLInputElement).checked) {
+        issues += (checks[i] as HTMLInputElement).value + "\n";
+      }
+    }
+    issues += (
+      (event.target as HTMLFormElement).querySelector(
+        "#reportContent"
+      ) as HTMLInputElement
+    ).value;
+    fetch("/api/report", {
+      method: "post",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+      },
+      body: issues,
+    }).then(() => {
+      setIsShowingSuccessForm(true);
+    });
+  }
   return (
-    <div className="w-full h-auto flex flex-col bg-white" id="reportContainer">
+    <form
+      className="w-full h-auto flex flex-col bg-white"
+      id="reportContainer"
+      onSubmit={sendEmailReport}
+    >
       <div className="px-5">
         <div id="reportView">
           <div id="stepOne">
@@ -95,16 +137,34 @@ export function ReportIssueForm({location}:{location:YourPeerLegacyLocationData}
             </div>
           </div>
           <div className="py-5">
-            <button
+            <input
               className="primary-button mt-5 w-full block"
               id="reportActionButton"
-              onClick={() => {}}
-            >
-              Send
-            </button>
+              type="submit"
+              value="Send"
+            ></input>
           </div>
         </div>
       </div>
-    </div>
+      {isShowingSuccessForm ? (
+        <div
+          id="reportCompletedView"
+          className="flex items-center flex-col justify-center w-2/3 mx-auto mt-10"
+        >
+          <div className="text-center text-dark font-medium text-base mb-2">
+            Thank you so much!
+          </div>
+          <p className="text-sm tex-dark font-normal mb-4 text-center">
+            You're helping everyone to get more reliable information and making
+            it easier for people to get the help they need.
+          </p>
+          <div className="flex justify-center">
+            <button className="primary-button" onClick={hideReportIssueForm}>
+              <span>Done</span>
+            </button>
+          </div>
+        </div>
+      ) : undefined}
+    </form>
   );
 }
