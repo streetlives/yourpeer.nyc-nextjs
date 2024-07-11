@@ -3,7 +3,6 @@
 import {
   CATEGORIES,
   getServicesWrapper,
-  LocationDetailData,
   YourPeerLegacyLocationData,
 } from "@/app/common";
 import { useState } from "react";
@@ -18,8 +17,8 @@ export function ReportCompletedView() {
         Thank you so much!
       </div>
       <p className="text-sm tex-dark font-normal mb-4 text-center">
-        You're helping everyone to get more reliable information and making it
-        easier for people to get the help they need.
+        You&apos;re helping everyone to get more reliable information and making
+        it easier for people to get the help they need.
       </p>
       <div className="flex justify-center">
         <button className="primary-button">
@@ -102,7 +101,7 @@ export function ReportIssueForm({
                   location,
                 );
                 return (
-                  <div>
+                  <div key={serviceCategory}>
                     {servicesWrapper.services.map((service) => (
                       <label
                         className="relative flex-1 flex space-x-2 cursor-pointer mt-3"
@@ -129,8 +128,8 @@ export function ReportIssueForm({
               htmlFor="reportContent"
               className="text-base text-dark font-medium"
             >
-              Please describe the issue below (Please don't enter any private
-              information)
+              Please describe the issue below (Please don&apos;t enter any
+              private information)
             </label>
             <div className="mt-4">
               <textarea
@@ -160,8 +159,8 @@ export function ReportIssueForm({
             Thank you so much!
           </div>
           <p className="text-sm tex-dark font-normal mb-4 text-center">
-            You're helping everyone to get more reliable information and making
-            it easier for people to get the help they need.
+            You&apos;re helping everyone to get more reliable information and
+            making it easier for people to get the help they need.
           </p>
           <div className="flex justify-center">
             <button className="primary-button" onClick={hideReportIssueForm}>
