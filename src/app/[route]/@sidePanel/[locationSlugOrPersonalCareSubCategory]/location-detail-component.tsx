@@ -11,6 +11,8 @@ import {
 } from "@/app/common";
 import Service from "./service-component";
 import customStreetViews from "./custom-streetviews";
+import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import { activeMarkerIcon, defaultZoom, mapStyles } from "@/map-common";
 
 
 export function getIconPath(iconName: string): string {
@@ -139,16 +141,49 @@ export default function LocationDetailComponent({
         </div>
         {location.closed ? undefined : (
           <div>
-            <div className="w-full max-h-72 h-72 bg-neutral-100 overflow-hidden relative hidden md:block">
-              <img
-                src={`https://maps.googleapis.com/maps/api/streetview?size=600x500&key=${GOOGLE_MAPS_API_KEY}&fov=100&location=${streetview}`}
-                className="w-full h-full object-cover object-center cursor-pointer"
-                loading="lazy"
-              />
+            <div>
+              <div className="w-full max-h-72 h-72 bg-neutral-100 overflow-hidden relative hidden md:block">
+                <img
+                  src={`https://maps.googleapis.com/maps/api/streetview?size=600x500&key=${GOOGLE_MAPS_API_KEY}&fov=100&location=${streetview}`}
+                  className="w-full h-full object-cover object-center cursor-pointer"
+                  loading="lazy"
+                />
+                <a
+                  href={`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=&viewpoint=${streetview}`}
+                  target="_blank"
+                  className="inline-block absolute bottom-4 right-4 z-0 bg-white shadow-sm rounded-full px-5 py-2 text-dark font-medium text-sm"
+                >
+                  View Street View
+                </a>
+              </div>
+            </div>
+            <div className="w-full max-h-52 h-52 overflow-hidden relative md:hidden">
+              <div id="miniMap" className="w-full h-full bg-neutral-100">
+                <APIProvider
+                  apiKey={GOOGLE_MAPS_API_KEY}
+                  libraries={["marker"]}
+                >
+                  <Map
+                    defaultZoom={defaultZoom}
+                    gestureHandling={"greedy"}
+                    streetViewControl={false}
+                    mapTypeControl={false}
+                    fullscreenControl={false}
+                    center={location}
+                    styles={mapStyles}
+                  >
+                    <Marker
+                      position={location}
+                      title={location.name}
+                      icon={activeMarkerIcon}
+                    />
+                  </Map>
+                </APIProvider>
+              </div>
               <a
-                href={`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=&viewpoint=${streetview}`}
+                href={`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${streetview}`}
                 target="_blank"
-                className="inline-block absolute bottom-4 right-4 z-0 bg-white shadow-sm rounded-full px-5 py-2 text-dark font-medium text-sm"
+                className="inline-block absolute bottom-4 right-4 z-0 bg-white shadow rounded-full px-5 py-2 text-dark font-medium text-sm"
               >
                 View Street View
               </a>
@@ -318,7 +353,7 @@ export default function LocationDetailComponent({
             {CATEGORIES.map((serviceCategory) => {
               const servicesWrapper = getServicesWrapper(
                 serviceCategory,
-                location,
+                location
               );
               return servicesWrapper?.services.length ? (
                 <LocationService
