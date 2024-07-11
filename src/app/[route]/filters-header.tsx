@@ -67,7 +67,7 @@ export default function FiltersHeader({
         ))}
 
         <Link
-          className="inline-flex flex-shrink-0 overflow-hidden items-center space-x-2 text-dark bg-gray-300 rounded-full text-xs py-1 px-3"
+          className="inline-flex flex-shrink-0 overflow-hidden items-center space-x-2 text-dark bg-neutral-100 rounded-full text-xs py-1 px-3"
           href={getUrlWithNewFilterParameter(
             `/${
               currentCategory === null
