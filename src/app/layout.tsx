@@ -1,8 +1,9 @@
 import "./globals.css";
 import GTranslateWrapper from "./gtranslate-wrapper";
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from "@next/third-parties/google";
 
-const GOOGLE_ANALYTICS_MEASUREMENT_ID = process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID as string
+const GOOGLE_ANALYTICS_MEASUREMENT_ID = process.env
+  .GOOGLE_ANALYTICS_MEASUREMENT_ID as string;
 
 export default function RootLayout({
   children,
