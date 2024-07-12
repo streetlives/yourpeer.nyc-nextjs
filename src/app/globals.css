@@ -30,10 +30,10 @@
     @apply text-[#1A73E9] underline hover:no-underline;
   }
 
-  .swiper-pagination .swiper-pagination-bullet {
+  .carousel-wrapper .swiper-pagination .swiper-pagination-bullet {
     @apply !bg-neutral-200 !w-2 !h-2;
   }
-  .swiper-pagination .swiper-pagination-bullet-active {
+  .carousel-wrapper .swiper-pagination .swiper-pagination-bullet-active {
     @apply !bg-gray-700;
   }
 

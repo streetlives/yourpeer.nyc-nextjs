@@ -146,6 +146,17 @@ function MapWrapper({
     );
   }, [locationDetailStub, setMapCenter]);
 
+  const centerTheMap = () => {
+    if (userPosition) {
+      setMapCenter({
+        lat: userPosition.coords.latitude,
+        lng: userPosition.coords.longitude,
+      });
+    } else {
+      setMapCenter(centralPark);
+    }
+  };
+
   // when we get new locationStubs AND the user's location is set,
   // then pan/zoom the map to contain 25 locations
   // FIXME: do we want to set a maximum distance?
@@ -211,59 +222,82 @@ function MapWrapper({
   }, [userPosition, locationStubs, googleMap]);
 
   return (
-    <Map
-      defaultZoom={defaultZoom}
-      gestureHandling={"greedy"}
-      streetViewControl={false}
-      mapTypeControl={false}
-      fullscreenControl={false}
-      center={mapCenter}
-      onCameraChanged={handleCameraChange}
-      styles={mapStyles}
-    >
-      {locationStubs
-        ? locationStubs.map((locationStub) => (
-            <Marker
-              key={locationStub.id}
-              position={{
-                lat: locationStub.position.coordinates[1],
-                lng: locationStub.position.coordinates[0],
-              }}
-              clickable={true}
-              onClick={() =>
-                router.push(`/${LOCATION_ROUTE}/${locationStub.slug}`)
-              }
-              title={locationStub.name}
-              icon={locationStub.closed ? closedMarker : markerIcon}
-            />
-          ))
-        : undefined}
-      {locationDetailStub ? (
-        <Marker
-          position={{
-            lat: locationDetailStub.position.coordinates[1],
-            lng: locationDetailStub.position.coordinates[0],
-          }}
-          clickable={true}
-          onClick={() =>
-            router.push(`/${LOCATION_ROUTE}/${locationDetailStub.slug}`)
-          }
-          title={locationDetailStub.name}
-          icon={activeMarkerIcon}
-        />
-      ) : undefined}
-      {userPosition ? (
-        <Marker
-          position={{
-            lat: userPosition.coords.latitude,
-            lng: userPosition.coords.longitude,
-          }}
-          clickable={false}
-          title="You are here!"
-          icon={myLocationIcon}
-        />
-      ) : undefined}
-    </Map>
+    <>
+      <Map
+        defaultZoom={defaultZoom}
+        gestureHandling={"greedy"}
+        streetViewControl={false}
+        mapTypeControl={false}
+        fullscreenControl={false}
+        center={mapCenter}
+        onCameraChanged={handleCameraChange}
+        styles={mapStyles}
+      >
+        {locationStubs
+          ? locationStubs.map((locationStub) => (
+              <Marker
+                key={locationStub.id}
+                position={{
+                  lat: locationStub.position.coordinates[1],
+                  lng: locationStub.position.coordinates[0],
+                }}
+                clickable={true}
+                onClick={() =>
+                  router.push(`/${LOCATION_ROUTE}/${locationStub.slug}`)
+                }
+                title={locationStub.name}
+                icon={locationStub.closed ? closedMarker : markerIcon}
+              />
+            ))
+          : undefined}
+        {locationDetailStub ? (
+          <Marker
+            position={{
+              lat: locationDetailStub.position.coordinates[1],
+              lng: locationDetailStub.position.coordinates[0],
+            }}
+            clickable={true}
+            onClick={() =>
+              router.push(`/${LOCATION_ROUTE}/${locationDetailStub.slug}`)
+            }
+            title={locationDetailStub.name}
+            icon={activeMarkerIcon}
+          />
+        ) : undefined}
+        {userPosition ? (
+          <Marker
+            position={{
+              lat: userPosition.coords.latitude,
+              lng: userPosition.coords.longitude,
+            }}
+            clickable={false}
+            title="You are here!"
+            icon={myLocationIcon}
+          />
+        ) : undefined}
+      </Map>
+
+      <div
+        id="recenter-btn"
+        onClick={centerTheMap}
+        className="absolute top-2 right-2 z-[1] bg-white/95 flex items-center justify-center cursor-pointer w-9 h-9 rounded"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="19"
+          height="19"
+          viewBox="0 0 19 19"
+          fill="none"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M18.0294 0.0566351L0.413683 7.84112C0.144651 7.96016 -0.0198463 8.23615 0.00343285 8.52942C0.026712 8.82269 0.232687 9.06927 0.517131 9.14438L7.12859 10.8845C7.6114 11.0114 7.98859 11.3883 8.11596 11.871L9.85611 18.4824C9.93099 18.767 10.1774 18.9732 10.4707 18.9967C10.764 19.0202 11.0402 18.8558 11.1594 18.5868L18.9402 0.971044C19.0552 0.709941 18.9985 0.404985 18.7971 0.202812C18.5957 0.000638069 18.291 -0.0573878 18.0294 0.0566351Z"
+            fill="#5A87FF"
+          />
+        </svg>
+      </div>
+    </>
   );
 }
 
@@ -286,25 +320,6 @@ export default function LocationsMap({
             locationDetailStub={locationDetailStub}
           />
         </APIProvider>
-      </div>
-      <div
-        id="recenter-btn"
-        className="absolute top-2 right-2 z-[1] bg-white/95 flex items-center justify-center cursor-pointer w-9 h-9 rounded"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="19"
-          height="19"
-          viewBox="0 0 19 19"
-          fill="none"
-        >
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M18.0294 0.0566351L0.413683 7.84112C0.144651 7.96016 -0.0198463 8.23615 0.00343285 8.52942C0.026712 8.82269 0.232687 9.06927 0.517131 9.14438L7.12859 10.8845C7.6114 11.0114 7.98859 11.3883 8.11596 11.871L9.85611 18.4824C9.93099 18.767 10.1774 18.9732 10.4707 18.9967C10.764 19.0202 11.0402 18.8558 11.1594 18.5868L18.9402 0.971044C19.0552 0.709941 18.9985 0.404985 18.7971 0.202812C18.5957 0.000638069 18.291 -0.0573878 18.0294 0.0566351Z"
-            fill="#5A87FF"
-          />
-        </svg>
       </div>
     </div>
   );
