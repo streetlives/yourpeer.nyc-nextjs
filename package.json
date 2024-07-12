@@ -13,6 +13,7 @@
     "all-checks": "npm run check-format && npm run check-types && npm run lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.4",
     "@headlessui/react": "^2.1.2",
     "@next/third-parties": "^14.2.5",
     "@sendgrid/mail": "^8.1.3",
