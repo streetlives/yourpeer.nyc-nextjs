@@ -4,7 +4,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { SEARCH_PARAM } from "../common";
-import { getUrlWithNewFilterParameter, getUrlWithoutFilterParameter } from "../navigation";
+import {
+  getUrlWithNewFilterParameter,
+  getUrlWithoutFilterParameter,
+} from "../navigation";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 function SearchPanel({ currentSearch }: { currentSearch: string }) {
@@ -74,7 +77,7 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
 
 export default function SearchForm() {
   const searchParams = useSearchParams() || new Map();
-  const searchParamFromQuery = searchParams.get(SEARCH_PARAM)
+  const searchParamFromQuery = searchParams.get(SEARCH_PARAM);
   const [search, setSearch] = useState(searchParams.get(SEARCH_PARAM));
   const [inputHasFocus, setInputHasFocus] = useState(false);
   const router = useRouter();
@@ -82,7 +85,7 @@ export default function SearchForm() {
 
   useEffect(() => {
     setSearch(searchParamFromQuery);
-  }, [searchParamFromQuery])
+  }, [searchParamFromQuery]);
 
   function doSetSearch(e: ChangeEvent) {
     setSearch((e.target as HTMLFormElement).value);
@@ -107,8 +110,8 @@ export default function SearchForm() {
           pathname,
           searchParams,
           SEARCH_PARAM,
-          search
-        )
+          search,
+        ),
       );
       setInputHasFocus(false);
     }
@@ -137,7 +140,7 @@ export default function SearchForm() {
             href={getUrlWithoutFilterParameter(
               pathname,
               searchParams,
-              SEARCH_PARAM
+              SEARCH_PARAM,
             )}
           >
             <XMarkIcon className="w-5 h-5 text-black" />
