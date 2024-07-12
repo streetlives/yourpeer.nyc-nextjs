@@ -1,25 +1,20 @@
 "use client";
 
-import {
-  ReadonlyURLSearchParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { SEARCH_PARAM } from "../common";
 import { getUrlWithNewFilterParameter, getUrlWithoutFilterParameter } from "../navigation";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 function SearchPanel({ currentSearch }: { currentSearch: string }) {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
   const pathname = usePathname();
   const newUrl = getUrlWithNewFilterParameter(
     pathname,
     searchParams,
     SEARCH_PARAM,
-    currentSearch
+    currentSearch,
   );
   //console.log("currentSearch", currentSearch);
   return (
@@ -78,11 +73,16 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
 }
 
 export default function SearchForm() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
+  const searchParamFromQuery = searchParams.get(SEARCH_PARAM)
   const [search, setSearch] = useState(searchParams.get(SEARCH_PARAM));
   const [inputHasFocus, setInputHasFocus] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+
+  useEffect(() => {
+    setSearch(searchParamFromQuery);
+  }, [searchParamFromQuery])
 
   function doSetSearch(e: ChangeEvent) {
     setSearch((e.target as HTMLFormElement).value);
@@ -110,18 +110,8 @@ export default function SearchForm() {
           search
         )
       );
+      setInputHasFocus(false);
     }
-  }
-
-  function clearSearch() {
-    setSearch("");
-    router.push(
-      getUrlWithoutFilterParameter(
-        pathname,
-        searchParams,
-        SEARCH_PARAM
-      )
-    )
   }
 
   return (
@@ -143,9 +133,15 @@ export default function SearchForm() {
           value={search || ""}
         />
         {search ? (
-          <button onClick={clearSearch}>
+          <Link
+            href={getUrlWithoutFilterParameter(
+              pathname,
+              searchParams,
+              SEARCH_PARAM
+            )}
+          >
             <XMarkIcon className="w-5 h-5 text-black" />
-          </button>
+          </Link>
         ) : undefined}
       </form>
       {inputHasFocus && search ? (

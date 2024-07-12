@@ -1,36 +1,15 @@
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
-  ReadonlyURLSearchParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
-import classNames from "classnames";
-import {
-  CLOTHING_PARAM_CASUAL_VALUE,
-  CLOTHING_PARAM,
-  CLOTHING_PARAM_PROFESSIONAL_VALUE,
-  REQUIREMENT_PARAM,
-  parseRequirementParam,
-  REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE,
-  REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE,
-  REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE,
-  AMENITIES_PARAM,
   AmenitiesSubCategory,
   AMENITIES_PARAM_LAUNDRY_VALUE,
   AMENITIES_PARAM_TOILETRIES_VALUE,
   getParsedAmenities,
   PERSONAL_CARE_CATEGORY,
-  PersonalCareValue,
   AMENITIES_PARAM_RESTROOM_VALUE,
   AMENITIES_PARAM_SHOWER_VALUE,
   parsePathnameToCategoryAndSubCategory,
 } from "../common";
-import {
-  getUrlWithNewFilterParameter,
-  getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved,
-  getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved,
-  getUrlWithoutFilterParameter,
-} from "../navigation";
+import { getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved } from "../navigation";
 import { ChangeEvent } from "react";
 import { RequirementFieldset } from "./requirements-fieldset";
 
@@ -38,10 +17,17 @@ import { RequirementFieldset } from "./requirements-fieldset";
 export default function FilterPersonalCare() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
+  if (!pathname) {
+    throw new Error("Expected pathname to not be null");
+  }
   const personalCareParam = searchParams.get(PERSONAL_CARE_CATEGORY);
-  const [category, amenitiesSubCategory] = parsePathnameToCategoryAndSubCategory(pathname)
-  const parsedAmenities = getParsedAmenities(amenitiesSubCategory, personalCareParam);
+  const [category, amenitiesSubCategory] =
+    parsePathnameToCategoryAndSubCategory(pathname);
+  const parsedAmenities = getParsedAmenities(
+    amenitiesSubCategory,
+    personalCareParam,
+  );
 
   function handleToiletriesChange(e: ChangeEvent) {
     router.push(
@@ -49,8 +35,8 @@ export default function FilterPersonalCare() {
         pathname,
         searchParams,
         AMENITIES_PARAM_TOILETRIES_VALUE,
-        (e.target as HTMLFormElement).checked
-      )
+        (e.target as HTMLFormElement).checked,
+      ),
     );
   }
 
@@ -60,8 +46,8 @@ export default function FilterPersonalCare() {
         pathname,
         searchParams,
         AMENITIES_PARAM_RESTROOM_VALUE,
-        (e.target as HTMLFormElement).checked
-      )
+        (e.target as HTMLFormElement).checked,
+      ),
     );
   }
 
@@ -71,8 +57,8 @@ export default function FilterPersonalCare() {
         pathname,
         searchParams,
         AMENITIES_PARAM_SHOWER_VALUE,
-        (e.target as HTMLFormElement).checked
-      )
+        (e.target as HTMLFormElement).checked,
+      ),
     );
   }
 
@@ -82,8 +68,8 @@ export default function FilterPersonalCare() {
         pathname,
         searchParams,
         AMENITIES_PARAM_LAUNDRY_VALUE,
-        (e.target as HTMLFormElement).checked
-      )
+        (e.target as HTMLFormElement).checked,
+      ),
     );
   }
 
@@ -91,12 +77,12 @@ export default function FilterPersonalCare() {
     amenitiesSubCategory,
     onChange,
     label,
-    subLabel
+    subLabel,
   }: {
     amenitiesSubCategory: AmenitiesSubCategory;
-    onChange:(e: ChangeEvent) => void;
+    onChange: (e: ChangeEvent) => void;
     label: string;
-    subLabel?: string
+    subLabel?: string;
   }) {
     return (
       <label className="relative flex-1 flex space-x-2 cursor-pointer">
@@ -108,7 +94,6 @@ export default function FilterPersonalCare() {
         />
         <span className="text-xs text-dark mt-0.5">{label}</span>
         {subLabel ? <p className="text-gray-600">{subLabel}</p> : undefined}
-        
       </label>
     );
   }

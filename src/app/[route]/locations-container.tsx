@@ -5,7 +5,6 @@ import {
   CATEGORY_ICON_SRC_MAP,
   getIconPath,
   getServicesWrapper,
-  LOCATION_ROUTE,
   YourPeerLegacyLocationData,
 } from "../common";
 import { LocationsContainerPager } from "./locations-container-pager";
@@ -15,7 +14,7 @@ export default function LocationsContainer({
   yourPeerLegacyLocationData,
   resultCount,
   numberOfPages,
-  currentPage
+  currentPage,
 }: {
   category: Category;
   yourPeerLegacyLocationData: YourPeerLegacyLocationData[];
@@ -35,16 +34,16 @@ export default function LocationsContainer({
               {category === "shelters-housing"
                 ? "All popular Shelter & Housing locations"
                 : category === "food"
-                ? "All popular Food locations"
-                : category === "clothing"
-                ? "All popular Clothing locations"
-                : category === "personal-care"
-                ? "All popular Personal care locations"
-                : category === "health-care"
-                ? "All popular Health locations"
-                : category === "other"
-                ? "All popular Other locations"
-                : "All service locations"}
+                  ? "All popular Food locations"
+                  : category === "clothing"
+                    ? "All popular Clothing locations"
+                    : category === "personal-care"
+                      ? "All popular Personal care locations"
+                      : category === "health-care"
+                        ? "All popular Health locations"
+                        : category === "other"
+                          ? "All popular Other locations"
+                          : "All service locations"}
             </span>
           </h1>
         </div>
@@ -122,7 +121,7 @@ export default function LocationsContainer({
                       {CATEGORIES.map((serviceCategory) => {
                         const servicesWrapper = getServicesWrapper(
                           serviceCategory,
-                          location
+                          location,
                         );
                         return servicesWrapper?.services.length ? (
                           <li
@@ -131,7 +130,7 @@ export default function LocationsContainer({
                           >
                             <img
                               src={getIconPath(
-                                CATEGORY_ICON_SRC_MAP[serviceCategory]
+                                CATEGORY_ICON_SRC_MAP[serviceCategory],
                               )}
                               className="flex-shrink-0 max-h-5"
                               alt=""

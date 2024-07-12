@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
+import { Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-import 'swiper/css';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/pagination";
 
 export function AboutUsPage() {
   return (
@@ -47,8 +46,8 @@ export function AboutUsPage() {
             <p className="text-dark text-base text-center">
               YourPeer&apos;s social service information is validated by our
               information specialists who all have lived experiences navigating
-              the support system. They work hard to collect social services&apos;
-              information and keep them up-to-date.
+              the support system. They work hard to collect social
+              services&apos; information and keep them up-to-date.
             </p>
           </div>
 
@@ -155,8 +154,8 @@ export function AboutUsPage() {
                   Liz (she/her)
                 </h3>
                 <div className="text-base text-gray-800 text-center">
-                  I&apos;m naturally eager to support my community because I want the
-                  future generation to avoid facing my predicament.
+                  I&apos;m naturally eager to support my community because I
+                  want the future generation to avoid facing my predicament.
                 </div>
               </div>
             </SwiperSlide>

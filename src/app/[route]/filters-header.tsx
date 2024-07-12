@@ -39,7 +39,7 @@ export default function FiltersHeader({
       <h1 className="flex gap-2 py-3 px-4  flex-nowrap lg:flex-wrap items-center overflow-x-auto border-b border-dotted border-neutral-200 scrollbar-hide">
         {CATEGORIES.filter(
           (thisCategory) =>
-            currentCategory === thisCategory || currentCategory === null
+            currentCategory === thisCategory || currentCategory === null,
         ).map((thisCategory) => (
           <Link
             key={thisCategory}
@@ -47,7 +47,7 @@ export default function FiltersHeader({
               commonClassNames,
               currentCategory === thisCategory
                 ? { "bg-primary": true }
-                : { "bg-neutral-100": true }
+                : { "bg-neutral-100": true },
             )}
             href={
               currentCategory === thisCategory
@@ -67,7 +67,7 @@ export default function FiltersHeader({
         ))}
 
         <Link
-          className="inline-flex flex-shrink-0 overflow-hidden items-center space-x-2 text-dark bg-gray-300 rounded-full text-xs py-1 px-3"
+          className="inline-flex flex-shrink-0 overflow-hidden items-center space-x-2 text-dark bg-neutral-100 rounded-full text-xs py-1 px-3"
           href={getUrlWithNewFilterParameter(
             `/${
               currentCategory === null
@@ -75,7 +75,7 @@ export default function FiltersHeader({
                 : CATEGORY_TO_ROUTE_MAP[currentCategory]
             }`,
             searchParams,
-            SHOW_ADVANCED_FILTERS_PARAM
+            SHOW_ADVANCED_FILTERS_PARAM,
           )}
         >
           <img src="/img/icons/filters.svg" className="w-4 h-4" alt="" />
