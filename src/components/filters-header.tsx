@@ -15,13 +15,13 @@ import {
   LOCATION_ROUTE,
   SearchParams,
   SHOW_ADVANCED_FILTERS_PARAM,
-} from "../common";
+} from "./common";
 import Link from "next/link";
 import classNames from "classnames";
 import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
-} from "../navigation";
+} from "./navigation";
 
 export default function FiltersHeader({
   category: currentCategory,

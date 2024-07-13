@@ -10,7 +10,7 @@ import {
   CATEGORIES,
   getServicesWrapper,
   YourPeerLegacyLocationData,
-} from "@/app/common";
+} from "./common";
 import { useState } from "react";
 
 export function ReportCompletedView() {

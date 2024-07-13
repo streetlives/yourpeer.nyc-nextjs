@@ -32,7 +32,7 @@ import {
   AmenitiesSubCategory,
   AMENITY_TO_TAXONOMY_NAME_MAP,
   TaxonomySubCategory,
-} from "../common";
+} from "./common";
 import moment from "moment";
 
 const NEXT_PUBLIC_GO_GETTA_PROD_URL = process.env.NEXT_PUBLIC_GO_GETTA_PROD_URL;

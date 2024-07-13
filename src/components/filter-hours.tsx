@@ -6,11 +6,11 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import classNames from "classnames";
-import { OPEN_PARAM } from "../common";
+import { OPEN_PARAM } from "./common";
 import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
-} from "../navigation";
+} from "./navigation";
 
 export default function FilterHours() {
   const router = useRouter();

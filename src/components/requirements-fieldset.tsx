@@ -13,9 +13,9 @@ import {
   REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE,
   REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE,
   REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE,
-} from "../common";
+} from "./common";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved } from "../navigation";
+import { getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved } from "./navigation";
 
 export function RequirementFieldset() {
   const router = useRouter();

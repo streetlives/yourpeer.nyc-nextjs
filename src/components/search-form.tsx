@@ -9,11 +9,11 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { SEARCH_PARAM } from "../common";
+import { SEARCH_PARAM } from "./common";
 import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
-} from "../navigation";
+} from "./navigation";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 function SearchPanel({ currentSearch }: { currentSearch: string }) {

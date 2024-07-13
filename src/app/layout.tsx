@@ -5,7 +5,7 @@
 // https://opensource.org/licenses/MIT.
 
 import "./globals.css";
-import GTranslateWrapper from "./gtranslate-wrapper";
+import GTranslateWrapper from "../components/gtranslate-wrapper";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 const GOOGLE_ANALYTICS_MEASUREMENT_ID = process.env

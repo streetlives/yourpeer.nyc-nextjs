@@ -15,15 +15,15 @@ import {
   YourPeerParsedRequestParams,
   parseCategoryFromRoute,
   parseRequest,
-} from "../../common";
-import FiltersHeader from "../filters-header";
-import FiltersPopup from "../filters-popup";
-import LocationsContainer from "../locations-container";
+} from "./common";
+import FiltersHeader from "./filters-header";
+import FiltersPopup from "./filters-popup";
+import LocationsContainer from "./locations-container";
 import {
   getFullLocationData,
   getTaxonomies,
   map_gogetta_to_yourpeer,
-} from "../streetlives-api-service";
+} from "./streetlives-api-service";
 
 interface SidePanelComponentData {
   parsedSearchParams: YourPeerParsedRequestParams;

@@ -10,11 +10,11 @@ import {
   CLOTHING_PARAM_CASUAL_VALUE,
   CLOTHING_PARAM,
   CLOTHING_PARAM_PROFESSIONAL_VALUE,
-} from "../common";
+} from "./common";
 import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
-} from "../navigation";
+} from "./navigation";
 import { RequirementFieldset } from "./requirements-fieldset";
 
 export default function FilterClothing() {

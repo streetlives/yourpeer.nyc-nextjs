@@ -14,8 +14,8 @@ import {
   AMENITIES_PARAM_RESTROOM_VALUE,
   AMENITIES_PARAM_SHOWER_VALUE,
   parsePathnameToCategoryAndSubCategory,
-} from "../common";
-import { getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved } from "../navigation";
+} from "./common";
+import { getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved } from "./navigation";
 import { ChangeEvent } from "react";
 import { RequirementFieldset } from "./requirements-fieldset";
 

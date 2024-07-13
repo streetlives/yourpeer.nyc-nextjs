@@ -11,7 +11,7 @@ import {
   DONATE_ROUTE,
   PRIVACY_POLICY_ROUTE,
   TERMS_OF_USE_ROUTE,
-} from "@/app/common";
+} from "../../../components/common";
 import { AboutUsPage } from "./about-us";
 import { ContactUsPage } from "./contact-us";
 import { DonationPage } from "./dontate";

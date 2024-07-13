@@ -11,19 +11,19 @@ import {
   CategoryNotNull,
   LOCATION_ROUTE,
   SHOW_ADVANCED_FILTERS_PARAM,
-} from "../common";
+  AGE_PARAM,
+} from "./common";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import FilterHours from "./filter-hours";
-import { AGE_PARAM } from "../common";
 import FilterHousing from "./filter-housing";
 import {
   getUrlWithNewCategory,
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
-} from "../navigation";
+} from "./navigation";
 import FilterFood from "./filter-food";
 import FilterClothing from "./filter-clothing";
 import FilterPersonalCare from "./filter-personal-care";
