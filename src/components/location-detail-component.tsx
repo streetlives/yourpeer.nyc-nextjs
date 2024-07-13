@@ -10,8 +10,12 @@ import {
   CATEGORIES,
   CATEGORY_DESCRIPTION_MAP,
   CategoryNotNull,
+  COOKIE_NAME,
   getServicesWrapper,
   LOCATION_ROUTE,
+  RouteParams,
+  SearchParams,
+  SubRouteParams,
   YourPeerLegacyLocationData,
   YourPeerLegacyServiceDataWrapper,
 } from "./common";
@@ -76,6 +80,25 @@ function LocationService({
   );
 }
 
+function parseCookies(): Record<string, string>{
+   return document.cookie
+    .split(';')
+    // Map over the array of key-value pairs and split each pair into an array of key and value
+    .map(v => v.split('='))
+    // Reduce the array of key-value arrays into an object
+    .reduce((acc, v) => {
+      // Decode and trim the key and value, then assign them as properties to the accumulator object
+      acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+      return acc;
+    }, {} as Record<string, string>); 
+}
+
+function serializeToQueryParams(searchParams: SearchParams): string {
+  return Object.entries(searchParams)
+    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+    .join("&");
+}
+
 export default function LocationDetailComponent({
   location,
   slug,
@@ -90,17 +113,24 @@ export default function LocationDetailComponent({
   function hideReportIssueForm() {
     setIsShowingReportIssueForm(false);
   }
+
+  let previousRoute;
+  const cookies = parseCookies()
+  if(cookies[COOKIE_NAME]){
+    const previousParams = JSON.parse(cookies[COOKIE_NAME]) as unknown as {
+      searchParams: SearchParams;
+      params: SubRouteParams;
+    };
+    previousRoute = `/${previousParams.params.route}${previousParams.params.locationSlugOrPersonalCareSubCategory ? `/${previousParams.params.locationSlugOrPersonalCareSubCategory}` : ""}${Object.keys(previousParams).length ? `?${serializeToQueryParams(previousParams.searchParams)}` : ""}`;
+  }
+
   return (
     <div className="details-screen bg-white md:block z-40 fixed md:absolute inset-0 w-full h-full overflow-y-auto scrollbar-hide">
       <div className="h-14 px-4 gap-x-2 flex justify-between md:justify-start items-center bg-white sticky top-0 left-0 w-full right-0 z-10">
         <a
           className="text-dark hover:text-black transition flex-shrink-0"
           id="details_back"
-          onClick={() => {
-            const url = `/${LOCATION_ROUTE}`;
-            //console.log('url', url, window.history.length)
-            window.location.replace(`/${LOCATION_ROUTE}`);
-          }}
+          href={previousRoute ? previousRoute : `/${LOCATION_ROUTE}`}
           style={{ cursor: "pointer" }}
         >
           <svg
@@ -374,7 +404,7 @@ export default function LocationDetailComponent({
               {CATEGORIES.map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location,
+                  location
                 );
                 return servicesWrapper?.services.length ? (
                   <LocationService
