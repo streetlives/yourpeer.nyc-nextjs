@@ -1,3 +1,9 @@
+// Copyright (c) 2024 Streetlives, Inc.
+//
+// Use of this source code is governed by an MIT-style
+// license that can be found in the LICENSE file or at
+// https://opensource.org/licenses/MIT.
+
 const customStreetViews: Record<string, string> = {
   "translatinx-network-hells-kitchen":
     "40.7453799,-73.9927467&fov=100&heading=43&pano=jlbFtqGBI2T9IaqNzaVNIg",

@@ -1,3 +1,9 @@
+// Copyright (c) 2024 Streetlives, Inc.
+//
+// Use of this source code is governed by an MIT-style
+// license that can be found in the LICENSE file or at
+// https://opensource.org/licenses/MIT.
+
 import { COMPANY_ROUTES, CompanyRoute, RESOURCE_ROUTES } from "../common";
 import { Footer } from "../footer";
 import {
