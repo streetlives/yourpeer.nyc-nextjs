@@ -12,7 +12,7 @@ import {
   getIconPath,
   getServicesWrapper,
   YourPeerLegacyLocationData,
-} from "../common";
+} from "./common";
 import { LocationsContainerPager } from "./locations-container-pager";
 
 export default function LocationsContainer({

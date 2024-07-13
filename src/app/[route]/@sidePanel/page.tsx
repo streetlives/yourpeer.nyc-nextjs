@@ -4,15 +4,19 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import { RESOURCE_ROUTES, RouteParams, SearchParams } from "../../common";
+import {
+  RESOURCE_ROUTES,
+  RouteParams,
+  SearchParams,
+} from "../../../components/common";
 
 import { notFound } from "next/navigation";
 import {
   getSidePanelComponentData,
   SidePanelComponent,
-} from "./side-panel-component";
+} from "../../../components/side-panel-component";
 
-export { generateMetadata } from "../metadata";
+export { generateMetadata } from "../../../components/metadata";
 
 export default async function SidePanelPage({
   searchParams,

@@ -11,19 +11,19 @@ import {
   PERSONAL_CARE_CATEGORY,
   SearchParams,
   SubRouteParams,
-} from "../../../common";
+} from "../../../../components/common";
 import {
   Error404Response,
   fetchLocationsDetailData,
   map_gogetta_to_yourpeer,
-} from "../../streetlives-api-service";
+} from "../../../../components/streetlives-api-service";
 import {
   getSidePanelComponentData,
   SidePanelComponent,
-} from "../side-panel-component";
-import LocationDetailComponent from "./location-detail-component";
+} from "../../../../components/side-panel-component";
+import LocationDetailComponent from "../../../../components/location-detail-component";
 
-export { generateMetadata } from "../../metadata";
+export { generateMetadata } from "../../../../components/metadata";
 
 export default async function LocationDetail({
   params,

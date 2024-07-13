@@ -5,7 +5,7 @@
 // https://opensource.org/licenses/MIT.
 
 import type { Metadata } from "next";
-import { Footer } from "./footer";
+import { Footer } from "../components/footer";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 

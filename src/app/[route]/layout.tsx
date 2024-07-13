@@ -1,15 +1,19 @@
 // Copyright (c) 2024 Streetlives, Inc.
 //
 // Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file or at
+// license that can be f../../components/footerhe LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import { COMPANY_ROUTES, CompanyRoute, RESOURCE_ROUTES } from "../common";
-import { Footer } from "../footer";
+import {
+  COMPANY_ROUTES,
+  CompanyRoute,
+  RESOURCE_ROUTES,
+} from "../../components/common";
+import { Footer } from "../../components/footer";
 import {
   LocationsNavbarCompanyRoutes,
   LocationsNavbarResourceRoutes,
-} from "./locations-navbar";
+} from "../../components/locations-navbar";
 import { notFound } from "next/navigation";
 
 export default function LocationsLayout({

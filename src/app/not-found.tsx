@@ -1,13 +1,13 @@
 // Copyright (c) 2024 Streetlives, Inc.
 //
-// Use of this source code is governed by an MIT-style
+// Use of this source co../components/footerverned by an MIT-style
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
 import Link from "next/link";
-import { LocationsNavbarCompanyRoutes } from "./[route]/locations-navbar";
-import { Footer } from "./footer";
-import { CATEGORY_TO_ROUTE_MAP, LOCATION_ROUTE } from "./common";
+import { LocationsNavbarCompanyRoutes } from "../components/locations-navbar";
+import { Footer } from "../components/footer";
+import { CATEGORY_TO_ROUTE_MAP, LOCATION_ROUTE } from "../components/common";
 
 export default function CustomNotFoundPage() {
   return (

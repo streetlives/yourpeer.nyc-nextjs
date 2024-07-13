@@ -11,7 +11,7 @@ import {
   AgeEligibility,
   YourPeerLegacyScheduleData,
   YourPeerLegacyServiceData,
-} from "../../../common";
+} from "./common";
 
 const moment = require("moment-strftime");
 

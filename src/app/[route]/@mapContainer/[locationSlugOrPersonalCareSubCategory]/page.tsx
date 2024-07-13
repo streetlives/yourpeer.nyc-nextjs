@@ -11,13 +11,13 @@ import {
   PERSONAL_CARE_CATEGORY,
   SearchParams,
   SubRouteParams,
-} from "../../../common";
-import LocationsMap from "../../map";
+} from "../../../../components/common";
+import LocationsMap from "../../../../components/map";
 import {
   Error404Response,
   fetchLocationsDetailData,
-} from "../../streetlives-api-service";
-import { getMapContainerData } from "../map-container-component";
+} from "../../../../components/streetlives-api-service";
+import { getMapContainerData } from "../../../../components/map-container-component";
 
 export default async function MapDetail({
   searchParams,

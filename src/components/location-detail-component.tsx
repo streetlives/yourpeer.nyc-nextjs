@@ -14,11 +14,11 @@ import {
   LOCATION_ROUTE,
   YourPeerLegacyLocationData,
   YourPeerLegacyServiceDataWrapper,
-} from "@/app/common";
+} from "./common";
 import Service from "./service-component";
 import customStreetViews from "./custom-streetviews";
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
-import { activeMarkerIcon, defaultZoom, mapStyles } from "@/map-common";
+import { activeMarkerIcon, defaultZoom, mapStyles } from "./map-common";
 import { useState } from "react";
 import { ReportIssueForm } from "./report-issue";
 

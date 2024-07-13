@@ -7,7 +7,7 @@
 "use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
-import { getUrlToNextOrPreviousPage } from "../navigation";
+import { getUrlToNextOrPreviousPage } from "./navigation";
 
 export function LocationsContainerPager({
   resultCount,

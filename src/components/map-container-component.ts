@@ -11,11 +11,11 @@ import {
   SimplifiedLocationData,
   parseCategoryFromRoute,
   parseRequest,
-} from "../../common";
+} from "./common";
 import {
   getSimplifiedLocationData,
   getTaxonomies,
-} from "../streetlives-api-service";
+} from "./streetlives-api-service";
 
 export async function getMapContainerData({
   searchParams,

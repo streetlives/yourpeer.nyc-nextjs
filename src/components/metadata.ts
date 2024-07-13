@@ -20,7 +20,7 @@ import {
   RouteParams,
   SubRouteParams,
   TERMS_OF_USE_ROUTE,
-} from "../common";
+} from "./common";
 import { fetchLocationsDetailData } from "./streetlives-api-service";
 
 type Props = {

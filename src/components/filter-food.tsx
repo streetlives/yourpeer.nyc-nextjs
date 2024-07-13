@@ -7,20 +7,20 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import classNames from "classnames";
 import {
-  SHELTER_PARAM,
-  SHELTER_PARAM_SINGLE_VALUE,
-  SHELTER_PARAM_FAMILY_VALUE,
-} from "../common";
+  FOOD_PARAM,
+  FOOD_PARAM_SOUP_KITCHEN_VALUE,
+  FOOD_PARAM_PANTRY_VALUE,
+} from "./common";
 import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
-} from "../navigation";
+} from "./navigation";
 
-export default function FilterHousing() {
+export default function FilterFood() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams() || new Map();
-  const shelterParam = searchParams.get(SHELTER_PARAM);
+  const foodParam = searchParams.get(FOOD_PARAM);
   const commonClasses = [
     "text-xs",
     "relative",
@@ -43,28 +43,28 @@ export default function FilterHousing() {
 
   function handleIsAnyClick() {
     router.push(
-      getUrlWithoutFilterParameter(pathname, searchParams, SHELTER_PARAM),
+      getUrlWithoutFilterParameter(pathname, searchParams, FOOD_PARAM),
     );
   }
 
-  function handleIsSingleAdultClick() {
+  function handleIsSoupKItchenClick() {
     router.push(
       getUrlWithNewFilterParameter(
         pathname,
         searchParams,
-        SHELTER_PARAM,
-        SHELTER_PARAM_SINGLE_VALUE,
+        FOOD_PARAM,
+        FOOD_PARAM_SOUP_KITCHEN_VALUE,
       ),
     );
   }
 
-  function handleIsFamiliesClick() {
+  function handleIsPantryClick() {
     router.push(
       getUrlWithNewFilterParameter(
         pathname,
         searchParams,
-        SHELTER_PARAM,
-        SHELTER_PARAM_FAMILY_VALUE,
+        FOOD_PARAM,
+        FOOD_PARAM_PANTRY_VALUE,
       ),
     );
   }
@@ -72,7 +72,7 @@ export default function FilterHousing() {
   return (
     <fieldset className="mt-6">
       <legend className="text-xs font-semibold leading-6 text-dark">
-        Shelter & Housing type
+        Food type
       </legend>
       <div className="mt-2 flex w-full">
         <label
@@ -80,14 +80,14 @@ export default function FilterHousing() {
             null,
             commonClasses
               .concat("rounded-l-lg")
-              .concat(!shelterParam ? selectedClasses : notSelectedClasses),
+              .concat(!foodParam ? selectedClasses : notSelectedClasses),
           )}
         >
           <input
             type="radio"
             id="filter_shelter_type_any"
             name="accommodation-type"
-            value={!shelterParam ? "true" : undefined}
+            value={!foodParam ? "true" : undefined}
             className="sr-only"
             aria-labelledby="accommodationType-0-label"
             aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
@@ -99,7 +99,7 @@ export default function FilterHousing() {
           className={classNames.call(
             null,
             commonClasses.concat(
-              shelterParam == SHELTER_PARAM_SINGLE_VALUE
+              foodParam == FOOD_PARAM_SOUP_KITCHEN_VALUE
                 ? selectedClasses
                 : notSelectedClasses,
             ),
@@ -107,17 +107,15 @@ export default function FilterHousing() {
         >
           <input
             type="radio"
-            id="filter_shelter_type_single_adult"
-            name="accom"
+            id="filter_food_type_soup_kitchen"
+            name="filter_food_type_soup_kitchen"
             value={
-              shelterParam == SHELTER_PARAM_SINGLE_VALUE ? "true" : undefined
+              foodParam == FOOD_PARAM_SOUP_KITCHEN_VALUE ? "true" : undefined
             }
             className="sr-only"
-            aria-labelledby="accommodationType-0-label"
-            aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
-            onClick={handleIsSingleAdultClick}
+            onClick={handleIsSoupKItchenClick}
           />
-          Single Adult
+          Soup Kitchen
         </label>
         <label
           className={classNames.call(
@@ -125,7 +123,7 @@ export default function FilterHousing() {
             commonClasses
               .concat("rounded-r-lg")
               .concat(
-                shelterParam == SHELTER_PARAM_FAMILY_VALUE
+                foodParam == FOOD_PARAM_PANTRY_VALUE
                   ? selectedClasses
                   : notSelectedClasses,
               ),
@@ -133,17 +131,13 @@ export default function FilterHousing() {
         >
           <input
             type="radio"
-            id="filter_shelter_type_families"
+            id="filter_food_type_pantry"
             name="accommodationType"
-            value={
-              shelterParam == SHELTER_PARAM_FAMILY_VALUE ? "true" : undefined
-            }
+            value={foodParam == FOOD_PARAM_PANTRY_VALUE ? "true" : undefined}
             className="sr-only"
-            aria-labelledby="accommodationType-0-label"
-            aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
-            onClick={handleIsFamiliesClick}
+            onClick={handleIsPantryClick}
           />
-          Families
+          Food Pantry
         </label>
       </div>
     </fieldset>

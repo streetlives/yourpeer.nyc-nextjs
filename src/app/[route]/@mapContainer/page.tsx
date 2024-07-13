@@ -5,10 +5,14 @@
 // https://opensource.org/licenses/MIT.
 
 import { notFound } from "next/navigation";
-import { RESOURCE_ROUTES, RouteParams, SearchParams } from "../../common";
-import LocationsMap from "../map";
+import {
+  RESOURCE_ROUTES,
+  RouteParams,
+  SearchParams,
+} from "../../../components/common";
+import LocationsMap from "../../../components/map";
 
-import { getMapContainerData } from "./map-container-component";
+import { getMapContainerData } from "../../../components/map-container-component";
 
 export default async function MapContainerPage({
   searchParams,
