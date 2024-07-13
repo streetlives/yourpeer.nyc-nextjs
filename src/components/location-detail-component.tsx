@@ -103,7 +103,11 @@ function parseCookies(): Record<string, string> {
 
 function serializeToQueryParams(searchParams: SearchParams): string {
   return Object.entries(searchParams)
-    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+    .map(([k, v]) =>
+      typeof v === "string"
+        ? `${encodeURIComponent(k)}=${encodeURIComponent(v)}`
+        : ""
+    )
     .join("&");
 }
 
