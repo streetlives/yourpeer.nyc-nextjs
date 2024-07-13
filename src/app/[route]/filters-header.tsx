@@ -1,4 +1,5 @@
 import {
+  AGE_PARAM,
   CATEGORIES,
   Category,
   CATEGORY_DESCRIPTION_MAP,
@@ -11,7 +12,10 @@ import {
 } from "../common";
 import Link from "next/link";
 import classNames from "classnames";
-import { getUrlWithNewFilterParameter } from "../navigation";
+import {
+  getUrlWithNewFilterParameter,
+  getUrlWithoutFilterParameter,
+} from "../navigation";
 
 export default function FiltersHeader({
   category: currentCategory,
@@ -20,6 +24,11 @@ export default function FiltersHeader({
   category: Category;
   searchParams: SearchParams;
 }) {
+  const pathname = `/${
+    currentCategory === null
+      ? LOCATION_ROUTE
+      : CATEGORY_TO_ROUTE_MAP[currentCategory]
+  }`;
   const commonClassNames = [
     "inline-flex",
     "flex-shrink-0",
@@ -36,44 +45,56 @@ export default function FiltersHeader({
   ];
   return (
     <div className="sticky top-0 w-full inset-x-0 bg-white z-10">
-      <h1 className="flex gap-2 py-3 px-4  flex-nowrap lg:flex-wrap items-center overflow-x-auto border-b border-dotted border-neutral-200 scrollbar-hide">
+      <div className="flex gap-2 py-3 px-4  flex-nowrap lg:flex-wrap items-center overflow-x-auto border-b border-dotted border-neutral-200 scrollbar-hide">
         {CATEGORIES.filter(
           (thisCategory) =>
             currentCategory === thisCategory || currentCategory === null,
-        ).map((thisCategory) => (
+        ).map((thisCategory) => {
+          const link = (
+            <Link
+              key={thisCategory}
+              className={classNames(
+                commonClassNames,
+                currentCategory === thisCategory
+                  ? { "bg-primary": true }
+                  : { "bg-neutral-100": true },
+              )}
+              href={
+                currentCategory === thisCategory
+                  ? LOCATION_ROUTE
+                  : CATEGORY_TO_ROUTE_MAP[thisCategory]
+              }
+            >
+              <img
+                src={getIconPath(CATEGORY_ICON_SRC_MAP[thisCategory])}
+                className="w-4 h-4"
+                alt=""
+              />
+              <span className="leading-3 truncate">
+                {CATEGORY_DESCRIPTION_MAP[thisCategory]}
+              </span>
+            </Link>
+          );
+          return currentCategory === thisCategory ? <h1>{link}</h1> : link;
+        })}
+        {searchParams[AGE_PARAM] ? (
           <Link
-            key={thisCategory}
-            className={classNames(
-              commonClassNames,
-              currentCategory === thisCategory
-                ? { "bg-primary": true }
-                : { "bg-neutral-100": true },
+            className="bg-primary inline-flex flex-shrink-0 overflow-hidden items-center space-x-2 text-dark rounded-full text-xs py-1 px-3 transition location_filter"
+            href={getUrlWithoutFilterParameter(
+              pathname,
+              searchParams,
+              AGE_PARAM,
             )}
-            href={
-              currentCategory === thisCategory
-                ? LOCATION_ROUTE
-                : CATEGORY_TO_ROUTE_MAP[thisCategory]
-            }
           >
-            <img
-              src={getIconPath(CATEGORY_ICON_SRC_MAP[thisCategory])}
-              className="w-4 h-4"
-              alt=""
-            />
             <span className="leading-3 truncate">
-              {CATEGORY_DESCRIPTION_MAP[thisCategory]}
+              Age: {searchParams[AGE_PARAM]}
             </span>
           </Link>
-        ))}
-
+        ) : undefined}
         <Link
           className="inline-flex flex-shrink-0 overflow-hidden items-center space-x-2 text-dark bg-neutral-100 rounded-full text-xs py-1 px-3"
           href={getUrlWithNewFilterParameter(
-            `/${
-              currentCategory === null
-                ? LOCATION_ROUTE
-                : CATEGORY_TO_ROUTE_MAP[currentCategory]
-            }`,
+            pathname,
             searchParams,
             SHOW_ADVANCED_FILTERS_PARAM,
           )}
@@ -81,7 +102,7 @@ export default function FiltersHeader({
           <img src="/img/icons/filters.svg" className="w-4 h-4" alt="" />
           <span className="leading-3 truncate">All Filters</span>
         </Link>
-      </h1>
+      </div>
     </div>
   );
 }
