@@ -13,7 +13,6 @@ import {
   COOKIE_NAME,
   getServicesWrapper,
   LOCATION_ROUTE,
-  RouteParams,
   SearchParams,
   SubRouteParams,
   YourPeerLegacyLocationData,
@@ -106,7 +105,7 @@ function serializeToQueryParams(searchParams: SearchParams): string {
     .map(([k, v]) =>
       typeof v === "string"
         ? `${encodeURIComponent(k)}=${encodeURIComponent(v)}`
-        : ""
+        : "",
     )
     .join("&");
 }

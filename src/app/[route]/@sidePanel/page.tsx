@@ -15,7 +15,6 @@ import {
   getSidePanelComponentData,
   SidePanelComponent,
 } from "../../../components/side-panel-component";
-import CookieWrapper from "@/components/cookie-wrapper";
 
 export { generateMetadata } from "../../../components/metadata";
 

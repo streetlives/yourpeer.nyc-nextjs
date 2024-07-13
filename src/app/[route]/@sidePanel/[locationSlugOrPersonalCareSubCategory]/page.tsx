@@ -8,7 +8,6 @@ import { notFound } from "next/navigation";
 import {
   AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING,
   AmenitiesSubCategory,
-  COOKIE_NAME,
   PERSONAL_CARE_CATEGORY,
   SearchParams,
   SubRouteParams,
@@ -23,7 +22,6 @@ import {
   SidePanelComponent,
 } from "../../../../components/side-panel-component";
 import LocationDetailComponent from "../../../../components/location-detail-component";
-import { cookies } from "next/headers";
 
 export { generateMetadata } from "../../../../components/metadata";
 
