@@ -6,7 +6,6 @@
 
 "use client";
 
-import { useLocalStorage } from "usehooks-ts";
 import {
   APIProvider,
   Map,
@@ -81,8 +80,7 @@ function MapWrapper({
 }) {
   const router = useRouter();
   const [userPosition, setUserPosition] = useState<GeolocationPosition>();
-  const [mapCenter, setMapCenter] = useLocalStorage<Position>(
-    "map-center",
+  const [mapCenter, setMapCenter] = useState<Position>(
     locationDetailStub
       ? {
           lat: locationDetailStub.position.coordinates[1],
@@ -204,7 +202,7 @@ function MapWrapper({
         ),
       );
 
-      if (googleMap) {
+      if (googleMap && !locationDetailStub) {
         var bounds = new google.maps.LatLngBounds();
         closest25Locations.forEach(function (loc) {
           var latLng = new google.maps.LatLng(
