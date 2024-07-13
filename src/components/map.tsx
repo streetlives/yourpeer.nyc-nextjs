@@ -204,7 +204,7 @@ function MapWrapper({
         ),
       );
 
-      if (googleMap) {
+      if (googleMap && !locationDetailStub) {
         var bounds = new google.maps.LatLngBounds();
         closest25Locations.forEach(function (loc) {
           var latLng = new google.maps.LatLng(

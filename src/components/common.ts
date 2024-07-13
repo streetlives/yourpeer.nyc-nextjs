@@ -736,3 +736,5 @@ export const RESOURCE_ROUTES = Object.keys(ROUTE_TO_CATEGORY_MAP).concat(
 );
 
 export const PAGE_PARAM = "page";
+
+export const COOKIE_NAME = "last-set-params";

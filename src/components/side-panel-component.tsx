@@ -11,11 +11,13 @@ import {
   RouteParams,
   SHOW_ADVANCED_FILTERS_PARAM,
   SearchParams,
+  SubRouteParams,
   YourPeerLegacyLocationData,
   YourPeerParsedRequestParams,
   parseCategoryFromRoute,
   parseRequest,
 } from "./common";
+import CookieWrapper from "./cookie-wrapper";
 import FiltersHeader from "./filters-header";
 import FiltersPopup from "./filters-popup";
 import LocationsContainer from "./locations-container";
@@ -26,6 +28,7 @@ import {
 } from "./streetlives-api-service";
 
 interface SidePanelComponentData {
+  params: RouteParams | SubRouteParams;
   parsedSearchParams: YourPeerParsedRequestParams;
   category: Category;
   resultCount: number;
@@ -54,6 +57,7 @@ export async function getSidePanelComponentData({
     map_gogetta_to_yourpeer(location, false),
   );
   return {
+    params,
     parsedSearchParams,
     category,
     resultCount,
@@ -65,6 +69,7 @@ export async function getSidePanelComponentData({
 export function SidePanelComponent({
   searchParams,
   sidePanelComponentData: {
+    params,
     parsedSearchParams,
     category,
     resultCount,
@@ -76,21 +81,24 @@ export function SidePanelComponent({
   sidePanelComponentData: SidePanelComponentData;
 }) {
   return (
-    <div
-      className="w-full h-full md:h-full flex flex-col"
-      id="filters_and_list_screen"
-    >
-      {parsedSearchParams[SHOW_ADVANCED_FILTERS_PARAM] ? (
-        <FiltersPopup category={category} numLocationResults={resultCount} />
-      ) : undefined}
-      <FiltersHeader category={category} searchParams={searchParams} />
-      <LocationsContainer
-        resultCount={resultCount}
-        numberOfPages={numberOfPages}
-        currentPage={parsedSearchParams[PAGE_PARAM]}
-        category={category}
-        yourPeerLegacyLocationData={yourPeerLegacyLocationData}
-      />
-    </div>
+    <>
+      <CookieWrapper searchParams={searchParams} params={params} />
+      <div
+        className="w-full h-full md:h-full flex flex-col"
+        id="filters_and_list_screen"
+      >
+        {parsedSearchParams[SHOW_ADVANCED_FILTERS_PARAM] ? (
+          <FiltersPopup category={category} numLocationResults={resultCount} />
+        ) : undefined}
+        <FiltersHeader category={category} searchParams={searchParams} />
+        <LocationsContainer
+          resultCount={resultCount}
+          numberOfPages={numberOfPages}
+          currentPage={parsedSearchParams[PAGE_PARAM]}
+          category={category}
+          yourPeerLegacyLocationData={yourPeerLegacyLocationData}
+        />
+      </div>
+    </>
   );
 }
