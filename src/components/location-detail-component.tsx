@@ -44,7 +44,7 @@ function formatWebsiteUrl(url: string): string | undefined {
 
 const CATEGORY_ICON_SRC_MAP: Record<CategoryNotNull, string> = {
   "health-care": "health-icon",
-  other: "dots-con",
+  other: "other",
   "shelters-housing": "home-icon",
   food: "food-icon",
   clothing: "clothing-icon",
