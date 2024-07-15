@@ -400,14 +400,6 @@ export default function HomePage() {
               alt="Logo"
             />
 
-
-
-
-
-
-
-
-
             {/* <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
               src="/img/partnars-logo/logo-2.png"
@@ -446,7 +438,6 @@ export default function HomePage() {
               src="/img/partnars-logo/logo-19.png"
               alt="Logo"
             /> */}
-            
           </div>
 
           <p className="text-sm text-gray-800 text-center mb-6 px-5 mt-8 md:mt-16">

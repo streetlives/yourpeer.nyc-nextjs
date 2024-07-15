@@ -134,7 +134,7 @@ export default function Service({
         >
           <img
             src="/img/icons/arrow-down.svg"
-            className={`arrow w-7 h-7 object-contain max-h-7 transition ${isExpanded ? '' : '-rotate-90'}`}
+            className={`arrow w-7 h-7 object-contain max-h-7 transition ${isExpanded ? "" : "-rotate-90"}`}
             alt=""
           />
           <span className="absolute bg-transparent inset-y-0 left-0 -right-[500px]"></span>
