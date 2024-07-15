@@ -241,102 +241,102 @@ export default function HomePage() {
           <div className="w-full  flex flex-wrap justify-center items-center">
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-1.png"
+              src="/img/partners-logo/logo-1.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-2.png"
+              src="/img/partners-logo/logo-2.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-3.png"
+              src="/img/partners-logo/logo-3.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-4.png"
+              src="/img/partners-logo/logo-4.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-5.png"
+              src="/img/partners-logo/logo-5.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-6.png"
+              src="/img/partners-logo/logo-6.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-7.png"
+              src="/img/partners-logo/logo-7.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-8.png"
+              src="/img/partners-logo/logo-8.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-9.png"
+              src="/img/partners-logo/logo-9.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-10.png"
+              src="/img/partners-logo/logo-10.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-11.png"
+              src="/img/partners-logo/logo-11.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-12.png"
+              src="/img/partners-logo/logo-12.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-13.png"
+              src="/img/partners-logo/logo-13.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-14.png"
+              src="/img/partners-logo/logo-14.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-15.png"
+              src="/img/partners-logo/logo-15.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-16.png"
+              src="/img/partners-logo/logo-16.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-17.png"
+              src="/img/partners-logo/logo-17.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-18.png"
+              src="/img/partners-logo/logo-18.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-19.png"
+              src="/img/partners-logo/logo-19.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-20.png"
+              src="/img/partners-logo/logo-20.png"
               alt="Logo"
             />
           </div>
