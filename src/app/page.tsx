@@ -238,25 +238,25 @@ export default function HomePage() {
           <h2 className="text-center text-3xl text-gray-700 font-bold mb-9">
             Our Partners
           </h2>
-          <div className="w-full  flex flex-wrap justify-center items-center">
+          <div className="w-full flex flex-wrap justify-center items-center gap-x-3">
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
               src="/img/partnars-logo/logo-1.png"
               alt="Logo"
             />
             <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-2.png"
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-2.png"
               alt="Logo"
             />
             <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-3.png"
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-3.png"
               alt="Logo"
             />
             <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-4.png"
+              className="object-contain object-center w-20 sm:w-24 h-20 sm:h-24 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-4.png"
               alt="Logo"
             />
             <img
@@ -270,13 +270,38 @@ export default function HomePage() {
               alt="Logo"
             />
             <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-7.png"
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-7.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-8.png"
+              src="/img/partnars-logo/logo-10.png"
+              alt="Logo"
+            />
+            <img
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-8.png"
+              alt="Logo"
+            />
+            <img
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-9.png"
+              alt="Logo"
+            />
+            <img
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-10.png"
+              alt="Logo"
+            />
+            <img
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-11.png"
+              alt="Logo"
+            />
+            <img
+              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-11.png"
               alt="Logo"
             />
             <img
@@ -286,12 +311,47 @@ export default function HomePage() {
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-10.png"
+              src="/img/partnars-logo/logo-3.png"
+              alt="Logo"
+            />
+            <img
+              className="object-cover object-center w-20 sm:w-24 h-20 sm:h-24 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-12.png"
+              alt="Logo"
+            />
+            <img
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-13.png"
+              alt="Logo"
+            />
+            <img
+              className="object-contain object-center w-20 sm:w-24 h-20 sm:h-24 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-14.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-11.png"
+              src="/img/partnars-logo/logo-8.png"
+              alt="Logo"
+            />
+            <img
+              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-4.png"
+              alt="Logo"
+            />
+            <img
+              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-20.png"
+              alt="Logo"
+            />
+            <img
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-15.png"
+              alt="Logo"
+            />
+            <img
+              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-18.png"
               alt="Logo"
             />
             <img
@@ -306,12 +366,7 @@ export default function HomePage() {
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-14.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-15.png"
+              src="/img/partnars-logo/logo-17.png"
               alt="Logo"
             />
             <img
@@ -320,25 +375,78 @@ export default function HomePage() {
               alt="Logo"
             />
             <img
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-16.png"
+              alt="Logo"
+            />
+            <img
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-17.png"
+              alt="Logo"
+            />
+            <img
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-18.png"
+              alt="Logo"
+            />
+            <img
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-19.png"
+              alt="Logo"
+            />
+            <img
+              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-new-20.png"
+              alt="Logo"
+            />
+
+
+
+
+
+
+
+
+
+            {/* <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-17.png"
+              src="/img/partnars-logo/logo-2.png"
+              alt="Logo"
+            />
+            
+            
+            
+            
+            <img
+              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-7.png"
+              alt="Logo"
+            />
+            
+            
+            
+            
+            
+            
+            <img
+              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+              src="/img/partnars-logo/logo-14.png"
               alt="Logo"
             />
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-18.png"
+              src="/img/partnars-logo/logo-15.png"
               alt="Logo"
             />
+            
+            
+            
             <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
               src="/img/partnars-logo/logo-19.png"
               alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partnars-logo/logo-20.png"
-              alt="Logo"
-            />
+            /> */}
+            
           </div>
 
           <p className="text-sm text-gray-800 text-center mb-6 px-5 mt-8 md:mt-16">
