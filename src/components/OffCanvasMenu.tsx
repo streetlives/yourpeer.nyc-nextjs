@@ -19,7 +19,7 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
   const [nestedNav, setNestedNav] = useState(false);
 
   return (
-    <Dialog open={open} onClose={onClose} className="relative z-30">
+    <Dialog open={open} onClose={onClose} className="relative z-50">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity duration-500 ease-in-out data-[closed]:opacity-0"
