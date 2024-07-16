@@ -126,7 +126,7 @@ export default function SearchForm() {
   return (
     <>
       <form
-        className="md:flex items-center ml-2 relative flex-1"
+        className="flex items-center ml-2 relative flex-1"
         id="search_form"
         onSubmit={doSearchSubmit}
       >
