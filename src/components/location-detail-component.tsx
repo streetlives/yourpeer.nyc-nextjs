@@ -10,7 +10,7 @@ import {
   CATEGORIES,
   CATEGORY_DESCRIPTION_MAP,
   CategoryNotNull,
-  COOKIE_NAME,
+  LAST_SET_PARAMS_COOKIE_NAME,
   getServicesWrapper,
   LOCATION_ROUTE,
   SearchParams,
@@ -24,6 +24,7 @@ import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import { activeMarkerIcon, defaultZoom, mapStyles } from "./map-common";
 import { useState } from "react";
 import { ReportIssueForm } from "./report-issue";
+import { parseCookies } from "./cookies";
 
 export function getIconPath(iconName: string): string {
   return `/img/icons/${iconName}.png`;
@@ -79,27 +80,6 @@ function LocationService({
   );
 }
 
-function parseCookies(): Record<string, string> {
-  return (
-    document.cookie
-      .split(";")
-      // Map over the array of key-value pairs and split each pair into an array of key and value
-      .map((v) => v.split("="))
-      .filter((v) => v.length === 2)
-      // Reduce the array of key-value arrays into an object
-      .reduce(
-        (acc, v) => {
-          // Decode and trim the key and value, then assign them as properties to the accumulator object
-          acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(
-            v[1].trim(),
-          );
-          return acc;
-        },
-        {} as Record<string, string>,
-      )
-  );
-}
-
 function serializeToQueryParams(searchParams: SearchParams): string {
   return Object.entries(searchParams)
     .map(([k, v]) =>
@@ -127,8 +107,10 @@ export default function LocationDetailComponent({
 
   let previousRoute;
   const cookies = parseCookies();
-  if (cookies[COOKIE_NAME]) {
-    const previousParams = JSON.parse(cookies[COOKIE_NAME]) as unknown as {
+  if (cookies[LAST_SET_PARAMS_COOKIE_NAME]) {
+    const previousParams = JSON.parse(
+      cookies[LAST_SET_PARAMS_COOKIE_NAME],
+    ) as unknown as {
       searchParams: SearchParams;
       params: SubRouteParams;
     };

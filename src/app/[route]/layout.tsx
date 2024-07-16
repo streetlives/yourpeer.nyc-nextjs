@@ -4,6 +4,7 @@
 // license that can be f../../components/footerhe LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import MapListToggleButton from "@/components/map-list-toggle-button";
 import {
   COMPANY_ROUTES,
   CompanyRoute,
@@ -32,6 +33,7 @@ export default function LocationsLayout({
   return RESOURCE_ROUTES.includes(route) ? (
     <>
       <div className="h-[100dvh] w-full">
+        <MapListToggleButton />
         <div className="flex flex-col w-full h-full">
           <div>
             <LocationsNavbarResourceRoutes />

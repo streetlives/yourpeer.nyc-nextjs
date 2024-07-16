@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 import {
   AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING,
   AmenitiesSubCategory,
-  COOKIE_NAME,
+  LAST_SET_PARAMS_COOKIE_NAME,
   PERSONAL_CARE_CATEGORY,
   RouteParams,
   SearchParams,
@@ -47,7 +47,7 @@ export default async function MapDetail({
       );
     } else {
       // TODO: get the cookie
-      const cookie = cookies().get(COOKIE_NAME);
+      const cookie = cookies().get(LAST_SET_PARAMS_COOKIE_NAME);
       console.log("cookie", cookie);
       let previousParams = undefined;
       if (cookie && cookie.value) {
