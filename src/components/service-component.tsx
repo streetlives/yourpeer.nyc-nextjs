@@ -166,8 +166,8 @@ export default function Service({
                     {service.description ? (
                       <p className="text-sm text-dark mb-4 have-links">
                         <ul>
-                          {service.description.split("•").map((bullet) => (
-                            <li key="bullet">{bullet}</li>
+                          {service.description.split("•").map((description) => (
+                            <li key="bullet" dangerouslySetInnerHTML={{ __html: description }}></li>
                           ))}
                         </ul>
                       </p>
