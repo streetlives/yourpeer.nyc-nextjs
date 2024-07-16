@@ -11,9 +11,12 @@ import {
   CATEGORY_ICON_SRC_MAP,
   getIconPath,
   getServicesWrapper,
+  SHOW_MAP_VIEW_COOKIE_NAME,
   YourPeerLegacyLocationData,
 } from "./common";
 import { LocationsContainerPager } from "./locations-container-pager";
+import { cookies } from "next/headers";
+import classNames from "classnames";
 
 export default function LocationsContainer({
   category,
@@ -28,11 +31,24 @@ export default function LocationsContainer({
   numberOfPages: number;
   currentPage: number;
 }) {
+  const showMapView =
+    cookies().get(SHOW_MAP_VIEW_COOKIE_NAME)?.value === "true";
+  const classnames = classNames([
+    "md:flex",
+    "flex-col",
+    "flex-1",
+    "overflow-y-auto",
+    "scrollbar-hide",
+    "md:scrollbar-thumb-primary",
+    "md:scrollbar-w-2",
+    "md:scrollbar-track-rounded",
+    "md:scrollbar-thumb-rounded",
+    "md:scrollbar-track-primary/20",
+    showMapView ? "hidden" : "block",
+  ]);
+
   return (
-    <div
-      className="md:flex flex-col flex-1 overflow-y-auto scrollbar-hide md:scrollbar-thumb-primary md:scrollbar-w-2 md:scrollbar-track-rounded md:scrollbar-thumb-rounded md:scrollbar-track-primary/20"
-      id="locations_container"
-    >
+    <div className={classnames} id="locations_container">
       <div className="flex-1 flex flex-col">
         <div className="text-sm px-6 py-4 flex items-center border-b border-dotted border-neutral-200 justify-between">
           <h1>

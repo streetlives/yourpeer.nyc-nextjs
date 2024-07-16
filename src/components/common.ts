@@ -737,4 +737,7 @@ export const RESOURCE_ROUTES = Object.keys(ROUTE_TO_CATEGORY_MAP).concat(
 
 export const PAGE_PARAM = "page";
 
-export const COOKIE_NAME = "last-set-params";
+// TODO: move these into new cookies module
+export const LAST_SET_PARAMS_COOKIE_NAME = "last-set-params";
+
+export const SHOW_MAP_VIEW_COOKIE_NAME = "show-map-view";
