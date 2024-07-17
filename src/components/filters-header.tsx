@@ -55,41 +55,38 @@ export default function FiltersHeader({
       <div className="flex gap-2 py-3 px-4  flex-nowrap lg:flex-wrap items-center overflow-x-auto border-b border-dotted border-neutral-200 scrollbar-hide">
         {CATEGORIES.filter(
           (thisCategory) =>
-            currentCategory === thisCategory || currentCategory === null,
-        ).map((thisCategory) => {
-          const link = (
-            <Link
-              key={thisCategory}
-              className={classNames(
-                commonClassNames,
-                currentCategory === thisCategory
-                  ? { "bg-primary": true }
-                  : { "bg-neutral-100": true },
-              )}
-              href={getUrlWithNewCategory(
-                currentCategory === thisCategory ? null : thisCategory,
-                searchParams,
-              )}
-            >
-              <img
-                src={getIconPath(CATEGORY_ICON_SRC_MAP[thisCategory])}
-                className="w-4 h-4"
-                alt=""
-              />
-              <span className="leading-3 truncate">
-                {CATEGORY_DESCRIPTION_MAP[thisCategory]}
-              </span>
-            </Link>
-          );
-          return currentCategory === thisCategory ? <h1>{link}</h1> : link;
-        })}
+            currentCategory === thisCategory || currentCategory === null
+        ).map((thisCategory) => (
+          <Link
+            key={thisCategory}
+            className={classNames(
+              commonClassNames,
+              currentCategory === thisCategory
+                ? { "bg-primary": true }
+                : { "bg-neutral-100": true }
+            )}
+            href={getUrlWithNewCategory(
+              currentCategory === thisCategory ? null : thisCategory,
+              searchParams
+            )}
+          >
+            <img
+              src={getIconPath(CATEGORY_ICON_SRC_MAP[thisCategory])}
+              className="w-4 h-4"
+              alt=""
+            />
+            <span className="leading-3 truncate">
+              {CATEGORY_DESCRIPTION_MAP[thisCategory]}
+            </span>
+          </Link>
+        ))}
         {searchParams[AGE_PARAM] ? (
           <Link
             className="bg-primary inline-flex flex-shrink-0 overflow-hidden items-center space-x-2 text-dark rounded-full text-xs py-1 px-3 transition location_filter"
             href={getUrlWithoutFilterParameter(
               pathname,
               searchParams,
-              AGE_PARAM,
+              AGE_PARAM
             )}
           >
             <span className="leading-3 truncate">
@@ -102,7 +99,7 @@ export default function FiltersHeader({
           href={getUrlWithNewFilterParameter(
             pathname,
             searchParams,
-            SHOW_ADVANCED_FILTERS_PARAM,
+            SHOW_ADVANCED_FILTERS_PARAM
           )}
         >
           <img src="/img/icons/filters.svg" className="w-4 h-4" alt="" />
