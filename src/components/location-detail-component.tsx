@@ -22,7 +22,7 @@ import Service from "./service-component";
 import customStreetViews from "./custom-streetviews";
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import { activeMarkerIcon, defaultZoom, mapStyles } from "./map-common";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ReportIssueForm } from "./report-issue";
 import { parseCookies } from "./cookies";
 
@@ -105,17 +105,22 @@ export default function LocationDetailComponent({
     setIsShowingReportIssueForm(false);
   }
 
-  let previousRoute;
-  const cookies = parseCookies();
-  if (cookies[LAST_SET_PARAMS_COOKIE_NAME]) {
-    const previousParams = JSON.parse(
-      cookies[LAST_SET_PARAMS_COOKIE_NAME],
-    ) as unknown as {
-      searchParams: SearchParams;
-      params: SubRouteParams;
-    };
-    previousRoute = `/${previousParams.params.route}${previousParams.params.locationSlugOrPersonalCareSubCategory ? `/${previousParams.params.locationSlugOrPersonalCareSubCategory}` : ""}${Object.keys(previousParams).length ? `?${serializeToQueryParams(previousParams.searchParams)}` : ""}`;
-  }
+  const [previousRoute, setPreviousRoute] = useState<string>();
+  useEffect(() => {
+    const cookies = parseCookies();
+    if (cookies[LAST_SET_PARAMS_COOKIE_NAME]) {
+      const previousParams = JSON.parse(
+        cookies[LAST_SET_PARAMS_COOKIE_NAME]
+      ) as unknown as {
+        searchParams: SearchParams;
+        params: SubRouteParams;
+      };
+      setPreviousRoute(
+        `/${previousParams.params.route}${previousParams.params.locationSlugOrPersonalCareSubCategory ? `/${previousParams.params.locationSlugOrPersonalCareSubCategory}` : ""}${Object.keys(previousParams).length ? `?${serializeToQueryParams(previousParams.searchParams)}` : ""}`
+      );
+    }
+  }, []);
+
 
   return (
     <div className="details-screen bg-white md:block z-40 fixed md:absolute inset-0 w-full h-full overflow-y-auto scrollbar-hide">

@@ -7,7 +7,8 @@
 "use client";
 
 import { SHOW_MAP_VIEW_COOKIE_NAME } from "./common";
-import { parseCookies, setCookie } from "./cookies";
+import { setCookie } from "./cookies";
+import useShowMapViewCookie from "./use-show-map-view-cookie";
 
 export default function MapListToggleButton() {
   function setMapIsVisibleCookie(mapIsVisible: boolean): void {
@@ -15,11 +16,11 @@ export default function MapListToggleButton() {
     window.location.reload();
   }
 
-  const cookies = parseCookies();
+  const [showMapView] = useShowMapViewCookie();
 
   return (
     <div className="fixed bottom-5 left-1/2 -translate-x-1/2 md:hidden z-30">
-      {cookies[SHOW_MAP_VIEW_COOKIE_NAME] === "true" ? (
+      {showMapView ? (
         <button
           className="items-center justify-center text-black bg-primary rounded-full shadow-sm hover:brightness-90 hover:cursor-pointer text-sm py-2 px-4 space-x-2"
           onClick={() => setMapIsVisibleCookie(false)}
