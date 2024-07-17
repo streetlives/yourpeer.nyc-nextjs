@@ -55,7 +55,7 @@ export default function FiltersHeader({
       <div className="flex gap-2 py-3 px-4  flex-nowrap lg:flex-wrap items-center overflow-x-auto border-b border-dotted border-neutral-200 scrollbar-hide">
         {CATEGORIES.filter(
           (thisCategory) =>
-            currentCategory === thisCategory || currentCategory === null
+            currentCategory === thisCategory || currentCategory === null,
         ).map((thisCategory) => (
           <Link
             key={thisCategory}
@@ -63,11 +63,11 @@ export default function FiltersHeader({
               commonClassNames,
               currentCategory === thisCategory
                 ? { "bg-primary": true }
-                : { "bg-neutral-100": true }
+                : { "bg-neutral-100": true },
             )}
             href={getUrlWithNewCategory(
               currentCategory === thisCategory ? null : thisCategory,
-              searchParams
+              searchParams,
             )}
           >
             <img
@@ -86,7 +86,7 @@ export default function FiltersHeader({
             href={getUrlWithoutFilterParameter(
               pathname,
               searchParams,
-              AGE_PARAM
+              AGE_PARAM,
             )}
           >
             <span className="leading-3 truncate">
@@ -99,7 +99,7 @@ export default function FiltersHeader({
           href={getUrlWithNewFilterParameter(
             pathname,
             searchParams,
-            SHOW_ADVANCED_FILTERS_PARAM
+            SHOW_ADVANCED_FILTERS_PARAM,
           )}
         >
           <img src="/img/icons/filters.svg" className="w-4 h-4" alt="" />
