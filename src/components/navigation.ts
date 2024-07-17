@@ -11,8 +11,6 @@ import {
   AmenitiesSubCategory,
   Category,
   CATEGORY_TO_ROUTE_MAP,
-  CategoryNotNull,
-  FILTERS_THAT_APPLY_TO_ALL_CATEGORIES,
   getParsedAmenities,
   LOCATION_ROUTE,
   PAGE_PARAM,
