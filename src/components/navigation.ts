@@ -9,9 +9,8 @@ import {
   AMENITIES_PARAM,
   AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING,
   AmenitiesSubCategory,
+  Category,
   CATEGORY_TO_ROUTE_MAP,
-  CategoryNotNull,
-  FILTERS_THAT_APPLY_TO_ALL_CATEGORIES,
   getParsedAmenities,
   LOCATION_ROUTE,
   PAGE_PARAM,
@@ -28,20 +27,17 @@ import {
 
 // Change category
 export function getUrlWithNewCategory(
-  newCategory: CategoryNotNull,
-  searchParams: ReadonlyURLSearchParams | Map<string, string>,
+  newCategory: Category,
+  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
 ): string {
-  const currentUrlSearchParams = new URLSearchParams(
-    Array.from(searchParams.entries()).filter(([k, v]) =>
-      FILTERS_THAT_APPLY_TO_ALL_CATEGORIES.includes(k),
-    ),
-  );
+  const searchParamsList: string[][] = getSearchParamsList(searchParams);
+  const currentUrlSearchParams = new URLSearchParams(searchParamsList);
 
-  const newSearchParamsStr = currentUrlSearchParams.toString();
   // always delete the current page
   currentUrlSearchParams.delete(PAGE_PARAM);
+  const newSearchParamsStr = currentUrlSearchParams.toString();
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
-  return `/${CATEGORY_TO_ROUTE_MAP[newCategory]}${query}`;
+  return `/${newCategory ? CATEGORY_TO_ROUTE_MAP[newCategory] : LOCATION_ROUTE}${query}`;
 }
 
 function getSearchParamsList(
@@ -72,9 +68,9 @@ export function getUrlWithNewFilterParameter(
 
   currentUrlSearchParams.set(urlParamName, urlParamValue);
 
-  const newSearchParamsStr = currentUrlSearchParams.toString();
   // always delete the current page
   currentUrlSearchParams.delete(PAGE_PARAM);
+  const newSearchParamsStr = currentUrlSearchParams.toString();
 
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `${pathname}${query}`;
@@ -94,9 +90,9 @@ export function getUrlWithoutFilterParameter(
 
   currentUrlSearchParams.delete(urlParamName);
 
-  const newSearchParamsStr = currentUrlSearchParams.toString();
   // always delete the current page
   currentUrlSearchParams.delete(PAGE_PARAM);
+  const newSearchParamsStr = currentUrlSearchParams.toString();
 
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `${pathname}${query}`;
