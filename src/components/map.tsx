@@ -13,11 +13,7 @@ import {
   Marker,
   useMap,
 } from "@vis.gl/react-google-maps";
-import {
-  LOCATION_ROUTE,
-  SHOW_MAP_VIEW_COOKIE_NAME,
-  SimplifiedLocationData,
-} from "./common";
+import { LOCATION_ROUTE, SimplifiedLocationData } from "./common";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -28,8 +24,8 @@ import {
   markerIcon,
   myLocationIcon,
 } from "./map-common";
-import { parseCookies } from "./cookies";
 import classNames from "classnames";
+import useShowMapViewCookie from "./use-show-map-view-cookie";
 
 interface Position {
   lat: number;
@@ -318,12 +314,7 @@ export default function LocationsMap({
   locationStubs?: SimplifiedLocationData[];
   locationDetailStub?: SimplifiedLocationData;
 }) {
-  const [showMapView, setShowMapView] = useState(true);
-  useEffect(() => {
-    const cookies = parseCookies();
-    const showMapViewCookie = cookies[SHOW_MAP_VIEW_COOKIE_NAME] === "true";
-    setShowMapView(showMapViewCookie);
-  }, []);
+  const [showMapView, setShowMapView] = useShowMapViewCookie();
   const classnames = classNames([
     "w-full",
     "md:block",
