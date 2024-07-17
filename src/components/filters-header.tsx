@@ -19,6 +19,7 @@ import {
 import Link from "next/link";
 import classNames from "classnames";
 import {
+  getUrlWithNewCategory,
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
 } from "./navigation";
@@ -65,11 +66,10 @@ export default function FiltersHeader({
                   ? { "bg-primary": true }
                   : { "bg-neutral-100": true },
               )}
-              href={
-                currentCategory === thisCategory
-                  ? LOCATION_ROUTE
-                  : CATEGORY_TO_ROUTE_MAP[thisCategory]
-              }
+              href={getUrlWithNewCategory(
+                currentCategory === thisCategory ? null : thisCategory,
+                searchParams,
+              )}
             >
               <img
                 src={getIconPath(CATEGORY_ICON_SRC_MAP[thisCategory])}
