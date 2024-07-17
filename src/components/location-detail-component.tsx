@@ -110,17 +110,16 @@ export default function LocationDetailComponent({
     const cookies = parseCookies();
     if (cookies[LAST_SET_PARAMS_COOKIE_NAME]) {
       const previousParams = JSON.parse(
-        cookies[LAST_SET_PARAMS_COOKIE_NAME]
+        cookies[LAST_SET_PARAMS_COOKIE_NAME],
       ) as unknown as {
         searchParams: SearchParams;
         params: SubRouteParams;
       };
       setPreviousRoute(
-        `/${previousParams.params.route}${previousParams.params.locationSlugOrPersonalCareSubCategory ? `/${previousParams.params.locationSlugOrPersonalCareSubCategory}` : ""}${Object.keys(previousParams).length ? `?${serializeToQueryParams(previousParams.searchParams)}` : ""}`
+        `/${previousParams.params.route}${previousParams.params.locationSlugOrPersonalCareSubCategory ? `/${previousParams.params.locationSlugOrPersonalCareSubCategory}` : ""}${Object.keys(previousParams).length ? `?${serializeToQueryParams(previousParams.searchParams)}` : ""}`,
       );
     }
   }, []);
-
 
   return (
     <div className="details-screen bg-white md:block z-40 fixed md:absolute inset-0 w-full h-full overflow-y-auto scrollbar-hide">

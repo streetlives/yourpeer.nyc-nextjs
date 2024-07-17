@@ -13,10 +13,7 @@ import {
   Marker,
   useMap,
 } from "@vis.gl/react-google-maps";
-import {
-  LOCATION_ROUTE,
-  SimplifiedLocationData,
-} from "./common";
+import { LOCATION_ROUTE, SimplifiedLocationData } from "./common";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
