@@ -211,6 +211,7 @@ export default function LocationDetailComponent({
                     <Map
                       defaultZoom={defaultZoom}
                       gestureHandling={"greedy"}
+                      zoomControl={false}
                       streetViewControl={false}
                       mapTypeControl={false}
                       fullscreenControl={false}
@@ -331,7 +332,7 @@ export default function LocationDetailComponent({
                     </li>
                   ) : undefined}
                   {location.url ? (
-                    <li translate="no" className="flex space-x-3">
+                    <li translate="no" className="flex space-x-3 overflow-hidden">
                       <img
                         src="/img/icons/cursor.svg"
                         className="flex-shrink-0 w-5 h-5 max-h-5"
