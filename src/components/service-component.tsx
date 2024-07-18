@@ -164,16 +164,12 @@ export default function Service({
                 <div>
                   <>
                     {service.description ? (
-                      <p className="text-sm text-dark mb-4 have-links">
-                        <ul>
-                          {service.description.split("•").map((description) => (
-                            <li
-                              key="bullet"
-                              dangerouslySetInnerHTML={{ __html: description }}
-                            ></li>
-                          ))}
-                        </ul>
-                      </p>
+                      <p
+                        className="text-sm text-dark mb-4 have-links"
+                        dangerouslySetInnerHTML={{
+                          __html: service.description.replace(/•/g, "<br>•"),
+                        }}
+                      ></p>
                     ) : undefined}
                     <ul className="flex flex-col space-y-3">
                       {service.schedule ? (
@@ -213,16 +209,12 @@ export default function Service({
                               />
                             </svg>
                           </span>
-                          <p className="text-dark text-sm have-links service-info">
-                            <ul>
-                              {info.split("•").map((i) => (
-                                <li
-                                  key={i}
-                                  dangerouslySetInnerHTML={{ __html: i }}
-                                ></li>
-                              ))}
-                            </ul>
-                          </p>
+                          <p
+                            className="text-dark text-sm have-links service-info"
+                            dangerouslySetInnerHTML={{
+                              __html: info.replace(/•/g, "<br>•"),
+                            }}
+                          ></p>
                         </li>
                       ))}
                       <li className="flex items-start space-x-2 {% if not service.membership and not service.eligibility and not service.docs and not service.age %} hidden {% endif %}">
