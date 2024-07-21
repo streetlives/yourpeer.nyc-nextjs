@@ -28,7 +28,7 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
   //console.log("currentSearch", currentSearch);
   return (
     <div
-      className="bg-white fixed z-40 md:absolute bottom-0 md:bottom-auto w-full top-[49.6px] md:top-full inset-x-0 rounded border md:border-gray-300"
+      className="bg-white fixed md:absolute bottom-0 md:bottom-auto w-full top-[49.6px] md:top-full inset-x-0 rounded border md:border-gray-300"
       id="search_panel"
     >
       <div>
@@ -93,6 +93,10 @@ export default function SearchForm() {
     setSearch(searchParamFromQuery);
   }, [searchParamFromQuery]);
 
+  function clearSearch(){
+    setSearch('');
+  }
+
   function doSetSearch(e: ChangeEvent) {
     setSearch((e.target as HTMLFormElement).value);
   }
@@ -143,6 +147,7 @@ export default function SearchForm() {
         />
         {search ? (
           <Link
+            onClick={clearSearch}
             href={getUrlWithoutFilterParameter(
               pathname,
               searchParams,

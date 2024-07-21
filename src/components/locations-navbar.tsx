@@ -16,7 +16,7 @@ export const LocationsNavbarResourceRoutes = () => {
   return (
     <>
       <OffCanvasMenu open={open} onClose={() => setOpen(false)} />
-      <div className="bg-white relative z-20 shadow w-full flex flex-col">
+      <div className="bg-white relative z-50 shadow w-full flex flex-col">
         <nav className="flex space-x-3 items-center justify-between px-5 py-2 md:py-3">
           <div className="flex items-center">
             <button
