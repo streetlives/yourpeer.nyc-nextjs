@@ -8,23 +8,86 @@ import Link from "next/link";
 import {
   CATEGORIES,
   Category,
+  CATEGORY_DESCRIPTION_MAP,
+  CATEGORY_FILTER_ICON_SRC_MAP,
   CATEGORY_ICON_SRC_MAP,
+  CATEGORY_TO_ROUTE_MAP,
   getIconPath,
   getServicesWrapper,
+  SearchParams,
   SHOW_MAP_VIEW_COOKIE_NAME,
   YourPeerLegacyLocationData,
 } from "./common";
 import { LocationsContainerPager } from "./locations-container-pager";
 import { cookies } from "next/headers";
 import classNames from "classnames";
+import { getUrlWithNewCategory } from "./navigation";
+
+function NoLocationsFound({ searchParams }: { searchParams: SearchParams }) {
+  return (
+    <div className="">
+      <div className="p-5">
+        <div className="flex items-center justify-center flex-col p-5 sm:p-7">
+          <img
+            src="/img/icons/search-icon.png"
+            className="w-9 h-9 max-h-9 object-contain"
+            alt=""
+          />
+          <p className="mt-5 text-base text-dark text-center">
+            No item found. Please try to change filters.
+          </p>
+        </div>
+
+        <ul className="flex flex-col divide-y divide-gray-300">
+          {CATEGORIES.map((category) => (
+            <li key={category}>
+              <Link
+                href={getUrlWithNewCategory(category, searchParams)}
+                className="flex items-center cursor-pointer space-x-4 group py-5 rounded-md hover:bg-gray-100 transition duration-200"
+              >
+                <img
+                  src={getIconPath(CATEGORY_FILTER_ICON_SRC_MAP[category])}
+                  width="32"
+                  className="object-contain flex-shrink-0"
+                  alt=""
+                />
+                <div className="flex-grow">
+                  <div className="underline text-gray-800 text-sm group-hover:text-gray-700 transition group-hover:no-underline font-semibold">
+                    {CATEGORY_DESCRIPTION_MAP[category]}
+                  </div>
+                </div>
+                <span className="text-gray-700 transition group-hover:translate-x-1">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
 
 export default function LocationsContainer({
+  searchParams,
   category,
   yourPeerLegacyLocationData,
   resultCount,
   numberOfPages,
   currentPage,
 }: {
+  searchParams: SearchParams;
   category: Category;
   yourPeerLegacyLocationData: YourPeerLegacyLocationData[];
   resultCount: number;
@@ -198,7 +261,9 @@ export default function LocationsContainer({
               currentPage={currentPage}
             />
           </>
-        ) : undefined}
+        ) : (
+          <NoLocationsFound searchParams={searchParams} />
+        )}
       </div>
     </div>
   );

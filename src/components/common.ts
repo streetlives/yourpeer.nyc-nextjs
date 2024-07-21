@@ -90,6 +90,15 @@ export const CATEGORY_ICON_SRC_MAP: Record<CategoryNotNull, string> = {
   "personal-care": "personal-care",
 };
 
+export const CATEGORY_FILTER_ICON_SRC_MAP: Record<CategoryNotNull, string> = {
+  "health-care": "health-icon",
+  other: "dots-icon",
+  "shelters-housing": "home-icon",
+  food: "food-icon-2",
+  clothing: "clothing-icon",
+  "personal-care": "personal-care-2",
+};
+
 export function getIconPath(iconName: string): string {
   return `/img/icons/${iconName}.svg`;
 }

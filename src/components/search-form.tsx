@@ -93,8 +93,8 @@ export default function SearchForm() {
     setSearch(searchParamFromQuery);
   }, [searchParamFromQuery]);
 
-  function clearSearch(){
-    setSearch('');
+  function clearSearch() {
+    setSearch("");
   }
 
   function doSetSearch(e: ChangeEvent) {
