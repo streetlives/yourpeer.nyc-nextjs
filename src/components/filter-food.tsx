@@ -4,7 +4,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import classNames from "classnames";
 import {
   FOOD_PARAM,
@@ -15,12 +15,14 @@ import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
 } from "./navigation";
+import { useNormalizedSearchParams } from "./use-normalized-search-params";
 
 export default function FilterFood() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const foodParam = searchParams.get(FOOD_PARAM);
+  const { normalizedSearchParams } = useNormalizedSearchParams();
+  const foodParam =
+    normalizedSearchParams && normalizedSearchParams.get(FOOD_PARAM);
   const commonClasses = [
     "text-xs",
     "relative",
@@ -43,7 +45,11 @@ export default function FilterFood() {
 
   function handleIsAnyClick() {
     router.push(
-      getUrlWithoutFilterParameter(pathname, searchParams, FOOD_PARAM),
+      getUrlWithoutFilterParameter(
+        pathname,
+        normalizedSearchParams,
+        FOOD_PARAM,
+      ),
     );
   }
 
@@ -51,7 +57,7 @@ export default function FilterFood() {
     router.push(
       getUrlWithNewFilterParameter(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         FOOD_PARAM,
         FOOD_PARAM_SOUP_KITCHEN_VALUE,
       ),
@@ -62,7 +68,7 @@ export default function FilterFood() {
     router.push(
       getUrlWithNewFilterParameter(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         FOOD_PARAM,
         FOOD_PARAM_PANTRY_VALUE,
       ),

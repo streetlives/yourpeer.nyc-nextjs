@@ -12,13 +12,11 @@ import {
   LOCATION_ROUTE,
   SHOW_ADVANCED_FILTERS_PARAM,
   AGE_PARAM,
-  SEARCH_PARAM,
-  mapsAreEqual,
 } from "./common";
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import React, { ChangeEvent } from "react";
 import classNames from "classnames";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import FilterHours from "./filter-hours";
 import FilterHousing from "./filter-housing";
 import {
@@ -29,7 +27,7 @@ import {
 import FilterFood from "./filter-food";
 import FilterClothing from "./filter-clothing";
 import FilterPersonalCare from "./filter-personal-care";
-import { SearchContext, SearchContextType } from "./search-context";
+import { useNormalizedSearchParams } from "./use-normalized-search-params";
 
 function CategoryFilterLabel({
   labelCategory,
@@ -37,19 +35,20 @@ function CategoryFilterLabel({
   imgSrc,
   activeImgSrc,
   labelText,
+  normalizedSearchParams,
 }: {
   labelCategory: CategoryNotNull;
   currentCategory: Category;
   imgSrc: string;
   activeImgSrc: string;
   labelText: string;
+  normalizedSearchParams?: Map<string, string>;
 }) {
-  const searchParams = useSearchParams();
   const isActive = labelCategory == currentCategory;
 
   return (
     <Link
-      href={getUrlWithNewCategory(labelCategory, searchParams)}
+      href={getUrlWithNewCategory(labelCategory, normalizedSearchParams)}
       aria-labelledby="service-type-0-label"
       aria-describedby="service-type-0-description-0 service-type-0-description-1"
       className={classNames(
@@ -89,13 +88,10 @@ export default function FiltersPopup({
   category: Category;
   numLocationResults: number;
 }) {
-  const { search } = useContext(SearchContext) as SearchContextType;
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [normalizedSearchParams, setNormalizedSearchParams] =
-    useState<Map<string, string>>();
-  const [ageParam, setAgeParam] = useState<number>();
+  const { normalizedSearchParams, ageParam, search, setAgeParam } =
+    useNormalizedSearchParams();
 
   console.log(
     "search",
@@ -103,32 +99,6 @@ export default function FiltersPopup({
     "normalizedSearchParams",
     normalizedSearchParams,
   );
-
-  // normalize the search params
-  useEffect(() => {
-    const localNormalizedSearchParams = searchParams
-      ? new Map(searchParams.entries())
-      : new Map();
-    if (searchParams) {
-      if (searchParams.has(AGE_PARAM)) {
-        const age = searchParams.get(AGE_PARAM);
-        if (age) {
-          setAgeParam(parseInt(age, 10));
-        }
-        localNormalizedSearchParams.set(AGE_PARAM, age);
-      }
-      if (search) {
-        localNormalizedSearchParams.set(SEARCH_PARAM, search);
-      }
-    }
-    // only set him if he's changed
-    if (
-      normalizedSearchParams === undefined ||
-      !mapsAreEqual(localNormalizedSearchParams, normalizedSearchParams)
-    ) {
-      setNormalizedSearchParams(localNormalizedSearchParams);
-    }
-  }, [searchParams, normalizedSearchParams, setNormalizedSearchParams, search]);
 
   function handleFilterFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -213,6 +183,7 @@ export default function FiltersPopup({
               activeImgSrc="/img/icons/active-home-icon.svg"
               imgSrc="/img/icons/home-icon.svg"
               labelText="Shelter & Housing"
+              normalizedSearchParams={normalizedSearchParams}
             />
             <CategoryFilterLabel
               currentCategory={category}
@@ -220,6 +191,7 @@ export default function FiltersPopup({
               activeImgSrc="/img/icons/active-food-icon.svg"
               imgSrc="/img/icons/food-icon-2.svg"
               labelText="Food"
+              normalizedSearchParams={normalizedSearchParams}
             />
             <CategoryFilterLabel
               currentCategory={category}
@@ -227,6 +199,7 @@ export default function FiltersPopup({
               activeImgSrc="/img/icons/active-clothing-icon.svg"
               imgSrc="/img/icons/clothing-icon.svg"
               labelText="Clothing"
+              normalizedSearchParams={normalizedSearchParams}
             />
             <CategoryFilterLabel
               currentCategory={category}
@@ -234,6 +207,7 @@ export default function FiltersPopup({
               activeImgSrc="/img/icons/active-personal-care.svg"
               imgSrc="/img/icons/personal-care-2.svg"
               labelText="Personal Care"
+              normalizedSearchParams={normalizedSearchParams}
             />
             <CategoryFilterLabel
               currentCategory={category}
@@ -241,6 +215,7 @@ export default function FiltersPopup({
               activeImgSrc="/img/icons/active-health-icon.svg"
               imgSrc="/img/icons/health-icon.svg"
               labelText="Health"
+              normalizedSearchParams={normalizedSearchParams}
             />
             <CategoryFilterLabel
               currentCategory={category}
@@ -248,6 +223,7 @@ export default function FiltersPopup({
               activeImgSrc="/img/icons/active-dots-icon.svg"
               imgSrc="/img/icons/dots-icon.svg"
               labelText="Other"
+              normalizedSearchParams={normalizedSearchParams}
             />
           </div>
         </fieldset>

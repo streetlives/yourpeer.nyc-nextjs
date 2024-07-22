@@ -4,7 +4,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import classNames from "classnames";
 import {
   SHELTER_PARAM,
@@ -15,12 +15,14 @@ import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
 } from "./navigation";
+import { useNormalizedSearchParams } from "./use-normalized-search-params";
 
 export default function FilterHousing() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const shelterParam = searchParams.get(SHELTER_PARAM);
+  const { normalizedSearchParams } = useNormalizedSearchParams();
+  const shelterParam =
+    normalizedSearchParams && normalizedSearchParams.get(SHELTER_PARAM);
   const commonClasses = [
     "text-xs",
     "relative",
@@ -43,7 +45,11 @@ export default function FilterHousing() {
 
   function handleIsAnyClick() {
     router.push(
-      getUrlWithoutFilterParameter(pathname, searchParams, SHELTER_PARAM),
+      getUrlWithoutFilterParameter(
+        pathname,
+        normalizedSearchParams,
+        SHELTER_PARAM,
+      ),
     );
   }
 
@@ -51,7 +57,7 @@ export default function FilterHousing() {
     router.push(
       getUrlWithNewFilterParameter(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         SHELTER_PARAM,
         SHELTER_PARAM_SINGLE_VALUE,
       ),
@@ -62,7 +68,7 @@ export default function FilterHousing() {
     router.push(
       getUrlWithNewFilterParameter(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         SHELTER_PARAM,
         SHELTER_PARAM_FAMILY_VALUE,
       ),

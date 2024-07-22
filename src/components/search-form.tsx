@@ -85,7 +85,7 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
 export default function SearchForm() {
   const { search, setSearch } = useContext(SearchContext) as SearchContextType;
   const searchParams = useSearchParams();
-  const searchParamFromQuery = searchParams.get(SEARCH_PARAM);
+  const searchParamFromQuery = searchParams && searchParams.get(SEARCH_PARAM);
   const [inputHasFocus, setInputHasFocus] = useState(false);
   const router = useRouter();
   const pathname = usePathname();

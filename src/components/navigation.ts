@@ -55,7 +55,8 @@ function getSearchParamsList(
 ): string[][] {
   return !searchParams
     ? []
-    : searchParams instanceof ReadonlyURLSearchParams
+    : searchParams instanceof ReadonlyURLSearchParams ||
+        searchParams instanceof Map
       ? Array.from(searchParams.entries())
       : (Object.entries(searchParams)
           .filter(([k, v]) => v !== undefined)
@@ -99,6 +100,7 @@ export function getUrlWithoutFilterParameter(
     | ReadonlyURLSearchParams
     | SearchParams
     | Map<string, string>
+    | null
     | undefined,
   urlParamName: UrlParamName,
 ): string {

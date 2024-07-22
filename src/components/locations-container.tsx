@@ -11,7 +11,6 @@ import {
   CATEGORY_DESCRIPTION_MAP,
   CATEGORY_FILTER_ICON_SRC_MAP,
   CATEGORY_ICON_SRC_MAP,
-  CATEGORY_TO_ROUTE_MAP,
   getIconPath,
   getServicesWrapper,
   SearchParams,
