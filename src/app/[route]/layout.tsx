@@ -17,6 +17,7 @@ import {
 } from "../../components/locations-navbar";
 import { notFound } from "next/navigation";
 import { SearchProvider } from "@/components/search-context";
+import { Suspense } from "react";
 
 export default function LocationsLayout({
   mapContainer,
@@ -45,10 +46,13 @@ export default function LocationsLayout({
                 className="relative w-full md:w-1/2 lg:w-1/3 bg-white overflow-hidden"
                 id="left_panel"
               >
-                {sidePanel}
+                <Suspense fallback={<p>Loading location data...</p>}>
+                  {sidePanel}
+                </Suspense>
               </div>
-
-              {mapContainer}
+              <Suspense fallback={<p>Loading map...</p>}>
+                {mapContainer}
+              </Suspense>
             </main>
           </div>
         </SearchProvider>
