@@ -35,7 +35,7 @@ export function useNormalizedSearchParams(): UseNormalizedSearchParamsType {
       }
       localNormalizedSearchParams.set(AGE_PARAM, age);
     }
-    if (search && localNormalizedSearchParams.get(SEARCH_PARAM) !== ageParam) {
+    if (search && localNormalizedSearchParams.get(SEARCH_PARAM) !== search) {
       localNormalizedSearchParams.set(SEARCH_PARAM, search);
     }
     if (ageParam && localNormalizedSearchParams.get(AGE_PARAM) !== ageParam) {
