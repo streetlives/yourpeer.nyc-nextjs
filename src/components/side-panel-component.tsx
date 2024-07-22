@@ -92,6 +92,7 @@ export function SidePanelComponent({
         ) : undefined}
         <FiltersHeader category={category} searchParams={searchParams} />
         <LocationsContainer
+          searchParams={searchParams}
           resultCount={resultCount}
           numberOfPages={numberOfPages}
           currentPage={parsedSearchParams[PAGE_PARAM]}

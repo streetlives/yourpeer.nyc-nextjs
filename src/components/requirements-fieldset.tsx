@@ -14,23 +14,24 @@ import {
   REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE,
   REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE,
 } from "./common";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved } from "./navigation";
+import { useNormalizedSearchParams } from "./use-normalized-search-params";
 
 export function RequirementFieldset() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams() || new Map();
+  const { normalizedSearchParams } = useNormalizedSearchParams();
 
   const parsedRequirementParam = parseRequirementParam(
-    searchParams.get(REQUIREMENT_PARAM),
+    normalizedSearchParams && normalizedSearchParams.get(REQUIREMENT_PARAM),
   );
 
   function handleNoRequirementsChange(e: ChangeEvent) {
     router.push(
       getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE,
         (e.target as HTMLFormElement).checked,
       ),
@@ -41,7 +42,7 @@ export function RequirementFieldset() {
     router.push(
       getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE,
         (e.target as HTMLFormElement).checked,
       ),
@@ -52,7 +53,7 @@ export function RequirementFieldset() {
     router.push(
       getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE,
         (e.target as HTMLFormElement).checked,
       ),

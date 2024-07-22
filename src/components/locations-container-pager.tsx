@@ -19,7 +19,7 @@ export function LocationsContainerPager({
   currentPage: number;
 }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams() || new Map();
+  const searchParams = useSearchParams();
   const hasPreviousPage = currentPage > 0;
   const hasNextPage = currentPage < numberOfPages;
 

@@ -8,16 +8,17 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import { SEARCH_PARAM } from "./common";
 import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
 } from "./navigation";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { SearchContext, SearchContextType } from "./search-context";
 
 function SearchPanel({ currentSearch }: { currentSearch: string }) {
-  const searchParams = useSearchParams() || new Map();
+  const searchParams = useSearchParams();
   const pathname = usePathname();
   const newUrl = getUrlWithNewFilterParameter(
     pathname,
@@ -28,7 +29,7 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
   //console.log("currentSearch", currentSearch);
   return (
     <div
-      className="bg-white fixed z-40 md:absolute bottom-0 md:bottom-auto w-full top-[49.6px] md:top-full inset-x-0 rounded border md:border-gray-300"
+      className="bg-white fixed md:absolute bottom-0 md:bottom-auto w-full top-[49.6px] md:top-full inset-x-0 rounded border md:border-gray-300"
       id="search_panel"
     >
       <div>
@@ -82,16 +83,20 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
 }
 
 export default function SearchForm() {
-  const searchParams = useSearchParams() || new Map();
-  const searchParamFromQuery = searchParams.get(SEARCH_PARAM);
-  const [search, setSearch] = useState(searchParams.get(SEARCH_PARAM));
+  const { search, setSearch } = useContext(SearchContext) as SearchContextType;
+  const searchParams = useSearchParams();
+  const searchParamFromQuery = searchParams && searchParams.get(SEARCH_PARAM);
   const [inputHasFocus, setInputHasFocus] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
     setSearch(searchParamFromQuery);
-  }, [searchParamFromQuery]);
+  }, [setSearch, searchParamFromQuery]);
+
+  function clearSearch() {
+    setSearch("");
+  }
 
   function doSetSearch(e: ChangeEvent) {
     setSearch((e.target as HTMLFormElement).value);
@@ -143,6 +148,7 @@ export default function SearchForm() {
         />
         {search ? (
           <Link
+            onClick={clearSearch}
             href={getUrlWithoutFilterParameter(
               pathname,
               searchParams,

@@ -4,7 +4,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   AmenitiesSubCategory,
   AMENITIES_PARAM_LAUNDRY_VALUE,
@@ -18,16 +18,19 @@ import {
 import { getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved } from "./navigation";
 import { ChangeEvent } from "react";
 import { RequirementFieldset } from "./requirements-fieldset";
+import { useNormalizedSearchParams } from "./use-normalized-search-params";
 
 // TODO: route should get a type enum
 export default function FilterPersonalCare() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams() || new Map();
+  const { normalizedSearchParams } = useNormalizedSearchParams();
   if (!pathname) {
     throw new Error("Expected pathname to not be null");
   }
-  const personalCareParam = searchParams.get(PERSONAL_CARE_CATEGORY);
+  const personalCareParam =
+    normalizedSearchParams &&
+    normalizedSearchParams.get(PERSONAL_CARE_CATEGORY);
   const [category, amenitiesSubCategory] =
     parsePathnameToCategoryAndSubCategory(pathname);
   const parsedAmenities = getParsedAmenities(
@@ -39,7 +42,7 @@ export default function FilterPersonalCare() {
     router.push(
       getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         AMENITIES_PARAM_TOILETRIES_VALUE,
         (e.target as HTMLFormElement).checked,
       ),
@@ -50,7 +53,7 @@ export default function FilterPersonalCare() {
     router.push(
       getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         AMENITIES_PARAM_RESTROOM_VALUE,
         (e.target as HTMLFormElement).checked,
       ),
@@ -61,7 +64,7 @@ export default function FilterPersonalCare() {
     router.push(
       getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         AMENITIES_PARAM_SHOWER_VALUE,
         (e.target as HTMLFormElement).checked,
       ),
@@ -72,7 +75,7 @@ export default function FilterPersonalCare() {
     router.push(
       getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         AMENITIES_PARAM_LAUNDRY_VALUE,
         (e.target as HTMLFormElement).checked,
       ),

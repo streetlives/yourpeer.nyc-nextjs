@@ -90,6 +90,15 @@ export const CATEGORY_ICON_SRC_MAP: Record<CategoryNotNull, string> = {
   "personal-care": "personal-care",
 };
 
+export const CATEGORY_FILTER_ICON_SRC_MAP: Record<CategoryNotNull, string> = {
+  "health-care": "health-icon",
+  other: "dots-icon",
+  "shelters-housing": "home-icon",
+  food: "food-icon-2",
+  clothing: "clothing-icon",
+  "personal-care": "personal-care-2",
+};
+
 export function getIconPath(iconName: string): string {
   return `/img/icons/${iconName}.svg`;
 }
@@ -741,3 +750,15 @@ export const PAGE_PARAM = "page";
 export const LAST_SET_PARAMS_COOKIE_NAME = "last-set-params";
 
 export const SHOW_MAP_VIEW_COOKIE_NAME = "show-map-view";
+
+export function mapsAreEqual(
+  left: Map<string, string>,
+  right: Map<string, string>,
+): boolean {
+  return (
+    left.size === right.size &&
+    Array.from(left.entries()).every(
+      ([k, v]) => right.has(k) && v === right.get(k),
+    )
+  );
+}

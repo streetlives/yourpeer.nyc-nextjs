@@ -4,19 +4,21 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import classNames from "classnames";
 import { OPEN_PARAM } from "./common";
 import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
 } from "./navigation";
+import { useNormalizedSearchParams } from "./use-normalized-search-params";
 
 export default function FilterHours() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams() || new Map();
-  const isOpenNow = !!searchParams.get(OPEN_PARAM);
+  const { normalizedSearchParams } = useNormalizedSearchParams();
+  const isOpenNow =
+    normalizedSearchParams && !!normalizedSearchParams.get(OPEN_PARAM);
   const commonClasses = [
     "text-xs",
     "relative",
@@ -36,13 +38,21 @@ export default function FilterHours() {
 
   function handleIsOpenNowClick() {
     router.push(
-      getUrlWithNewFilterParameter(pathname, searchParams, OPEN_PARAM),
+      getUrlWithNewFilterParameter(
+        pathname,
+        normalizedSearchParams,
+        OPEN_PARAM,
+      ),
     );
   }
 
   function handleIsNotOpenNowClick() {
     router.push(
-      getUrlWithoutFilterParameter(pathname, searchParams, OPEN_PARAM),
+      getUrlWithoutFilterParameter(
+        pathname,
+        normalizedSearchParams,
+        OPEN_PARAM,
+      ),
     );
   }
 

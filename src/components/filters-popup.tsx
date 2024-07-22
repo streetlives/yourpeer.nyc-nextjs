@@ -13,10 +13,10 @@ import {
   SHOW_ADVANCED_FILTERS_PARAM,
   AGE_PARAM,
 } from "./common";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent } from "react";
 import classNames from "classnames";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import FilterHours from "./filter-hours";
 import FilterHousing from "./filter-housing";
 import {
@@ -27,6 +27,7 @@ import {
 import FilterFood from "./filter-food";
 import FilterClothing from "./filter-clothing";
 import FilterPersonalCare from "./filter-personal-care";
+import { useNormalizedSearchParams } from "./use-normalized-search-params";
 
 function CategoryFilterLabel({
   labelCategory,
@@ -34,23 +35,20 @@ function CategoryFilterLabel({
   imgSrc,
   activeImgSrc,
   labelText,
+  normalizedSearchParams,
 }: {
   labelCategory: CategoryNotNull;
   currentCategory: Category;
   imgSrc: string;
   activeImgSrc: string;
   labelText: string;
+  normalizedSearchParams?: Map<string, string>;
 }) {
-  const searchParams = useSearchParams() || new Map();
   const isActive = labelCategory == currentCategory;
-  const router = useRouter();
-
-  function handleClick() {
-    router.push(getUrlWithNewCategory(labelCategory, searchParams));
-  }
 
   return (
-    <label
+    <Link
+      href={getUrlWithNewCategory(labelCategory, normalizedSearchParams)}
       aria-labelledby="service-type-0-label"
       aria-describedby="service-type-0-description-0 service-type-0-description-1"
       className={classNames(
@@ -70,7 +68,7 @@ function CategoryFilterLabel({
           : { "bg-white": true, "border-gray-300": true },
       )}
     >
-      <input type="radio" className="sr-only" onClick={handleClick} />
+      <input type="radio" className="sr-only" />
       <img
         src={isActive ? activeImgSrc : imgSrc}
         className="max-h-8 w-8 h-8 object-contain"
@@ -79,7 +77,7 @@ function CategoryFilterLabel({
       <div className="text-center text-xs text-dark mt-3 truncate">
         {labelText}
       </div>
-    </label>
+    </Link>
   );
 }
 
@@ -92,17 +90,15 @@ export default function FiltersPopup({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams() || new Map();
-  const [ageParam, setAgeParam] = useState<number>();
+  const { normalizedSearchParams, ageParam, search, setAgeParam } =
+    useNormalizedSearchParams();
 
-  useEffect(() => {
-    if (searchParams.has(AGE_PARAM)) {
-      const age = searchParams.get(AGE_PARAM);
-      if (age) {
-        setAgeParam(parseInt(age, 10));
-      }
-    }
-  }, [searchParams]);
+  console.log(
+    "search",
+    search,
+    "normalizedSearchParams",
+    normalizedSearchParams,
+  );
 
   function handleFilterFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -110,7 +106,7 @@ export default function FiltersPopup({
       router.push(
         getUrlWithNewFilterParameter(
           pathname,
-          searchParams,
+          normalizedSearchParams,
           AGE_PARAM,
           ageParam.toString(),
         ),
@@ -122,7 +118,7 @@ export default function FiltersPopup({
     router.push(
       getUrlWithNewFilterParameter(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         AGE_PARAM,
         e.target.value,
       ),
@@ -145,7 +141,7 @@ export default function FiltersPopup({
           className="inline-block"
           href={getUrlWithoutFilterParameter(
             pathname,
-            searchParams,
+            normalizedSearchParams,
             SHOW_ADVANCED_FILTERS_PARAM,
           )}
         >
@@ -187,6 +183,7 @@ export default function FiltersPopup({
               activeImgSrc="/img/icons/active-home-icon.svg"
               imgSrc="/img/icons/home-icon.svg"
               labelText="Shelter & Housing"
+              normalizedSearchParams={normalizedSearchParams}
             />
             <CategoryFilterLabel
               currentCategory={category}
@@ -194,6 +191,7 @@ export default function FiltersPopup({
               activeImgSrc="/img/icons/active-food-icon.svg"
               imgSrc="/img/icons/food-icon-2.svg"
               labelText="Food"
+              normalizedSearchParams={normalizedSearchParams}
             />
             <CategoryFilterLabel
               currentCategory={category}
@@ -201,6 +199,7 @@ export default function FiltersPopup({
               activeImgSrc="/img/icons/active-clothing-icon.svg"
               imgSrc="/img/icons/clothing-icon.svg"
               labelText="Clothing"
+              normalizedSearchParams={normalizedSearchParams}
             />
             <CategoryFilterLabel
               currentCategory={category}
@@ -208,6 +207,7 @@ export default function FiltersPopup({
               activeImgSrc="/img/icons/active-personal-care.svg"
               imgSrc="/img/icons/personal-care-2.svg"
               labelText="Personal Care"
+              normalizedSearchParams={normalizedSearchParams}
             />
             <CategoryFilterLabel
               currentCategory={category}
@@ -215,6 +215,7 @@ export default function FiltersPopup({
               activeImgSrc="/img/icons/active-health-icon.svg"
               imgSrc="/img/icons/health-icon.svg"
               labelText="Health"
+              normalizedSearchParams={normalizedSearchParams}
             />
             <CategoryFilterLabel
               currentCategory={category}
@@ -222,6 +223,7 @@ export default function FiltersPopup({
               activeImgSrc="/img/icons/active-dots-icon.svg"
               imgSrc="/img/icons/dots-icon.svg"
               labelText="Other"
+              normalizedSearchParams={normalizedSearchParams}
             />
           </div>
         </fieldset>
@@ -263,7 +265,7 @@ export default function FiltersPopup({
         <Link
           href={getUrlWithoutFilterParameter(
             pathname,
-            searchParams,
+            normalizedSearchParams,
             SHOW_ADVANCED_FILTERS_PARAM,
           )}
           className="primary-button flex-1 block flex-shrink-0 px-5 truncate"

@@ -4,7 +4,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import classNames from "classnames";
 import {
   CLOTHING_PARAM_CASUAL_VALUE,
@@ -16,12 +16,14 @@ import {
   getUrlWithoutFilterParameter,
 } from "./navigation";
 import { RequirementFieldset } from "./requirements-fieldset";
+import { useNormalizedSearchParams } from "./use-normalized-search-params";
 
 export default function FilterClothing() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams() || new Map();
-  const clothingParam = searchParams.get(CLOTHING_PARAM);
+  const { normalizedSearchParams } = useNormalizedSearchParams();
+  const clothingParam =
+    normalizedSearchParams && normalizedSearchParams.get(CLOTHING_PARAM);
   const commonClasses = [
     "text-xs",
     "relative",
@@ -44,7 +46,11 @@ export default function FilterClothing() {
 
   function handleIsAnyClick() {
     router.push(
-      getUrlWithoutFilterParameter(pathname, searchParams, CLOTHING_PARAM),
+      getUrlWithoutFilterParameter(
+        pathname,
+        normalizedSearchParams,
+        CLOTHING_PARAM,
+      ),
     );
   }
 
@@ -52,7 +58,7 @@ export default function FilterClothing() {
     router.push(
       getUrlWithNewFilterParameter(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         CLOTHING_PARAM,
         CLOTHING_PARAM_CASUAL_VALUE,
       ),
@@ -63,7 +69,7 @@ export default function FilterClothing() {
     router.push(
       getUrlWithNewFilterParameter(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         CLOTHING_PARAM,
         CLOTHING_PARAM_PROFESSIONAL_VALUE,
       ),
