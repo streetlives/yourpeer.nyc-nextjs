@@ -20,7 +20,7 @@ import { getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved } from "./nav
 export function RequirementFieldset() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams() || new Map();
+  const searchParams = useSearchParams();
 
   const parsedRequirementParam = parseRequirementParam(
     searchParams.get(REQUIREMENT_PARAM),

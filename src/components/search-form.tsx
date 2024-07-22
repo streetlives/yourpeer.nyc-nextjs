@@ -8,16 +8,17 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import { SEARCH_PARAM } from "./common";
 import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
 } from "./navigation";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { SearchContext, SearchContextType } from "./search-context";
 
 function SearchPanel({ currentSearch }: { currentSearch: string }) {
-  const searchParams = useSearchParams() || new Map();
+  const searchParams = useSearchParams();
   const pathname = usePathname();
   const newUrl = getUrlWithNewFilterParameter(
     pathname,
@@ -82,16 +83,16 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
 }
 
 export default function SearchForm() {
-  const searchParams = useSearchParams() || new Map();
+  const { search, setSearch } = useContext(SearchContext) as SearchContextType;
+  const searchParams = useSearchParams();
   const searchParamFromQuery = searchParams.get(SEARCH_PARAM);
-  const [search, setSearch] = useState(searchParams.get(SEARCH_PARAM));
   const [inputHasFocus, setInputHasFocus] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
     setSearch(searchParamFromQuery);
-  }, [searchParamFromQuery]);
+  }, [setSearch, searchParamFromQuery]);
 
   function clearSearch() {
     setSearch("");

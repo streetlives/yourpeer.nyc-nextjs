@@ -19,7 +19,7 @@ import {
 export default function FilterHousing() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams() || new Map();
+  const searchParams = useSearchParams();
   const shelterParam = searchParams.get(SHELTER_PARAM);
   const commonClasses = [
     "text-xs",

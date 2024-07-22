@@ -28,7 +28,12 @@ import {
 // Change category
 export function getUrlWithNewCategory(
   newCategory: Category,
-  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
+  searchParams:
+    | ReadonlyURLSearchParams
+    | SearchParams
+    | Map<string, string>
+    | undefined
+    | null,
 ): string {
   const searchParamsList: string[][] = getSearchParamsList(searchParams);
   const currentUrlSearchParams = new URLSearchParams(searchParamsList);
@@ -41,21 +46,33 @@ export function getUrlWithNewCategory(
 }
 
 function getSearchParamsList(
-  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
+  searchParams:
+    | ReadonlyURLSearchParams
+    | SearchParams
+    | Map<string, string>
+    | undefined
+    | null,
 ): string[][] {
-  return searchParams instanceof ReadonlyURLSearchParams
-    ? Array.from(searchParams.entries())
-    : (Object.entries(searchParams)
-        .filter(([k, v]) => v !== undefined)
-        .flatMap(([k, v]) =>
-          Array.isArray(v) ? v.map((w) => [k, w]) : [[k, v]],
-        ) as string[][]);
+  return !searchParams
+    ? []
+    : searchParams instanceof ReadonlyURLSearchParams
+      ? Array.from(searchParams.entries())
+      : (Object.entries(searchParams)
+          .filter(([k, v]) => v !== undefined)
+          .flatMap(([k, v]) =>
+            Array.isArray(v) ? v.map((w) => [k, w]) : [[k, v]],
+          ) as string[][]);
 }
 
 // Add filter parameter
 export function getUrlWithNewFilterParameter(
   pathname: string | null,
-  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
+  searchParams:
+    | ReadonlyURLSearchParams
+    | SearchParams
+    | Map<string, string>
+    | undefined
+    | null,
   urlParamName: UrlParamName,
   urlParamValue: string = "yes",
 ): string {
@@ -78,7 +95,11 @@ export function getUrlWithNewFilterParameter(
 
 export function getUrlWithoutFilterParameter(
   pathname: string | null,
-  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
+  searchParams:
+    | ReadonlyURLSearchParams
+    | SearchParams
+    | Map<string, string>
+    | undefined,
   urlParamName: UrlParamName,
 ): string {
   if (!pathname) {
@@ -105,7 +126,12 @@ export function getUrlWithoutFilterParameters(): string {
 
 export function getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
   pathname: string | null,
-  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
+  searchParams:
+    | ReadonlyURLSearchParams
+    | SearchParams
+    | Map<string, string>
+    | undefined
+    | null,
   newRequirementTypeToAddOrRemove: RequirementValue,
   addRequirementType: boolean,
 ): string {
@@ -157,7 +183,12 @@ export function getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
 
 export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved(
   pathname: string | null,
-  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
+  searchParams:
+    | ReadonlyURLSearchParams
+    | SearchParams
+    | Map<string, string>
+    | undefined
+    | null,
   newAmenityToAddOrRemove: AmenitiesSubCategory,
   addAmenity: boolean,
 ): string {
@@ -236,7 +267,12 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
 
 export function getUrlToNextOrPreviousPage(
   pathname: string | null,
-  searchParams: ReadonlyURLSearchParams | SearchParams | Map<string, string>,
+  searchParams:
+    | ReadonlyURLSearchParams
+    | SearchParams
+    | Map<string, string>
+    | undefined
+    | null,
   nextPage: boolean,
 ) {
   if (!pathname) {

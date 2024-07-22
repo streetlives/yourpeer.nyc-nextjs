@@ -12,8 +12,10 @@ import {
   LOCATION_ROUTE,
   SHOW_ADVANCED_FILTERS_PARAM,
   AGE_PARAM,
+  SEARCH_PARAM,
+  mapsAreEqual,
 } from "./common";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -27,6 +29,7 @@ import {
 import FilterFood from "./filter-food";
 import FilterClothing from "./filter-clothing";
 import FilterPersonalCare from "./filter-personal-care";
+import { SearchContext, SearchContextType } from "./search-context";
 
 function CategoryFilterLabel({
   labelCategory,
@@ -41,16 +44,12 @@ function CategoryFilterLabel({
   activeImgSrc: string;
   labelText: string;
 }) {
-  const searchParams = useSearchParams() || new Map();
+  const searchParams = useSearchParams();
   const isActive = labelCategory == currentCategory;
-  const router = useRouter();
-
-  function handleClick() {
-    router.push(getUrlWithNewCategory(labelCategory, searchParams));
-  }
 
   return (
-    <label
+    <Link
+      href={getUrlWithNewCategory(labelCategory, searchParams)}
       aria-labelledby="service-type-0-label"
       aria-describedby="service-type-0-description-0 service-type-0-description-1"
       className={classNames(
@@ -70,7 +69,7 @@ function CategoryFilterLabel({
           : { "bg-white": true, "border-gray-300": true },
       )}
     >
-      <input type="radio" className="sr-only" onClick={handleClick} />
+      <input type="radio" className="sr-only" />
       <img
         src={isActive ? activeImgSrc : imgSrc}
         className="max-h-8 w-8 h-8 object-contain"
@@ -79,7 +78,7 @@ function CategoryFilterLabel({
       <div className="text-center text-xs text-dark mt-3 truncate">
         {labelText}
       </div>
-    </label>
+    </Link>
   );
 }
 
@@ -90,19 +89,46 @@ export default function FiltersPopup({
   category: Category;
   numLocationResults: number;
 }) {
+  const { search } = useContext(SearchContext) as SearchContextType;
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams() || new Map();
+  const searchParams = useSearchParams();
+  const [normalizedSearchParams, setNormalizedSearchParams] =
+    useState<Map<string, string>>();
   const [ageParam, setAgeParam] = useState<number>();
 
+  console.log(
+    "search",
+    search,
+    "normalizedSearchParams",
+    normalizedSearchParams,
+  );
+
+  // normalize the search params
   useEffect(() => {
-    if (searchParams.has(AGE_PARAM)) {
-      const age = searchParams.get(AGE_PARAM);
-      if (age) {
-        setAgeParam(parseInt(age, 10));
+    const localNormalizedSearchParams = searchParams
+      ? new Map(searchParams.entries())
+      : new Map();
+    if (searchParams) {
+      if (searchParams.has(AGE_PARAM)) {
+        const age = searchParams.get(AGE_PARAM);
+        if (age) {
+          setAgeParam(parseInt(age, 10));
+        }
+        localNormalizedSearchParams.set(AGE_PARAM, age);
+      }
+      if (search) {
+        localNormalizedSearchParams.set(SEARCH_PARAM, search);
       }
     }
-  }, [searchParams]);
+    // only set him if he's changed
+    if (
+      normalizedSearchParams === undefined ||
+      !mapsAreEqual(localNormalizedSearchParams, normalizedSearchParams)
+    ) {
+      setNormalizedSearchParams(localNormalizedSearchParams);
+    }
+  }, [searchParams, normalizedSearchParams, setNormalizedSearchParams, search]);
 
   function handleFilterFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -110,7 +136,7 @@ export default function FiltersPopup({
       router.push(
         getUrlWithNewFilterParameter(
           pathname,
-          searchParams,
+          normalizedSearchParams,
           AGE_PARAM,
           ageParam.toString(),
         ),
@@ -122,7 +148,7 @@ export default function FiltersPopup({
     router.push(
       getUrlWithNewFilterParameter(
         pathname,
-        searchParams,
+        normalizedSearchParams,
         AGE_PARAM,
         e.target.value,
       ),
@@ -145,7 +171,7 @@ export default function FiltersPopup({
           className="inline-block"
           href={getUrlWithoutFilterParameter(
             pathname,
-            searchParams,
+            normalizedSearchParams,
             SHOW_ADVANCED_FILTERS_PARAM,
           )}
         >
@@ -263,7 +289,7 @@ export default function FiltersPopup({
         <Link
           href={getUrlWithoutFilterParameter(
             pathname,
-            searchParams,
+            normalizedSearchParams,
             SHOW_ADVANCED_FILTERS_PARAM,
           )}
           className="primary-button flex-1 block flex-shrink-0 px-5 truncate"
