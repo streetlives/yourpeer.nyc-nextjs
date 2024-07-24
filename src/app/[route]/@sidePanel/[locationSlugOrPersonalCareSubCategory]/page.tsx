@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import {
   AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING,
   AmenitiesSubCategory,
+  LAST_SET_PARAMS_COOKIE_NAME,
   PERSONAL_CARE_CATEGORY,
   SearchParams,
   SubRouteParams,
@@ -22,6 +23,9 @@ import {
   SidePanelComponent,
 } from "../../../../components/side-panel-component";
 import LocationDetailComponent from "../../../../components/location-detail-component";
+import { cookies } from "next/headers";
+import { usePreviousParams } from "@/components/use-previous-params";
+import { getMapContainerData } from "@/components/map-container-component";
 
 export { generateMetadata } from "../../../../components/metadata";
 
@@ -32,6 +36,7 @@ export default async function LocationDetail({
   params: SubRouteParams;
   searchParams: SearchParams;
 }) {
+  const previousParams = usePreviousParams();
   try {
     if (
       params.route === PERSONAL_CARE_CATEGORY &&
@@ -55,10 +60,15 @@ export default async function LocationDetail({
         ),
         true,
       );
-
+      
       return (
         <LocationDetailComponent
           location={location}
+          locationStubs={
+            previousParams
+              ? await getMapContainerData(previousParams)
+              : undefined
+          }
           slug={params.locationSlugOrPersonalCareSubCategory}
         />
       );

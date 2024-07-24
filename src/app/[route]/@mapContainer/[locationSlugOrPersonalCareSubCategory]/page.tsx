@@ -8,9 +8,7 @@ import { notFound } from "next/navigation";
 import {
   AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING,
   AmenitiesSubCategory,
-  LAST_SET_PARAMS_COOKIE_NAME,
   PERSONAL_CARE_CATEGORY,
-  RouteParams,
   SearchParams,
   SubRouteParams,
 } from "../../../../components/common";
@@ -20,7 +18,7 @@ import {
   fetchLocationsDetailData,
 } from "../../../../components/streetlives-api-service";
 import { getMapContainerData } from "../../../../components/map-container-component";
-import { cookies } from "next/headers";
+import { usePreviousParams } from "@/components/use-previous-params";
 
 export default async function MapDetail({
   searchParams,
@@ -29,7 +27,7 @@ export default async function MapDetail({
   searchParams: SearchParams;
   params: SubRouteParams;
 }) {
-  // TODO: move out this check
+  const previousParams = usePreviousParams();
   try {
     if (
       params.route === PERSONAL_CARE_CATEGORY &&
@@ -46,24 +44,15 @@ export default async function MapDetail({
         />
       );
     } else {
-      // TODO: get the cookie
-      const cookie = cookies().get(LAST_SET_PARAMS_COOKIE_NAME);
-      console.log("cookie", cookie);
-      let previousParams = undefined;
-      if (cookie && cookie.value) {
-        // TODO: where is the type for this?
-        previousParams = JSON.parse(cookie.value) as unknown as {
-          searchParams: SearchParams;
-          params: RouteParams | SubRouteParams;
-        };
-      }
       const location = await fetchLocationsDetailData(
         params.locationSlugOrPersonalCareSubCategory,
       );
       return (
         <LocationsMap
           locationStubs={
-            previousParams && (await getMapContainerData(previousParams))
+            previousParams
+              ? await getMapContainerData(previousParams)
+              : undefined
           }
           locationDetailStub={location}
         />

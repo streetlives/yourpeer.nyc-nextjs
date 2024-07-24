@@ -17,6 +17,7 @@ import {
   SubRouteParams,
   YourPeerLegacyLocationData,
   YourPeerLegacyServiceDataWrapper,
+  SimplifiedLocationData,
 } from "./common";
 import Service from "./service-component";
 import customStreetViews from "./custom-streetviews";
@@ -26,6 +27,7 @@ import { useEffect, useState } from "react";
 import { ReportIssueForm } from "./report-issue";
 import { parseCookies } from "./cookies";
 import QuickExitLink from "./quick-exit-link";
+import LocationStubMarker from "./location-stub-marker";
 
 export function getIconPath(iconName: string): string {
   return `/img/icons/${iconName}.png`;
@@ -93,9 +95,11 @@ function serializeToQueryParams(searchParams: SearchParams): string {
 
 export default function LocationDetailComponent({
   location,
+  locationStubs,
   slug,
 }: {
   location: YourPeerLegacyLocationData;
+  locationStubs?: SimplifiedLocationData[];
   slug: string;
 }) {
   const streetview =
@@ -225,6 +229,18 @@ export default function LocationDetailComponent({
                         title={location.name}
                         icon={activeMarkerIcon}
                       />
+                      {locationStubs
+                        ? locationStubs
+                            .filter(
+                              (locationStub) => locationStub.id !== location.id
+                            )
+                            .map((locationStub) => (
+                              <LocationStubMarker
+                                locationStub={locationStub}
+                                key={locationStub.id}
+                              />
+                            ))
+                        : undefined}
                     </Map>
                   </APIProvider>
                 </div>
@@ -407,7 +423,7 @@ export default function LocationDetailComponent({
               {CATEGORIES.map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location,
+                  location
                 );
                 return servicesWrapper?.services.length ? (
                   <LocationService

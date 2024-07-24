@@ -26,6 +26,7 @@ import {
 } from "./map-common";
 import classNames from "classnames";
 import useShowMapViewCookie from "./use-show-map-view-cookie";
+import LocationStubMarker from "./location-stub-marker";
 
 interface Position {
   lat: number;
@@ -241,18 +242,9 @@ function MapWrapper({
       >
         {locationStubs
           ? locationStubs.map((locationStub) => (
-              <Marker
+              <LocationStubMarker
+                locationStub={locationStub}
                 key={locationStub.id}
-                position={{
-                  lat: locationStub.position.coordinates[1],
-                  lng: locationStub.position.coordinates[0],
-                }}
-                clickable={true}
-                onClick={() =>
-                  router.push(`/${LOCATION_ROUTE}/${locationStub.slug}`)
-                }
-                title={locationStub.name}
-                icon={locationStub.closed ? closedMarker : markerIcon}
               />
             ))
           : undefined}
