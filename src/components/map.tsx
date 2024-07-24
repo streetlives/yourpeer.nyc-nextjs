@@ -18,10 +18,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   activeMarkerIcon,
-  closedMarker,
   defaultZoom,
   mapStyles,
-  markerIcon,
   myLocationIcon,
 } from "./map-common";
 import classNames from "classnames";
