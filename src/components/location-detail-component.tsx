@@ -25,6 +25,7 @@ import { activeMarkerIcon, defaultZoom, mapStyles } from "./map-common";
 import { useEffect, useState } from "react";
 import { ReportIssueForm } from "./report-issue";
 import { parseCookies } from "./cookies";
+import QuickExitLink from "./quick-exit-link";
 
 export function getIconPath(iconName: string): string {
   return `/img/icons/${iconName}.png`;
@@ -122,8 +123,8 @@ export default function LocationDetailComponent({
   }, []);
 
   return (
-    <div className="details-screen bg-white md:block z-40 fixed md:absolute inset-0 w-full h-full overflow-y-auto scrollbar-hide">
-      <div className="h-14 px-4 gap-x-2 flex justify-between md:justify-start items-center bg-white sticky top-0 left-0 w-full right-0 z-10">
+    <div className="details-screen bg-white md:block z-50 sm:z-0 fixed md:absolute inset-0 w-full h-full overflow-y-auto scrollbar-hide">
+      <div className="h-14 px-4 gap-x-2 flex justify-between md:justify-start items-center bg-white sticky top-0 left-0 w-full right-0">
         <a
           className="text-dark hover:text-black transition flex-shrink-0"
           id="details_back"
@@ -145,6 +146,7 @@ export default function LocationDetailComponent({
             />
           </svg>
         </a>
+        <QuickExitLink />
       </div>
       {isShowingReportIssueForm ? (
         <ReportIssueForm
