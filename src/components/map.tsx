@@ -154,13 +154,24 @@ function MapWrapper({
   }, [locationDetailStub, setMapCenter]);
 
   const centerTheMap = () => {
-    if (userPosition) {
-      setMapCenter({
-        lat: userPosition.coords.latitude,
-        lng: userPosition.coords.longitude,
-      });
+    const normalizedUserPosition = userPosition
+      ? {
+          lat: userPosition.coords.latitude,
+          lng: userPosition.coords.longitude,
+        }
+      : centralPark;
+    if (locationDetailStub && googleMap) {
+      var bounds = new google.maps.LatLngBounds();
+      bounds.extend(new google.maps.LatLng(normalizedUserPosition));
+      bounds.extend(
+        new google.maps.LatLng(
+          locationDetailStub.position.coordinates[1],
+          locationDetailStub.position.coordinates[0]
+        )
+      );
+      googleMap.fitBounds(bounds);
     } else {
-      setMapCenter(centralPark);
+      setMapCenter(normalizedUserPosition);
     }
   };
 
