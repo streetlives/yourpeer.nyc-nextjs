@@ -353,7 +353,7 @@ export function map_gogetta_to_yourpeer(
     area: address.neighborhood,
     info: null,
     slug: `/locations/${d["slug"]}`,
-    last_updated: moment(updated_at).endOf("day").fromNow(),
+    last_updated: moment(updated_at).fromNow(),
     last_updated_date: updated_at,
     name: org_name,
     phone: d["Phones"] && d["Phones"][0] && d["Phones"][0]["number"],

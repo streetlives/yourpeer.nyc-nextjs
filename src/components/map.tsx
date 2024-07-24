@@ -18,14 +18,13 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   activeMarkerIcon,
-  closedMarker,
   defaultZoom,
   mapStyles,
-  markerIcon,
   myLocationIcon,
 } from "./map-common";
 import classNames from "classnames";
 import useShowMapViewCookie from "./use-show-map-view-cookie";
+import LocationStubMarker from "./location-stub-marker";
 
 interface Position {
   lat: number;
@@ -153,13 +152,24 @@ function MapWrapper({
   }, [locationDetailStub, setMapCenter]);
 
   const centerTheMap = () => {
-    if (userPosition) {
-      setMapCenter({
-        lat: userPosition.coords.latitude,
-        lng: userPosition.coords.longitude,
-      });
+    const normalizedUserPosition = userPosition
+      ? {
+          lat: userPosition.coords.latitude,
+          lng: userPosition.coords.longitude,
+        }
+      : centralPark;
+    if (locationDetailStub && googleMap) {
+      var bounds = new google.maps.LatLngBounds();
+      bounds.extend(new google.maps.LatLng(normalizedUserPosition));
+      bounds.extend(
+        new google.maps.LatLng(
+          locationDetailStub.position.coordinates[1],
+          locationDetailStub.position.coordinates[0],
+        ),
+      );
+      googleMap.fitBounds(bounds);
     } else {
-      setMapCenter(centralPark);
+      setMapCenter(normalizedUserPosition);
     }
   };
 
@@ -241,18 +251,9 @@ function MapWrapper({
       >
         {locationStubs
           ? locationStubs.map((locationStub) => (
-              <Marker
+              <LocationStubMarker
+                locationStub={locationStub}
                 key={locationStub.id}
-                position={{
-                  lat: locationStub.position.coordinates[1],
-                  lng: locationStub.position.coordinates[0],
-                }}
-                clickable={true}
-                onClick={() =>
-                  router.push(`/${LOCATION_ROUTE}/${locationStub.slug}`)
-                }
-                title={locationStub.name}
-                icon={locationStub.closed ? closedMarker : markerIcon}
               />
             ))
           : undefined}

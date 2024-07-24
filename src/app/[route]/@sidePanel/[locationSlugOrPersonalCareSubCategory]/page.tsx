@@ -22,6 +22,8 @@ import {
   SidePanelComponent,
 } from "../../../../components/side-panel-component";
 import LocationDetailComponent from "../../../../components/location-detail-component";
+import { usePreviousParams } from "@/components/use-previous-params";
+import { getMapContainerData } from "@/components/map-container-component";
 
 export { generateMetadata } from "../../../../components/metadata";
 
@@ -32,6 +34,7 @@ export default async function LocationDetail({
   params: SubRouteParams;
   searchParams: SearchParams;
 }) {
+  const previousParams = usePreviousParams();
   try {
     if (
       params.route === PERSONAL_CARE_CATEGORY &&
@@ -59,6 +62,11 @@ export default async function LocationDetail({
       return (
         <LocationDetailComponent
           location={location}
+          locationStubs={
+            previousParams
+              ? await getMapContainerData(previousParams)
+              : undefined
+          }
           slug={params.locationSlugOrPersonalCareSubCategory}
         />
       );
