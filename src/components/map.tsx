@@ -166,8 +166,8 @@ function MapWrapper({
       bounds.extend(
         new google.maps.LatLng(
           locationDetailStub.position.coordinates[1],
-          locationDetailStub.position.coordinates[0]
-        )
+          locationDetailStub.position.coordinates[0],
+        ),
       );
       googleMap.fitBounds(bounds);
     } else {

@@ -60,7 +60,7 @@ export default async function LocationDetail({
         ),
         true,
       );
-      
+
       return (
         <LocationDetailComponent
           location={location}
