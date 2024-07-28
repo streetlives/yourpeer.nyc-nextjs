@@ -10,7 +10,7 @@ export default function LocationStubMarker({
 }: {
   locationStub: SimplifiedLocationData;
   locationSlugClickedOnMobile?: string;
-  setLocationSlugClickedOnMobile: (slug: string) => void;
+  setLocationSlugClickedOnMobile?: (slug: string) => void;
 }) {
   const router = useRouter();
   return (
@@ -25,7 +25,7 @@ export default function LocationStubMarker({
 
         if (pageWidth > 767) {
           router.push(`/${LOCATION_ROUTE}/${locationStub.slug}`);
-        } else {
+        } else if (setLocationSlugClickedOnMobile) {
           setLocationSlugClickedOnMobile(locationStub.slug);
         }
       }}
