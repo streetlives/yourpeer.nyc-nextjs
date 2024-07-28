@@ -14,7 +14,7 @@ import {
   useMap,
 } from "@vis.gl/react-google-maps";
 import { LOCATION_ROUTE, SimplifiedLocationData } from "./common";
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   activeMarkerIcon,
@@ -25,6 +25,7 @@ import {
 import classNames from "classnames";
 import useShowMapViewCookie from "./use-show-map-view-cookie";
 import LocationStubMarker from "./location-stub-marker";
+import { MobileTray } from "./mobile-tray";
 
 interface Position {
   lat: number;
@@ -75,10 +76,19 @@ interface SimplifiedLocationDataWithDistance extends SimplifiedLocationData {
 function MapWrapper({
   locationStubs,
   locationDetailStub,
+  locationSlugClickedOnMobile,
+  setLocationSlugClickedOnMobile,
 }: {
   locationStubs?: SimplifiedLocationData[];
   locationDetailStub?: SimplifiedLocationData;
+  locationSlugClickedOnMobile?: string;
+  setLocationSlugClickedOnMobile: (slug: string) => void;
 }) {
+  const locationStubClickedOnMobile = locationStubs
+    ?.filter(
+      (locationStub) => locationStub.slug === locationSlugClickedOnMobile
+    )
+    .pop();
   const router = useRouter();
   const [userPosition, setUserPosition] = useState<GeolocationPosition>();
   const [mapCenter, setMapCenter] = useState<Position>(
@@ -87,8 +97,14 @@ function MapWrapper({
           lat: locationDetailStub.position.coordinates[1],
           lng: locationDetailStub.position.coordinates[0],
         }
-      : centralPark,
+      : locationStubClickedOnMobile
+        ? {
+            lat: locationStubClickedOnMobile.position.coordinates[1],
+            lng: locationStubClickedOnMobile.position.coordinates[0],
+          }
+        : centralPark
   );
+  console.log('mapCenter', mapCenter)
   const googleMap = useMap();
 
   useEffect(() => {
@@ -99,6 +115,15 @@ function MapWrapper({
       });
     }
   }, [locationDetailStub, setMapCenter]);
+
+  useEffect(() => {
+    if (locationStubClickedOnMobile) {
+      setMapCenter({
+        lat: locationStubClickedOnMobile.position.coordinates[1],
+        lng: locationStubClickedOnMobile.position.coordinates[0],
+      });
+    }
+  }, [locationStubClickedOnMobile, setMapCenter]);
 
   const handleCameraChange = useCallback(
     (ev: MapCameraChangedEvent) => {
@@ -111,7 +136,7 @@ function MapWrapper({
         });
       }
     },
-    [setMapCenter],
+    [setMapCenter]
   );
 
   useEffect(() => {
@@ -124,7 +149,7 @@ function MapWrapper({
           pos.coords.latitude,
           pos.coords.longitude,
           centralPark.lat,
-          centralPark.lng,
+          centralPark.lng
         );
 
         console.log("distanceInMiles", distanceInMiles);
@@ -133,6 +158,11 @@ function MapWrapper({
           setMapCenter({
             lat: locationDetailStub.position.coordinates[1],
             lng: locationDetailStub.position.coordinates[0],
+          });
+        } else if(locationStubClickedOnMobile){
+          setMapCenter({
+            lat: locationStubClickedOnMobile.position.coordinates[1],
+            lng: locationStubClickedOnMobile.position.coordinates[0],
           });
         } else {
           if (distanceInMiles > 26) {
@@ -147,9 +177,9 @@ function MapWrapper({
       },
       (error) => {
         console.log("unable to get user position", error);
-      },
+      }
     );
-  }, [locationDetailStub, setMapCenter]);
+  }, [locationDetailStub, setMapCenter, locationStubClickedOnMobile]);
 
   const centerTheMap = () => {
     const normalizedUserPosition = userPosition
@@ -164,8 +194,8 @@ function MapWrapper({
       bounds.extend(
         new google.maps.LatLng(
           locationDetailStub.position.coordinates[1],
-          locationDetailStub.position.coordinates[0],
-        ),
+          locationDetailStub.position.coordinates[0]
+        )
       );
       googleMap.fitBounds(bounds);
     } else {
@@ -183,7 +213,7 @@ function MapWrapper({
         userPosition.coords.latitude,
         userPosition.coords.longitude,
         centralPark.lat,
-        centralPark.lng,
+        centralPark.lng
       );
 
       const centerPosition =
@@ -202,7 +232,7 @@ function MapWrapper({
               centerPosition.lat,
               centerPosition.lng,
               locationStub.position.coordinates[1],
-              locationStub.position.coordinates[0],
+              locationStub.position.coordinates[0]
             ),
           }))
           .sort((a, b) => a.distanceMiles - b.distanceMiles);
@@ -210,16 +240,16 @@ function MapWrapper({
         0,
         Math.min(
           simplifiedLocationDataWithDistance.length,
-          MAX_NUM_LOCATIONS_TO_INCLUDE_IN_BOUNDS,
-        ),
+          MAX_NUM_LOCATIONS_TO_INCLUDE_IN_BOUNDS
+        )
       );
 
-      if (googleMap && !locationDetailStub) {
+      if (googleMap && !locationDetailStub && !locationStubClickedOnMobile) {
         var bounds = new google.maps.LatLngBounds();
         closest25Locations.forEach(function (loc) {
           var latLng = new google.maps.LatLng(
             loc.position.coordinates[1],
-            loc.position.coordinates[0],
+            loc.position.coordinates[0]
           );
           bounds.extend(latLng);
         });
@@ -228,14 +258,14 @@ function MapWrapper({
           bounds.extend(
             new google.maps.LatLng(
               userPosition.coords.latitude,
-              userPosition.coords.longitude,
-            ),
+              userPosition.coords.longitude
+            )
           );
         }
         googleMap.fitBounds(bounds);
       }
     }
-  }, [userPosition, locationStubs, googleMap]);
+  }, [userPosition, locationStubs, googleMap, locationDetailStub, locationStubClickedOnMobile]);
 
   return (
     <>
@@ -254,6 +284,8 @@ function MapWrapper({
               <LocationStubMarker
                 locationStub={locationStub}
                 key={locationStub.id}
+                locationSlugClickedOnMobile={locationSlugClickedOnMobile}
+                setLocationSlugClickedOnMobile={setLocationSlugClickedOnMobile}
               />
             ))
           : undefined}
@@ -315,6 +347,9 @@ export default function LocationsMap({
   locationStubs?: SimplifiedLocationData[];
   locationDetailStub?: SimplifiedLocationData;
 }) {
+  const [locationSlugClickedOnMobile, setLocationSlugClickedOnMobile] =
+    useState<string>();
+
   const [showMapView, setShowMapView] = useShowMapViewCookie();
   const classnames = classNames([
     "w-full",
@@ -329,15 +364,26 @@ export default function LocationsMap({
   ]);
 
   return (
-    <div id="map_container" className={classnames}>
-      <div id="map" className="w-full h-full">
-        <APIProvider apiKey={GOOGLE_MAPS_API_KEY} libraries={["marker"]}>
-          <MapWrapper
-            locationStubs={locationStubs}
-            locationDetailStub={locationDetailStub}
-          />
-        </APIProvider>
+    <>
+      <div id="map_container" className={classnames}>
+        <div id="map" className="w-full h-full">
+          <APIProvider apiKey={GOOGLE_MAPS_API_KEY} libraries={["marker"]}>
+            <MapWrapper
+              locationStubs={locationStubs}
+              locationDetailStub={locationDetailStub}
+              locationSlugClickedOnMobile={locationSlugClickedOnMobile}
+              setLocationSlugClickedOnMobile={setLocationSlugClickedOnMobile}
+            />
+          </APIProvider>
+        </div>
       </div>
-    </div>
+      {locationSlugClickedOnMobile ? (
+        <Suspense fallback={<div>Loading data...</div>}>
+          <MobileTray
+            locationSlugClickedOnMobile={locationSlugClickedOnMobile}
+          />
+        </Suspense>
+      ) : undefined}
+    </>
   );
 }
