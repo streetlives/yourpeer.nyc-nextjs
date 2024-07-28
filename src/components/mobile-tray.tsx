@@ -5,16 +5,19 @@ import {
   getIconPath,
   getServicesWrapper,
 } from "./common";
-import { fetchLocationsDetailData, map_gogetta_to_yourpeer } from "./streetlives-api-service";
+import {
+  fetchLocationsDetailData,
+  map_gogetta_to_yourpeer,
+} from "./streetlives-api-service";
 
 export async function MobileTray({
-  locationSlugClickedOnMobile
+  locationSlugClickedOnMobile,
 }: {
-  locationSlugClickedOnMobile: string
+  locationSlugClickedOnMobile: string;
 }) {
   const location = map_gogetta_to_yourpeer(
     await fetchLocationsDetailData(locationSlugClickedOnMobile),
-    true
+    true,
   );
   return (
     <div
@@ -87,7 +90,7 @@ export async function MobileTray({
           {CATEGORIES.map((serviceCategory) => {
             const servicesWrapper = getServicesWrapper(
               serviceCategory,
-              location
+              location,
             );
             return servicesWrapper?.services.length ? (
               <li className="flex space-x-1.5 text-sm text-dark">

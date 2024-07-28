@@ -86,7 +86,7 @@ function MapWrapper({
 }) {
   const locationStubClickedOnMobile = locationStubs
     ?.filter(
-      (locationStub) => locationStub.slug === locationSlugClickedOnMobile
+      (locationStub) => locationStub.slug === locationSlugClickedOnMobile,
     )
     .pop();
   const router = useRouter();
@@ -102,9 +102,9 @@ function MapWrapper({
             lat: locationStubClickedOnMobile.position.coordinates[1],
             lng: locationStubClickedOnMobile.position.coordinates[0],
           }
-        : centralPark
+        : centralPark,
   );
-  console.log('mapCenter', mapCenter)
+  console.log("mapCenter", mapCenter);
   const googleMap = useMap();
 
   useEffect(() => {
@@ -136,7 +136,7 @@ function MapWrapper({
         });
       }
     },
-    [setMapCenter]
+    [setMapCenter],
   );
 
   useEffect(() => {
@@ -149,7 +149,7 @@ function MapWrapper({
           pos.coords.latitude,
           pos.coords.longitude,
           centralPark.lat,
-          centralPark.lng
+          centralPark.lng,
         );
 
         console.log("distanceInMiles", distanceInMiles);
@@ -159,7 +159,7 @@ function MapWrapper({
             lat: locationDetailStub.position.coordinates[1],
             lng: locationDetailStub.position.coordinates[0],
           });
-        } else if(locationStubClickedOnMobile){
+        } else if (locationStubClickedOnMobile) {
           setMapCenter({
             lat: locationStubClickedOnMobile.position.coordinates[1],
             lng: locationStubClickedOnMobile.position.coordinates[0],
@@ -177,7 +177,7 @@ function MapWrapper({
       },
       (error) => {
         console.log("unable to get user position", error);
-      }
+      },
     );
   }, [locationDetailStub, setMapCenter, locationStubClickedOnMobile]);
 
@@ -194,8 +194,8 @@ function MapWrapper({
       bounds.extend(
         new google.maps.LatLng(
           locationDetailStub.position.coordinates[1],
-          locationDetailStub.position.coordinates[0]
-        )
+          locationDetailStub.position.coordinates[0],
+        ),
       );
       googleMap.fitBounds(bounds);
     } else {
@@ -213,7 +213,7 @@ function MapWrapper({
         userPosition.coords.latitude,
         userPosition.coords.longitude,
         centralPark.lat,
-        centralPark.lng
+        centralPark.lng,
       );
 
       const centerPosition =
@@ -232,7 +232,7 @@ function MapWrapper({
               centerPosition.lat,
               centerPosition.lng,
               locationStub.position.coordinates[1],
-              locationStub.position.coordinates[0]
+              locationStub.position.coordinates[0],
             ),
           }))
           .sort((a, b) => a.distanceMiles - b.distanceMiles);
@@ -240,8 +240,8 @@ function MapWrapper({
         0,
         Math.min(
           simplifiedLocationDataWithDistance.length,
-          MAX_NUM_LOCATIONS_TO_INCLUDE_IN_BOUNDS
-        )
+          MAX_NUM_LOCATIONS_TO_INCLUDE_IN_BOUNDS,
+        ),
       );
 
       if (googleMap && !locationDetailStub && !locationStubClickedOnMobile) {
@@ -249,7 +249,7 @@ function MapWrapper({
         closest25Locations.forEach(function (loc) {
           var latLng = new google.maps.LatLng(
             loc.position.coordinates[1],
-            loc.position.coordinates[0]
+            loc.position.coordinates[0],
           );
           bounds.extend(latLng);
         });
@@ -258,14 +258,20 @@ function MapWrapper({
           bounds.extend(
             new google.maps.LatLng(
               userPosition.coords.latitude,
-              userPosition.coords.longitude
-            )
+              userPosition.coords.longitude,
+            ),
           );
         }
         googleMap.fitBounds(bounds);
       }
     }
-  }, [userPosition, locationStubs, googleMap, locationDetailStub, locationStubClickedOnMobile]);
+  }, [
+    userPosition,
+    locationStubs,
+    googleMap,
+    locationDetailStub,
+    locationStubClickedOnMobile,
+  ]);
 
   return (
     <>
