@@ -356,6 +356,8 @@ export default function LocationsMap({
   const [locationSlugClickedOnMobile, setLocationSlugClickedOnMobile] =
     useState<string>();
 
+  console.log("locationSlugClickedOnMobile", locationSlugClickedOnMobile);
+
   const [showMapView, setShowMapView] = useShowMapViewCookie();
   const classnames = classNames([
     "w-full",
@@ -387,6 +389,7 @@ export default function LocationsMap({
         <Suspense fallback={<div>Loading data...</div>}>
           <MobileTray
             locationSlugClickedOnMobile={locationSlugClickedOnMobile}
+            setLocationSlugClickedOnMobile={setLocationSlugClickedOnMobile}
           />
         </Suspense>
       ) : undefined}

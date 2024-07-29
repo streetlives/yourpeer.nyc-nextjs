@@ -12,8 +12,12 @@ import {
 
 export async function MobileTray({
   locationSlugClickedOnMobile,
+  setLocationSlugClickedOnMobile,
 }: {
   locationSlugClickedOnMobile: string;
+  setLocationSlugClickedOnMobile: (
+    locationSlugClickedOnMobile: string | undefined,
+  ) => void;
 }) {
   const location = map_gogetta_to_yourpeer(
     await fetchLocationsDetailData(locationSlugClickedOnMobile),
@@ -26,7 +30,10 @@ export async function MobileTray({
     >
       <div className="flex items-start justify-between">
         <h3 className="text-dark text-base font-medium">{location.name}</h3>
-        <button className="text-dark ml-2">
+        <button
+          className="text-dark ml-2"
+          onClick={() => setLocationSlugClickedOnMobile(undefined)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
