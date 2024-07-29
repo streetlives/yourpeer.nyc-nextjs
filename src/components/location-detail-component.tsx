@@ -89,7 +89,7 @@ function serializeToQueryParams(searchParams: SearchParams): string {
     .map(([k, v]) =>
       typeof v === "string"
         ? `${encodeURIComponent(k)}=${encodeURIComponent(v)}`
-        : ""
+        : "",
     )
     .join("&");
 }
@@ -117,13 +117,13 @@ export default function LocationDetailComponent({
     const cookies = parseCookies();
     if (cookies[LAST_SET_PARAMS_COOKIE_NAME]) {
       const previousParams = JSON.parse(
-        cookies[LAST_SET_PARAMS_COOKIE_NAME]
+        cookies[LAST_SET_PARAMS_COOKIE_NAME],
       ) as unknown as {
         searchParams: SearchParams;
         params: SubRouteParams;
       };
       setPreviousRoute(
-        `/${previousParams.params.route}${previousParams.params.locationSlugOrPersonalCareSubCategory ? `/${previousParams.params.locationSlugOrPersonalCareSubCategory}` : ""}${Object.keys(previousParams).length ? `?${serializeToQueryParams(previousParams.searchParams)}` : ""}`
+        `/${previousParams.params.route}${previousParams.params.locationSlugOrPersonalCareSubCategory ? `/${previousParams.params.locationSlugOrPersonalCareSubCategory}` : ""}${Object.keys(previousParams).length ? `?${serializeToQueryParams(previousParams.searchParams)}` : ""}`,
       );
     }
   }, []);
@@ -257,7 +257,7 @@ export default function LocationDetailComponent({
                       {locationStubs
                         ? locationStubs
                             .filter(
-                              (locationStub) => locationStub.id !== location.id
+                              (locationStub) => locationStub.id !== location.id,
                             )
                             .map((locationStub) => (
                               <LocationStubMarker
@@ -448,7 +448,7 @@ export default function LocationDetailComponent({
               {CATEGORIES.map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location
+                  location,
                 );
                 return servicesWrapper?.services.length ? (
                   <LocationService

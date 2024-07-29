@@ -8,7 +8,6 @@
 
 import React, { useEffect, useState } from "react";
 import OffCanvasMenu from "./OffCanvasMenu";
-import QuickExitLink from "./quick-exit-link";
 import Link from "next/link";
 
 export default function Navbar({ background = true }) {
