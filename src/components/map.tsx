@@ -104,8 +104,16 @@ function MapWrapper({
           }
         : centralPark,
   );
-  console.log("mapCenter", mapCenter);
   const googleMap = useMap();
+
+  useEffect(() => {
+    if (locationStubClickedOnMobile) {
+      googleMap?.panTo({
+        lat: locationStubClickedOnMobile.position.coordinates[1],
+        lng: locationStubClickedOnMobile.position.coordinates[0],
+      });
+    }
+  }, [locationStubClickedOnMobile, setMapCenter, googleMap]);
 
   useEffect(() => {
     if (locationDetailStub) {
@@ -130,13 +138,19 @@ function MapWrapper({
       //console.log("camera changed: ", ev.detail);
       const center = ev.map.getCenter();
       if (center) {
-        setMapCenter({
+        const newCenter = {
           lat: center.lat(),
           lng: center.lng(),
-        });
+        };
+        if (
+          mapCenter.lat !== newCenter.lat ||
+          mapCenter.lng !== newCenter.lng
+        ) {
+          setMapCenter(newCenter);
+        }
       }
     },
-    [setMapCenter],
+    [mapCenter, setMapCenter],
   );
 
   useEffect(() => {
@@ -355,8 +369,6 @@ export default function LocationsMap({
 }) {
   const [locationSlugClickedOnMobile, setLocationSlugClickedOnMobile] =
     useState<string>();
-
-  console.log("locationSlugClickedOnMobile", locationSlugClickedOnMobile);
 
   const [showMapView, setShowMapView] = useShowMapViewCookie();
   const classnames = classNames([

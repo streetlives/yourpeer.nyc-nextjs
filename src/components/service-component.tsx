@@ -12,6 +12,7 @@ import {
   YourPeerLegacyScheduleData,
   YourPeerLegacyServiceData,
 } from "./common";
+import { isBuffer } from "util";
 
 const moment = require("moment-strftime");
 
@@ -102,11 +103,49 @@ function renderSchedule(schedule: YourPeerLegacyScheduleData): string {
   });
 
   const group_strings: string[] = Object.entries(days_grouped_by_hours).map(
-    ([k, v]) =>
-      `${v.map((weekday) => day_number_to_name(weekday)).join(" & ")}, ${k}`,
+    ([k, v]) => {
+      const weekdays = v.sort();
+      let weekdayStartEndGroups: [number, number][] = [];
+      let endDayIndex = 0;
+      let startDay = weekdays[endDayIndex];
+      const lastDay = weekdays[weekdays.length - 1];
+      if (weekdays.length === 1) {
+        weekdayStartEndGroups.push([startDay, lastDay]);
+      } else {
+        let possibleEndDay = startDay;
+        for (
+          let endDayIndex = 1;
+          endDayIndex < weekdays.length;
+          endDayIndex++
+        ) {
+          if (weekdays[endDayIndex] === possibleEndDay + 1) {
+            possibleEndDay = weekdays[endDayIndex];
+          } else {
+            // otherwise, end this group and start the next group
+            weekdayStartEndGroups.push([startDay, possibleEndDay]);
+            startDay = weekdays[endDayIndex];
+            possibleEndDay = startDay;
+          }
+        }
+        if (
+          !weekdayStartEndGroups.length ||
+          weekdayStartEndGroups[weekdayStartEndGroups.length - 1][0] !==
+            startDay
+        ) {
+          weekdayStartEndGroups.push([startDay, possibleEndDay]);
+        }
+      }
+      return `${weekdayStartEndGroups
+        .map(([startDay, endDay]) =>
+          startDay === endDay
+            ? day_number_to_name(startDay)
+            : `${day_number_to_name(startDay)} to ${day_number_to_name(endDay)}`,
+        )
+        .join(", ")}  ${k}`;
+    },
   );
 
-  return `Open ${group_strings.join(";")}`;
+  return `Open ${group_strings.join("; ")}`;
 }
 
 export default function Service({
@@ -122,7 +161,7 @@ export default function Service({
   function toggleIsExpanded() {
     setIsExpanded(!isExpanded);
   }
-  return (
+  return Object.keys(service.schedule).length ? (
     <div
       key={service.id}
       className="flex items-start pl-3 pr-6 pt-2 pb-4 overflow-hidden relative"
@@ -217,21 +256,26 @@ export default function Service({
                           ></p>
                         </li>
                       ))}
-                      <li className="flex items-start space-x-2 {% if not service.membership and not service.eligibility and not service.docs and not service.age %} hidden {% endif %}">
-                        <span className="text-danger">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="w-5 h-5"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        </span>
+                      <li className="flex items-start space-x-2">
+                        {service.membership ||
+                        service.eligibility?.length ||
+                        service.docs?.length ||
+                        service.age?.length ? (
+                          <span className="text-danger">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="currentColor"
+                              className="w-5 h-5"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                        ) : undefined}
                         <div>
                           {service.membership ? (
                             <p className="text-dark text-sm">
@@ -257,7 +301,8 @@ export default function Service({
                               ))
                             : undefined}
                           {!service.age ||
-                          service.age?.every((age) => age.all_ages) ? (
+                          (service.age?.length &&
+                            service.age?.every((age) => age.all_ages)) ? (
                             <p className="text-dark text-sm">
                               People of all ages are welcome
                             </p>
@@ -320,5 +365,5 @@ export default function Service({
         ) : undefined}
       </div>
     </div>
-  );
+  ) : undefined;
 }
