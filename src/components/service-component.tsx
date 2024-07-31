@@ -12,7 +12,6 @@ import {
   YourPeerLegacyScheduleData,
   YourPeerLegacyServiceData,
 } from "./common";
-import { isBuffer } from "util";
 
 const moment = require("moment-strftime");
 
