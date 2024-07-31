@@ -8,6 +8,7 @@ import MapListToggleButton from "@/components/map-list-toggle-button";
 import {
   COMPANY_ROUTES,
   CompanyRoute,
+  LOCATION_ROUTE,
   RESOURCE_ROUTES,
   SHOW_MAP_VIEW_COOKIE_NAME,
 } from "../../components/common";
@@ -21,7 +22,7 @@ import { SearchProvider } from "@/components/search-context";
 import { Suspense } from "react";
 import { SidebarLoadingAnimation } from "@/components/sidebar-loading-animation";
 import { MapLoadingAnimation } from "@/components/map-loading-animation";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import classNames from "classnames";
 
 export default function LocationsLayout({
@@ -35,8 +36,16 @@ export default function LocationsLayout({
   staticPage: React.ReactNode;
   params: { route: string };
 }) {
+  const currentPath = headers().get("x-current-path") as string;
+  const [ignore, firstPathComponent, secondPathComponent] =
+    currentPath.split("/");
+  const isLocationDetailPage =
+    firstPathComponent === LOCATION_ROUTE &&
+    typeof secondPathComponent === "string";
+
   const showMapView =
-    cookies().get(SHOW_MAP_VIEW_COOKIE_NAME)?.value === "true";
+    cookies().get(SHOW_MAP_VIEW_COOKIE_NAME)?.value === "true" &&
+    !isLocationDetailPage;
 
   const classnames = classNames([
     "flex-1",
