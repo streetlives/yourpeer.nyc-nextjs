@@ -182,3 +182,96 @@ a[href^="https://maps.google.com/maps"]{display:none !important} */
   display: none;
   animation: slideDown 0.5s ease-in-out;
 }
+
+/* loading skeletons */
+.card {
+  position: relative;
+  -webkit-box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 6px;
+  height: 760px;
+  overflow: hidden;
+  width: 360px;
+  margin: 40px auto;
+}
+
+.shimmerBG {
+  animation-duration: 2.2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: shimmer;
+  animation-timing-function: linear;
+  background: #ddd;
+  background: linear-gradient(to right, #e0e0e0 8%, #efefef 18%, #e0e0e0 33%);
+  background-size: 1200px 100%;
+}
+
+@-webkit-keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1200px 0;
+  }
+
+  100% {
+    background-position: 1200px 0;
+  }
+}
+
+.divider {
+  height: 2px;
+}
+
+.p-24 {
+  padding: 24px;
+}
+
+.title-line {
+  height: 24px;
+  width: 100%;
+  margin-bottom: 12px;
+  border-radius: 20px;
+}
+
+.content-line {
+  height: 12px;
+  width: 100%;
+  margin-bottom: 12px;
+  border-radius: 8px;
+}
+
+.end {
+  width: 40%;
+  margin-bottom: 0px;
+}
+
+.m-t-24 {
+  margin-top: 24px;
+}
+
+@media only screen and (max-width: 600px) {
+  main.showMapOnMobile > #left_panel {
+    display: none;
+  }
+
+  main.showMapOnMobile > #map_container {
+    display: block;
+  }
+
+  main.hideMapOnMobile > #left_panel {
+    display: block;
+  }
+
+  main.hideMapOnMobile > #map_container {
+    display: none;
+  }
+}

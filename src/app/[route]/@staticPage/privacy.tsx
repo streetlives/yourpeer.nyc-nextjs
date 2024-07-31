@@ -4,7 +4,8 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import { LOCATION_ROUTE } from "../../../components/common";
+import Link from "next/link";
+import { LOCATION_ROUTE, TERMS_OF_USE_ROUTE } from "../../../components/common";
 
 export function PrivacyPage() {
   return (
@@ -22,12 +23,12 @@ export function PrivacyPage() {
               This Privacy Policy applies to your access and use of all products
               and services that are made available through Streetlives, Inc.
               (“Streetlives”) website, located at{" "}
-              <a href="https://yourpeer.nyc">https://yourpeer.nyc</a> (the
+              <Link href="https://yourpeer.nyc">https://yourpeer.nyc</Link> (the
               “Site”), and is incorporated into and is the subject to
               Streetlives’
-              <a href="{% url 'terms-of-use' %}">Terms of Use</a> (the “Terms”).
-              Capitalized terms that are not defined in the Privacy Policy have
-              the meaning given to them in the Terms.
+              <Link href={`/${TERMS_OF_USE_ROUTE}`}>Terms of Use</Link> (the
+              “Terms”). Capitalized terms that are not defined in the Privacy
+              Policy have the meaning given to them in the Terms.
             </p>
             <p>
               This Privacy Policy only applies to information collected on the
@@ -301,10 +302,10 @@ export function PrivacyPage() {
               find the right service.
             </p>
             <div>
-              <a href={`/${LOCATION_ROUTE}`} className="primary-button">
+              <Link href={`/${LOCATION_ROUTE}`} className="primary-button">
                 {" "}
                 Explore services{" "}
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -14,11 +14,9 @@ import {
   getIconPath,
   getServicesWrapper,
   SearchParams,
-  SHOW_MAP_VIEW_COOKIE_NAME,
   YourPeerLegacyLocationData,
 } from "./common";
 import { LocationsContainerPager } from "./locations-container-pager";
-import { cookies } from "next/headers";
 import classNames from "classnames";
 import { getUrlWithNewCategory } from "./navigation";
 
@@ -63,9 +61,9 @@ function NoLocationsFound({ searchParams }: { searchParams: SearchParams }) {
                     className="w-5 h-5"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     />
                   </svg>
                 </span>
@@ -93,8 +91,6 @@ export default function LocationsContainer({
   numberOfPages: number;
   currentPage: number;
 }) {
-  const showMapView =
-    cookies().get(SHOW_MAP_VIEW_COOKIE_NAME)?.value === "true";
   const classnames = classNames([
     "md:flex",
     "flex-col",
@@ -106,7 +102,7 @@ export default function LocationsContainer({
     "md:scrollbar-track-rounded",
     "md:scrollbar-thumb-rounded",
     "md:scrollbar-track-primary/20",
-    showMapView ? "hidden" : "block",
+    "block",
   ]);
 
   return (

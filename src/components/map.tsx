@@ -22,8 +22,6 @@ import {
   mapStyles,
   myLocationIcon,
 } from "./map-common";
-import classNames from "classnames";
-import useShowMapViewCookie from "./use-show-map-view-cookie";
 import LocationStubMarker from "./location-stub-marker";
 import { MobileTray } from "./mobile-tray";
 
@@ -104,8 +102,16 @@ function MapWrapper({
           }
         : centralPark,
   );
-  console.log("mapCenter", mapCenter);
   const googleMap = useMap();
+
+  useEffect(() => {
+    if (locationStubClickedOnMobile) {
+      googleMap?.panTo({
+        lat: locationStubClickedOnMobile.position.coordinates[1],
+        lng: locationStubClickedOnMobile.position.coordinates[0],
+      });
+    }
+  }, [locationStubClickedOnMobile, setMapCenter, googleMap]);
 
   useEffect(() => {
     if (locationDetailStub) {
@@ -130,13 +136,19 @@ function MapWrapper({
       //console.log("camera changed: ", ev.detail);
       const center = ev.map.getCenter();
       if (center) {
-        setMapCenter({
+        const newCenter = {
           lat: center.lat(),
           lng: center.lng(),
-        });
+        };
+        if (
+          mapCenter.lat !== newCenter.lat ||
+          mapCenter.lng !== newCenter.lng
+        ) {
+          setMapCenter(newCenter);
+        }
       }
     },
-    [setMapCenter],
+    [mapCenter, setMapCenter],
   );
 
   useEffect(() => {
@@ -356,34 +368,17 @@ export default function LocationsMap({
   const [locationSlugClickedOnMobile, setLocationSlugClickedOnMobile] =
     useState<string>();
 
-  console.log("locationSlugClickedOnMobile", locationSlugClickedOnMobile);
-
-  const [showMapView, setShowMapView] = useShowMapViewCookie();
-  const classnames = classNames([
-    "w-full",
-    "md:block",
-    "md:w-1/2",
-    "lg:w-2/3",
-    "bg-gray-300",
-    "h-full",
-    "flex-1",
-    "relative",
-    showMapView ? "flex" : "hidden",
-  ]);
-
   return (
     <>
-      <div id="map_container" className={classnames}>
-        <div id="map" className="w-full h-full">
-          <APIProvider apiKey={GOOGLE_MAPS_API_KEY} libraries={["marker"]}>
-            <MapWrapper
-              locationStubs={locationStubs}
-              locationDetailStub={locationDetailStub}
-              locationSlugClickedOnMobile={locationSlugClickedOnMobile}
-              setLocationSlugClickedOnMobile={setLocationSlugClickedOnMobile}
-            />
-          </APIProvider>
-        </div>
+      <div id="map" className="w-full h-full">
+        <APIProvider apiKey={GOOGLE_MAPS_API_KEY} libraries={["marker"]}>
+          <MapWrapper
+            locationStubs={locationStubs}
+            locationDetailStub={locationDetailStub}
+            locationSlugClickedOnMobile={locationSlugClickedOnMobile}
+            setLocationSlugClickedOnMobile={setLocationSlugClickedOnMobile}
+          />
+        </APIProvider>
       </div>
       {locationSlugClickedOnMobile ? (
         <Suspense fallback={<div>Loading data...</div>}>

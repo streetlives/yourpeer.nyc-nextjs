@@ -8,7 +8,9 @@ import MapListToggleButton from "@/components/map-list-toggle-button";
 import {
   COMPANY_ROUTES,
   CompanyRoute,
+  LOCATION_ROUTE,
   RESOURCE_ROUTES,
+  SHOW_MAP_VIEW_COOKIE_NAME,
 } from "../../components/common";
 import { Footer } from "../../components/footer";
 import {
@@ -18,6 +20,10 @@ import {
 import { notFound } from "next/navigation";
 import { SearchProvider } from "@/components/search-context";
 import { Suspense } from "react";
+import { SidebarLoadingAnimation } from "@/components/sidebar-loading-animation";
+import { MapLoadingAnimation } from "@/components/map-loading-animation";
+import { cookies, headers } from "next/headers";
+import classNames from "classnames";
 
 export default function LocationsLayout({
   mapContainer,
@@ -30,6 +36,26 @@ export default function LocationsLayout({
   staticPage: React.ReactNode;
   params: { route: string };
 }) {
+  const currentPath = headers().get("x-current-path") as string;
+  const [ignore, firstPathComponent, secondPathComponent] =
+    currentPath.split("/");
+  const isLocationDetailPage =
+    firstPathComponent === LOCATION_ROUTE &&
+    typeof secondPathComponent === "string";
+
+  const showMapView =
+    cookies().get(SHOW_MAP_VIEW_COOKIE_NAME)?.value === "true" &&
+    !isLocationDetailPage;
+
+  const classnames = classNames([
+    "flex-1",
+    "overflow-hidden",
+    "flex",
+    "flex-col",
+    "md:flex-row",
+    showMapView ? "showMapOnMobile" : "hideMapOnMobile",
+  ]);
+
   //console.log("route", route);
   // TODO: handle the other top-level routes that are not the category routes
   return RESOURCE_ROUTES.includes(route) ? (
@@ -41,18 +67,23 @@ export default function LocationsLayout({
             <div>
               <LocationsNavbarResourceRoutes />
             </div>
-            <main className="flex-1 overflow-hidden flex flex-col md:flex-row">
+            <main className={classnames}>
               <div
                 className="relative w-full md:w-1/2 lg:w-1/3 bg-white overflow-hidden"
                 id="left_panel"
               >
-                <Suspense fallback={<p>Loading location data...</p>}>
+                <Suspense fallback={<SidebarLoadingAnimation />}>
                   {sidePanel}
                 </Suspense>
               </div>
-              <Suspense fallback={<p>Loading map...</p>}>
-                {mapContainer}
-              </Suspense>
+              <div
+                id="map_container"
+                className="w-full md:block md:w-1/2 lg:w-2/3 bg-gray-300 h-full flex-1 relative"
+              >
+                <Suspense fallback={<MapLoadingAnimation />}>
+                  {mapContainer}
+                </Suspense>
+              </div>
             </main>
           </div>
         </SearchProvider>
