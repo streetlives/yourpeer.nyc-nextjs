@@ -93,8 +93,6 @@ export default function LocationsContainer({
   numberOfPages: number;
   currentPage: number;
 }) {
-  const showMapView =
-    cookies().get(SHOW_MAP_VIEW_COOKIE_NAME)?.value === "true";
   const classnames = classNames([
     "md:flex",
     "flex-col",
@@ -106,7 +104,7 @@ export default function LocationsContainer({
     "md:scrollbar-track-rounded",
     "md:scrollbar-thumb-rounded",
     "md:scrollbar-track-primary/20",
-    showMapView ? "hidden" : "block",
+    "block",
   ]);
 
   return (

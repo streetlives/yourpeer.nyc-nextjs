@@ -370,32 +370,17 @@ export default function LocationsMap({
   const [locationSlugClickedOnMobile, setLocationSlugClickedOnMobile] =
     useState<string>();
 
-  const [showMapView, setShowMapView] = useShowMapViewCookie();
-  const classnames = classNames([
-    "w-full",
-    "md:block",
-    "md:w-1/2",
-    "lg:w-2/3",
-    "bg-gray-300",
-    "h-full",
-    "flex-1",
-    "relative",
-    showMapView ? "flex" : "hidden",
-  ]);
-
   return (
     <>
-      <div id="map_container" className={classnames}>
-        <div id="map" className="w-full h-full">
-          <APIProvider apiKey={GOOGLE_MAPS_API_KEY} libraries={["marker"]}>
-            <MapWrapper
-              locationStubs={locationStubs}
-              locationDetailStub={locationDetailStub}
-              locationSlugClickedOnMobile={locationSlugClickedOnMobile}
-              setLocationSlugClickedOnMobile={setLocationSlugClickedOnMobile}
-            />
-          </APIProvider>
-        </div>
+      <div id="map" className="w-full h-full">
+        <APIProvider apiKey={GOOGLE_MAPS_API_KEY} libraries={["marker"]}>
+          <MapWrapper
+            locationStubs={locationStubs}
+            locationDetailStub={locationDetailStub}
+            locationSlugClickedOnMobile={locationSlugClickedOnMobile}
+            setLocationSlugClickedOnMobile={setLocationSlugClickedOnMobile}
+          />
+        </APIProvider>
       </div>
       {locationSlugClickedOnMobile ? (
         <Suspense fallback={<div>Loading data...</div>}>
