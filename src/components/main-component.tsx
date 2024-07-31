@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { usePathname } from "next/navigation";
 import { LOCATION_ROUTE } from "./common";
@@ -11,7 +11,7 @@ import { MapLoadingAnimation } from "./map-loading-animation";
 export function MainComponent({
   mapContainer,
   sidePanel,
-}:{
+}: {
   mapContainer: React.ReactNode;
   sidePanel: React.ReactNode;
 }) {
@@ -23,7 +23,7 @@ export function MainComponent({
     typeof secondPathComponent === "string";
 
   const { showMapViewOnMobile } = useContext(
-    SearchContext
+    SearchContext,
   ) as SearchContextType;
 
   const showMapView = showMapViewOnMobile && !isLocationDetailPage;

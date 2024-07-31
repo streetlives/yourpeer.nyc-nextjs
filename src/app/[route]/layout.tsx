@@ -18,6 +18,7 @@ import {
 import { notFound } from "next/navigation";
 import { SearchProvider } from "@/components/search-context";
 import { MainComponent } from "@/components/main-component";
+import { CookiesProvider } from "next-client-cookies/server";
 
 export default function LocationsLayout({
   mapContainer,
@@ -30,21 +31,25 @@ export default function LocationsLayout({
   staticPage: React.ReactNode;
   params: { route: string };
 }) {
-
   //console.log("route", route);
   // TODO: handle the other top-level routes that are not the category routes
   return RESOURCE_ROUTES.includes(route) ? (
     <>
       <div className="h-[100dvh] w-full">
-        <SearchProvider>
-          <MapListToggleButton />
-          <div className="flex flex-col w-full h-full">
-            <div>
-              <LocationsNavbarResourceRoutes />
+        <CookiesProvider>
+          <SearchProvider>
+            <MapListToggleButton />
+            <div className="flex flex-col w-full h-full">
+              <div>
+                <LocationsNavbarResourceRoutes />
+              </div>
+              <MainComponent
+                mapContainer={mapContainer}
+                sidePanel={sidePanel}
+              />
             </div>
-            <MainComponent mapContainer={mapContainer} sidePanel={sidePanel} />
-          </div>
-        </SearchProvider>
+          </SearchProvider>
+        </CookiesProvider>
       </div>
     </>
   ) : COMPANY_ROUTES.includes(route as CompanyRoute) ? (

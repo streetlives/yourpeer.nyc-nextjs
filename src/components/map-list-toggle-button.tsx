@@ -12,9 +12,8 @@ import { SearchContext, SearchContextType } from "./search-context";
 import useShowMapViewCookie from "./use-show-map-view-cookie";
 
 export default function MapListToggleButton() {
-
   const { showMapViewOnMobile, setShowMapViewOnMobile } = useContext(
-    SearchContext
+    SearchContext,
   ) as SearchContextType;
 
   function setMapIsVisible(mapIsVisible: boolean): void {
