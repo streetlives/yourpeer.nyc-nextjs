@@ -83,7 +83,7 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
 }
 
 export default function SearchForm() {
-  const { search, setSearch } = useContext(SearchContext) as SearchContextType;
+  const { search, setSearch, showMapViewOnMobile, setShowMapViewOnMobile } = useContext(SearchContext) as SearchContextType;
   const searchParams = useSearchParams();
   const searchParamFromQuery = searchParams && searchParams.get(SEARCH_PARAM);
   const [inputHasFocus, setInputHasFocus] = useState(false);
@@ -96,6 +96,7 @@ export default function SearchForm() {
 
   function clearSearch() {
     setSearch("");
+    setShowMapViewOnMobile(false);
   }
 
   function doSetSearch(e: ChangeEvent) {
@@ -116,6 +117,7 @@ export default function SearchForm() {
     event.stopPropagation();
 
     if (search) {
+      setShowMapViewOnMobile(false);
       router.push(
         getUrlWithNewFilterParameter(
           pathname,
