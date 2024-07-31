@@ -22,8 +22,6 @@ import {
   mapStyles,
   myLocationIcon,
 } from "./map-common";
-import classNames from "classnames";
-import useShowMapViewCookie from "./use-show-map-view-cookie";
 import LocationStubMarker from "./location-stub-marker";
 import { MobileTray } from "./mobile-tray";
 

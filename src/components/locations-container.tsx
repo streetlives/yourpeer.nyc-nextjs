@@ -14,11 +14,9 @@ import {
   getIconPath,
   getServicesWrapper,
   SearchParams,
-  SHOW_MAP_VIEW_COOKIE_NAME,
   YourPeerLegacyLocationData,
 } from "./common";
 import { LocationsContainerPager } from "./locations-container-pager";
-import { cookies } from "next/headers";
 import classNames from "classnames";
 import { getUrlWithNewCategory } from "./navigation";
 
