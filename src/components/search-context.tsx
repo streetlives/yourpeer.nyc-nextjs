@@ -4,7 +4,6 @@
 
 import { useCookies } from "next-client-cookies";
 import React, { createContext, useState } from "react";
-import { useLocalStorage } from "usehooks-ts";
 import { SHOW_MAP_VIEW_COOKIE_NAME } from "./common";
 
 export const SearchContext = createContext<SearchContextType | null>(null);

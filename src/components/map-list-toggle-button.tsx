@@ -7,9 +7,7 @@
 "use client";
 
 import { useContext } from "react";
-import { SHOW_MAP_VIEW_COOKIE_NAME } from "./common";
 import { SearchContext, SearchContextType } from "./search-context";
-import useShowMapViewCookie from "./use-show-map-view-cookie";
 
 export default function MapListToggleButton() {
   const { showMapViewOnMobile, setShowMapViewOnMobile } = useContext(
