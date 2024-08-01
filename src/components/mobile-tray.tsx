@@ -22,12 +22,6 @@ export function MobileTray({
   ) => void;
 }) {
   const [location, setLocation] = useState<YourPeerLegacyLocationData>();
-  console.log(
-    "locationSlugClickedOnMobile",
-    locationSlugClickedOnMobile,
-    "location",
-    location,
-  );
   const [isLoading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     setLoading(true);

@@ -238,13 +238,15 @@ function MapWrapper({
           lng: userPosition.coords.longitude,
         }
       : centralPark;
-    if (locationDetailStub && googleMap) {
+    const normalizedLocationDetailStub =
+      locationStubClickedOnMobile || locationDetailStub;
+    if (normalizedLocationDetailStub && googleMap) {
       var bounds = new google.maps.LatLngBounds();
       bounds.extend(new google.maps.LatLng(normalizedUserPosition));
       bounds.extend(
         new google.maps.LatLng(
-          locationDetailStub.position.coordinates[1],
-          locationDetailStub.position.coordinates[0],
+          normalizedLocationDetailStub.position.coordinates[1],
+          normalizedLocationDetailStub.position.coordinates[0],
         ),
       );
       googleMap.fitBounds(bounds);
