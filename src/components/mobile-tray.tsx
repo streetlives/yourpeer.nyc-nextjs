@@ -36,7 +36,7 @@ export function MobileTray({
       id="mobile_tray"
       className="p-5 fixed md:hidden bottom-0 inset-x-0 rounded-t-lg z-30 bg-white"
     >
-      {isLoading ? (
+      {isLoading || location === undefined ? (
         <div>Loading location data...</div>
       ) : (
         <>
@@ -109,7 +109,7 @@ export function MobileTray({
               {CATEGORIES.map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location,
+                  location
                 );
                 return servicesWrapper?.services.length ? (
                   <li
