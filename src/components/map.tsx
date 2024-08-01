@@ -14,7 +14,7 @@ import {
   useMap,
 } from "@vis.gl/react-google-maps";
 import { LOCATION_ROUTE, SimplifiedLocationData } from "./common";
-import { Suspense, useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   activeMarkerIcon,
