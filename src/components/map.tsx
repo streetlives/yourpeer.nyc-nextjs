@@ -345,8 +345,6 @@ function MapWrapper({
     }
   }
 
-  console.log("mapCenter", mapCenter);
-
   return (
     <>
       <Map

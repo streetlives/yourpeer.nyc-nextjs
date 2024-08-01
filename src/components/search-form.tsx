@@ -20,22 +20,35 @@ import { SearchContext, SearchContextType } from "./search-context";
 function SearchPanel({ currentSearch }: { currentSearch: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const newUrl = getUrlWithNewFilterParameter(
-    pathname,
-    searchParams,
-    SEARCH_PARAM,
-    currentSearch,
-  );
+  const { setShowMapViewOnMobile } = useContext(
+    SearchContext,
+  ) as SearchContextType;
+  const router = useRouter();
   //console.log("currentSearch", currentSearch);
+
+  function handleSearchPanelClick() {
+    if (currentSearch) {
+      setShowMapViewOnMobile(false);
+      router.push(
+        getUrlWithNewFilterParameter(
+          pathname,
+          searchParams,
+          SEARCH_PARAM,
+          currentSearch,
+        ),
+      );
+    }
+  }
+
   return (
     <div
       className="bg-white fixed md:absolute bottom-0 md:bottom-auto w-full top-[49.6px] md:top-full inset-x-0 rounded border md:border-gray-300"
       id="search_panel"
     >
       <div>
-        <Link
+        <div
           className="flex items-center px-5 py-4 hover:bg-gray-200 transition"
-          href={newUrl}
+          onClick={handleSearchPanelClick}
           id="search_panel_link"
         >
           <img
@@ -63,7 +76,7 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
               />
             </svg>
           </span>
-        </Link>
+        </div>
       </div>
 
       <div className="md:hidden">
