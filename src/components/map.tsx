@@ -14,7 +14,7 @@ import {
   useMap,
 } from "@vis.gl/react-google-maps";
 import { LOCATION_ROUTE, SimplifiedLocationData } from "./common";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   activeMarkerIcon,
@@ -24,6 +24,7 @@ import {
 } from "./map-common";
 import LocationStubMarker from "./location-stub-marker";
 import { MobileTray } from "./mobile-tray";
+import { SearchContext, SearchContextType } from "./search-context";
 
 interface Position {
   lat: number;
@@ -80,7 +81,7 @@ function MapWrapper({
   locationStubs?: SimplifiedLocationData[];
   locationDetailStub?: SimplifiedLocationData;
   locationSlugClickedOnMobile?: string;
-  setLocationSlugClickedOnMobile: (slug: string) => void;
+  setLocationSlugClickedOnMobile: (slug: string | undefined) => void;
 }) {
   const locationStubClickedOnMobile = locationStubs
     ?.filter(
@@ -89,6 +90,7 @@ function MapWrapper({
     .pop();
   const router = useRouter();
   const [userPosition, setUserPosition] = useState<GeolocationPosition>();
+  const [zoom, setZoom] = useState<number>(defaultZoom);
   const [mapCenter, setMapCenter] = useState<Position>(
     locationDetailStub
       ? {
@@ -102,7 +104,24 @@ function MapWrapper({
           }
         : centralPark,
   );
+  const [lastImportantCenter, setLastImportantCenter] = useState<Position>();
+  const [lastImportantZoom, setLastImportantZoom] = useState<number>();
   const googleMap = useMap();
+
+  const { showMapViewOnMobile } = useContext(
+    SearchContext,
+  ) as SearchContextType;
+
+  useEffect(() => {
+    setLocationSlugClickedOnMobile(undefined);
+  }, [locationStubs, setLocationSlugClickedOnMobile]);
+
+  useEffect(() => {
+    if (showMapViewOnMobile) {
+      googleMap?.setCenter(mapCenter);
+      googleMap?.setZoom(zoom);
+    }
+  }, [showMapViewOnMobile, googleMap]);
 
   useEffect(() => {
     if (locationStubClickedOnMobile) {
@@ -147,50 +166,56 @@ function MapWrapper({
           setMapCenter(newCenter);
         }
       }
+      const newZoom = ev.map.getZoom();
+      if (newZoom && newZoom !== zoom) {
+        setZoom(newZoom);
+      }
     },
-    [mapCenter, setMapCenter],
+    [mapCenter, setMapCenter, zoom, setZoom],
   );
 
   useEffect(() => {
-    window.navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        // TODO: logGeoEvent(pos.coords);
-        setUserPosition(pos);
+    if (!lastImportantCenter && !lastImportantZoom) {
+      window.navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          // TODO: logGeoEvent(pos.coords);
+          setUserPosition(pos);
 
-        const distanceInMiles = calculateDistanceInMiles(
-          pos.coords.latitude,
-          pos.coords.longitude,
-          centralPark.lat,
-          centralPark.lng,
-        );
+          const distanceInMiles = calculateDistanceInMiles(
+            pos.coords.latitude,
+            pos.coords.longitude,
+            centralPark.lat,
+            centralPark.lng,
+          );
 
-        console.log("distanceInMiles", distanceInMiles);
+          console.log("distanceInMiles", distanceInMiles);
 
-        if (locationDetailStub) {
-          setMapCenter({
-            lat: locationDetailStub.position.coordinates[1],
-            lng: locationDetailStub.position.coordinates[0],
-          });
-        } else if (locationStubClickedOnMobile) {
-          setMapCenter({
-            lat: locationStubClickedOnMobile.position.coordinates[1],
-            lng: locationStubClickedOnMobile.position.coordinates[0],
-          });
-        } else {
-          if (distanceInMiles > 26) {
-            setMapCenter(centralPark);
-          } else {
+          if (locationDetailStub) {
             setMapCenter({
-              lat: pos.coords.latitude,
-              lng: pos.coords.longitude,
+              lat: locationDetailStub.position.coordinates[1],
+              lng: locationDetailStub.position.coordinates[0],
             });
+          } else if (locationStubClickedOnMobile) {
+            setMapCenter({
+              lat: locationStubClickedOnMobile.position.coordinates[1],
+              lng: locationStubClickedOnMobile.position.coordinates[0],
+            });
+          } else {
+            if (distanceInMiles > 26) {
+              setMapCenter(centralPark);
+            } else {
+              setMapCenter({
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude,
+              });
+            }
           }
-        }
-      },
-      (error) => {
-        console.log("unable to get user position", error);
-      },
-    );
+        },
+        (error) => {
+          console.log("unable to get user position", error);
+        },
+      );
+    }
   }, [locationDetailStub, setMapCenter, locationStubClickedOnMobile]);
 
   const centerTheMap = () => {
@@ -256,7 +281,13 @@ function MapWrapper({
         ),
       );
 
-      if (googleMap && !locationDetailStub && !locationStubClickedOnMobile) {
+      if (
+        googleMap &&
+        !locationDetailStub &&
+        !locationStubClickedOnMobile &&
+        !lastImportantCenter &&
+        !lastImportantZoom
+      ) {
         var bounds = new google.maps.LatLngBounds();
         closest25Locations.forEach(function (loc) {
           var latLng = new google.maps.LatLng(
@@ -283,12 +314,30 @@ function MapWrapper({
     googleMap,
     locationDetailStub,
     locationStubClickedOnMobile,
+    lastImportantCenter,
+    lastImportantZoom,
   ]);
+
+  function handleClickOnLocationStubMarker(
+    locationStub: SimplifiedLocationData,
+  ) {
+    const pageWidth = document.documentElement.scrollWidth;
+
+    if (pageWidth > 767) {
+      router.push(`/${LOCATION_ROUTE}/${locationStub.slug}`);
+    } else if (setLocationSlugClickedOnMobile) {
+      setLocationSlugClickedOnMobile(locationStub.slug);
+      setLastImportantCenter(mapCenter);
+      setLastImportantZoom(zoom);
+    }
+  }
+
+  console.log("mapCenter", mapCenter);
 
   return (
     <>
       <Map
-        defaultZoom={defaultZoom}
+        defaultZoom={zoom}
         gestureHandling={"greedy"}
         streetViewControl={false}
         mapTypeControl={false}
@@ -303,7 +352,9 @@ function MapWrapper({
                 locationStub={locationStub}
                 key={locationStub.id}
                 locationSlugClickedOnMobile={locationSlugClickedOnMobile}
-                setLocationSlugClickedOnMobile={setLocationSlugClickedOnMobile}
+                handleClickOnLocationStubMarker={
+                  handleClickOnLocationStubMarker
+                }
               />
             ))
           : undefined}
