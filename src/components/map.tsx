@@ -461,12 +461,10 @@ export default function LocationsMap({
         </APIProvider>
       </div>
       {locationSlugClickedOnMobile ? (
-        <Suspense fallback={<div>Loading data...</div>}>
-          <MobileTray
-            locationSlugClickedOnMobile={locationSlugClickedOnMobile}
-            setLocationSlugClickedOnMobile={setLocationSlugClickedOnMobile}
-          />
-        </Suspense>
+        <MobileTray
+          locationSlugClickedOnMobile={locationSlugClickedOnMobile}
+          setLocationSlugClickedOnMobile={setLocationSlugClickedOnMobile}
+        />
       ) : undefined}
     </>
   );
