@@ -1,16 +1,18 @@
 import { Marker } from "@vis.gl/react-google-maps";
-import { LOCATION_ROUTE, SimplifiedLocationData } from "./common";
+import { SimplifiedLocationData } from "./common";
 import { useRouter } from "next/navigation";
 import { activeMarkerIcon, closedMarker, markerIcon } from "./map-common";
 
 export default function LocationStubMarker({
   locationStub,
   locationSlugClickedOnMobile,
-  setLocationSlugClickedOnMobile,
+  handleClickOnLocationStubMarker,
 }: {
   locationStub: SimplifiedLocationData;
   locationSlugClickedOnMobile?: string;
-  setLocationSlugClickedOnMobile?: (slug: string) => void;
+  handleClickOnLocationStubMarker?: (
+    locationStub: SimplifiedLocationData,
+  ) => void;
 }) {
   const router = useRouter();
   return (
@@ -20,15 +22,10 @@ export default function LocationStubMarker({
         lng: locationStub.position.coordinates[0],
       }}
       clickable={true}
-      onClick={() => {
-        const pageWidth = document.documentElement.scrollWidth;
-
-        if (pageWidth > 767) {
-          router.push(`/${LOCATION_ROUTE}/${locationStub.slug}`);
-        } else if (setLocationSlugClickedOnMobile) {
-          setLocationSlugClickedOnMobile(locationStub.slug);
-        }
-      }}
+      onClick={() =>
+        handleClickOnLocationStubMarker &&
+        handleClickOnLocationStubMarker(locationStub)
+      }
       title={locationStub.name}
       icon={
         locationStub.closed

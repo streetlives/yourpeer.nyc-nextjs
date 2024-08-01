@@ -50,6 +50,7 @@ export default function FiltersHeader({
     "transition",
     "location_filter",
   ];
+  const linkHeight = { minHeight: "24px" };
   return (
     <div className="sticky top-0 w-full inset-x-0 bg-white z-10">
       <div className="flex gap-2 py-3 px-4  flex-nowrap lg:flex-wrap items-center overflow-x-auto border-b border-dotted border-neutral-200 scrollbar-hide">
@@ -59,6 +60,7 @@ export default function FiltersHeader({
         ).map((thisCategory) => (
           <Link
             key={thisCategory}
+            style={linkHeight}
             className={classNames(
               commonClassNames,
               currentCategory === thisCategory
@@ -83,6 +85,7 @@ export default function FiltersHeader({
         {searchParams[AGE_PARAM] ? (
           <Link
             className="bg-primary inline-flex flex-shrink-0 overflow-hidden items-center space-x-2 text-dark rounded-full text-xs py-1 px-3 transition location_filter"
+            style={linkHeight}
             href={getUrlWithoutFilterParameter(
               pathname,
               searchParams,
@@ -96,6 +99,7 @@ export default function FiltersHeader({
         ) : undefined}
         <Link
           className="inline-flex flex-shrink-0 overflow-hidden items-center space-x-2 text-dark bg-neutral-100 rounded-full text-xs py-1 px-3"
+          style={linkHeight}
           href={getUrlWithNewFilterParameter(
             pathname,
             searchParams,

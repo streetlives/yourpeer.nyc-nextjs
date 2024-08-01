@@ -6,24 +6,24 @@
 
 "use client";
 
-import { SHOW_MAP_VIEW_COOKIE_NAME } from "./common";
-import { setCookie } from "./cookies";
-import useShowMapViewCookie from "./use-show-map-view-cookie";
+import { useContext } from "react";
+import { SearchContext, SearchContextType } from "./search-context";
 
 export default function MapListToggleButton() {
-  function setMapIsVisibleCookie(mapIsVisible: boolean): void {
-    setCookie(SHOW_MAP_VIEW_COOKIE_NAME, JSON.stringify(mapIsVisible));
-    window.location.reload();
-  }
+  const { showMapViewOnMobile, setShowMapViewOnMobile } = useContext(
+    SearchContext,
+  ) as SearchContextType;
 
-  const [showMapView] = useShowMapViewCookie();
+  function setMapIsVisible(mapIsVisible: boolean): void {
+    setShowMapViewOnMobile(mapIsVisible);
+  }
 
   return (
     <div className="fixed bottom-5 left-1/2 -translate-x-1/2 md:hidden z-30">
-      {showMapView ? (
+      {showMapViewOnMobile ? (
         <button
           className="items-center justify-center text-black bg-primary rounded-full shadow-sm hover:brightness-90 hover:cursor-pointer text-sm py-2 px-4 space-x-2"
-          onClick={() => setMapIsVisibleCookie(false)}
+          onClick={() => setMapIsVisible(false)}
         >
           <img
             src="/img/icons/list-icon.svg"
@@ -35,7 +35,7 @@ export default function MapListToggleButton() {
       ) : (
         <button
           className="inline-flex items-center justify-center text-black bg-primary rounded-full shadow-sm hover:brightness-90 hover:cursor-pointer text-sm py-2 px-4 space-x-2"
-          onClick={() => setMapIsVisibleCookie(true)}
+          onClick={() => setMapIsVisible(true)}
         >
           <img
             src="/img/icons/map-icon.svg"

@@ -308,6 +308,7 @@ function filter_services_by_name(
                   .includes("membership") &&
                 eligibility.eligible_values.length &&
                 !eligibility.eligible_values
+                  .filter((elig_value) => typeof elig_value === "string")
                   .map((elig_value) => elig_value.toLowerCase())
                   .includes("false"),
             ).length
