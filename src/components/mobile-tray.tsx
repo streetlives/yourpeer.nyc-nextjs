@@ -109,7 +109,7 @@ export function MobileTray({
               {CATEGORIES.map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location
+                  location,
                 );
                 return servicesWrapper?.services.length ? (
                   <li
