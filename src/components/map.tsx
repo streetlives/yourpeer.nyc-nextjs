@@ -130,9 +130,9 @@ function MapWrapper({
   }, [mapCenter]);
 
   useEffect(() => {
-    if (showMapViewOnMobile) {
-      googleMap?.setCenter(mapCenter);
-      googleMap?.setZoom(zoom);
+    if (showMapViewOnMobile && googleMap) {
+      googleMap.setCenter(mapCenter);
+      googleMap.setZoom(zoom);
     }
   }, [showMapViewOnMobile, googleMap]);
 
@@ -165,21 +165,23 @@ function MapWrapper({
 
   const handleCameraChange = useCallback(
     (ev: MapCameraChangedEvent) => {
+      const googleMapDiv = googleMap?.getDiv();
+
+      // if google map is already hidden, then ignore the event, because we get a weird zoom
+      if (
+        googleMapDiv &&
+        googleMapDiv.clientHeight === 0 &&
+        googleMapDiv.clientWidth === 0
+      )
+        return;
+
       //console.log("camera changed: ", ev.detail);
-      const center = ev.map.getCenter();
-      if (center) {
-        const newCenter = {
-          lat: center.lat(),
-          lng: center.lng(),
-        };
-        if (
-          mapCenter.lat !== newCenter.lat ||
-          mapCenter.lng !== newCenter.lng
-        ) {
-          setMapCenter(newCenter);
-        }
+      const newCenter = ev.detail.center;
+      if (mapCenter.lat !== newCenter.lat || mapCenter.lng !== newCenter.lng) {
+        setMapCenter(newCenter);
       }
-      const newZoom = ev.map.getZoom();
+
+      const newZoom = ev.detail.zoom;
       if (newZoom && newZoom !== zoom) {
         setZoom(newZoom);
       }
