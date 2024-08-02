@@ -27,7 +27,7 @@ import { MobileTray } from "./mobile-tray";
 import { SearchContext, SearchContextType } from "./search-context";
 import { useCookies } from "next-client-cookies";
 
-interface Position {
+export interface Position {
   lat: number;
   lng: number;
 }
