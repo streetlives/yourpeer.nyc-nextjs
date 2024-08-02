@@ -76,23 +76,16 @@ interface SimplifiedLocationDataWithDistance extends SimplifiedLocationData {
 function MapWrapper({
   locationStubs,
   locationDetailStub,
-  locationSlugClickedOnMobile,
   setLocationSlugClickedOnMobile,
 }: {
   locationStubs?: SimplifiedLocationData[];
   locationDetailStub?: SimplifiedLocationData;
-  locationSlugClickedOnMobile?: string;
   setLocationSlugClickedOnMobile: (slug: string | undefined) => void;
 }) {
   const cookies = useCookies();
   const cookieZoom = cookies.get("zoom");
   const cookieMapCenter = cookies.get("mapCenter");
 
-  const locationStubClickedOnMobile = locationStubs
-    ?.filter(
-      (locationStub) => locationStub.slug === locationSlugClickedOnMobile,
-    )
-    .pop();
   const router = useRouter();
   const [userPosition, setUserPosition] = useState<Position>();
   const [zoom, setZoom] = useState<number>(
@@ -106,17 +99,10 @@ function MapWrapper({
             lat: locationDetailStub.position.coordinates[1],
             lng: locationDetailStub.position.coordinates[0],
           }
-        : locationStubClickedOnMobile
-          ? {
-              lat: locationStubClickedOnMobile.position.coordinates[1],
-              lng: locationStubClickedOnMobile.position.coordinates[0],
-            }
-          : centralPark,
+        : centralPark,
   );
   const [lastImportantCenter, setLastImportantCenter] = useState<Position>();
   const [lastImportantZoom, setLastImportantZoom] = useState<number>();
-  const normalizedLocationDetailStub =
-    locationStubClickedOnMobile || locationDetailStub;
   const googleMap = useMap();
 
   function getUserPositionOrCentralPark(): Position {
@@ -135,13 +121,13 @@ function MapWrapper({
   function centerTheMap(): void {
     const normalizedUserPosition = getUserPositionOrCentralPark();
     if (googleMap) {
-      if (normalizedLocationDetailStub) {
+      if (locationDetailStub) {
         var bounds = new google.maps.LatLngBounds();
         bounds.extend(new google.maps.LatLng(normalizedUserPosition));
         bounds.extend(
           new google.maps.LatLng(
-            normalizedLocationDetailStub.position.coordinates[1],
-            normalizedLocationDetailStub.position.coordinates[0],
+            locationDetailStub.position.coordinates[1],
+            locationDetailStub.position.coordinates[0],
           ),
         );
         googleMap.fitBounds(bounds);
@@ -246,7 +232,7 @@ function MapWrapper({
   useEffect(() => {
     const normalizedUserPosition = getUserPositionOrCentralPark();
 
-    if (normalizedLocationDetailStub) return; // if normalizedLocationDetailStub is set, then he should be the center
+    if (locationDetailStub) return; // if locationDetailStub is set, then he should be the center
 
     if (locationStubs && locationStubs.length) {
       const simplifiedLocationDataWithDistance: SimplifiedLocationDataWithDistance[] =
@@ -288,7 +274,7 @@ function MapWrapper({
         googleMap.fitBounds(bounds);
       }
     }
-  }, [userPosition, locationStubs, googleMap]);
+  }, [userPosition, locationStubs, googleMap, showMapViewOnMobile]);
 
   return (
     <>
@@ -307,27 +293,13 @@ function MapWrapper({
               <LocationStubMarker
                 locationStub={locationStub}
                 key={locationStub.id}
-                locationSlugClickedOnMobile={locationSlugClickedOnMobile}
+                locationSlugClickedOnMobile={locationDetailStub?.slug}
                 handleClickOnLocationStubMarker={
                   handleClickOnLocationStubMarker
                 }
               />
             ))
           : undefined}
-        {locationDetailStub ? (
-          <Marker
-            position={{
-              lat: locationDetailStub.position.coordinates[1],
-              lng: locationDetailStub.position.coordinates[0],
-            }}
-            clickable={true}
-            onClick={() =>
-              router.push(`/${LOCATION_ROUTE}/${locationDetailStub.slug}`)
-            }
-            title={locationDetailStub.name}
-            icon={activeMarkerIcon}
-          />
-        ) : undefined}
         {userPosition ? (
           <Marker
             position={userPosition}
@@ -376,6 +348,8 @@ export default function LocationsMap({
 
   const [locationSlugClickedOnMobile, setLocationSlugClickedOnMobile] =
     useState<string | undefined>(cookieLocationSlugClickedOnMobile);
+  const [locationStubClickedOnMobile, setLocationStubClickedOnMobile] =
+    useState<SimplifiedLocationData>();
 
   useEffect(() => {
     if (locationSlugClickedOnMobile) {
@@ -390,21 +364,37 @@ export default function LocationsMap({
     }
   }, [locationSlugClickedOnMobile]);
 
+  useEffect(() => {
+    const newLocationStub = locationStubs
+      ?.filter(
+        (locationStub) => locationStub.slug === locationSlugClickedOnMobile,
+      )
+      .pop();
+    setLocationStubClickedOnMobile(newLocationStub);
+    if (!newLocationStub) {
+      // clear all of the cookies
+      cookies.remove("locationSlugClickedOnMobile");
+      cookies.remove("zoom");
+      cookies.remove("mapCenter");
+    }
+  }, [locationStubs, locationSlugClickedOnMobile]);
+
   return (
     <>
       <div id="map" className="w-full h-full">
         <APIProvider apiKey={GOOGLE_MAPS_API_KEY} libraries={["marker"]}>
           <MapWrapper
             locationStubs={locationStubs}
-            locationDetailStub={locationDetailStub}
-            locationSlugClickedOnMobile={locationSlugClickedOnMobile}
+            locationDetailStub={
+              locationStubClickedOnMobile || locationDetailStub
+            }
             setLocationSlugClickedOnMobile={setLocationSlugClickedOnMobile}
           />
         </APIProvider>
       </div>
-      {locationSlugClickedOnMobile ? (
+      {locationStubClickedOnMobile ? (
         <MobileTray
-          locationSlugClickedOnMobile={locationSlugClickedOnMobile}
+          locationSlugClickedOnMobile={locationStubClickedOnMobile?.slug}
           setLocationSlugClickedOnMobile={setLocationSlugClickedOnMobile}
         />
       ) : undefined}
