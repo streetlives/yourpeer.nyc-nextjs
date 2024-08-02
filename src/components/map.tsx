@@ -16,12 +16,7 @@ import {
 import { LOCATION_ROUTE, SimplifiedLocationData } from "./common";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  activeMarkerIcon,
-  defaultZoom,
-  mapStyles,
-  myLocationIcon,
-} from "./map-common";
+import { defaultZoom, mapStyles, myLocationIcon } from "./map-common";
 import LocationStubMarker from "./location-stub-marker";
 import { MobileTray } from "./mobile-tray";
 import { SearchContext, SearchContextType } from "./search-context";
