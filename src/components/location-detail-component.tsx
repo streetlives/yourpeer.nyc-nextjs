@@ -21,13 +21,19 @@ import {
 } from "./common";
 import Service from "./service-component";
 import customStreetViews from "./custom-streetviews";
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import {
+  APIProvider,
+  Map,
+  MapCameraChangedEvent,
+  Marker,
+} from "@vis.gl/react-google-maps";
 import { activeMarkerIcon, defaultZoom, mapStyles } from "./map-common";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ReportIssueForm } from "./report-issue";
 import { parseCookies } from "./cookies";
 import QuickExitLink from "./quick-exit-link";
 import LocationStubMarker from "./location-stub-marker";
+import { Position } from "./map";
 import { Transition } from "@headlessui/react";
 
 export function getIconPath(iconName: string): string {
@@ -128,7 +134,42 @@ export default function LocationDetailComponent({
     }
   }, []);
 
-  useEffect(() => {}, []);
+  const [zoom, setZoom] = useState<number>(defaultZoom);
+  const [mapCenter, setMapCenter] = useState<Position>(location);
+
+  // TODO: eliminate duplicate code
+  const handleCameraChange = useCallback(
+    (ev: MapCameraChangedEvent) => {
+      const googleMapDiv = ev.map.getDiv();
+
+      // if google map is already hidden, then ignore the event, because we get a weird zoom
+      if (
+        !googleMapDiv ||
+        (googleMapDiv.clientHeight === 0 && googleMapDiv.clientWidth === 0)
+      )
+        return;
+
+      //console.log("camera changed: ", ev.detail);
+      const newCenter = ev.detail.center;
+      console.log("newCenter", newCenter);
+      if (
+        newCenter.lat !== 0 &&
+        newCenter.lng !== 0 &&
+        (mapCenter.lat !== newCenter.lat || mapCenter.lng !== newCenter.lng)
+      ) {
+        console.log("setMapCenter(newCenter);", newCenter);
+        setMapCenter(newCenter);
+      }
+
+      const newZoom = ev.detail.zoom;
+      console.log("newZoom ", newZoom);
+      if (newZoom && newZoom !== zoom) {
+        console.log("setZoom(newZoom);", newZoom);
+        setZoom(newZoom);
+      }
+    },
+    [mapCenter, setMapCenter, zoom, setZoom],
+  );
 
   const handleScroll = (e: React.UIEvent<HTMLElement>): void => {
     const target = e.target as HTMLElement;
@@ -240,14 +281,15 @@ export default function LocationDetailComponent({
                     libraries={["marker"]}
                   >
                     <Map
-                      defaultZoom={defaultZoom}
+                      defaultZoom={zoom}
                       gestureHandling={"greedy"}
                       zoomControl={false}
                       streetViewControl={false}
                       mapTypeControl={false}
                       fullscreenControl={false}
-                      center={location}
+                      center={mapCenter}
                       styles={mapStyles}
+                      onCameraChanged={handleCameraChange}
                     >
                       <Marker
                         position={location}

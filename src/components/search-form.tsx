@@ -111,6 +111,9 @@ export default function SearchForm() {
   function clearSearch() {
     setSearch("");
     setShowMapViewOnMobile(false);
+    router.push(
+      getUrlWithoutFilterParameter(pathname, searchParams, SEARCH_PARAM),
+    );
   }
 
   function doSetSearch(e: ChangeEvent) {
