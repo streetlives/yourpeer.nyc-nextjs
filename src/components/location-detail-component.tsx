@@ -134,7 +134,6 @@ export default function LocationDetailComponent({
     }
   }, []);
 
-<<<<<<< HEAD
   const [zoom, setZoom] = useState<number>(defaultZoom);
   const [mapCenter, setMapCenter] = useState<Position>(location);
 
@@ -171,8 +170,6 @@ export default function LocationDetailComponent({
     },
     [mapCenter, setMapCenter, zoom, setZoom],
   );
-=======
-  useEffect(() => {}, []);
 
   const handleScroll = (e: React.UIEvent<HTMLElement>): void => {
     const target = e.target as HTMLElement;
@@ -182,7 +179,6 @@ export default function LocationDetailComponent({
       setStickyTitle(false);
     }
   };
->>>>>>> 827f5709b12557f29e44ed89cebe45fe612c92fa
 
   return (
     <div
