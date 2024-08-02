@@ -22,6 +22,9 @@ import { MobileTray } from "./mobile-tray";
 import { SearchContext, SearchContextType } from "./search-context";
 import { useCookies } from "next-client-cookies";
 
+function isMobile(): boolean {
+  return window.innerWidth <= 600;
+}
 export interface Position {
   lat: number;
   lng: number;
@@ -71,23 +74,31 @@ interface SimplifiedLocationDataWithDistance extends SimplifiedLocationData {
 function MapWrapper({
   locationStubs,
   locationDetailStub,
+  locationSlugClickedOnMobile,
+  locationStubClickedOnMobile,
   setLocationSlugClickedOnMobile,
 }: {
   locationStubs?: SimplifiedLocationData[];
   locationDetailStub?: SimplifiedLocationData;
+  locationSlugClickedOnMobile?: string;
+  locationStubClickedOnMobile?: SimplifiedLocationData;
   setLocationSlugClickedOnMobile: (slug: string | undefined) => void;
 }) {
   const cookies = useCookies();
   const cookieZoom = cookies.get("zoom");
   const cookieMapCenter = cookies.get("mapCenter");
+  const normalizedLocationDetailStub =
+    locationStubClickedOnMobile || locationDetailStub;
 
   const router = useRouter();
   const [userPosition, setUserPosition] = useState<Position>();
   const [zoom, setZoom] = useState<number>(
-    cookieZoom ? parseInt(cookieZoom) : defaultZoom,
+    locationSlugClickedOnMobile && cookieZoom
+      ? parseInt(cookieZoom)
+      : defaultZoom,
   );
   const [mapCenter, setMapCenter] = useState<Position>(
-    cookieMapCenter
+    locationSlugClickedOnMobile && cookieMapCenter
       ? (JSON.parse(cookieMapCenter) as Position)
       : locationDetailStub
         ? {
@@ -116,13 +127,13 @@ function MapWrapper({
   function centerTheMap(): void {
     const normalizedUserPosition = getUserPositionOrCentralPark();
     if (googleMap) {
-      if (locationDetailStub) {
+      if (normalizedLocationDetailStub) {
         var bounds = new google.maps.LatLngBounds();
         bounds.extend(new google.maps.LatLng(normalizedUserPosition));
         bounds.extend(
           new google.maps.LatLng(
-            locationDetailStub.position.coordinates[1],
-            locationDetailStub.position.coordinates[0],
+            normalizedLocationDetailStub.position.coordinates[1],
+            normalizedLocationDetailStub.position.coordinates[0],
           ),
         );
         googleMap.fitBounds(bounds);
@@ -137,7 +148,7 @@ function MapWrapper({
   ) {
     const pageWidth = document.documentElement.scrollWidth;
 
-    if (pageWidth > 767) {
+    if (!isMobile()) {
       router.push(`/${LOCATION_ROUTE}/${locationStub.slug}`);
     } else if (setLocationSlugClickedOnMobile) {
       setLocationSlugClickedOnMobile(locationStub.slug);
@@ -227,7 +238,7 @@ function MapWrapper({
   useEffect(() => {
     const normalizedUserPosition = getUserPositionOrCentralPark();
 
-    if (locationDetailStub) return; // if locationDetailStub is set, then he should be the center
+    if (normalizedLocationDetailStub) return; // if locationDetailStub is set, then he should be the center
 
     if (locationStubs && locationStubs.length) {
       const simplifiedLocationDataWithDistance: SimplifiedLocationDataWithDistance[] =
@@ -288,7 +299,7 @@ function MapWrapper({
               <LocationStubMarker
                 locationStub={locationStub}
                 key={locationStub.id}
-                locationSlugClickedOnMobile={locationDetailStub?.slug}
+                locationSlugClickedOnMobile={normalizedLocationDetailStub?.slug}
                 handleClickOnLocationStubMarker={
                   handleClickOnLocationStubMarker
                 }
@@ -374,16 +385,34 @@ export default function LocationsMap({
     }
   }, [locationStubs, locationSlugClickedOnMobile]);
 
+  function checkIfIsMobile(): void {
+    if (!isMobile()) {
+      setLocationSlugClickedOnMobile(undefined);
+      cookies.remove("locationSlugClickedOnMobile");
+    }
+  }
+
+  useEffect(() => {
+    checkIfIsMobile();
+    function resizeListener() {
+      checkIfIsMobile();
+    }
+    window.addEventListener("resize", resizeListener);
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+    };
+  }, []);
+
   return (
     <>
       <div id="map" className="w-full h-full">
         <APIProvider apiKey={GOOGLE_MAPS_API_KEY} libraries={["marker"]}>
           <MapWrapper
             locationStubs={locationStubs}
-            locationDetailStub={
-              locationStubClickedOnMobile || locationDetailStub
-            }
+            locationDetailStub={locationDetailStub}
+            locationStubClickedOnMobile={locationStubClickedOnMobile}
             setLocationSlugClickedOnMobile={setLocationSlugClickedOnMobile}
+            locationSlugClickedOnMobile={locationSlugClickedOnMobile}
           />
         </APIProvider>
       </div>
