@@ -16,7 +16,6 @@ import {
   YourPeerLegacyServiceDataWrapper,
   SimplifiedLocationData,
   ROUTE_TO_CATEGORY_MAP,
-  Category,
 } from "./common";
 import Service from "./service-component";
 import customStreetViews from "./custom-streetviews";
@@ -34,7 +33,6 @@ import LocationStubMarker from "./location-stub-marker";
 import { Position } from "./map";
 import { Transition } from "@headlessui/react";
 import { usePreviousRoute } from "./use-previous-route";
-import { usePreviousParams } from "./use-previous-params";
 import { usePreviousParamsOnClient } from "./use-previous-params-client";
 
 export function getIconPath(iconName: string): string {
