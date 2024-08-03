@@ -15,6 +15,8 @@ import {
   YourPeerLegacyLocationData,
   YourPeerLegacyServiceDataWrapper,
   SimplifiedLocationData,
+  ROUTE_TO_CATEGORY_MAP,
+  Category,
 } from "./common";
 import Service from "./service-component";
 import customStreetViews from "./custom-streetviews";
@@ -32,6 +34,8 @@ import LocationStubMarker from "./location-stub-marker";
 import { Position } from "./map";
 import { Transition } from "@headlessui/react";
 import { usePreviousRoute } from "./use-previous-route";
+import { usePreviousParams } from "./use-previous-params";
+import { usePreviousParamsOnClient } from "./use-previous-params-client";
 
 export function getIconPath(iconName: string): string {
   return `/img/icons/${iconName}.png`;
@@ -63,10 +67,12 @@ function LocationService({
   serviceInfo,
   name,
   icon,
+  startExpanded,
 }: {
   serviceInfo: YourPeerLegacyServiceDataWrapper;
   name: string;
   icon: string;
+  startExpanded: boolean;
 }) {
   return (
     <div className="bg-white rounded-lg">
@@ -80,7 +86,11 @@ function LocationService({
       </div>
       <div className="flex flex-col divide-y divide-gray-200">
         {serviceInfo.services.map((service) => (
-          <Service key={service.id} service={service} />
+          <Service
+            key={service.id}
+            service={service}
+            startExpanded={startExpanded}
+          />
         ))}
       </div>
     </div>
@@ -103,7 +113,9 @@ export default function LocationDetailComponent({
   function hideReportIssueForm() {
     setIsShowingReportIssueForm(false);
   }
-
+  const previousParams = usePreviousParamsOnClient();
+  const previousCategory =
+    ROUTE_TO_CATEGORY_MAP[previousParams?.params.route as string];
   const previousRoute = usePreviousRoute();
   const [stickyTitle, setStickyTitle] = useState<boolean>(false);
 
@@ -460,7 +472,14 @@ export default function LocationDetailComponent({
           </div>
           {!location.closed ? (
             <div className="px-4 py-5 bg-neutral-50 flex flex-col gap-y-4">
-              {CATEGORIES.map((serviceCategory) => {
+              {(previousCategory
+                ? [previousCategory].concat(
+                    CATEGORIES.filter(
+                      (category) => category !== previousCategory,
+                    ),
+                  )
+                : CATEGORIES
+              ).map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
                   location,
@@ -471,6 +490,7 @@ export default function LocationDetailComponent({
                     serviceInfo={servicesWrapper}
                     name={CATEGORY_DESCRIPTION_MAP[serviceCategory]}
                     icon={CATEGORY_ICON_SRC_MAP[serviceCategory]}
+                    startExpanded={serviceCategory === previousCategory}
                   />
                 ) : undefined;
               })}

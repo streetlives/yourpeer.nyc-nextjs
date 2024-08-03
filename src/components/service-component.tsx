@@ -149,10 +149,12 @@ function renderSchedule(schedule: YourPeerLegacyScheduleData): string {
 
 export default function Service({
   service,
+  startExpanded,
 }: {
   service: YourPeerLegacyServiceData;
+  startExpanded: boolean;
 }) {
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(startExpanded);
   //console.log('isExpanded', isExpanded)
   const hasSomethingToShow =
     service.description || service.info || service.docs || service.schedule;
