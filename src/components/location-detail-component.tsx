@@ -10,11 +10,8 @@ import {
   CATEGORIES,
   CATEGORY_DESCRIPTION_MAP,
   CategoryNotNull,
-  LAST_SET_PARAMS_COOKIE_NAME,
   getServicesWrapper,
   LOCATION_ROUTE,
-  SearchParams,
-  SubRouteParams,
   YourPeerLegacyLocationData,
   YourPeerLegacyServiceDataWrapper,
   SimplifiedLocationData,
@@ -28,13 +25,13 @@ import {
   Marker,
 } from "@vis.gl/react-google-maps";
 import { activeMarkerIcon, defaultZoom, mapStyles } from "./map-common";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { ReportIssueForm } from "./report-issue";
-import { parseCookies } from "./cookies";
 import QuickExitLink from "./quick-exit-link";
 import LocationStubMarker from "./location-stub-marker";
 import { Position } from "./map";
 import { Transition } from "@headlessui/react";
+import { usePreviousRoute } from "./use-previous-route";
 
 export function getIconPath(iconName: string): string {
   return `/img/icons/${iconName}.png`;
@@ -90,16 +87,6 @@ function LocationService({
   );
 }
 
-function serializeToQueryParams(searchParams: SearchParams): string {
-  return Object.entries(searchParams)
-    .map(([k, v]) =>
-      typeof v === "string"
-        ? `${encodeURIComponent(k)}=${encodeURIComponent(v)}`
-        : "",
-    )
-    .join("&");
-}
-
 export default function LocationDetailComponent({
   location,
   locationStubs,
@@ -117,22 +104,8 @@ export default function LocationDetailComponent({
     setIsShowingReportIssueForm(false);
   }
 
-  const [previousRoute, setPreviousRoute] = useState<string>();
+  const previousRoute = usePreviousRoute();
   const [stickyTitle, setStickyTitle] = useState<boolean>(false);
-  useEffect(() => {
-    const cookies = parseCookies();
-    if (cookies[LAST_SET_PARAMS_COOKIE_NAME]) {
-      const previousParams = JSON.parse(
-        cookies[LAST_SET_PARAMS_COOKIE_NAME],
-      ) as unknown as {
-        searchParams: SearchParams;
-        params: SubRouteParams;
-      };
-      setPreviousRoute(
-        `/${previousParams.params.route}${previousParams.params.locationSlugOrPersonalCareSubCategory ? `/${previousParams.params.locationSlugOrPersonalCareSubCategory}` : ""}${Object.keys(previousParams).length ? `?${serializeToQueryParams(previousParams.searchParams)}` : ""}`,
-      );
-    }
-  }, []);
 
   const [zoom, setZoom] = useState<number>(defaultZoom);
   const [mapCenter, setMapCenter] = useState<Position>(location);

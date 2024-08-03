@@ -21,9 +21,26 @@ import {
   REQUIREMENT_PARAM,
   REQUIREMENT_PARAM_CANONICAL_ORDERING,
   RequirementValue,
+  RouteParams,
   SearchParams,
   UrlParamName,
 } from "./common";
+
+function removeExtraneousSearchParams(
+  pathname: string | null,
+  currentUrlSearchParams: URLSearchParams,
+): void {
+  // always delete the current page
+  currentUrlSearchParams.delete(PAGE_PARAM);
+  if (!pathname) {
+    currentUrlSearchParams.delete(PERSONAL_CARE_CATEGORY);
+  } else {
+    const params = parsePathnameToSubRouteParams(pathname);
+    if (params.route !== PERSONAL_CARE_CATEGORY) {
+      currentUrlSearchParams.delete(PERSONAL_CARE_CATEGORY);
+    }
+  }
+}
 
 // Change category
 export function getUrlWithNewCategory(
@@ -39,7 +56,7 @@ export function getUrlWithNewCategory(
   const currentUrlSearchParams = new URLSearchParams(searchParamsList);
 
   // always delete the current page
-  currentUrlSearchParams.delete(PAGE_PARAM);
+  removeExtraneousSearchParams(newCategory, currentUrlSearchParams);
   const newSearchParamsStr = currentUrlSearchParams.toString();
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `/${newCategory ? CATEGORY_TO_ROUTE_MAP[newCategory] : LOCATION_ROUTE}${query}`;
@@ -113,8 +130,8 @@ export function getUrlWithoutFilterParameter(
 
   currentUrlSearchParams.delete(urlParamName);
 
-  // always delete the current page
-  currentUrlSearchParams.delete(PAGE_PARAM);
+  removeExtraneousSearchParams(pathname, currentUrlSearchParams);
+
   const newSearchParamsStr = currentUrlSearchParams.toString();
 
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
@@ -175,8 +192,7 @@ export function getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved(
     currentUrlSearchParams.delete(REQUIREMENT_PARAM);
   }
 
-  // always delete the current page
-  currentUrlSearchParams.delete(PAGE_PARAM);
+  removeExtraneousSearchParams(pathname, currentUrlSearchParams);
   const newSearchParamsStr = currentUrlSearchParams.toString();
 
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
@@ -257,12 +273,6 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
 
   const newSearchParamsStr = currentUrlSearchParams.toString();
 
-  console.log(
-    "newPath, currentUrlSearchParams",
-    newPath,
-    currentUrlSearchParams,
-  );
-
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `${newPath}${query}`;
 }
@@ -308,4 +318,24 @@ export function getUrlToNextOrPreviousPage(
 
   const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
   return `${pathname}${query}`;
+}
+
+export function parsePathnameToSubRouteParams(pathname: string): RouteParams {
+  const [ignore, route, locationSlugOrPersonalCareSubCategory] =
+    pathname.split("/");
+  return {
+    route,
+    locationSlugOrPersonalCareSubCategory,
+  };
+}
+
+export function isOnLocationDetailPage(params: RouteParams): boolean {
+  return (
+    params.route === LOCATION_ROUTE &&
+    params.locationSlugOrPersonalCareSubCategory !== undefined
+  );
+}
+
+export function paramsToPathname(params: RouteParams): string {
+  return `/${params.route}${params.locationSlugOrPersonalCareSubCategory ? `/${params.locationSlugOrPersonalCareSubCategory}` : ""}`;
 }

@@ -6,20 +6,34 @@
 
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  ReadonlyURLSearchParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import Link from "next/link";
 import React, { ChangeEvent, useContext, useEffect, useState } from "react";
-import { SEARCH_PARAM } from "./common";
+import { LOCATION_ROUTE, SEARCH_PARAM, SearchParams } from "./common";
 import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
+  isOnLocationDetailPage,
+  paramsToPathname,
+  parsePathnameToSubRouteParams,
 } from "./navigation";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { SearchContext, SearchContextType } from "./search-context";
+import { PreviousParams } from "./use-previous-params";
+import { usePreviousParamsOnClient } from "./use-previous-params-client";
 
-function SearchPanel({ currentSearch }: { currentSearch: string }) {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
+function SearchPanel({
+  currentSearch,
+  paramsToUseForNextUrl,
+}: {
+  currentSearch: string;
+  paramsToUseForNextUrl: PreviousParams;
+}) {
   const { setShowMapViewOnMobile } = useContext(
     SearchContext,
   ) as SearchContextType;
@@ -31,8 +45,9 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
       setShowMapViewOnMobile(false);
       router.push(
         getUrlWithNewFilterParameter(
-          pathname,
-          searchParams,
+          // TODO
+          paramsToPathname(paramsToUseForNextUrl.params),
+          paramsToUseForNextUrl.searchParams,
           SEARCH_PARAM,
           currentSearch,
         ),
@@ -95,24 +110,63 @@ function SearchPanel({ currentSearch }: { currentSearch: string }) {
   );
 }
 
+function convertReadonlyURLSearchParamsToSearchParams(
+  readonlyURLSearchParams: ReadonlyURLSearchParams,
+): SearchParams {
+  return Object.fromEntries(Array.from(readonlyURLSearchParams.entries()));
+}
+
 export default function SearchForm() {
+  // TODO: if we are on the location detail screen,
+  // then we want to use the cookie to get the previous searchParams,
+  // construct the same URL we would use on the back button,
+  // but with modified search parameter,
+  // then navigate to the new URL
   const { search, setSearch, showMapViewOnMobile, setShowMapViewOnMobile } =
     useContext(SearchContext) as SearchContextType;
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() as ReadonlyURLSearchParams;
   const searchParamFromQuery = searchParams && searchParams.get(SEARCH_PARAM);
   const [inputHasFocus, setInputHasFocus] = useState(false);
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname() as string;
+  const previousParams = usePreviousParamsOnClient();
+  const searchParamFromCookie = previousParams?.searchParams[
+    SEARCH_PARAM
+  ] as string;
+  const currentParams = parsePathnameToSubRouteParams(pathname);
+  const defaultPreviousParams: PreviousParams = {
+    searchParams: {},
+    params: {
+      route: LOCATION_ROUTE,
+    },
+  };
+
+  const isCurrentlyOnLocationDetailPage = isOnLocationDetailPage(currentParams);
+  const paramsToUseForNextUrl: PreviousParams = isCurrentlyOnLocationDetailPage
+    ? previousParams || defaultPreviousParams
+    : {
+        params: currentParams,
+        searchParams:
+          convertReadonlyURLSearchParamsToSearchParams(searchParams),
+      };
 
   useEffect(() => {
-    setSearch(searchParamFromQuery);
-  }, [setSearch, searchParamFromQuery]);
+    setSearch(
+      isCurrentlyOnLocationDetailPage
+        ? searchParamFromCookie
+        : searchParamFromQuery,
+    );
+  }, [setSearch, searchParamFromQuery, searchParamFromCookie]);
 
   function clearSearch() {
     setSearch("");
     setShowMapViewOnMobile(false);
     router.push(
-      getUrlWithoutFilterParameter(pathname, searchParams, SEARCH_PARAM),
+      getUrlWithoutFilterParameter(
+        paramsToPathname(paramsToUseForNextUrl.params),
+        paramsToUseForNextUrl.searchParams,
+        SEARCH_PARAM,
+      ),
     );
   }
 
@@ -137,8 +191,8 @@ export default function SearchForm() {
       setShowMapViewOnMobile(false);
       router.push(
         getUrlWithNewFilterParameter(
-          pathname,
-          searchParams,
+          paramsToPathname(paramsToUseForNextUrl.params),
+          paramsToUseForNextUrl.searchParams,
           SEARCH_PARAM,
           search,
         ),
@@ -169,8 +223,8 @@ export default function SearchForm() {
           <Link
             onClick={clearSearch}
             href={getUrlWithoutFilterParameter(
-              pathname,
-              searchParams,
+              paramsToPathname(paramsToUseForNextUrl.params),
+              paramsToUseForNextUrl.searchParams,
               SEARCH_PARAM,
             )}
           >
@@ -179,7 +233,10 @@ export default function SearchForm() {
         ) : undefined}
       </form>
       {inputHasFocus && search ? (
-        <SearchPanel currentSearch={search} />
+        <SearchPanel
+          currentSearch={search}
+          paramsToUseForNextUrl={paramsToUseForNextUrl}
+        />
       ) : undefined}
     </>
   );

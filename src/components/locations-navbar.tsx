@@ -106,7 +106,8 @@ export const LocationsNavbarCompanyRoutes = () => {
           </div>
           <div className="flex items-center space-x-2">
             <div className="gtranslate_wrapper"></div>
-            <button
+            <a
+              href="https://www.google.com"
               className="inline-flex items-center text-[13px] sm:text-xs font-medium text-black space-x-1"
               id="quickExitLink"
             >
@@ -123,7 +124,7 @@ export const LocationsNavbarCompanyRoutes = () => {
                   fill="#212121"
                 />
               </svg>
-            </button>
+            </a>
           </div>
         </nav>
       </header>

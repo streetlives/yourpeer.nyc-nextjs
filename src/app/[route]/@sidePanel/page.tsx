@@ -11,10 +11,8 @@ import {
 } from "../../../components/common";
 
 import { notFound } from "next/navigation";
-import {
-  getSidePanelComponentData,
-  SidePanelComponent,
-} from "../../../components/side-panel-component";
+import { SidePanelComponent } from "../../../components/side-panel-component";
+import { getSidePanelComponentData } from "@/components/get-side-panel-component-data";
 
 export { generateMetadata } from "../../../components/metadata";
 

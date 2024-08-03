@@ -271,6 +271,7 @@ export function parsePathnameToCategoryAndSubCategory(
 
 export interface RouteParams {
   route: string;
+  locationSlugOrPersonalCareSubCategory?: string;
 }
 
 export interface SubRouteParams extends RouteParams {
