@@ -90,7 +90,7 @@ export async function fetchLocationsData<T extends SimplifiedLocationData>({
     query_url +=
       "&" +
       taxonomySpecificAttributes
-        .map((a, i) => `taxonomySpecificAttribute[${i}]=${a}`)
+        .map((a, i) => `taxonomySpecificAttributes[${i}]=${a}`)
         .join("&");
   }
 
