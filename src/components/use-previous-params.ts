@@ -3,12 +3,11 @@ import {
   LAST_SET_PARAMS_COOKIE_NAME,
   RouteParams,
   SearchParams,
-  SubRouteParams,
 } from "./common";
 
 export interface PreviousParams {
   searchParams: SearchParams;
-  params: RouteParams | SubRouteParams;
+  params: RouteParams;
 }
 
 export function usePreviousParams(): PreviousParams | null {

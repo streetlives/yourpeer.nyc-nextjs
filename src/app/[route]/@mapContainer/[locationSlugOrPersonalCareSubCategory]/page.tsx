@@ -30,6 +30,7 @@ export default async function MapDetail({
   const previousParams = usePreviousParams();
   try {
     if (
+      // TODO: eliminate duplicate code - move this condition out
       params.route === PERSONAL_CARE_CATEGORY &&
       AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
         params.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory,

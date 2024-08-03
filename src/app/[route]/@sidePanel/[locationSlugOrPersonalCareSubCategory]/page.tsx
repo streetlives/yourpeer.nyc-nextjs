@@ -17,13 +17,11 @@ import {
   fetchLocationsDetailData,
   map_gogetta_to_yourpeer,
 } from "../../../../components/streetlives-api-service";
-import {
-  getSidePanelComponentData,
-  SidePanelComponent,
-} from "../../../../components/side-panel-component";
+import { SidePanelComponent } from "../../../../components/side-panel-component";
 import LocationDetailComponent from "../../../../components/location-detail-component";
 import { usePreviousParams } from "@/components/use-previous-params";
 import { getMapContainerData } from "@/components/map-container-component";
+import { getSidePanelComponentData } from "@/components/get-side-panel-component-data";
 
 export { generateMetadata } from "../../../../components/metadata";
 
@@ -37,6 +35,7 @@ export default async function LocationDetail({
   const previousParams = usePreviousParams();
   try {
     if (
+      // TODO: eliminate duplicate code - move this condition out
       params.route === PERSONAL_CARE_CATEGORY &&
       AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
         params.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory,
