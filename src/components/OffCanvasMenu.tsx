@@ -88,7 +88,8 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                       </a>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <button
+                      <a
+                        href="https://www.google.com"
                         className="inline-flex items-center text-[13px] sm:text-xs font-medium text-black space-x-1"
                         id="quickExitLink"
                       >
@@ -105,7 +106,7 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                             fill="#212121"
                           />
                         </svg>
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
