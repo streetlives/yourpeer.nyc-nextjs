@@ -257,11 +257,11 @@ export function TermsPage() {
               <li>
                 <p>
                   <strong>
-                    Governing Law
+                    <span>Governing Law</span>
                     <sup>
                       <a href={`#${governingLawInternalLinkId}`}>1</a>
                     </sup>
-                    .{" "}
+                    <span>.</span>{" "}
                   </strong>
                   <span>
                     &nbsp;These Terms are governed by the laws of the State of
@@ -304,10 +304,10 @@ export function TermsPage() {
                 </p>
                 <p>
                   <small>
-                    <a id={governingLawInternalLinkId}></a>1. Implications of
+                    <a id={governingLawInternalLinkId}></a><span>1. Implications of
                     choice of law should be discussed with the client—it is
                     important to explain why choosing their home state may be
-                    most beneficial.
+                    most beneficial.</span>
                   </small>
                 </p>
               </li>
