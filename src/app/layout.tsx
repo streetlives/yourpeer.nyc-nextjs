@@ -6,6 +6,11 @@
 
 import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import type { Viewport } from 'next'
+ 
+export const viewport: Viewport = {
+  themeColor: '#FFD54F',
+}
 
 const GOOGLE_ANALYTICS_MEASUREMENT_ID = process.env
   .GOOGLE_ANALYTICS_MEASUREMENT_ID as string;
