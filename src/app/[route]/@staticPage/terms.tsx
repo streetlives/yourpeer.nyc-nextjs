@@ -7,7 +7,7 @@
 import { LOCATION_ROUTE } from "../../../components/common";
 
 export function TermsPage() {
-  const governingLawInternalLinkId = "governing_law_footnote"
+  const governingLawInternalLinkId = "governing_law_footnote";
   return (
     <>
       <section className="bg-white pt-28 lg:pt-32 lg:py-20 notranslate">
@@ -256,51 +256,58 @@ export function TermsPage() {
               </li>
               <li>
                 <p>
-                <strong>Governing Law<sup><a href={`#${governingLawInternalLinkId}`}>1</a></sup>. </strong>
-                <span>
-                  &nbsp;These Terms are governed by the laws of the State of
-                  New York, without regard to conflict of law principles.
-                  Subject to Section 11, which provides that disputes are to
-                  be resolved through binding arbitration or small claims
-                  court, to the extent that any lawsuit or court proceeding is
-                  permitted hereunder, you and Streetlives agree to submit to
-                  the exclusive personal jurisdiction of the state courts and
-                  federal courts located within New York County, NY for the
-                  purpose of litigating all such disputes.
-                </span>
-              </p>
-            </li>
-            <li>
-              <p>
-                <strong>Dispute Resolution by Binding Arbitration. </strong>{" "}
-                <span>
-                  In the interest of resolving disputes between you and
-                  Streetlives in the most expedient and cost-effective manner,
-                  you and Streetlives agree to resolve disputes through
-                  binding arbitration or small claims court instead of in
-                  courts of general jurisdiction (“Agreement to Arbitrate”).
-                  Arbitration is more informal than a lawsuit in court.
-                  Arbitration uses a neutral arbitrator instead of a judge or
-                  jury, allows for more limited discovery than in court, and
-                  is subject to very limited review by courts. Arbitrators can
-                  award the same damages and relief that a court can award.
-                  Any arbitration or litigation under these Terms will take
-                  place on an individual basis; class arbitrations and class
-                  actions are not permitted. You acknowledge and agree that
-                  the arbitrator may award relief (including monetary,
-                  injunctive, and declaratory relief) only in favor of the
-                  individual party seeking relief and only to the extent
-                  necessary to provide relief necessitated by that individual
-                  party’s claim(s). Any relief awarded cannot affect other
-                  users.&nbsp;
-                </span>
-                <br />
-              </p>
-              <p>
-                <small>
-                    <a  id={governingLawInternalLinkId}></a>1. Implications of choice of law should be discussed with the
-                    client—it is important to explain why choosing their home
-                    state may be most beneficial.
+                  <strong>
+                    Governing Law
+                    <sup>
+                      <a href={`#${governingLawInternalLinkId}`}>1</a>
+                    </sup>
+                    .{" "}
+                  </strong>
+                  <span>
+                    &nbsp;These Terms are governed by the laws of the State of
+                    New York, without regard to conflict of law principles.
+                    Subject to Section 11, which provides that disputes are to
+                    be resolved through binding arbitration or small claims
+                    court, to the extent that any lawsuit or court proceeding is
+                    permitted hereunder, you and Streetlives agree to submit to
+                    the exclusive personal jurisdiction of the state courts and
+                    federal courts located within New York County, NY for the
+                    purpose of litigating all such disputes.
+                  </span>
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Dispute Resolution by Binding Arbitration. </strong>{" "}
+                  <span>
+                    In the interest of resolving disputes between you and
+                    Streetlives in the most expedient and cost-effective manner,
+                    you and Streetlives agree to resolve disputes through
+                    binding arbitration or small claims court instead of in
+                    courts of general jurisdiction (“Agreement to Arbitrate”).
+                    Arbitration is more informal than a lawsuit in court.
+                    Arbitration uses a neutral arbitrator instead of a judge or
+                    jury, allows for more limited discovery than in court, and
+                    is subject to very limited review by courts. Arbitrators can
+                    award the same damages and relief that a court can award.
+                    Any arbitration or litigation under these Terms will take
+                    place on an individual basis; class arbitrations and class
+                    actions are not permitted. You acknowledge and agree that
+                    the arbitrator may award relief (including monetary,
+                    injunctive, and declaratory relief) only in favor of the
+                    individual party seeking relief and only to the extent
+                    necessary to provide relief necessitated by that individual
+                    party’s claim(s). Any relief awarded cannot affect other
+                    users.&nbsp;
+                  </span>
+                  <br />
+                </p>
+                <p>
+                  <small>
+                    <a id={governingLawInternalLinkId}></a>1. Implications of
+                    choice of law should be discussed with the client—it is
+                    important to explain why choosing their home state may be
+                    most beneficial.
                   </small>
                 </p>
               </li>

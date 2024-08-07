@@ -106,7 +106,7 @@ export default function LocationDetailComponent({
 }) {
   const streetview =
     customStreetViews[slug] || `${location.lat},${location.lng}`;
-  const streetviewHref = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${streetview}`
+  const streetviewHref = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${streetview}`;
   const [isShowingReportIssueForm, setIsShowingReportIssueForm] =
     useState(false);
   function hideReportIssueForm() {
