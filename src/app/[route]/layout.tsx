@@ -19,6 +19,7 @@ import { notFound } from "next/navigation";
 import { SearchProvider } from "@/components/search-context";
 import { MainComponent } from "@/components/main-component";
 import { CookiesProvider } from "next-client-cookies/server";
+import { GTranslateSelect } from "@/components/gtranslate-select";
 
 export default function LocationsLayout({
   mapContainer,
@@ -37,6 +38,7 @@ export default function LocationsLayout({
     <>
       <div className="h-[100dvh] w-full">
         <CookiesProvider>
+          <GTranslateSelect withSelect={false} />
           <SearchProvider>
             <MapListToggleButton />
             <div className="flex flex-col w-full h-full">

@@ -84,7 +84,7 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                       </button>
                       <a href="/" translate="no" className="text-[15]">
                         <span className="text-black font-[900]">YourPeer</span>
-                        NYC
+                        <span>NYC</span>
                       </a>
                     </div>
                     <div className="flex items-center space-x-3">

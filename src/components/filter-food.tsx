@@ -99,7 +99,7 @@ export default function FilterFood() {
             aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
             onClick={handleIsAnyClick}
           />
-          Any
+          <span>Any</span>
         </label>
         <label
           className={classNames.call(
@@ -121,7 +121,7 @@ export default function FilterFood() {
             className="sr-only"
             onClick={handleIsSoupKItchenClick}
           />
-          Soup Kitchen
+          <span>Soup Kitchen</span>
         </label>
         <label
           className={classNames.call(
@@ -143,7 +143,7 @@ export default function FilterFood() {
             className="sr-only"
             onClick={handleIsPantryClick}
           />
-          Food Pantry
+          <span>Food Pantry</span>
         </label>
       </div>
     </fieldset>

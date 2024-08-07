@@ -162,7 +162,8 @@ export default function LocationsContainer({
                       </span>
                       <span className="text-success truncate">
                         {" "}
-                        ✓ Validated <span> {location.last_updated} </span>
+                        <span>✓ Validated&nbsp;</span>
+                        <span> {location.last_updated} </span>
                       </span>
                     </p>
                   </div>

@@ -16,19 +16,24 @@ export function ContactUsPage() {
             Thank you for your interest in YourPeer.
           </p>
           <p className="text-dark text-center mb-6">
-            If you have general questions or feedback for us, please email us at{" "}
+            <span>
+              If you have general questions or feedback for us, please email us
+              at
+            </span>{" "}
             <a href="mailto:yourpeer@streetlives.nyc" className="link">
               yourpeer@streetlives.nyc
             </a>
-            .
+            <span>.</span>
           </p>
           <p className="text-dark text-center mb-6">
-            If are an organization or individual interested in working with us
-            please email us at{" "}
+            <span>
+              If are an organization or individual interested in working with us
+              please email us at
+            </span>{" "}
             <a href="mailto:yourpeerpartner@streetlives.nyc" className="link">
               yourpeerpartner@streetlives.nyc
             </a>
-            .
+            <span>.</span>
           </p>
         </div>
       </div>

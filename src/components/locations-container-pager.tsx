@@ -53,7 +53,9 @@ export function LocationsContainerPager({
           <span>Previous</span>
         </a>
         <div className="text-dark font-medium">
-          <span> {currentPage + 1} </span> of <span>{numberOfPages + 1}</span>
+          <span> {currentPage + 1} </span>
+          <span>&nbsp;of&nbsp;</span>
+          <span>{numberOfPages + 1}</span>
         </div>
         <a
           className={`inline-flex space-x-1 disabled:text-muted ${

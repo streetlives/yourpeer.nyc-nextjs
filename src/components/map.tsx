@@ -294,18 +294,22 @@ function MapWrapper({
         onCameraChanged={handleCameraChange}
         styles={mapStyles}
       >
-        {locationStubs
-          ? locationStubs.map((locationStub) => (
-              <LocationStubMarker
-                locationStub={locationStub}
-                key={locationStub.id}
-                locationSlugClickedOnMobile={normalizedLocationDetailStub?.slug}
-                handleClickOnLocationStubMarker={
-                  handleClickOnLocationStubMarker
-                }
-              />
-            ))
-          : undefined}
+        <span>
+          {locationStubs
+            ? locationStubs.map((locationStub) => (
+                <LocationStubMarker
+                  locationStub={locationStub}
+                  key={locationStub.id}
+                  locationSlugClickedOnMobile={
+                    normalizedLocationDetailStub?.slug
+                  }
+                  handleClickOnLocationStubMarker={
+                    handleClickOnLocationStubMarker
+                  }
+                />
+              ))
+            : undefined}
+        </span>
         {userPosition ? (
           <Marker
             position={userPosition}

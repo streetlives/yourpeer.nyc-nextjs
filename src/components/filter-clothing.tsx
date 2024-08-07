@@ -101,7 +101,7 @@ export default function FilterClothing() {
               aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
               onClick={handleIsAnyClick}
             />
-            Any
+            <span>Any</span>
           </label>
           <label
             className={classNames.call(
@@ -125,7 +125,7 @@ export default function FilterClothing() {
               className="sr-only"
               onClick={handleIsCasualClick}
             />
-            Casual
+            <span>Casual</span>
           </label>
           <label
             className={classNames.call(
@@ -151,7 +151,7 @@ export default function FilterClothing() {
               className="sr-only"
               onClick={handleIsProfessionalClick}
             />
-            Professional
+            <span>Professional</span>
           </label>
         </div>
       </fieldset>

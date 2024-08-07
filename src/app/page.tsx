@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import { Footer } from "../components/footer";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { CookiesProvider } from "next-client-cookies/server";
 
 export const metadata: Metadata = {
   title: "New York City Services & Resources For Unhoused People | YourPeer",
@@ -18,7 +19,9 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <Navbar background={false} />
+      <CookiesProvider>
+        <Navbar background={false} />
+      </CookiesProvider>
 
       <div
         className="w-full flex flex-col bg-center pt-16 bg-cover bg-no-repeat bg-amber-300"
@@ -446,7 +449,7 @@ export default function HomePage() {
           </p>
 
           <p className="text-sm text-gray-800 text-center mb-6 px-5">
-            For more information, visit
+            <span>For more information, visit</span>
             <a
               href="https://www.nycfoodpolicy.org/food/"
               className="text-blue-700 underline hover:no-underline"

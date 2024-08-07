@@ -474,10 +474,10 @@ export async function getTaxonomies(
       // FIXME: specifying taxonomySpecificAttributes does not seem to have any effect on the returned results
       switch (parsedSearchParams[CLOTHING_PARAM]) {
         case CLOTHING_PARAM_CASUAL_VALUE:
-          taxonomySpecificAttributes = ["clothingOccasion", "everyday"];
+          taxonomySpecificAttributes = ["clothingOccasion", "Everyday"];
           break;
         case CLOTHING_PARAM_PROFESSIONAL_VALUE:
-          taxonomySpecificAttributes = ["clothingOccasion", "interview"];
+          taxonomySpecificAttributes = ["clothingOccasion", "Job Interview"];
           break;
       }
       break;

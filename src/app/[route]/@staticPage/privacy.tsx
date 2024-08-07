@@ -10,25 +10,33 @@ import { LOCATION_ROUTE, TERMS_OF_USE_ROUTE } from "../../../components/common";
 export function PrivacyPage() {
   return (
     <>
-      <section className="bg-white pt-28 lg:pt-32 lg:py-20">
+      <section className="bg-white pt-28 lg:pt-32 lg:py-20 notranslate">
         <div className="px-5 max-w-3xl mx-auto">
           <h1 className="text-center font-medium text-2xl lg:text-4xl mb-8">
             Privacy Policy
           </h1>
           <div className="text-base text-dark prose">
             <p className="text-lg text-dark">
-              Last Updated <time dateTime="2023-08-15">August 15, 2023</time>.
+              <span>Last Updated&nbsp;</span>
+              <time dateTime="2023-08-15">August 15, 2023</time>
+              <span>.</span>
             </p>
             <p>
-              This Privacy Policy applies to your access and use of all products
-              and services that are made available through Streetlives, Inc.
-              (“Streetlives”) website, located at{" "}
-              <Link href="https://yourpeer.nyc">https://yourpeer.nyc</Link> (the
-              “Site”), and is incorporated into and is the subject to
-              Streetlives’
-              <Link href={`/${TERMS_OF_USE_ROUTE}`}>Terms of Use</Link> (the
-              “Terms”). Capitalized terms that are not defined in the Privacy
-              Policy have the meaning given to them in the Terms.
+              <span>
+                This Privacy Policy applies to your access and use of all
+                products and services that are made available through
+                Streetlives, Inc. (“Streetlives”) website, located at
+              </span>{" "}
+              <Link href="https://yourpeer.nyc">https://yourpeer.nyc</Link>
+              <span>
+                &nbsp;(the “Site”), and is incorporated into and is the subject
+                to Streetlives’
+              </span>
+              <Link href={`/${TERMS_OF_USE_ROUTE}`}>Terms of Use</Link>
+              <span>
+                &nbsp;(the “Terms”). Capitalized terms that are not defined in
+                the Privacy Policy have the meaning given to them in the Terms.
+              </span>
             </p>
             <p>
               This Privacy Policy only applies to information collected on the
@@ -153,20 +161,22 @@ export function PrivacyPage() {
               </li>
               <li>
                 <p>
-                  As we may collect certain Personal Information, you may
-                  request to access, correct, delete, or restrict use of certain
-                  Personal Information covered by this Privacy Policy. While
-                  Streetlives will make reasonable efforts to accommodate your
-                  request, we also reserve the right to impose restrictions and
-                  requirements on such requests, if allowed or required by
-                  applicable laws, and we are under no obligation to grant such
-                  a request, unless required by applicable laws. Please note
-                  that it may also take some time to process your request. For
-                  inquiries, please contact us at
+                  <span>
+                    As we may collect certain Personal Information, you may
+                    request to access, correct, delete, or restrict use of
+                    certain Personal Information covered by this Privacy Policy.
+                    While Streetlives will make reasonable efforts to
+                    accommodate your request, we also reserve the right to
+                    impose restrictions and requirements on such requests, if
+                    allowed or required by applicable laws, and we are under no
+                    obligation to grant such a request, unless required by
+                    applicable laws. Please note that it may also take some time
+                    to process your request. For inquiries, please contact us at
+                  </span>
                   <a href="mailto:privacy@streetlives.nyc">
                     privacy@streetlives.nyc
                   </a>
-                  .
+                  <span>.</span>
                 </p>
               </li>
             </ul>
@@ -263,22 +273,24 @@ export function PrivacyPage() {
 
             <h2>Our Contact Information:</h2>
             <p>
-              Please contact us with any questions or comments about this
-              Privacy Policy, your personal information, our use and disclosure
-              practices, or your consent choices by e-mail at{" "}
+              <span>
+                Please contact us with any questions or comments about this
+                Privacy Policy, your personal information, our use and
+                disclosure practices, or your consent choices by e-mail at
+              </span>{" "}
               <a href="mailto:privacy@streetlives.nyc">
                 privacy@streetlives.nyc
               </a>
-              .
+              <span>.</span>
             </p>
             <address>
-              Attn: Privacy
+              <span>Attn: Privacy</span>
               <br />
-              Streetlives, Inc.
+              <span>Streetlives, Inc.</span>
               <br />
-              251 Little Falls Drive
+              <span>251 Little Falls Drive</span>
               <br />
-              Wilmington, DE 19808
+              <span>Wilmington, DE 19808</span>
             </address>
           </div>
         </div>
