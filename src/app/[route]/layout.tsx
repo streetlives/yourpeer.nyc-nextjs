@@ -56,7 +56,9 @@ export default function LocationsLayout({
     </>
   ) : COMPANY_ROUTES.includes(route as CompanyRoute) ? (
     <>
-      <LocationsNavbarCompanyRoutes />
+      <CookiesProvider>
+        <LocationsNavbarCompanyRoutes />
+      </CookiesProvider>
       {staticPage}
       <Footer />
     </>
