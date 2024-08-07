@@ -304,10 +304,12 @@ export function TermsPage() {
                 </p>
                 <p>
                   <small>
-                    <a id={governingLawInternalLinkId}></a><span>1. Implications of
-                    choice of law should be discussed with the client—it is
-                    important to explain why choosing their home state may be
-                    most beneficial.</span>
+                    <a id={governingLawInternalLinkId}></a>
+                    <span>
+                      1. Implications of choice of law should be discussed with
+                      the client—it is important to explain why choosing their
+                      home state may be most beneficial.
+                    </span>
                   </small>
                 </p>
               </li>
