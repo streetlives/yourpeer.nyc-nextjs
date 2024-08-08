@@ -80,7 +80,7 @@ export default function FilterHours() {
             aria-describedby="openingHours-0-description-0 openingHours-0-description-1"
             onClick={handleIsNotOpenNowClick}
           />
-          Any
+          <span>Any</span>
         </label>
         <label
           className={classNames.call(
@@ -100,7 +100,7 @@ export default function FilterHours() {
             aria-describedby="openingHours-0-description-0 openingHours-0-description-1"
             onClick={handleIsOpenNowClick}
           />
-          Open now
+          <span>Open now</span>
         </label>
       </div>
     </fieldset>

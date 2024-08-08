@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import { Footer } from "../components/footer";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import GTranslateWrapper from "@/components/gtranslate-wrapper";
 
 export const metadata: Metadata = {
   title: "New York City Services & Resources For Unhoused People | YourPeer",
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      <GTranslateWrapper />
       <Navbar background={false} />
 
       <div
@@ -446,7 +448,7 @@ export default function HomePage() {
           </p>
 
           <p className="text-sm text-gray-800 text-center mb-6 px-5">
-            For more information, visit
+            <span>For more information, visit</span>
             <a
               href="https://www.nycfoodpolicy.org/food/"
               className="text-blue-700 underline hover:no-underline"

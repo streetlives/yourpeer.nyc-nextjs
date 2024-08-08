@@ -285,22 +285,26 @@ export default function Service({
                               organization{" "}
                             </p>
                           ) : undefined}
-                          {service.eligibility
-                            ? service.eligibility.map((item) => (
-                                <p key={item} className="text-dark text-sm">
-                                  <span> {item} </span>
-                                </p>
-                              ))
-                            : undefined}
-                          {service.docs
-                            ? service.docs.map((req) => (
-                                <p key={req} className="text-dark text-sm">
-                                  {req === null || req === "None"
-                                    ? "No proofs required"
-                                    : `Requires ${req}`}
-                                </p>
-                              ))
-                            : undefined}
+                          <span>
+                            {service.eligibility
+                              ? service.eligibility.map((item) => (
+                                  <p key={item} className="text-dark text-sm">
+                                    <span> {item} </span>
+                                  </p>
+                                ))
+                              : undefined}
+                          </span>
+                          <span>
+                            {service.docs
+                              ? service.docs.map((req) => (
+                                  <p key={req} className="text-dark text-sm">
+                                    {req === null || req === "None"
+                                      ? "No proofs required"
+                                      : `Requires ${req}`}
+                                  </p>
+                                ))
+                              : undefined}
+                          </span>
                           {!service.age ||
                           (service.age?.length &&
                             service.age?.every((age) => age.all_ages)) ? (
@@ -338,30 +342,32 @@ export default function Service({
                 </div>
               ) : undefined}
             </div>
-            {service.closed && service.info.length
-              ? service.info.map((info) => (
-                  <li key={info} className="flex items-start space-x-2">
-                    <span className="text-info">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="w-5 h-5"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                    <p
-                      dangerouslySetInnerHTML={{ __html: info }}
-                      className="text-dark text-sm have-links"
-                    ></p>
-                  </li>
-                ))
-              : undefined}
+            <span>
+              {service.closed && service.info.length
+                ? service.info.map((info) => (
+                    <li key={info} className="flex items-start space-x-2">
+                      <span className="text-info">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="w-5 h-5"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                      <p
+                        dangerouslySetInnerHTML={{ __html: info }}
+                        className="text-dark text-sm have-links"
+                      ></p>
+                    </li>
+                  ))
+                : undefined}
+            </span>
           </div>
         ) : undefined}
       </div>

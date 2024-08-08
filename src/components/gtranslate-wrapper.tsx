@@ -6,24 +6,59 @@
 
 "use client";
 
-import Script from "next/script";
+import {
+  lang_array_english,
+  lang_array_native,
+  languages,
+} from "./gtranslate-common";
 import { useEffect } from "react";
 
-export default function GTranslateWrapper() {
-  useEffect(() => {
-    window["gtranslateSettings" as any] = {
-      default_language: "en",
-      native_language_names: true,
-      languages: ["en", "es", "zh-CN", "bn", "fr"],
-      wrapper_selector: ".gtranslate_wrapper",
-    } as any;
-  }, []);
-  return (
-    <>
-      <Script
-        src="https://cdn.gtranslate.net/widgets/latest/dropdown.js"
-        defer
-      ></Script>
-    </>
+function googleTranslateElementInit() {
+  console.log("googleTranslateElementInit");
+  new (window.google as any).translate.TranslateElement(
+    {
+      pageLanguage: "auto",
+      languages: languages.map((l) => ({
+        label: lang_array_english[l as keyof typeof lang_array_native],
+        value: l,
+      })),
+    },
+    "google_translate_element",
   );
+}
+
+export default function GTranslateWrapper() {
+  const GOOGLE_TRANSLATE_ELEMENT_ID = "google_translate_element";
+  const SCRIPT_SRC =
+    "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+
+  function setupScript() {
+    const script = document.querySelector(`script[src="${SCRIPT_SRC}"]`);
+    if (!script) {
+      const newScript = document.createElement("script");
+      newScript.setAttribute("src", SCRIPT_SRC);
+      newScript.setAttribute("strategy", "afterInteractive");
+      document.body.appendChild(newScript);
+    }
+  }
+
+  useEffect(() => {
+    function poll() {
+      if (!window.googleTranslateElementInit) {
+        window.googleTranslateElementInit = googleTranslateElementInit;
+      }
+      let googleTranslateElement = document.querySelector(
+        `#${GOOGLE_TRANSLATE_ELEMENT_ID}`,
+      );
+      if (!googleTranslateElement) {
+        const div = document.createElement("div");
+        div.setAttribute("id", GOOGLE_TRANSLATE_ELEMENT_ID);
+        document.body.appendChild(div);
+        setupScript();
+      }
+    }
+    poll();
+  }, []);
+
+  return <></>;
 }

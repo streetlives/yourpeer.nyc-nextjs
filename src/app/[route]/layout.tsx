@@ -18,7 +18,7 @@ import {
 import { notFound } from "next/navigation";
 import { SearchProvider } from "@/components/search-context";
 import { MainComponent } from "@/components/main-component";
-import { CookiesProvider } from "next-client-cookies/server";
+import GTranslateWrapper from "@/components/gtranslate-wrapper";
 
 export default function LocationsLayout({
   mapContainer,
@@ -31,34 +31,37 @@ export default function LocationsLayout({
   staticPage: React.ReactNode;
   params: { route: string };
 }) {
-  //console.log("route", route);
-  // TODO: handle the other top-level routes that are not the category routes
-  return RESOURCE_ROUTES.includes(route) ? (
+  return (
     <>
-      <div className="h-[100dvh] w-full">
-        <CookiesProvider>
-          <SearchProvider>
-            <MapListToggleButton />
-            <div className="flex flex-col w-full h-full">
-              <div>
-                <LocationsNavbarResourceRoutes />
-              </div>
-              <MainComponent
-                mapContainer={mapContainer}
-                sidePanel={sidePanel}
-              />
+      <GTranslateWrapper />
+      <span>
+        {RESOURCE_ROUTES.includes(route) ? (
+          <>
+            <div className="h-[100dvh] w-full">
+              <SearchProvider>
+                <MapListToggleButton />
+                <div className="flex flex-col w-full h-full">
+                  <div>
+                    <LocationsNavbarResourceRoutes />
+                  </div>
+                  <MainComponent
+                    mapContainer={mapContainer}
+                    sidePanel={sidePanel}
+                  />
+                </div>
+              </SearchProvider>
             </div>
-          </SearchProvider>
-        </CookiesProvider>
-      </div>
+          </>
+        ) : COMPANY_ROUTES.includes(route as CompanyRoute) ? (
+          <>
+            <LocationsNavbarCompanyRoutes />
+            {staticPage}
+            <Footer />
+          </>
+        ) : (
+          notFound()
+        )}
+      </span>
     </>
-  ) : COMPANY_ROUTES.includes(route as CompanyRoute) ? (
-    <>
-      <LocationsNavbarCompanyRoutes />
-      {staticPage}
-      <Footer />
-    </>
-  ) : (
-    notFound()
   );
 }

@@ -9,6 +9,7 @@
 import React, { useEffect, useState } from "react";
 import OffCanvasMenu from "./OffCanvasMenu";
 import Link from "next/link";
+import { GTranslateSelect } from "./gtranslate-select";
 
 export default function Navbar({ background = true }) {
   const [open, setOpen] = useState(false);
@@ -61,11 +62,12 @@ export default function Navbar({ background = true }) {
               </svg>
             </button>
             <a href="/" translate="no" className="text-[15px]">
-              <span className="text-black font-extrabold ">YourPeer</span>NYC
+              <span className="text-black font-extrabold ">YourPeer</span>
+              <span>NYC</span>
             </a>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="gtranslate_wrapper"></div>
+            <GTranslateSelect />
             <Link
               href="https://www.google.com"
               id="quickExitLink"

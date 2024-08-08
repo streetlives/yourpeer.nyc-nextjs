@@ -72,7 +72,7 @@ function SearchPanel({
             alt=""
           />
           <div className="flex-1 text-dark">
-            Search for{" "}
+            <span>Search for</span>{" "}
             <span id="search_for" translate="no">
               {currentSearch}
             </span>
@@ -102,7 +102,9 @@ function SearchPanel({
             alt=""
           />
           <p className="mt-5 text-base text-dark text-center ">
-            Search for keywords <br /> in our service listings
+            <span>Search for keywords&nbsp;</span>
+            <br />
+            <span>&nbsp;in our service listings</span>
           </p>
         </div>
       </div>

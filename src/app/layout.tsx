@@ -5,8 +5,13 @@
 // https://opensource.org/licenses/MIT.
 
 import "./globals.css";
-import GTranslateWrapper from "../components/gtranslate-wrapper";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import type { Viewport } from "next";
+import { CookiesProvider } from "next-client-cookies/server";
+
+export const viewport: Viewport = {
+  themeColor: "#FFD54F",
+};
 
 const GOOGLE_ANALYTICS_MEASUREMENT_ID = process.env
   .GOOGLE_ANALYTICS_MEASUREMENT_ID as string;
@@ -31,8 +36,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {children}
-        <GTranslateWrapper />
+        <CookiesProvider>{children}</CookiesProvider>
         <GoogleAnalytics gaId={GOOGLE_ANALYTICS_MEASUREMENT_ID} />
       </body>
     </html>

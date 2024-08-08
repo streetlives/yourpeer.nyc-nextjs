@@ -106,6 +106,7 @@ export default function LocationDetailComponent({
 }) {
   const streetview =
     customStreetViews[slug] || `${location.lat},${location.lng}`;
+  const streetviewHref = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${streetview}`;
   const [isShowingReportIssueForm, setIsShowingReportIssueForm] =
     useState(false);
   function hideReportIssueForm() {
@@ -233,7 +234,8 @@ export default function LocationDetailComponent({
                 <span className="text-green truncate">✓</span>
                 <span className="text-green truncate">
                   <span>
-                    Validated <span> {location.last_updated} </span>
+                    <span>Validated&nbsp;</span>
+                    <span> {location.last_updated} </span>
                   </span>
                 </span>
               </p>
@@ -249,7 +251,7 @@ export default function LocationDetailComponent({
                     loading="lazy"
                   />
                   <a
-                    href={`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=&viewpoint=${streetview}`}
+                    href={streetviewHref}
                     target="_blank"
                     className="inline-block absolute bottom-4 right-4 z-0 bg-white shadow-sm rounded-full px-5 py-2 text-dark font-medium text-sm"
                   >
@@ -279,23 +281,26 @@ export default function LocationDetailComponent({
                         title={location.name}
                         icon={activeMarkerIcon}
                       />
-                      {locationStubs
-                        ? locationStubs
-                            .filter(
-                              (locationStub) => locationStub.id !== location.id,
-                            )
-                            .map((locationStub) => (
-                              <LocationStubMarker
-                                locationStub={locationStub}
-                                key={locationStub.id}
-                              />
-                            ))
-                        : undefined}
+                      <span>
+                        {locationStubs
+                          ? locationStubs
+                              .filter(
+                                (locationStub) =>
+                                  locationStub.id !== location.id,
+                              )
+                              .map((locationStub) => (
+                                <LocationStubMarker
+                                  locationStub={locationStub}
+                                  key={locationStub.id}
+                                />
+                              ))
+                          : undefined}
+                      </span>
                     </Map>
                   </APIProvider>
                 </div>
                 <a
-                  href={`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${streetview}`}
+                  href={streetviewHref}
                   target="_blank"
                   className="inline-block absolute bottom-4 right-4 z-0 bg-white shadow rounded-full px-5 py-2 text-dark font-medium text-sm"
                 >
@@ -345,8 +350,9 @@ export default function LocationDetailComponent({
                 />
                 <p className="text-dark text-sm ml-2">
                   <span translate="no">{location.address}</span> <br />
-                  <span translate="no">{location.city}</span>,{" "}
-                  <span translate="no">{location.zip}</span> <br />
+                  <span translate="no">{location.city}</span>
+                  <span>,</span> <span translate="no">{location.zip}</span>{" "}
+                  <br />
                   {!location.closed ? (
                     <a
                       href={`https://www.google.com/maps/dir/?api=1&destination=${location.address},${location.city},${location.zip}`}
@@ -358,70 +364,72 @@ export default function LocationDetailComponent({
                   ) : undefined}
                 </p>
               </li>
-              {!location.closed ? (
-                <>
-                  {location.phone ? (
-                    <li translate="no" className="flex space-x-3">
-                      <img
-                        src="/img/icons/phone.svg"
-                        className="flex-shrink-0 w-5 h-5 max-h-5"
-                        alt=""
-                      />
-                      <p className="text-dark text-sm ml-2">
-                        <a
-                          href={`tel:${location.phone}`}
-                          className="text-blue underline hover:no-underline"
+              <span>
+                {!location.closed ? (
+                  <>
+                    {location.phone ? (
+                      <li translate="no" className="flex space-x-3">
+                        <img
+                          src="/img/icons/phone.svg"
+                          className="flex-shrink-0 w-5 h-5 max-h-5"
+                          alt=""
+                        />
+                        <p className="text-dark text-sm ml-2">
+                          <a
+                            href={`tel:${location.phone}`}
+                            className="text-blue underline hover:no-underline"
+                          >
+                            {" "}
+                            {location.phone}{" "}
+                          </a>
+                        </p>
+                      </li>
+                    ) : undefined}
+                    {location.email ? (
+                      <li translate="no" className="flex space-x-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="text-dark w-5 h-5 max-h-5 flex-shrink-0"
                         >
-                          {" "}
-                          {location.phone}{" "}
-                        </a>
-                      </p>
-                    </li>
-                  ) : undefined}
-                  {location.email ? (
-                    <li translate="no" className="flex space-x-3">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="text-dark w-5 h-5 max-h-5 flex-shrink-0"
+                          <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
+                          <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
+                        </svg>
+                        <p className="text-dark text-sm ml-2">
+                          <a
+                            href={`mailto:${location.email}`}
+                            className="text-blue underline hover:no-underline"
+                          >
+                            {location.email}
+                          </a>
+                        </p>
+                      </li>
+                    ) : undefined}
+                    {location.url ? (
+                      <li
+                        translate="no"
+                        className="flex space-x-3 overflow-hidden"
                       >
-                        <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
-                        <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
-                      </svg>
-                      <p className="text-dark text-sm ml-2">
-                        <a
-                          href={`mailto:${location.email}`}
-                          className="text-blue underline hover:no-underline"
-                        >
-                          {location.email}
-                        </a>
-                      </p>
-                    </li>
-                  ) : undefined}
-                  {location.url ? (
-                    <li
-                      translate="no"
-                      className="flex space-x-3 overflow-hidden"
-                    >
-                      <img
-                        src="/img/icons/cursor.svg"
-                        className="flex-shrink-0 w-5 h-5 max-h-5"
-                        alt=""
-                      />
-                      <p className="text-dark text-sm ml-2">
-                        <a
-                          href={formatWebsiteUrl(location.url)}
-                          target="_blank"
-                          className="text-blue underline hover:no-underline cursor-pointer"
-                        >
-                          {formatWebsiteUrl(location.url)}
-                        </a>
-                      </p>
-                    </li>
-                  ) : undefined}
-                </>
-              ) : undefined}
+                        <img
+                          src="/img/icons/cursor.svg"
+                          className="flex-shrink-0 w-5 h-5 max-h-5"
+                          alt=""
+                        />
+                        <p className="text-dark text-sm ml-2">
+                          <a
+                            href={formatWebsiteUrl(location.url)}
+                            target="_blank"
+                            className="text-blue underline hover:no-underline cursor-pointer"
+                          >
+                            {formatWebsiteUrl(location.url)}
+                          </a>
+                        </p>
+                      </li>
+                    ) : undefined}
+                  </>
+                ) : undefined}
+              </span>
             </ul>
             <div className="mt-5 flex gap-4">
               <a

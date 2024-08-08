@@ -275,3 +275,18 @@ a[href^="https://maps.google.com/maps"]{display:none !important} */
     display: none;
   }
 }
+
+div.skiptranslate,
+#google_translate_element {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+font {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  position: initial !important;
+}

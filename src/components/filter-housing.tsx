@@ -99,7 +99,7 @@ export default function FilterHousing() {
             aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
             onClick={handleIsAnyClick}
           />
-          Any
+          <span>Any</span>
         </label>
         <label
           className={classNames.call(
@@ -123,7 +123,7 @@ export default function FilterHousing() {
             aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
             onClick={handleIsSingleAdultClick}
           />
-          Single Adult
+          <span>Single Adult</span>
         </label>
         <label
           className={classNames.call(
@@ -149,7 +149,7 @@ export default function FilterHousing() {
             aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
             onClick={handleIsFamiliesClick}
           />
-          Families
+          <span>Families</span>
         </label>
       </div>
     </fieldset>

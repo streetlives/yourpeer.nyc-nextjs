@@ -10,6 +10,7 @@ import OffCanvasMenu from "@/components/OffCanvasMenu";
 import QuickExit from "./quick-exit";
 import SearchForm from "./search-form";
 import { useState } from "react";
+import { GTranslateSelect } from "./gtranslate-select";
 
 export const LocationsNavbarResourceRoutes = () => {
   const [open, setOpen] = useState(false);
@@ -43,7 +44,7 @@ export const LocationsNavbarResourceRoutes = () => {
               className="text-sm ml-3 leading-3 hidden sm:inline-block"
             >
               <span className="text-black font-extrabold">YourPeer</span>
-              NYC
+              <span>NYC</span>
             </a>
           </div>
           <div id="search_container" className="flex-grow md:flex-none">
@@ -101,11 +102,12 @@ export const LocationsNavbarCompanyRoutes = () => {
               </svg>
             </button>
             <a href="/" translate="no" className="text-[15px]">
-              <span className="text-black font-extrabold ">YourPeer</span>NYC
+              <span className="text-black font-extrabold ">YourPeer</span>
+              <span>NYC</span>
             </a>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="gtranslate_wrapper"></div>
+            <GTranslateSelect />
             <a
               href="https://www.google.com"
               className="inline-flex items-center text-[13px] sm:text-xs font-medium text-black space-x-1"
