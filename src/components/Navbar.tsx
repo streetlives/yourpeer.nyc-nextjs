@@ -67,7 +67,7 @@ export default function Navbar({ background = true }) {
             </a>
           </div>
           <div className="flex items-center space-x-2">
-            <GTranslateSelect withSelect={true} />
+            <GTranslateSelect />
             <Link
               href="https://www.google.com"
               id="quickExitLink"

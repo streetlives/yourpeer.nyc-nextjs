@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 import { Footer } from "../components/footer";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import { CookiesProvider } from "next-client-cookies/server";
+import GTranslateWrapper from "@/components/gtranslate-wrapper";
 
 export const metadata: Metadata = {
   title: "New York City Services & Resources For Unhoused People | YourPeer",
@@ -19,9 +19,8 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <CookiesProvider>
-        <Navbar background={false} />
-      </CookiesProvider>
+      <GTranslateWrapper />
+      <Navbar background={false} />
 
       <div
         className="w-full flex flex-col bg-center pt-16 bg-cover bg-no-repeat bg-amber-300"

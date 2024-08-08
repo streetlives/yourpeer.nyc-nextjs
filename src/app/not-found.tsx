@@ -8,14 +8,11 @@ import Link from "next/link";
 import { LocationsNavbarCompanyRoutes } from "../components/locations-navbar";
 import { Footer } from "../components/footer";
 import { CATEGORY_TO_ROUTE_MAP, LOCATION_ROUTE } from "../components/common";
-import { CookiesProvider } from "next-client-cookies/server";
 
 export default function CustomNotFoundPage() {
   return (
     <>
-      <CookiesProvider>
-        <LocationsNavbarCompanyRoutes />
-      </CookiesProvider>
+      <LocationsNavbarCompanyRoutes />
       <section className="bg-white flex-1 py-12 lg:py-20">
         <div className="px-5 max-w-lg mx-auto">
           <div className="flex flex-col items-center justify-center">

@@ -107,7 +107,7 @@ export const LocationsNavbarCompanyRoutes = () => {
             </a>
           </div>
           <div className="flex items-center space-x-2">
-            <GTranslateSelect withSelect={true} />
+            <GTranslateSelect />
             <a
               href="https://www.google.com"
               className="inline-flex items-center text-[13px] sm:text-xs font-medium text-black space-x-1"
