@@ -4,6 +4,8 @@ import { useCookies } from "next-client-cookies";
 import { useState } from "react";
 import { lang_array_native, languages } from "./gtranslate-common";
 
+const GOOGLE_TRANLATE_COOKIE_NAME = "googtrans";
+
 export function GTranslateSelect() {
   const cookies = useCookies();
   const cookie = cookies.get("googtrans");
@@ -17,13 +19,19 @@ export function GTranslateSelect() {
     const value = e.target.value;
     if (value) {
       const targetLanguage = value.split("|")[1];
-      const newCookieValue = `/${value.replace("|", "/")}`;
-      cookies.set("googtrans", newCookieValue);
+      const newCookieValue =
+        targetLanguage === "en" ? undefined : `/${value.replace("|", "/")}`;
       setGTranslateCookie(value);
       const element = document.querySelector(".goog-te-combo");
       if (element) {
         (element as HTMLSelectElement).value = targetLanguage;
         element.dispatchEvent(new Event("change"));
+      }
+      // we clear the cookie if it's english so that we do not run google translate
+      if (newCookieValue) {
+        cookies.set(GOOGLE_TRANLATE_COOKIE_NAME, newCookieValue);
+      } else {
+        cookies.remove(GOOGLE_TRANLATE_COOKIE_NAME);
       }
     }
   }
