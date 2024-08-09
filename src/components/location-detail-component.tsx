@@ -43,13 +43,20 @@ const GOOGLE_MAPS_API_KEY = (
   process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string
 ).toString();
 
-function formatWebsiteUrl(url: string): string | undefined {
+function normalizeWebsiteUrl(url: string): string | undefined {
   if (url) {
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
       return "https://" + url;
     }
   }
   return url;
+}
+
+function renderNormalizedWebsiteUrl(url: string): string | undefined {
+  const fullyQualifiedUrl = normalizeWebsiteUrl(url);
+  if (fullyQualifiedUrl) {
+    return fullyQualifiedUrl.replace(/^https:\/\//, "");
+  }
 }
 
 const CATEGORY_ICON_SRC_MAP: Record<CategoryNotNull, string> = {
@@ -418,11 +425,11 @@ export default function LocationDetailComponent({
                         />
                         <p className="text-dark text-sm ml-2">
                           <a
-                            href={formatWebsiteUrl(location.url)}
+                            href={normalizeWebsiteUrl(location.url)}
                             target="_blank"
                             className="text-blue underline hover:no-underline cursor-pointer"
                           >
-                            {formatWebsiteUrl(location.url)}
+                            {renderNormalizedWebsiteUrl(location.url)}
                           </a>
                         </p>
                       </li>
