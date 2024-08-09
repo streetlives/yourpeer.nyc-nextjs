@@ -55,7 +55,7 @@ function normalizeWebsiteUrl(url: string): string | undefined {
 function renderNormalizedWebsiteUrl(url: string): string | undefined {
   const fullyQualifiedUrl = normalizeWebsiteUrl(url);
   if (fullyQualifiedUrl) {
-    return fullyQualifiedUrl.replace(/^https:\/\//, "");
+    return fullyQualifiedUrl.replace(/^https?:\/\//, "");
   }
 }
 
