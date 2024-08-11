@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="YourPeer Logo" src="https://streetlives-v2-dev-static.s3.amazonaws.com/fabicon.png" />
+  <a href="https://yourpeer.nyc"><img alt="YourPeer Logo" src="https://streetlives-v2-dev-static.s3.amazonaws.com/fabicon.png" /></a>
 </p>
 
 This repository contains the source code to [YourPeer.nyc](https://yourpeer.nyc)
