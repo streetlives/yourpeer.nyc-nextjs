@@ -11,6 +11,8 @@ YourPeer.nyc is developed by [Streetlives](https://www.streetlives.nyc/), a US n
 
 # Getting started
 
+YourPeer.nyc is a [Next.js](https://nextjs.org/) app.
+
 Create a `.env.local` in your project root directory. It should contain the following entries:
 
 ```
