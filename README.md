@@ -8,7 +8,6 @@ YourPeer.nyc allows users to search through 2400+ free support services across N
 
 YourPeer.nyc is developed by [Streetlives](https://www.streetlives.nyc/), a US nonprofit based in New York City.
 
-
 # Getting started
 
 YourPeer.nyc is a [Next.js](https://nextjs.org/) app.
