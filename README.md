@@ -27,3 +27,15 @@ Then run:
 # npm run build
 # npm run dev
 ```
+
+# Contributing
+
+Please open a pull request. Ensure that each source file includes the correct license header template, like this:
+
+```
+Copyright (c) 2024 Streetlives, Inc., [your name]
+
+Use of this source code is governed by an MIT-style
+license that can be found in the LICENSE file or at
+https://opensource.org/licenses/MIT.
+```
