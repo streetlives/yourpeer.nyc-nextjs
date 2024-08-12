@@ -34,8 +34,7 @@ import { Position } from "./map";
 import { Transition } from "@headlessui/react";
 import { usePreviousRoute } from "./use-previous-route";
 import { usePreviousParamsOnClient } from "./use-previous-params-client";
-import { PlusCircleIcon, PlusIcon } from "@heroicons/react/24/solid";
-import { EllipsisVerticalIcon, UserIcon } from "@heroicons/react/24/outline";
+import { PlusCircleIcon  } from "@heroicons/react/24/solid";
 import ReviewListItem from "./review-list-item";
 import { useRouter } from "next/navigation";
 import ReviewForm from "./review-form";
@@ -169,7 +168,7 @@ export default function LocationDetailComponent({
         setZoom(newZoom);
       }
     },
-    [mapCenter, setMapCenter, zoom, setZoom]
+    [mapCenter, setMapCenter, zoom, setZoom],
   );
 
   const handleScroll = (e: React.UIEvent<HTMLElement>): void => {
@@ -633,18 +632,21 @@ export default function LocationDetailComponent({
             </div>
 
             {!location.closed ? (
-              <div id="locationDetailsServices" className="px-4 py-5 bg-neutral-50 flex flex-col gap-y-4">
+              <div
+                id="locationDetailsServices"
+                className="px-4 py-5 bg-neutral-50 flex flex-col gap-y-4"
+              >
                 {(previousCategory
                   ? [previousCategory].concat(
                       CATEGORIES.filter(
-                        (category) => category !== previousCategory
-                      )
+                        (category) => category !== previousCategory,
+                      ),
                     )
                   : CATEGORIES
                 ).map((serviceCategory) => {
                   const servicesWrapper = getServicesWrapper(
                     serviceCategory,
-                    location
+                    location,
                   );
                   return servicesWrapper?.services.length ? (
                     <LocationService

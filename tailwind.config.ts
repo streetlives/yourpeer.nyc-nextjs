@@ -36,7 +36,7 @@ const config: Config = {
         pink: {
           200: "#F48FB1",
         },
-  
+
         transparent: "transparent",
         current: "currentColor",
         black: colors.black,
@@ -50,7 +50,7 @@ const config: Config = {
         info: "#5A87FF",
         blue: "#1A73E9",
         muted: "#C4C4C4",
-        purple: '#3D5AFE',
+        purple: "#3D5AFE",
         neutral: {
           50: "#F0F0F0",
           100: "#DDDDDD",
@@ -60,7 +60,6 @@ const config: Config = {
         },
       },
     },
-    
   },
   plugins: [
     require("@tailwindcss/forms"),
