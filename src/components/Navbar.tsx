@@ -61,7 +61,7 @@ export default function Navbar({ background = true }) {
                 />
               </svg>
             </button>
-            <a href="/" translate="no" className="text-[15px]">
+            <a href="/" translate="no" className="text-[15px] pt-[2px]">
               <span className="text-black font-extrabold ">YourPeer</span>
               <span>NYC</span>
             </a>
