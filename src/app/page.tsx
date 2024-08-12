@@ -240,167 +240,231 @@ export default function HomePage() {
           <h2 className="text-center text-3xl text-gray-700 font-bold mb-9">
             Our Partners
           </h2>
-          <div className="w-full flex flex-wrap justify-center items-center gap-x-3">
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-1.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-2.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-3.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-20 sm:w-24 h-20 sm:h-24 flex-shrink-0"
-              src="/img/partners-logo/logo-new-4.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-5.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-6.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-7.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-10.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-8.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-9.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-10.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-11.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-11.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-9.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-3.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-20 sm:w-24 h-20 sm:h-24 flex-shrink-0"
-              src="/img/partners-logo/logo-new-12.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-13.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-20 sm:w-24 h-20 sm:h-24 flex-shrink-0"
-              src="/img/partners-logo/logo-new-14.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-8.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-4.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-20.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-15.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-18.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-12.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-13.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-17.png"
-              alt="Logo"
-            />
-            <img
-              className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-16.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-16.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-17.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-18.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-19.png"
-              alt="Logo"
-            />
-            <img
-              className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
-              src="/img/partners-logo/logo-new-20.png"
-              alt="Logo"
-            />
+          <div className="w-full grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 justify-center place-content-center items-center gap-x-3">
+            <div className="flex items-center justify-center">
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-1.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-2.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-3.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-contain object-center w-20 sm:w-24 h-20 sm:h-24 flex-shrink-0"
+                src="/img/partners-logo/logo-new-4.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-5.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-6.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-7.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-10.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-8.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-9.png"
+                alt="Logo"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-10.png"
+                alt="Logo"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-11.png"
+                alt="Logo"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-11.png"
+                alt="Logo"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-9.png"
+                alt="Logo"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-3.png"
+                alt="Logo"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <img
+                className="object-cover object-center w-20 sm:w-24 h-20 sm:h-24 flex-shrink-0"
+                src="/img/partners-logo/logo-new-12.png"
+                alt="Logo"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-13.png"
+                alt="Logo"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <img
+                className="object-contain object-center w-20 sm:w-24 h-20 sm:h-24 flex-shrink-0"
+                src="/img/partners-logo/logo-new-14.png"
+                alt="Logo"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-8.png"
+                alt="Logo"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-4.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-20.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-15.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-18.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-12.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-13.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-17.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-16.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-16.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-17.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-18.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-19.png"
+                alt="Logo"
+              />
+            </div>
+            <div className='flex items-center justify-center'>
+              <img
+                className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
+                src="/img/partners-logo/logo-new-20.png"
+                alt="Logo"
+              />
+            </div>
 
             {/* <img
               className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
