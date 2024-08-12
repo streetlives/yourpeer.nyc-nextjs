@@ -248,63 +248,63 @@ export default function HomePage() {
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-new-2.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-new-3.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-contain object-center w-20 sm:w-24 h-20 sm:h-24 flex-shrink-0"
                 src="/img/partners-logo/logo-new-4.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-5.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-6.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-new-7.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-10.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-new-8.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-new-9.png"
@@ -381,84 +381,84 @@ export default function HomePage() {
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-20.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-new-15.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-18.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-12.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-13.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-17.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-cover object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-16.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-new-16.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-new-17.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-new-18.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-new-19.png"
                 alt="Logo"
               />
             </div>
-            <div className='flex items-center justify-center'>
+            <div className="flex items-center justify-center">
               <img
                 className="object-contain object-center w-24 sm:w-36 h-24 sm:h-36 flex-shrink-0"
                 src="/img/partners-logo/logo-new-20.png"
