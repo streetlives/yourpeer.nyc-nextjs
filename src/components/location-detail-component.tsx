@@ -34,7 +34,7 @@ import { Position } from "./map";
 import { Transition } from "@headlessui/react";
 import { usePreviousRoute } from "./use-previous-route";
 import { usePreviousParamsOnClient } from "./use-previous-params-client";
-import { PlusCircleIcon  } from "@heroicons/react/24/solid";
+import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import ReviewListItem from "./review-list-item";
 import { useRouter } from "next/navigation";
 import ReviewForm from "./review-form";
@@ -357,12 +357,11 @@ export default function LocationDetailComponent({
                           icon={activeMarkerIcon}
                         />
                         <span>
-                        {locationStubs
+                          {locationStubs
                             ? locationStubs
                                 .filter(
                                   (locationStub) =>
-                                 
-                                  locationStub.id !== location.id
+                                    locationStub.id !== location.id,
                                 )
                                 .map((locationStub) => (
                                   <LocationStubMarker
@@ -372,7 +371,7 @@ export default function LocationDetailComponent({
                                 ))
                             : undefined}
                         </span>
-                    </Map>
+                      </Map>
                     </APIProvider>
                   </div>
                   <a
@@ -428,7 +427,7 @@ export default function LocationDetailComponent({
                     <span translate="no">{location.address}</span> <br />
                     <span translate="no">{location.city}</span>
                     <span>,</span> <span translate="no">{location.zip}</span>{" "}
-                  <br />
+                    <br />
                     {!location.closed ? (
                       <a
                         href={`https://www.google.com/maps/dir/?api=1&destination=${location.address},${location.city},${location.zip}`}
@@ -441,7 +440,7 @@ export default function LocationDetailComponent({
                   </p>
                 </li>
                 <span>
-                {!location.closed ? (
+                  {!location.closed ? (
                     <>
                       {location.phone ? (
                         <li translate="no" className="flex space-x-3">
@@ -506,7 +505,7 @@ export default function LocationDetailComponent({
                     </>
                   ) : undefined}
                 </span>
-            </ul>
+              </ul>
               <div className="mt-5 flex gap-4">
                 <a
                   href={`mailto:yourpeer@streetlives.nyc?subject=Feedback on YourPeer Location ${location.name}`}
@@ -581,32 +580,33 @@ export default function LocationDetailComponent({
                   </div>
                   <ul className="mt-3 flex flex-col space-y-3">
                     <li className="bg-grey-100 rounded-3xl px-4 py-3 text-sm md:text-balance text-grey-900">
-                      I like that you get{" "}
-                      <strong className="text-green-800 ">
+                      <span>I like that you get</span>
+                      <strong className="text-green-800">
+                        {" "}
                         prepared and ready for new jobs and programs.
                       </strong>
                     </li>
                     <li className="bg-grey-100 rounded-3xl px-4 py-3 text-sm md:text-balance text-grey-900">
-                      The{" "}
+                      <span>The</span>
                       <strong className="text-green-800">
                         structure and rules
-                      </strong>{" "}
-                      of the program.{" "}
+                      </strong>
+                      <span>of the program.</span>
                       <strong className="text-green-800">Curfew</strong>
                     </li>
                     <li className="bg-grey-100 rounded-3xl px-4 py-3 text-sm md:text-balance text-grey-900">
-                      They sent me to a security program and it{" "}
+                      <span>They sent me to a security program and it</span>
                       <strong className="text-red-600">
-                        wasn’t what I expected it to be.
+                        wasn&apos;t what I expected it to be.
                       </strong>
                     </li>
                     <li className="bg-grey-100 rounded-3xl px-4 py-3 text-sm md:text-balance text-grey-900">
                       <strong className="text-red-600">
                         Better communication
                       </strong>{" "}
-                      skills between staff and residents.{" "}
+                      <span>skills between staff and residents.</span>{" "}
                       <strong className="text-red-600">More job</strong>{" "}
-                      opportunities.{" "}
+                      <span>opportunities.</span>
                       <strong className="text-red-600">
                         Bathroom conditions, AC
                       </strong>
