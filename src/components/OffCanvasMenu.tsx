@@ -32,8 +32,8 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
               transition
               className="pointer-events-auto w-screen sm:max-w-xs transform transition duration-500 ease-in-out data-[closed]:-translate-x-full sm:duration-700"
             >
-              <div className="flex h-full flex-col overflow-y-auto bg-amber-300 pb-6 pt-4 shadow-xl">
-                <div className="px-4 sm:px-6">
+              <div className="flex h-full flex-col overflow-y-auto bg-amber-300 pb-6 shadow-xl">
+                <div className="px-5 py-5 h-16">
                   <div className="items-start justify-start hidden sm:flex">
                     <div className="flex h-7 items-center">
                       <button
