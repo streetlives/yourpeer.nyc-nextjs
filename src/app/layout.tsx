@@ -16,8 +16,8 @@ export const viewport: Viewport = {
 const GOOGLE_ANALYTICS_MEASUREMENT_ID = process.env
   .GOOGLE_ANALYTICS_MEASUREMENT_ID as string;
 
-const GOOGLE_TAG_MANAGER_API_KEY = process.env
-  .GOOGLE_TAG_MANAGER_API_KEY as string;
+const NEXT_PUBLIC_GOOGLE_TAG_MANAGER_API_KEY = process.env
+  .NEXT_PUBLIC_GOOGLE_TAG_MANAGER_API_KEY as string;
 
 export default function RootLayout({
   children,
@@ -38,7 +38,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <GoogleTagManager gtmId={GOOGLE_TAG_MANAGER_API_KEY} />
+      <GoogleTagManager gtmId={NEXT_PUBLIC_GOOGLE_TAG_MANAGER_API_KEY} />
       <body>
         <CookiesProvider>{children}</CookiesProvider>
         <GoogleAnalytics gaId={GOOGLE_ANALYTICS_MEASUREMENT_ID} />
