@@ -5,7 +5,7 @@
 // https://opensource.org/licenses/MIT.
 
 import "./globals.css";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import type { Viewport } from "next";
 import { CookiesProvider } from "next-client-cookies/server";
 
@@ -15,6 +15,9 @@ export const viewport: Viewport = {
 
 const GOOGLE_ANALYTICS_MEASUREMENT_ID = process.env
   .GOOGLE_ANALYTICS_MEASUREMENT_ID as string;
+
+const GOOGLE_TAG_MANAGER_API_KEY = process.env
+  .GOOGLE_TAG_MANAGER_API_KEY as string;
 
 export default function RootLayout({
   children,
@@ -35,6 +38,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
+      <GoogleTagManager gtmId={GOOGLE_TAG_MANAGER_API_KEY} />
       <body>
         <CookiesProvider>{children}</CookiesProvider>
         <GoogleAnalytics gaId={GOOGLE_ANALYTICS_MEASUREMENT_ID} />
