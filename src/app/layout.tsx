@@ -5,9 +5,10 @@
 // https://opensource.org/licenses/MIT.
 
 import "./globals.css";
-import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Viewport } from "next";
 import { CookiesProvider } from "next-client-cookies/server";
+import Script from "next/script";
 
 export const viewport: Viewport = {
   themeColor: "#FFD54F",
@@ -38,7 +39,19 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <GoogleTagManager gtmId={NEXT_PUBLIC_GOOGLE_TAG_MANAGER_API_KEY} />
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${NEXT_PUBLIC_GOOGLE_TAG_MANAGER_API_KEY}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '${NEXT_PUBLIC_GOOGLE_TAG_MANAGER_API_KEY}');
+        `}
+      </Script>
       <body>
         <CookiesProvider>{children}</CookiesProvider>
         <GoogleAnalytics gaId={GOOGLE_ANALYTICS_MEASUREMENT_ID} />
