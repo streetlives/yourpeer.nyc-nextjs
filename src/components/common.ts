@@ -522,6 +522,7 @@ export interface ServiceData {
     information: string | null;
     createdAt: Date;
     updatedAt: Date;
+    location_id: string | null;
     service_id: string | null;
   }[];
   ServiceAreas: {
@@ -560,6 +561,15 @@ export interface AbstractDetailedLocationData {
     service_at_location_id: string | null;
   }[];
   Services: ServiceData[];
+  EventRelatedInfos: {
+    id: string;
+    event: string | null;
+    information: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    location_id: string | null;
+    service_id: string | null;
+  }[];
 }
 
 export interface FullLocationData
