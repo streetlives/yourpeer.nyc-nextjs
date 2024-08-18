@@ -162,7 +162,7 @@ export default function Service({
   function toggleIsExpanded() {
     setIsExpanded(!isExpanded);
   }
-  return Object.keys(service.schedule).length ? (
+  return (
     <div
       key={service.id}
       className="flex items-start pl-3 pr-6 pt-2 pb-4 overflow-hidden relative"
@@ -372,5 +372,5 @@ export default function Service({
         ) : undefined}
       </div>
     </div>
-  ) : undefined;
+  );
 }
