@@ -352,7 +352,7 @@ export function map_gogetta_to_yourpeer(
     lat: d["position"]["coordinates"][1],
     lng: d["position"]["coordinates"][0],
     area: address.neighborhood,
-    info: null,
+    info: d.EventRelatedInfos.map(info => info.information),
     slug: `/locations/${d["slug"]}`,
     last_updated: moment(updated_at).fromNow(),
     last_updated_date: updated_at,
