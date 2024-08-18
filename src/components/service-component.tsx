@@ -160,7 +160,9 @@ export default function Service({
     service.description || service.info || service.docs || service.schedule;
 
   function toggleIsExpanded() {
-    setIsExpanded(!isExpanded);
+    if (!service.closed) {
+      setIsExpanded(!isExpanded);
+    }
   }
   return (
     <div
