@@ -4,7 +4,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import _ from "underscore";
+import _, { sortBy } from "underscore";
 import {
   Category,
   CATEGORY_TO_TAXONOMY_NAME_MAP,
@@ -57,6 +57,7 @@ export async function fetchLocationsData<T extends SimplifiedLocationData>({
   location_fields_only,
   age = undefined,
   shelter = undefined,
+  sortBy = null
 }: {
   page?: number;
   pageSize?: number;
@@ -70,6 +71,7 @@ export async function fetchLocationsData<T extends SimplifiedLocationData>({
   location_fields_only?: boolean;
   age?: number | null;
   shelter?: string | null;
+  sortBy?: string | null
 }): Promise<LocationsDataResponse<T>> {
   // TODO: handle shelter type by looking up the appropriate taxonomy
   // TODO: maybe convert this function to use a url parse library, as opposed to string concatenation
@@ -116,7 +118,11 @@ export async function fetchLocationsData<T extends SimplifiedLocationData>({
     query_url += `&openAt=${new Date().toISOString()}`;
   }
 
-  console.log("query_url", query_url);
+    query_url += `&sortBy=${sortBy}`;
+
+
+  console.log(query_url)
+
 
   const gogetta_response = await fetch(query_url);
   if (gogetta_response.status !== 200) {
@@ -176,6 +182,7 @@ export async function getSimplifiedLocationData({
   search?: string | null;
   age?: number | null;
   shelter?: string | null;
+  sortBy?: string | null
 }): Promise<SimplifiedLocationData[]> {
   const response: LocationsDataResponse<SimplifiedLocationData> =
     await fetchLocationsData<SimplifiedLocationData>({
@@ -205,6 +212,7 @@ export async function getFullLocationData({
   search = undefined,
   age = undefined,
   shelter = undefined,
+  sortBy
 }: {
   page?: number;
   pageSize?: number;
@@ -217,6 +225,7 @@ export async function getFullLocationData({
   search?: string | null;
   age?: number | null;
   shelter?: string | null;
+  sortBy?: string | null
 }): Promise<LocationsDataResponse<FullLocationData>> {
   return fetchLocationsData<FullLocationData>({
     page,
@@ -228,6 +237,7 @@ export async function getFullLocationData({
     membershipRequired,
     open,
     search,
+    sortBy,
     age,
     shelter,
     location_fields_only: false,

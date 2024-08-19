@@ -34,20 +34,26 @@ export async function getSidePanelComponentData({
   searchParams: SearchParams;
   params: SubRouteParams;
 }): Promise<SidePanelComponentData> {
+  console.log(params);
+  console.log(searchParams)
   const category = parseCategoryFromRoute(params.route);
   const subCategory = getParsedSubCategory(params);
   // FIXME: the string composition in the next line is a bit ugly. I should clean up the type used in this interface
   const parsedSearchParams = parseRequest({ params, searchParams });
+  console.log(parsedSearchParams);
   const taxonomiesResults = await getTaxonomies(category, parsedSearchParams);
   const { locations, numberOfPages, resultCount } =
     await await getFullLocationData({
       ...parsedSearchParams,
       ...parsedSearchParams[REQUIREMENT_PARAM],
       ...taxonomiesResults,
+      sortBy: searchParams.sort && 'nearby'
     });
+
   const yourPeerLegacyLocationData = locations.map((location) =>
     map_gogetta_to_yourpeer(location, false),
   );
+
   return {
     params,
     parsedSearchParams,
