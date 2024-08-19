@@ -24,6 +24,7 @@ import classNames from "classnames";
 import { getUrlWithNewCategory } from "./navigation";
 import { TranslatableText } from "./translatable-text";
 import { useGTranslateCookie } from "./use-translated-text-hook";
+import { SortDropdown } from "./sort-dropdown";
 
 function NoLocationsFound({ searchParams }: { searchParams: SearchParams }) {
   return (
@@ -153,6 +154,8 @@ export default function LocationsContainer({
               }
             />
           </h1>
+
+          <SortDropdown />
         </div>
         {yourPeerLegacyLocationData.length ? (
           <>
@@ -229,7 +232,7 @@ export default function LocationsContainer({
                       {CATEGORIES.map((serviceCategory) => {
                         const servicesWrapper = getServicesWrapper(
                           serviceCategory,
-                          location,
+                          location
                         );
                         return servicesWrapper?.services.length ? (
                           <li
@@ -238,7 +241,7 @@ export default function LocationsContainer({
                           >
                             <img
                               src={getIconPath(
-                                CATEGORY_ICON_SRC_MAP[serviceCategory],
+                                CATEGORY_ICON_SRC_MAP[serviceCategory]
                               )}
                               className="flex-shrink-0 max-h-5"
                               alt=""
