@@ -581,6 +581,7 @@ export async function getTaxonomies(
                     t.name === "Families",
                 ),
           );
+          break;
         case SHELTER_PARAM_SINGLE_VALUE:
           taxonomies = taxonomyResponse.flatMap((r) =>
             !r.children
