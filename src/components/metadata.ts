@@ -157,7 +157,7 @@ export async function generateMetadata({
       switch (subRouteParams.locationSlugOrPersonalCareSubCategory) {
         case AMENITIES_PARAM_LAUNDRY_VALUE:
           title = attachSuffix(
-            "Free Laundry Services For Unhoused People In NYC"
+            "Free Laundry Services For Unhoused People In NYC",
           );
           description =
             "YourPeer connects unhoused individuals in NYC with free laundry services and locations. Explore our resources to find nearby laundry facilities.";
