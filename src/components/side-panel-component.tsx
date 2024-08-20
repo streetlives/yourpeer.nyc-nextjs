@@ -25,6 +25,7 @@ export function SidePanelComponent({
     params,
     parsedSearchParams,
     category,
+    subCategory,
     resultCount,
     numberOfPages,
     yourPeerLegacyLocationData,
@@ -52,7 +53,11 @@ export function SidePanelComponent({
         {parsedSearchParams[SHOW_ADVANCED_FILTERS_PARAM] ? (
           <FiltersPopup category={category} numLocationResults={resultCount} />
         ) : undefined}
-        <FiltersHeader category={category} searchParams={searchParams} />
+        <FiltersHeader
+          category={category}
+          subCategory={subCategory}
+          searchParams={searchParams}
+        />
         <LocationsContainer
           searchParams={searchParams}
           resultCount={resultCount}

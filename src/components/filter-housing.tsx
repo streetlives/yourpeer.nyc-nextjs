@@ -10,19 +10,24 @@ import {
   SHELTER_PARAM,
   SHELTER_PARAM_SINGLE_VALUE,
   SHELTER_PARAM_FAMILY_VALUE,
+  parsePathnameToCategoryAndSubCategory,
 } from "./common";
 import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
+  getUrlWithSubCategoryAddedOrRemoved,
 } from "./navigation";
 import { useNormalizedSearchParams } from "./use-normalized-search-params";
 
 export default function FilterHousing() {
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname() as string;
   const { normalizedSearchParams } = useNormalizedSearchParams();
+  const [category, subCategory] =
+    parsePathnameToCategoryAndSubCategory(pathname);
   const shelterParam =
-    normalizedSearchParams && normalizedSearchParams.get(SHELTER_PARAM);
+    (normalizedSearchParams && normalizedSearchParams.get(SHELTER_PARAM)) ||
+    subCategory;
   const commonClasses = [
     "text-xs",
     "relative",
@@ -45,20 +50,19 @@ export default function FilterHousing() {
 
   function handleIsAnyClick() {
     router.push(
-      getUrlWithoutFilterParameter(
+      getUrlWithSubCategoryAddedOrRemoved(
         pathname,
         normalizedSearchParams,
-        SHELTER_PARAM,
+        null,
       ),
     );
   }
 
   function handleIsSingleAdultClick() {
     router.push(
-      getUrlWithNewFilterParameter(
+      getUrlWithSubCategoryAddedOrRemoved(
         pathname,
         normalizedSearchParams,
-        SHELTER_PARAM,
         SHELTER_PARAM_SINGLE_VALUE,
       ),
     );
@@ -66,10 +70,9 @@ export default function FilterHousing() {
 
   function handleIsFamiliesClick() {
     router.push(
-      getUrlWithNewFilterParameter(
+      getUrlWithSubCategoryAddedOrRemoved(
         pathname,
         normalizedSearchParams,
-        SHELTER_PARAM,
         SHELTER_PARAM_FAMILY_VALUE,
       ),
     );

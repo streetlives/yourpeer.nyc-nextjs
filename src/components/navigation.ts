@@ -11,7 +11,14 @@ import {
   AmenitiesSubCategory,
   Category,
   CATEGORY_TO_ROUTE_MAP,
+  CLOTHING_PARAM,
+  CLOTHING_PARAM_CASUAL_VALUE,
+  CLOTHING_PARAM_PROFESSIONAL_VALUE,
+  ClothingValues,
+  FOOD_PARAM,
+  FoodValues,
   getParsedAmenities,
+  getParsedSubCategory,
   LOCATION_ROUTE,
   PAGE_PARAM,
   parsePageParam,
@@ -23,6 +30,9 @@ import {
   RequirementValue,
   RouteParams,
   SearchParams,
+  SHELTER_PARAM,
+  ShelterValues,
+  SubRouteParams,
   UrlParamName,
 } from "./common";
 
@@ -224,6 +234,7 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
     parsePathnameToCategoryAndSubCategory(pathname);
 
   const parsedAmenitiesFromQueryParam = getParsedAmenities(
+    null,
     amenitiesSubCategory,
     currentAmenitiesSubCategoryFromQueryParam,
   );
@@ -267,6 +278,47 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
     currentUrlSearchParams.delete(AMENITIES_PARAM);
     newPath = `/${PERSONAL_CARE_CATEGORY}`;
   }
+
+  // always delete the current page
+  currentUrlSearchParams.delete(PAGE_PARAM);
+
+  const newSearchParamsStr = currentUrlSearchParams.toString();
+
+  const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
+  return `${newPath}${query}`;
+}
+
+export function getUrlWithSubCategoryAddedOrRemoved(
+  pathname: string | null,
+  searchParams:
+    | ReadonlyURLSearchParams
+    | SearchParams
+    | Map<string, string>
+    | undefined
+    | null,
+  newSubCategoryToAddOrRemove:
+    | FoodValues
+    | ClothingValues
+    | ShelterValues
+    | null,
+): string {
+  if (!pathname) {
+    throw new Error("Expected pathname to not be null");
+  }
+  const searchParamsList: string[][] = getSearchParamsList(searchParams);
+
+  const currentUrlSearchParams = new URLSearchParams(searchParamsList);
+
+  const [category, subCategory] =
+    parsePathnameToCategoryAndSubCategory(pathname);
+
+  let newSubCategory = getParsedSubCategory({
+    route: category as string,
+    locationSlugOrPersonalCareSubCategory:
+      newSubCategoryToAddOrRemove as string,
+  });
+
+  const newPath = `/${category}${newSubCategory ? `/${newSubCategory}` : ""}`;
 
   // always delete the current page
   currentUrlSearchParams.delete(PAGE_PARAM);
@@ -329,7 +381,7 @@ export function parsePathnameToSubRouteParams(pathname: string): RouteParams {
   };
 }
 
-export function isOnLocationDetailPage(params: RouteParams): boolean {
+export function isOnLocationDetailPage(params: SubRouteParams): boolean {
   return (
     params.route === LOCATION_ROUTE &&
     params.locationSlugOrPersonalCareSubCategory !== undefined

@@ -9,11 +9,12 @@ import {
   AmenitiesSubCategory,
   AMENITIES_PARAM_LAUNDRY_VALUE,
   AMENITIES_PARAM_TOILETRIES_VALUE,
-  getParsedAmenities,
+  getParsedSubCategory,
   PERSONAL_CARE_CATEGORY,
   AMENITIES_PARAM_RESTROOM_VALUE,
   AMENITIES_PARAM_SHOWER_VALUE,
   parsePathnameToCategoryAndSubCategory,
+  getParsedAmenities,
 } from "./common";
 import { getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRemoved } from "./navigation";
 import { ChangeEvent } from "react";
@@ -34,6 +35,7 @@ export default function FilterPersonalCare() {
   const [category, amenitiesSubCategory] =
     parsePathnameToCategoryAndSubCategory(pathname);
   const parsedAmenities = getParsedAmenities(
+    null,
     amenitiesSubCategory,
     personalCareParam,
   );

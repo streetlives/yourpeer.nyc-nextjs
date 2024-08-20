@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import {
   AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING,
   AmenitiesSubCategory,
+  getParsedSubCategory,
   PERSONAL_CARE_CATEGORY,
   SearchParams,
   SubRouteParams,
@@ -22,6 +23,7 @@ import LocationDetailComponent from "../../../../components/location-detail-comp
 import { usePreviousParams } from "@/components/use-previous-params";
 import { getMapContainerData } from "@/components/map-container-component";
 import { getSidePanelComponentData } from "@/components/get-side-panel-component-data";
+import { isOnLocationDetailPage } from "@/components/navigation";
 
 export { generateMetadata } from "../../../../components/metadata";
 
@@ -34,13 +36,9 @@ export default async function LocationDetail({
 }) {
   const previousParams = usePreviousParams();
   try {
-    if (
-      // TODO: eliminate duplicate code - move this condition out
-      params.route === PERSONAL_CARE_CATEGORY &&
-      AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
-        params.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory,
-      )
-    ) {
+    if (!isOnLocationDetailPage(params)) {
+      // validate
+      getParsedSubCategory(params);
       return (
         <SidePanelComponent
           searchParams={searchParams}

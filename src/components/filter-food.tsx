@@ -10,19 +10,24 @@ import {
   FOOD_PARAM,
   FOOD_PARAM_SOUP_KITCHEN_VALUE,
   FOOD_PARAM_PANTRY_VALUE,
+  parsePathnameToCategoryAndSubCategory,
 } from "./common";
 import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
+  getUrlWithSubCategoryAddedOrRemoved,
 } from "./navigation";
 import { useNormalizedSearchParams } from "./use-normalized-search-params";
 
 export default function FilterFood() {
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname() as string;
   const { normalizedSearchParams } = useNormalizedSearchParams();
+  const [category, subCategory] =
+    parsePathnameToCategoryAndSubCategory(pathname);
   const foodParam =
-    normalizedSearchParams && normalizedSearchParams.get(FOOD_PARAM);
+    (normalizedSearchParams && normalizedSearchParams.get(FOOD_PARAM)) ||
+    subCategory;
   const commonClasses = [
     "text-xs",
     "relative",
@@ -45,20 +50,19 @@ export default function FilterFood() {
 
   function handleIsAnyClick() {
     router.push(
-      getUrlWithoutFilterParameter(
+      getUrlWithSubCategoryAddedOrRemoved(
         pathname,
         normalizedSearchParams,
-        FOOD_PARAM,
+        null,
       ),
     );
   }
 
   function handleIsSoupKItchenClick() {
     router.push(
-      getUrlWithNewFilterParameter(
+      getUrlWithSubCategoryAddedOrRemoved(
         pathname,
         normalizedSearchParams,
-        FOOD_PARAM,
         FOOD_PARAM_SOUP_KITCHEN_VALUE,
       ),
     );
@@ -66,10 +70,9 @@ export default function FilterFood() {
 
   function handleIsPantryClick() {
     router.push(
-      getUrlWithNewFilterParameter(
+      getUrlWithSubCategoryAddedOrRemoved(
         pathname,
         normalizedSearchParams,
-        FOOD_PARAM,
         FOOD_PARAM_PANTRY_VALUE,
       ),
     );
