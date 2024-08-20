@@ -5,6 +5,7 @@
 // https://opensource.org/licenses/MIT.
 
 import assert from "assert";
+import { Error404Response } from "./streetlives-api-service";
 
 export const CATEGORIES = [
   "shelters-housing",
@@ -107,15 +108,15 @@ export const SEARCH_PARAM = "search";
 export const AGE_PARAM = "age";
 export const OPEN_PARAM = "open";
 export const SHELTER_PARAM = "shelter";
-export const SHELTER_PARAM_SINGLE_VALUE = "single";
-export const SHELTER_PARAM_FAMILY_VALUE = "family";
+export const SHELTER_PARAM_SINGLE_VALUE = "adult";
+export const SHELTER_PARAM_FAMILY_VALUE = "families";
 export type ShelterValues =
   | typeof SHELTER_PARAM_SINGLE_VALUE
   | typeof SHELTER_PARAM_FAMILY_VALUE;
 export const SHOW_ADVANCED_FILTERS_PARAM = "adv";
 
 export const FOOD_PARAM = "food";
-export const FOOD_PARAM_SOUP_KITCHEN_VALUE = "kitchen";
+export const FOOD_PARAM_SOUP_KITCHEN_VALUE = "soup-kitchens";
 export const FOOD_PARAM_PANTRY_VALUE = "pantry";
 export type FoodValues =
   | typeof FOOD_PARAM_SOUP_KITCHEN_VALUE
@@ -181,18 +182,51 @@ export function parseAmenitiesQueryParam(
     : [];
 }
 
-export function getParsedAmenities(
-  amenitiesSubCategory: AmenitiesSubCategory | null,
-  amenitiesQueryParam: string | null | undefined,
-): AmenitiesSubCategory[] {
-  const parsedAmenitiesFromQueryParam: AmenitiesSubCategory[] =
-    parseAmenitiesQueryParam(amenitiesQueryParam);
+export type SubCategory =
+  | AmenitiesSubCategory
+  | ClothingValues
+  | FoodValues
+  | ShelterValues;
 
-  const combinedParsedAmenitiesFromPathAndQueryParams = (
-    amenitiesSubCategory ? [amenitiesSubCategory] : []
-  ).concat(parsedAmenitiesFromQueryParam);
-
-  return combinedParsedAmenitiesFromPathAndQueryParams;
+export function getParsedSubCategory(
+  params: SubRouteParams,
+): SubCategory | null {
+  console.log("getParsedSubCategory");
+  const category = params.route;
+  const subCategory = params.locationSlugOrPersonalCareSubCategory;
+  if (!subCategory) {
+    return null;
+  } else if (
+    category === CATEGORY_TO_ROUTE_MAP["personal-care"] &&
+    AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.indexOf(
+      subCategory as AmenitiesSubCategory,
+    ) > -1
+  ) {
+    return subCategory as AmenitiesSubCategory;
+  } else if (
+    category === CATEGORY_TO_ROUTE_MAP["clothing"] &&
+    (!subCategory ||
+      subCategory === CLOTHING_PARAM_CASUAL_VALUE ||
+      subCategory === CLOTHING_PARAM_PROFESSIONAL_VALUE)
+  ) {
+    return subCategory as ClothingValues;
+  } else if (
+    category === CATEGORY_TO_ROUTE_MAP["food"] &&
+    (!subCategory ||
+      subCategory === FOOD_PARAM_PANTRY_VALUE ||
+      subCategory === FOOD_PARAM_SOUP_KITCHEN_VALUE)
+  ) {
+    return subCategory as FoodValues;
+  } else if (
+    category === CATEGORY_TO_ROUTE_MAP["shelters-housing"] &&
+    (!subCategory ||
+      subCategory === SHELTER_PARAM_FAMILY_VALUE ||
+      subCategory === SHELTER_PARAM_SINGLE_VALUE)
+  ) {
+    return subCategory as ShelterValues;
+  } else {
+    throw new Error404Response("Received unexpected value for subcategory");
+  }
 }
 
 //1. Laundry
@@ -249,7 +283,7 @@ export interface ParsedAmenities {
   [AMENITIES_PARAM_TOILETRIES_VALUE]: boolean;
 }
 
-type CategoryAndSubCategory = [Category, AmenitiesSubCategory | null];
+type CategoryAndSubCategory = [Category, SubCategory | null];
 
 export function parsePathnameToCategoryAndSubCategory(
   pathname: string,
@@ -257,16 +291,11 @@ export function parsePathnameToCategoryAndSubCategory(
   const pathComponents = pathname.split("/");
   const [_, firstPathComponent, secondPathComponent] = pathComponents;
   assert(firstPathComponent in ROUTE_TO_CATEGORY_MAP);
-  assert(
-    secondPathComponent === undefined ||
-      AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
-        secondPathComponent as AmenitiesSubCategory,
-      ),
-  );
-  return [
-    ROUTE_TO_CATEGORY_MAP[firstPathComponent],
-    secondPathComponent ? (secondPathComponent as AmenitiesSubCategory) : null,
-  ];
+  const subCategory = getParsedSubCategory({
+    route: firstPathComponent,
+    locationSlugOrPersonalCareSubCategory: secondPathComponent,
+  });
+  return [ROUTE_TO_CATEGORY_MAP[firstPathComponent], subCategory];
 }
 
 export interface RouteParams {
@@ -288,13 +317,7 @@ function parseRouteParamsToCategoryAndSubCategory(
   const subRouteParams: SubRouteParams = params as SubRouteParams;
   // we want to get a category and subcategory out of this
   if (subRouteParams.locationSlugOrPersonalCareSubCategory) {
-    assert(
-      AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
-        subRouteParams.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory,
-      ),
-    );
-    subcategory =
-      subRouteParams.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory;
+    subcategory = getParsedSubCategory(subRouteParams);
   }
   return [category, subcategory];
 }
@@ -310,6 +333,25 @@ export function parsePageParam(
     : 0;
 }
 
+export function getParsedAmenities(
+  params: SubRouteParams | null,
+  amenitiesSubCategory: SubCategory | null,
+  amenitiesQueryParam: string | null | undefined,
+): AmenitiesSubCategory[] {
+  if (!params || params.route === AMENITIES_PARAM) {
+    const parsedAmenitiesFromQueryParam: AmenitiesSubCategory[] =
+      parseAmenitiesQueryParam(amenitiesQueryParam);
+
+    const combinedParsedAmenitiesFromPathAndQueryParams = (
+      amenitiesSubCategory ? [amenitiesSubCategory as AmenitiesSubCategory] : []
+    ).concat(parsedAmenitiesFromQueryParam);
+
+    return combinedParsedAmenitiesFromPathAndQueryParams;
+  } else {
+    return [];
+  }
+}
+
 // the idea here is we pass in all the raw request stuff that we can get from nextjs
 // this can either be the pathname, if we in a client component, and can use usePathname()
 // or it can be the route and locationSlugOrPersonalCareSubCategory params which we get as page params from nextjs
@@ -323,20 +365,23 @@ export function parseRequest({
   searchParams: SearchParams;
   params: RouteParams | SubRouteParams;
 }): YourPeerParsedRequestParams {
+  console.log("parseRequest", parseRequest);
   assert.ok(pathname !== undefined || params !== undefined);
   // TODO: validate searchParams with Joi
   // TODO: return 400 on validation error
 
   // if we got a pathname, first parse it to category, subcategory
-  const [category, amenitiesSubCategory] = pathname
+  const [category, subCategory] = pathname
     ? parsePathnameToCategoryAndSubCategory(pathname)
     : parseRouteParamsToCategoryAndSubCategory(params);
 
   const parsedRequirements = parseRequirementParam(
     searchParams[REQUIREMENT_PARAM] as string,
   );
-  const parsedAmenitiesParam = getParsedAmenities(
-    amenitiesSubCategory,
+  const parsedSubCategory = getParsedSubCategory(params as SubRouteParams);
+  const parsedAmenities = getParsedAmenities(
+    params as SubRouteParams,
+    parsedSubCategory,
     searchParams[AMENITIES_PARAM] as string,
   );
   return {
@@ -355,19 +400,19 @@ export function parseRequest({
         searchParams[SHELTER_PARAM] === SHELTER_PARAM_SINGLE_VALUE) ||
       searchParams[SHELTER_PARAM] === SHELTER_PARAM_FAMILY_VALUE
         ? (searchParams[SHELTER_PARAM] as ShelterValues)
-        : null,
+        : (parsedSubCategory as ShelterValues),
     [FOOD_PARAM]:
       (typeof searchParams[FOOD_PARAM] === "string" &&
         searchParams[FOOD_PARAM] === FOOD_PARAM_SOUP_KITCHEN_VALUE) ||
       searchParams[FOOD_PARAM] === FOOD_PARAM_PANTRY_VALUE
         ? (searchParams[FOOD_PARAM] as FoodValues)
-        : null,
+        : (parsedSubCategory as FoodValues),
     [CLOTHING_PARAM]:
       (typeof searchParams[CLOTHING_PARAM] === "string" &&
         searchParams[CLOTHING_PARAM] === CLOTHING_PARAM_CASUAL_VALUE) ||
       searchParams[CLOTHING_PARAM] === CLOTHING_PARAM_PROFESSIONAL_VALUE
         ? (searchParams[CLOTHING_PARAM] as ClothingValues)
-        : null,
+        : (parsedSubCategory as ClothingValues),
     [SHOW_ADVANCED_FILTERS_PARAM]: !!searchParams[SHOW_ADVANCED_FILTERS_PARAM],
     [REQUIREMENT_PARAM]: {
       noRequirement: parsedRequirements.includes(
@@ -381,16 +426,16 @@ export function parseRequest({
       ),
     },
     [AMENITIES_PARAM]: {
-      [AMENITIES_PARAM_LAUNDRY_VALUE]: parsedAmenitiesParam.includes(
+      [AMENITIES_PARAM_LAUNDRY_VALUE]: parsedAmenities.includes(
         AMENITIES_PARAM_LAUNDRY_VALUE,
       ),
-      [AMENITIES_PARAM_RESTROOM_VALUE]: parsedAmenitiesParam.includes(
+      [AMENITIES_PARAM_RESTROOM_VALUE]: parsedAmenities.includes(
         AMENITIES_PARAM_RESTROOM_VALUE,
       ),
-      [AMENITIES_PARAM_SHOWER_VALUE]: parsedAmenitiesParam.includes(
+      [AMENITIES_PARAM_SHOWER_VALUE]: parsedAmenities.includes(
         AMENITIES_PARAM_SHOWER_VALUE,
       ),
-      [AMENITIES_PARAM_TOILETRIES_VALUE]: parsedAmenitiesParam.includes(
+      [AMENITIES_PARAM_TOILETRIES_VALUE]: parsedAmenities.includes(
         AMENITIES_PARAM_TOILETRIES_VALUE,
       ),
     },

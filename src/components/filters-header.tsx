@@ -15,6 +15,7 @@ import {
   LOCATION_ROUTE,
   SearchParams,
   SHOW_ADVANCED_FILTERS_PARAM,
+  SubCategory,
 } from "./common";
 import Link from "next/link";
 import classNames from "classnames";
@@ -26,16 +27,19 @@ import {
 
 export default function FiltersHeader({
   category: currentCategory,
+  subCategory,
   searchParams,
 }: {
   category: Category;
+  subCategory: SubCategory | null;
   searchParams: SearchParams;
 }) {
+  // TODO: I think there is a functionn for this
   const pathname = `/${
     currentCategory === null
       ? LOCATION_ROUTE
       : CATEGORY_TO_ROUTE_MAP[currentCategory]
-  }`;
+  }${subCategory ? `/${subCategory}` : ""}`;
   const commonClassNames = [
     "inline-flex",
     "flex-shrink-0",

@@ -3,9 +3,11 @@ import {
   REQUIREMENT_PARAM,
   RouteParams,
   SearchParams,
+  SubCategory,
   SubRouteParams,
   YourPeerLegacyLocationData,
   YourPeerParsedRequestParams,
+  getParsedSubCategory,
   parseCategoryFromRoute,
   parseRequest,
 } from "./common";
@@ -19,6 +21,7 @@ export interface SidePanelComponentData {
   params: RouteParams | SubRouteParams;
   parsedSearchParams: YourPeerParsedRequestParams;
   category: Category;
+  subCategory: SubCategory | null;
   resultCount: number;
   numberOfPages: number;
   yourPeerLegacyLocationData: YourPeerLegacyLocationData[];
@@ -29,9 +32,10 @@ export async function getSidePanelComponentData({
   params,
 }: {
   searchParams: SearchParams;
-  params: RouteParams;
+  params: SubRouteParams;
 }): Promise<SidePanelComponentData> {
   const category = parseCategoryFromRoute(params.route);
+  const subCategory = getParsedSubCategory(params);
   // FIXME: the string composition in the next line is a bit ugly. I should clean up the type used in this interface
   const parsedSearchParams = parseRequest({ params, searchParams });
   const taxonomiesResults = await getTaxonomies(category, parsedSearchParams);
@@ -48,6 +52,7 @@ export async function getSidePanelComponentData({
     params,
     parsedSearchParams,
     category,
+    subCategory,
     resultCount,
     numberOfPages,
     yourPeerLegacyLocationData,

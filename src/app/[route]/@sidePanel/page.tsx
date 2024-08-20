@@ -6,8 +6,8 @@
 
 import {
   RESOURCE_ROUTES,
-  RouteParams,
   SearchParams,
+  SubRouteParams,
 } from "../../../components/common";
 
 import { notFound } from "next/navigation";
@@ -21,7 +21,7 @@ export default async function SidePanelPage({
   params,
 }: {
   searchParams: SearchParams;
-  params: RouteParams;
+  params: SubRouteParams;
 }) {
   return RESOURCE_ROUTES.includes(params.route) ? (
     <SidePanelComponent

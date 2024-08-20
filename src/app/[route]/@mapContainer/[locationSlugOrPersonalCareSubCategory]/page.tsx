@@ -6,9 +6,7 @@
 
 import { notFound } from "next/navigation";
 import {
-  AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING,
-  AmenitiesSubCategory,
-  PERSONAL_CARE_CATEGORY,
+  getParsedSubCategory,
   SearchParams,
   SubRouteParams,
 } from "../../../../components/common";
@@ -19,6 +17,7 @@ import {
 } from "../../../../components/streetlives-api-service";
 import { getMapContainerData } from "../../../../components/map-container-component";
 import { usePreviousParams } from "@/components/use-previous-params";
+import { isOnLocationDetailPage } from "@/components/navigation";
 
 export default async function MapDetail({
   searchParams,
@@ -27,15 +26,12 @@ export default async function MapDetail({
   searchParams: SearchParams;
   params: SubRouteParams;
 }) {
+  console.log();
   const previousParams = usePreviousParams();
   try {
-    if (
-      // TODO: eliminate duplicate code - move this condition out
-      params.route === PERSONAL_CARE_CATEGORY &&
-      AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING.includes(
-        params.locationSlugOrPersonalCareSubCategory as AmenitiesSubCategory,
-      )
-    ) {
+    if (!isOnLocationDetailPage(params)) {
+      // validate
+      getParsedSubCategory(params);
       return (
         <LocationsMap
           locationStubs={await getMapContainerData({
@@ -62,6 +58,8 @@ export default async function MapDetail({
   } catch (e) {
     if (e instanceof Error404Response) {
       return notFound();
+    } else {
+      throw e; // rethrow the error to force a 500 response
     }
   }
 }

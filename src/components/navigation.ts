@@ -11,7 +11,10 @@ import {
   AmenitiesSubCategory,
   Category,
   CATEGORY_TO_ROUTE_MAP,
+  ClothingValues,
+  FoodValues,
   getParsedAmenities,
+  getParsedSubCategory,
   LOCATION_ROUTE,
   PAGE_PARAM,
   parsePageParam,
@@ -23,6 +26,8 @@ import {
   RequirementValue,
   RouteParams,
   SearchParams,
+  ShelterValues,
+  SubRouteParams,
   UrlParamName,
 } from "./common";
 
@@ -224,6 +229,7 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
     parsePathnameToCategoryAndSubCategory(pathname);
 
   const parsedAmenitiesFromQueryParam = getParsedAmenities(
+    null,
     amenitiesSubCategory,
     currentAmenitiesSubCategoryFromQueryParam,
   );
@@ -277,6 +283,47 @@ export function getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAdd
   return `${newPath}${query}`;
 }
 
+export function getUrlWithSubCategoryAddedOrRemoved(
+  pathname: string | null,
+  searchParams:
+    | ReadonlyURLSearchParams
+    | SearchParams
+    | Map<string, string>
+    | undefined
+    | null,
+  newSubCategoryToAddOrRemove:
+    | FoodValues
+    | ClothingValues
+    | ShelterValues
+    | null,
+): string {
+  if (!pathname) {
+    throw new Error("Expected pathname to not be null");
+  }
+  const searchParamsList: string[][] = getSearchParamsList(searchParams);
+
+  const currentUrlSearchParams = new URLSearchParams(searchParamsList);
+
+  const [category, subCategory] =
+    parsePathnameToCategoryAndSubCategory(pathname);
+
+  let newSubCategory = getParsedSubCategory({
+    route: category as string,
+    locationSlugOrPersonalCareSubCategory:
+      newSubCategoryToAddOrRemove as string,
+  });
+
+  const newPath = `/${category}${newSubCategory ? `/${newSubCategory}` : ""}`;
+
+  // always delete the current page
+  currentUrlSearchParams.delete(PAGE_PARAM);
+
+  const newSearchParamsStr = currentUrlSearchParams.toString();
+
+  const query = newSearchParamsStr ? `?${newSearchParamsStr}` : "";
+  return `${newPath}${query}`;
+}
+
 export function getUrlToNextOrPreviousPage(
   pathname: string | null,
   searchParams:
@@ -320,7 +367,9 @@ export function getUrlToNextOrPreviousPage(
   return `${pathname}${query}`;
 }
 
-export function parsePathnameToSubRouteParams(pathname: string): RouteParams {
+export function parsePathnameToSubRouteParams(
+  pathname: string,
+): SubRouteParams {
   const [ignore, route, locationSlugOrPersonalCareSubCategory] =
     pathname.split("/");
   return {
@@ -329,7 +378,7 @@ export function parsePathnameToSubRouteParams(pathname: string): RouteParams {
   };
 }
 
-export function isOnLocationDetailPage(params: RouteParams): boolean {
+export function isOnLocationDetailPage(params: SubRouteParams): boolean {
   return (
     params.route === LOCATION_ROUTE &&
     params.locationSlugOrPersonalCareSubCategory !== undefined
