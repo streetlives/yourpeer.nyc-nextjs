@@ -5,6 +5,7 @@
 // https://opensource.org/licenses/MIT.
 
 import assert from "assert";
+import { Error404Response } from "./streetlives-api-service";
 
 export const CATEGORIES = [
   "shelters-housing",
@@ -224,7 +225,7 @@ export function getParsedSubCategory(
   ) {
     return subCategory as ShelterValues;
   } else {
-    throw new Error("Received unexpected value for subcategory");
+    throw new Error404Response("Received unexpected value for subcategory");
   }
 }
 

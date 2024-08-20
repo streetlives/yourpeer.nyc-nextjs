@@ -26,6 +26,7 @@ export default async function MapDetail({
   searchParams: SearchParams;
   params: SubRouteParams;
 }) {
+  console.log();
   const previousParams = usePreviousParams();
   try {
     if (!isOnLocationDetailPage(params)) {
@@ -57,6 +58,8 @@ export default async function MapDetail({
   } catch (e) {
     if (e instanceof Error404Response) {
       return notFound();
+    } else {
+      throw e; // rethrow the error to force a 500 response
     }
   }
 }

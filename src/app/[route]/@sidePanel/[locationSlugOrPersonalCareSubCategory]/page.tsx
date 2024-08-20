@@ -68,6 +68,8 @@ export default async function LocationDetail({
   } catch (e) {
     if (e instanceof Error404Response) {
       return notFound();
+    } else {
+      throw e; // rethrow the error to force a 500 response
     }
   }
 }
