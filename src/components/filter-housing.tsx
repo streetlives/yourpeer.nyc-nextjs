@@ -12,11 +12,7 @@ import {
   SHELTER_PARAM_FAMILY_VALUE,
   parsePathnameToCategoryAndSubCategory,
 } from "./common";
-import {
-  getUrlWithNewFilterParameter,
-  getUrlWithoutFilterParameter,
-  getUrlWithSubCategoryAddedOrRemoved,
-} from "./navigation";
+import { getUrlWithSubCategoryAddedOrRemoved } from "./navigation";
 import { useNormalizedSearchParams } from "./use-normalized-search-params";
 
 export default function FilterHousing() {

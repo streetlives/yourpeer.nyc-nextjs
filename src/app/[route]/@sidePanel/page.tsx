@@ -6,7 +6,6 @@
 
 import {
   RESOURCE_ROUTES,
-  RouteParams,
   SearchParams,
   SubRouteParams,
 } from "../../../components/common";

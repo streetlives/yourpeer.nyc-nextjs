@@ -6,10 +6,7 @@
 
 import { notFound } from "next/navigation";
 import {
-  AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING,
-  AmenitiesSubCategory,
   getParsedSubCategory,
-  PERSONAL_CARE_CATEGORY,
   SearchParams,
   SubRouteParams,
 } from "../../../../components/common";

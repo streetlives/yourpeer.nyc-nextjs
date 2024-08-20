@@ -11,11 +11,7 @@ import {
   AmenitiesSubCategory,
   Category,
   CATEGORY_TO_ROUTE_MAP,
-  CLOTHING_PARAM,
-  CLOTHING_PARAM_CASUAL_VALUE,
-  CLOTHING_PARAM_PROFESSIONAL_VALUE,
   ClothingValues,
-  FOOD_PARAM,
   FoodValues,
   getParsedAmenities,
   getParsedSubCategory,
@@ -30,7 +26,6 @@ import {
   RequirementValue,
   RouteParams,
   SearchParams,
-  SHELTER_PARAM,
   ShelterValues,
   SubRouteParams,
   UrlParamName,
@@ -372,7 +367,9 @@ export function getUrlToNextOrPreviousPage(
   return `${pathname}${query}`;
 }
 
-export function parsePathnameToSubRouteParams(pathname: string): RouteParams {
+export function parsePathnameToSubRouteParams(
+  pathname: string,
+): SubRouteParams {
   const [ignore, route, locationSlugOrPersonalCareSubCategory] =
     pathname.split("/");
   return {

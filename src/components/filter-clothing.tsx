@@ -12,11 +12,7 @@ import {
   CLOTHING_PARAM_PROFESSIONAL_VALUE,
   parsePathnameToCategoryAndSubCategory,
 } from "./common";
-import {
-  getUrlWithNewFilterParameter,
-  getUrlWithoutFilterParameter,
-  getUrlWithSubCategoryAddedOrRemoved,
-} from "./navigation";
+import { getUrlWithSubCategoryAddedOrRemoved } from "./navigation";
 import { RequirementFieldset } from "./requirements-fieldset";
 import { useNormalizedSearchParams } from "./use-normalized-search-params";
 
