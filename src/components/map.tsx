@@ -87,8 +87,17 @@ function MapWrapper({
   const cookies = useCookies();
   const cookieZoom = cookies.get("zoom");
   const cookieMapCenter = cookies.get("mapCenter");
+
   const normalizedLocationDetailStub =
     locationStubClickedOnMobile || locationDetailStub;
+  const normalizedLocationStubs =
+    normalizedLocationDetailStub &&
+    locationStubs &&
+    !locationStubs
+      .map((stub) => stub.id)
+      .includes(normalizedLocationDetailStub.id)
+      ? [normalizedLocationDetailStub].concat(locationStubs)
+      : locationStubs;
 
   const router = useRouter();
   const [userPosition, setUserPosition] = useState<Position>();
@@ -295,8 +304,8 @@ function MapWrapper({
         styles={mapStyles}
       >
         <span>
-          {locationStubs
-            ? locationStubs.map((locationStub) => (
+          {normalizedLocationStubs
+            ? normalizedLocationStubs.map((locationStub) => (
                 <LocationStubMarker
                   locationStub={locationStub}
                   key={locationStub.id}
