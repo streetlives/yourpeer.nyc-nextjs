@@ -342,9 +342,11 @@ export default function LocationDetailComponent({
                       Closed
                     </p>
                     {location.info?.map((info) => (
-                      <p key={info} className="text-dark font-normal text-sm">
-                        {info}
-                      </p>
+                      <p 
+                        key={info} 
+                        className="text-dark font-normal text-sm"
+                        dangerouslySetInnerHTML={{ __html: info }}
+                      ></p>
                     ))}
                   </div>
                 </div>
