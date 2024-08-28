@@ -65,7 +65,7 @@ export default function HomePage() {
                 className="object-contain flex-shrink-0"
                 alt=""
               />
-              <div className="text-[13px] text-dark mt-2 font-semibold">
+              <div className="text-[13px] text-dark mt-2 font-semibold text-center">
                 <TranslatableText text="Shelter & Housing" />
               </div>
             </Link>
@@ -82,7 +82,7 @@ export default function HomePage() {
                 className="object-contain flex-shrink-0"
                 alt=""
               />
-              <div className="text-[13px] text-dark mt-2 font-semibold">
+              <div className="text-[13px] text-dark mt-2 font-semibold text-center">
                 <TranslatableText text="Food" />
               </div>
             </Link>
@@ -99,7 +99,7 @@ export default function HomePage() {
                 className="object-contain flex-shrink-0"
                 alt=""
               />
-              <div className="text-[13px] text-dark mt-2 font-semibold">
+              <div className="text-[13px] text-dark mt-2 font-semibold text-center">
                 <TranslatableText text="Clothing" />
               </div>
             </Link>
@@ -116,7 +116,7 @@ export default function HomePage() {
                 className="object-contain flex-shrink-0"
                 alt=""
               />
-              <div className="text-[13px] text-dark mt-2 font-semibold">
+              <div className="text-[13px] text-dark mt-2 font-semibold text-center">
                 <TranslatableText text="Personal Care" />
               </div>
             </Link>
@@ -133,7 +133,7 @@ export default function HomePage() {
                 className="object-contain flex-shrink-0"
                 alt=""
               />
-              <div className="text-[13px] text-dark mt-2 font-semibold">
+              <div className="text-[13px] text-dark mt-2 font-semibold text-center">
                 <TranslatableText text="Health" />
               </div>
             </Link>
@@ -150,7 +150,7 @@ export default function HomePage() {
                 className="object-contain flex-shrink-0"
                 alt=""
               />
-              <div className="text-[13px] text-dark mt-2 font-semibold">
+              <div className="text-[13px] text-dark mt-2 font-semibold text-center">
                 <TranslatableText text="Other" />
               </div>
             </Link>
