@@ -516,7 +516,7 @@ export default function HomePage() {
               href="https://www.nycfoodpolicy.org/food/"
               className="text-blue-700 underline hover:no-underline"
             >
-              https://www.nycfoodpolicy.org/food/
+              www.nycfoodpolicy.org/food
             </a>
           </p>
         </div>
