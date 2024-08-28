@@ -12,6 +12,7 @@ import {
   YourPeerLegacyLocationData,
 } from "./common";
 import { useState } from "react";
+import { TranslatableText } from "./translatable-text";
 
 export function ReportCompletedView() {
   return (
@@ -81,7 +82,7 @@ export function ReportIssueForm({
         <div id="reportView">
           <div id="stepOne">
             <div className="text-lg font-medium">
-              Which parts of the information have an issue?
+              <TranslatableText text="Which parts of the information have an issue?" />
             </div>
             <div className="flex flex-col mt-4">
               <label className="relative flex-1 flex space-x-2 cursor-pointer">
@@ -98,13 +99,13 @@ export function ReportIssueForm({
               {CATEGORIES.filter((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location,
+                  location
                 );
                 return servicesWrapper.services.length;
               }).map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location,
+                  location
                 );
                 return (
                   <div key={serviceCategory}>
@@ -134,8 +135,7 @@ export function ReportIssueForm({
               htmlFor="reportContent"
               className="text-base text-dark font-medium"
             >
-              Please describe the issue below (Please don&apos;t enter any
-              private information)
+              <TranslatableText text="Please describe the issue below (Please don't enter any private information)" />
             </label>
             <div className="mt-4">
               <textarea

@@ -14,6 +14,7 @@ import {
 } from "./common";
 import { getUrlWithSubCategoryAddedOrRemoved } from "./navigation";
 import { useNormalizedSearchParams } from "./use-normalized-search-params";
+import { TranslatableText } from "./translatable-text";
 
 export default function FilterFood() {
   const router = useRouter();
@@ -77,7 +78,7 @@ export default function FilterFood() {
   return (
     <fieldset className="mt-6">
       <legend className="text-xs font-semibold leading-6 text-dark">
-        Food type
+        <TranslatableText text="Food type" />
       </legend>
       <div className="mt-2 flex w-full">
         <label
@@ -85,7 +86,7 @@ export default function FilterFood() {
             null,
             commonClasses
               .concat("rounded-l-lg")
-              .concat(!foodParam ? selectedClasses : notSelectedClasses),
+              .concat(!foodParam ? selectedClasses : notSelectedClasses)
           )}
         >
           <input
@@ -98,7 +99,7 @@ export default function FilterFood() {
             aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
             onClick={handleIsAnyClick}
           />
-          <span>Any</span>
+          <TranslatableText text="Any" />
         </label>
         <label
           className={classNames.call(
@@ -106,8 +107,8 @@ export default function FilterFood() {
             commonClasses.concat(
               foodParam == FOOD_PARAM_SOUP_KITCHEN_VALUE
                 ? selectedClasses
-                : notSelectedClasses,
-            ),
+                : notSelectedClasses
+            )
           )}
         >
           <input
@@ -120,7 +121,7 @@ export default function FilterFood() {
             className="sr-only"
             onClick={handleIsSoupKItchenClick}
           />
-          <span>Soup Kitchen</span>
+          <TranslatableText text="Soup Kitchen"/>
         </label>
         <label
           className={classNames.call(
@@ -130,8 +131,8 @@ export default function FilterFood() {
               .concat(
                 foodParam == FOOD_PARAM_PANTRY_VALUE
                   ? selectedClasses
-                  : notSelectedClasses,
-              ),
+                  : notSelectedClasses
+              )
           )}
         >
           <input
@@ -142,7 +143,7 @@ export default function FilterFood() {
             className="sr-only"
             onClick={handleIsPantryClick}
           />
-          <span>Food Pantry</span>
+          <TranslatableText text="Food Pantry"/>
         </label>
       </div>
     </fieldset>

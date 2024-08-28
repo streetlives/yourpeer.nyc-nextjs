@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TranslatableText } from "./translatable-text";
 
 export default function QuickExitLink() {
   return (
@@ -7,7 +8,9 @@ export default function QuickExitLink() {
       id="quickExitLink"
       className="md:hidden flex-shrink-0 inline-flex ml-auto items-center text-[10px] sm:text-xs uppercase font-medium text-black space-x-1 truncate"
     >
-      <span className="inline-block">Quick Exit</span>
+      <span className="inline-block">
+        <TranslatableText text="Quick Exit" />
+      </span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"

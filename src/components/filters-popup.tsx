@@ -28,6 +28,7 @@ import FilterFood from "./filter-food";
 import FilterClothing from "./filter-clothing";
 import FilterPersonalCare from "./filter-personal-care";
 import { useNormalizedSearchParams } from "./use-normalized-search-params";
+import { TranslatableText } from "./translatable-text";
 
 function CategoryFilterLabel({
   labelCategory,
@@ -75,7 +76,7 @@ function CategoryFilterLabel({
         alt=""
       />
       <div className="text-center text-xs text-dark mt-3 truncate">
-        {labelText}
+        <TranslatableText text={labelText} />
       </div>
     </Link>
   );
@@ -135,7 +136,9 @@ export default function FiltersPopup({
       className="bg-white fixed md:absolute inset-x-0 top-[49.6px] md:top-0 bottom-0 md:h-full z-40 flex flex-col md:overflow-hidden"
     >
       <div className="flex items-center p-4 justify-between">
-        <div className="text-dark text-lg font-medium">Filters</div>
+        <div className="text-dark text-lg font-medium">
+          <TranslatableText text="Filters" />
+        </div>
         <Link
           id="filters_popup_close_button"
           className="inline-block"
@@ -174,7 +177,7 @@ export default function FiltersPopup({
             id="is_advanced_filters"
           />
           <legend className="text-xs font-semibold leading-6 text-dark">
-            Service type
+            <TranslatableText text="Service type" />
           </legend>
           <div className="mt-2 grid gap-2 sm:gap-5 grid-cols-3">
             <CategoryFilterLabel
@@ -229,7 +232,7 @@ export default function FiltersPopup({
         </fieldset>
         <fieldset className="mt-6">
           <legend className="text-xs font-semibold leading-6 text-dark">
-            Age
+            <TranslatableText text="Age" />
           </legend>
           <div className="mt-2 flex w-full">
             <input
@@ -260,7 +263,7 @@ export default function FiltersPopup({
           className="outline-button block flex-1 flex-shrink-0"
           href={`/${LOCATION_ROUTE}`}
         >
-          Clear all
+          <TranslatableText text="Clear All" />
         </Link>
         <Link
           href={getUrlWithoutFilterParameter(

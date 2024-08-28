@@ -11,6 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/pagination";
+import { TranslatableText } from "@/components/translatable-text";
 
 export function AboutUsPage() {
   return (
@@ -19,17 +20,13 @@ export function AboutUsPage() {
         <div className="px-5 max-w-3xl mx-auto">
           <div className="flex flex-col items-center justify-center">
             <h1 className="text-black text-2xl md:text-4xl mb-10 text-center font-extrabold">
-              About Us
+              <TranslatableText text="About Us" />
             </h1>
             <p className="text-dark text-center mb-8">
-              YourPeer is a Streetlives product. Streetlives is a US nonprofit
-              based in New York City.
+              <TranslatableText text="YourPeer is a Streetlives product. Streetlives is a US nonprofit based in New York City." />
             </p>
             <p className="text-dark text-center">
-              We build technology in collaboration with unhoused people, people
-              with lived experience of homelessness, New York social service
-              providers, government, funders, and other system stakeholders in a
-              whole-of-community partnership.
+              <TranslatableText text="We build technology in collaboration with unhoused people, people with lived experience of homelessness, New York social service providers, government, funders, and other system stakeholders in a whole-of-community partnership." />
             </p>
 
             <div className="flex justify-center">
@@ -47,13 +44,10 @@ export function AboutUsPage() {
         <div className="px-5 max-w-5xl mx-auto">
           <div className="flex flex-col mb-8 items-center justify-center max-w-5xl mx-auto">
             <h2 className="text-gray-900 font-bold text-xl md:text-3xl mb-6 text-center">
-              Our information is peer-validated
+              <TranslatableText text="Our information is peer-validated" />
             </h2>
             <p className="text-dark text-base text-center">
-              YourPeer&apos;s social service information is validated by our
-              information specialists who all have lived experiences navigating
-              the support system. They work hard to collect social
-              services&apos; information and keep them up-to-date.
+              <TranslatableText text="YourPeer's social service information is validated by our information specialists who all have lived experiences navigating the support system. They work hard to collect social services' information and keep them up-to-date." />{" "}
             </p>
           </div>
 
@@ -78,11 +72,11 @@ export function AboutUsPage() {
                   className="text-gray-900 font-medium text-lg mb-2 text-center"
                   translate="no"
                 >
-                  doobneek (they/them)
+                  <TranslatableText text="doobneek" />{" "}
+                  <TranslatableText text="(they/them)" />
                 </h3>
                 <div className="text-base text-gray-800 text-center">
-                  I am passionate about helping others and participate in NYC
-                  DYCD’s plans to eradicate homelessness.
+                  <TranslatableText text="I am passionate about helping others and participate in NYC DYCD’s plans to eradicate homelessness." />
                 </div>
               </div>
             </SwiperSlide>
@@ -100,11 +94,11 @@ export function AboutUsPage() {
                   className="text-gray-900 font-medium text-lg mb-2 text-center"
                   translate="no"
                 >
-                  Kiesha (she/her)
+                  <TranslatableText text="Kiesha" />{" "}
+                  <TranslatableText text="(she/her)" />
                 </h3>
                 <div className="text-base text-gray-800 text-center">
-                  Because of my previous work experience, I’m knowledgeable
-                  about health-related services.
+                  <TranslatableText text="Because of my previous work experience, I’m knowledgeable about health-related services." />
                 </div>
               </div>
             </SwiperSlide>
@@ -121,11 +115,11 @@ export function AboutUsPage() {
                   className="text-gray-900 font-medium text-lg mb-2 text-center"
                   translate="no"
                 >
-                  Gavilán (he/him)
+                  <TranslatableText text="Gavilán" />{" "}
+                  <TranslatableText text="(he/him)" />
                 </h3>
                 <div className="text-base text-gray-800 text-center">
-                  My background in user research, marketing, and lived
-                  experience helps develop and promote YourPeer.
+                  <TranslatableText text="My background in user research, marketing, and lived experience helps develop and promote YourPeer." />
                 </div>
               </div>
             </SwiperSlide>
@@ -139,11 +133,11 @@ export function AboutUsPage() {
                   />
                 </div>
                 <h3 className="text-gray-900 font-medium text-lg mb-2 text-center">
-                  Anthony (he/him)
+                  <TranslatableText text="Anthony" />{" "}
+                  <TranslatableText text="(he/him)" />
                 </h3>
                 <div className="text-base text-gray-800 text-center">
-                  I have experience working with students and families and
-                  personally navigating homelessness in NYC.
+                  <TranslatableText text="I have experience working with students and families and personally navigating homelessness in NYC." />
                 </div>
               </div>
             </SwiperSlide>
@@ -157,11 +151,11 @@ export function AboutUsPage() {
                   />
                 </div>
                 <h3 className="text-gray-900 font-medium text-lg mb-2 text-center">
-                  Liz (she/her)
+                  <TranslatableText text="Liz" />{" "}
+                  <TranslatableText text="(she/her)" />
                 </h3>
                 <div className="text-base text-gray-800 text-center">
-                  I&apos;m naturally eager to support my community because I
-                  want the future generation to avoid facing my predicament.
+                  <TranslatableText text="I'm naturally eager to support my community because I want the future generation to avoid facing my predicament." />
                 </div>
               </div>
             </SwiperSlide>

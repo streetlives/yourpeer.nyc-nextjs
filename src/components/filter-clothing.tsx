@@ -15,6 +15,7 @@ import {
 import { getUrlWithSubCategoryAddedOrRemoved } from "./navigation";
 import { RequirementFieldset } from "./requirements-fieldset";
 import { useNormalizedSearchParams } from "./use-normalized-search-params";
+import { TranslatableText } from "./translatable-text";
 
 export default function FilterClothing() {
   const router = useRouter();
@@ -80,7 +81,7 @@ export default function FilterClothing() {
     <>
       <fieldset className="mt-6">
         <legend className="text-xs font-semibold leading-6 text-dark">
-          Clothing type
+          <TranslatableText text="Clothing type" />
         </legend>
         <div className="mt-2 flex w-full">
           <label
@@ -88,7 +89,7 @@ export default function FilterClothing() {
               null,
               commonClasses
                 .concat("rounded-l-lg")
-                .concat(!clothingParam ? selectedClasses : notSelectedClasses),
+                .concat(!clothingParam ? selectedClasses : notSelectedClasses)
             )}
           >
             <input
@@ -101,7 +102,7 @@ export default function FilterClothing() {
               aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
               onClick={handleIsAnyClick}
             />
-            <span>Any</span>
+            <TranslatableText text="Any" />
           </label>
           <label
             className={classNames.call(
@@ -109,8 +110,8 @@ export default function FilterClothing() {
               commonClasses.concat(
                 clothingParam == CLOTHING_PARAM_CASUAL_VALUE
                   ? selectedClasses
-                  : notSelectedClasses,
-              ),
+                  : notSelectedClasses
+              )
             )}
           >
             <input
@@ -125,7 +126,7 @@ export default function FilterClothing() {
               className="sr-only"
               onClick={handleIsCasualClick}
             />
-            <span>Casual</span>
+            <TranslatableText text="Casual" />
           </label>
           <label
             className={classNames.call(
@@ -135,8 +136,8 @@ export default function FilterClothing() {
                 .concat(
                   clothingParam == CLOTHING_PARAM_PROFESSIONAL_VALUE
                     ? selectedClasses
-                    : notSelectedClasses,
-                ),
+                    : notSelectedClasses
+                )
             )}
           >
             <input
@@ -151,7 +152,7 @@ export default function FilterClothing() {
               className="sr-only"
               onClick={handleIsProfessionalClick}
             />
-            <span>Professional</span>
+            <TranslatableText text="Professional" />
           </label>
         </div>
       </fieldset>

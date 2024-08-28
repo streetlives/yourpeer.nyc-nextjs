@@ -9,6 +9,7 @@
 import { useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import Link from "next/link";
+import { TranslatableText } from "./translatable-text";
 
 interface OffCanvasMenuProps {
   open: boolean;
@@ -93,7 +94,9 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                         className="inline-flex items-center text-[13px] sm:text-xs font-medium text-black space-x-1"
                         id="quickExitLink"
                       >
-                        <span className="inline-block">Quick Exit</span>
+                        <span className="inline-block">
+                          <TranslatableText text="Quick Exit" />
+                        </span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"

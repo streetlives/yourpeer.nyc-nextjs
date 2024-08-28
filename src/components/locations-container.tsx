@@ -19,6 +19,7 @@ import {
 import { LocationsContainerPager } from "./locations-container-pager";
 import classNames from "classnames";
 import { getUrlWithNewCategory } from "./navigation";
+import { TranslatableText } from "./translatable-text";
 
 function NoLocationsFound({ searchParams }: { searchParams: SearchParams }) {
   return (
@@ -110,21 +111,23 @@ export default function LocationsContainer({
       <div className="flex-1 flex flex-col">
         <div className="text-sm px-6 py-4 flex items-center border-b border-dotted border-neutral-200 justify-between">
           <h1>
-            <span>
-              {category === "shelters-housing"
-                ? "All popular Shelter & Housing locations"
-                : category === "food"
-                  ? "All popular Food locations"
-                  : category === "clothing"
-                    ? "All popular Clothing locations"
-                    : category === "personal-care"
-                      ? "All popular Personal care locations"
-                      : category === "health-care"
-                        ? "All popular Health locations"
-                        : category === "other"
-                          ? "All popular Other locations"
-                          : "All service locations"}
-            </span>
+            <TranslatableText
+              text={
+                category === "shelters-housing"
+                  ? "All popular Shelter & Housing locations"
+                  : category === "food"
+                    ? "All popular Food locations"
+                    : category === "clothing"
+                      ? "All popular Clothing locations"
+                      : category === "personal-care"
+                        ? "All popular Personal care locations"
+                        : category === "health-care"
+                          ? "All popular Health locations"
+                          : category === "other"
+                            ? "All popular Other locations"
+                            : "All service locations"
+              }
+            />
           </h1>
         </div>
         {yourPeerLegacyLocationData.length ? (
@@ -202,7 +205,7 @@ export default function LocationsContainer({
                       {CATEGORIES.map((serviceCategory) => {
                         const servicesWrapper = getServicesWrapper(
                           serviceCategory,
-                          location,
+                          location
                         );
                         return servicesWrapper?.services.length ? (
                           <li
@@ -211,7 +214,7 @@ export default function LocationsContainer({
                           >
                             <img
                               src={getIconPath(
-                                CATEGORY_ICON_SRC_MAP[serviceCategory],
+                                CATEGORY_ICON_SRC_MAP[serviceCategory]
                               )}
                               className="flex-shrink-0 max-h-5"
                               alt=""

@@ -11,6 +11,7 @@ import QuickExit from "./quick-exit";
 import SearchForm from "./search-form";
 import { useState } from "react";
 import { GTranslateSelect } from "./gtranslate-select";
+import { TranslatableText } from "./translatable-text";
 
 export const LocationsNavbarResourceRoutes = () => {
   const [open, setOpen] = useState(false);
@@ -113,7 +114,9 @@ export const LocationsNavbarCompanyRoutes = () => {
               className="inline-flex items-center text-[13px] sm:text-xs font-medium text-black space-x-1"
               id="quickExitLink"
             >
-              <span className="inline-block">Quick Exit</span>
+              <span className="inline-block">
+                <TranslatableText text="Quick Exit" />
+              </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

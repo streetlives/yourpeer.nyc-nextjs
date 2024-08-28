@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import OffCanvasMenu from "./OffCanvasMenu";
 import Link from "next/link";
 import { GTranslateSelect } from "./gtranslate-select";
+import { TranslatableText } from "./translatable-text";
 
 export default function Navbar({ background = true }) {
   const [open, setOpen] = useState(false);
@@ -73,7 +74,9 @@ export default function Navbar({ background = true }) {
               id="quickExitLink"
               className="flex-shrink-0 inline-flex ml-auto items-center text-[10px] sm:text-xs font-medium text-black space-x-1 truncate"
             >
-              <span className="inline-block">Quick Exit</span>
+              <span className="inline-block">
+                <TranslatableText text="Quick Exit" />
+              </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

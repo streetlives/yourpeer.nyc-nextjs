@@ -14,6 +14,7 @@ import {
 } from "./common";
 import { getUrlWithSubCategoryAddedOrRemoved } from "./navigation";
 import { useNormalizedSearchParams } from "./use-normalized-search-params";
+import { TranslatableText } from "./translatable-text";
 
 export default function FilterHousing() {
   const router = useRouter();
@@ -77,7 +78,7 @@ export default function FilterHousing() {
   return (
     <fieldset className="mt-6">
       <legend className="text-xs font-semibold leading-6 text-dark">
-        Shelter & Housing type
+        <TranslatableText text="Shelter & Housing type" />
       </legend>
       <div className="mt-2 flex w-full">
         <label
@@ -85,7 +86,7 @@ export default function FilterHousing() {
             null,
             commonClasses
               .concat("rounded-l-lg")
-              .concat(!shelterParam ? selectedClasses : notSelectedClasses),
+              .concat(!shelterParam ? selectedClasses : notSelectedClasses)
           )}
         >
           <input
@@ -98,7 +99,7 @@ export default function FilterHousing() {
             aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
             onClick={handleIsAnyClick}
           />
-          <span>Any</span>
+          <TranslatableText text="Any" />
         </label>
         <label
           className={classNames.call(
@@ -106,8 +107,8 @@ export default function FilterHousing() {
             commonClasses.concat(
               shelterParam == SHELTER_PARAM_SINGLE_VALUE
                 ? selectedClasses
-                : notSelectedClasses,
-            ),
+                : notSelectedClasses
+            )
           )}
         >
           <input
@@ -122,7 +123,7 @@ export default function FilterHousing() {
             aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
             onClick={handleIsSingleAdultClick}
           />
-          <span>Single Adult</span>
+          <TranslatableText text="Single Adult" />
         </label>
         <label
           className={classNames.call(
@@ -132,8 +133,8 @@ export default function FilterHousing() {
               .concat(
                 shelterParam == SHELTER_PARAM_FAMILY_VALUE
                   ? selectedClasses
-                  : notSelectedClasses,
-              ),
+                  : notSelectedClasses
+              )
           )}
         >
           <input
@@ -148,7 +149,7 @@ export default function FilterHousing() {
             aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
             onClick={handleIsFamiliesClick}
           />
-          <span>Families</span>
+          <TranslatableText text="Families"/>
         </label>
       </div>
     </fieldset>
