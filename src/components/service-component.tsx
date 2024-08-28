@@ -12,6 +12,7 @@ import {
   YourPeerLegacyScheduleData,
   YourPeerLegacyServiceData,
 } from "./common";
+import { TranslatableText } from "./translatable-text";
 
 const moment = require("moment-strftime");
 
@@ -188,7 +189,9 @@ export default function Service({
           id="collapsible"
           onClick={toggleIsExpanded}
         >
-          <span> {service.name} </span>
+          {service.name ? (
+            <TranslatableText text={service.name} expectTranslation={false} />
+          ) : undefined}
           {service.closed ? (
             <span className="text-danger">(Suspended)</span>
           ) : undefined}

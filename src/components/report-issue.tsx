@@ -118,11 +118,14 @@ export function ReportIssueForm({
                           type="checkbox"
                           name="issuePart"
                           className="w-5 h-5 text-primary !border-dark !border ring-dark focus:ring-dark issue"
-                        />
-                        <span className="text-xs text-dark mt-0.5">
-                          {" "}
-                          {service.name}{" "}
-                        </span>
+                        />{" "}
+                        {service.name ? (
+                          <TranslatableText
+                            className="text-xs text-dark mt-0.5"
+                            text={service.name}
+                            expectTranslation={false}
+                          />
+                        ) : undefined}{" "}
                       </label>
                     ))}
                   </div>

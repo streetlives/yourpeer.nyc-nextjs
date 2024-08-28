@@ -29,6 +29,7 @@ import FilterClothing from "./filter-clothing";
 import FilterPersonalCare from "./filter-personal-care";
 import { useNormalizedSearchParams } from "./use-normalized-search-params";
 import { TranslatableText } from "./translatable-text";
+import { useTranslatedText } from "./use-translated-text-hook";
 
 function CategoryFilterLabel({
   labelCategory,
@@ -75,7 +76,7 @@ function CategoryFilterLabel({
         className="max-h-8 w-8 h-8 object-contain"
         alt=""
       />
-      <div className="text-center text-xs text-dark mt-3 truncate">
+      <div className="text-center text-xs text-dark mt-3">
         <TranslatableText text={labelText} />
       </div>
     </Link>
@@ -93,6 +94,10 @@ export default function FiltersPopup({
   const pathname = usePathname();
   const { normalizedSearchParams, ageParam, search, setAgeParam } =
     useNormalizedSearchParams();
+
+  const ageTranslation = useTranslatedText({
+    text: "Enter Age",
+  }) as string;
 
   console.log(
     "search",
@@ -135,7 +140,7 @@ export default function FiltersPopup({
       id="filters_popup"
       className="bg-white fixed md:absolute inset-x-0 top-[49.6px] md:top-0 bottom-0 md:h-full z-40 flex flex-col md:overflow-hidden"
     >
-      <div className="flex items-center p-4 justify-between">
+      <div className="flex items-center m-4 justify-between">
         <div className="text-dark text-lg font-medium">
           <TranslatableText text="Filters" />
         </div>
@@ -239,7 +244,7 @@ export default function FiltersPopup({
               type="number"
               style={{ width: "100%", borderRadius: ".25rem" }}
               id="age_filter"
-              placeholder="Enter Age"
+              placeholder={ageTranslation}
               min="0"
               max="120"
               aria-labelledby="age_filter-0-label"
@@ -258,24 +263,60 @@ export default function FiltersPopup({
         {category === "clothing" ? <FilterClothing /> : undefined}
         {category === "personal-care" ? <FilterPersonalCare /> : undefined}
       </form>
-      <div className="p-4 flex items-center gap-x-4">
-        <Link
-          className="outline-button block flex-1 flex-shrink-0"
-          href={`/${LOCATION_ROUTE}`}
-        >
-          <TranslatableText text="Clear All" />
-        </Link>
-        <Link
-          href={getUrlWithoutFilterParameter(
-            pathname,
-            normalizedSearchParams,
-            SHOW_ADVANCED_FILTERS_PARAM,
-          )}
-          className="primary-button flex-1 block flex-shrink-0 px-5 truncate"
-        >
-          show {numLocationResults} results
-        </Link>
-      </div>
+      <table className="w-full">
+        <tbody>
+          <tr>
+            <td className="w-1/2 relative">
+              <div
+                style={{
+                  position: "absolute",
+                  top: "1rem",
+                  bottom: "1rem",
+                  left: "1rem",
+                  right: ".5rem",
+                }}
+              >
+                <Link
+                  className="outline-button block"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                  href={`/${LOCATION_ROUTE}`}
+                >
+                  <TranslatableText
+                    text="Clear All"
+                    className="block text-center w-full"
+                  />
+                </Link>
+              </div>
+            </td>
+            <td
+              style={{
+                width: "50%",
+                paddingLeft: ".5rem",
+                paddingRight: "1rem",
+                paddingTop: "1rem",
+                paddingBottom: "1rem",
+              }}
+            >
+              <Link
+                href={getUrlWithoutFilterParameter(
+                  pathname,
+                  normalizedSearchParams,
+                  SHOW_ADVANCED_FILTERS_PARAM,
+                )}
+                className="primary-button block px-5"
+              >
+                show {numLocationResults} results
+              </Link>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }

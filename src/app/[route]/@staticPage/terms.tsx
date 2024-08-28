@@ -427,10 +427,12 @@ export function TermsPage() {
                     contact the Complaint Assistance Unit of the Division of
                     Consumer Services of the California Department of Consumer
                     Affairs in writing at 1625 N. Market Blvd., Suite S-202,
-                    Sacramento, California 95834, or by telephone at (800)
-                    952-5210 in order to resolve a complaint regarding the
-                    service or to receive further information regarding use of
-                    the service.
+                    Sacramento, California 95834, or by telephone at
+                  </span>{" "}
+                  <a href="tel:+1-800-952-5210">(800) 952-5210</a>{" "}
+                  <span>
+                    in order to resolve a complaint regarding the service or to
+                    receive further information regarding use of the service.
                   </span>
                 </p>
               </li>

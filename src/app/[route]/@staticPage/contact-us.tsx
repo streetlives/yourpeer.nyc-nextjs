@@ -19,17 +19,17 @@ export function ContactUsPage() {
           </p>
           <p className="text-dark text-center mb-6">
             <TranslatableText text="If you have general questions or feedback for us, please email us at" />{" "}
-            <a href="mailto:yourpeer@streetlives.nyc" className="link">
+            <a href="mailto:yourpeer@streetlives.nyc" className="link notranslate">
               yourpeer@streetlives.nyc
             </a>
-            <span>.</span>
+            <span className="notranslate">.</span>
           </p>
           <p className="text-dark text-center mb-6">
             <TranslatableText text="If are an organization or individual interested in working with us please email us at" />{" "}
-            <a href="mailto:yourpeerpartner@streetlives.nyc" className="link">
+            <a href="mailto:yourpeerpartner@streetlives.nyc" className="link notranslate">
               yourpeerpartner@streetlives.nyc
             </a>
-            <span>.</span>
+            <span className="notranslate">.</span>
           </p>
         </div>
       </div>

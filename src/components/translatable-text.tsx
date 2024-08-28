@@ -1,41 +1,25 @@
 "use client";
 
-import { useContext } from "react";
-import {
-  getTargetLanguage,
-  LanguageTranslationContext,
-  LanguageTranslationContextType,
-} from "./language-translation-context";
 import classNames from "classnames";
-import translations from "./translations";
-import assert from "assert";
+import { useTranslatedText } from "./use-translated-text-hook";
 
 export function TranslatableText({
   text,
   id,
   className,
+  expectTranslation = true,
 }: {
   text: string;
   id?: string;
   className?: string;
+  expectTranslation?: boolean;
 }) {
-  const { gTranslateCookie } = useContext(
-    LanguageTranslationContext,
-  ) as LanguageTranslationContextType;
+  const translation = useTranslatedText({
+    text,
+    id,
+    expectTranslation,
+  });
 
-  const targetLanguage = gTranslateCookie
-    ? getTargetLanguage(gTranslateCookie)
-    : null;
-  const targetLanguageTranslations =
-    targetLanguage && translations[targetLanguage];
-  const translation =
-    targetLanguageTranslations &&
-    ((id && translations[targetLanguage][id]) ||
-      translations[targetLanguage][text]);
-  assert(
-    !targetLanguageTranslations || translation,
-    `Expected a translation to exist for target language ${targetLanguage} and translatable text "${text}"`,
-  );
   const classnames = `${className ? `${className} ` : ""}${classNames({ notranslate: !!translation })}`;
   return (
     <span id={id} className={classnames}>

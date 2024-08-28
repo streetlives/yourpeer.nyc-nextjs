@@ -56,7 +56,9 @@ export function AboutUsPage() {
             className="w-full h-auto !py-12 carousel-wrapper"
             modules={[Pagination]}
             spaceBetween={50}
-            slidesPerView={3}
+            slidesPerView={
+              typeof window !== "undefined" && window.innerWidth <= 600 ? 1 : 3
+            }
             pagination={{ clickable: true }}
           >
             <SwiperSlide className="swiper-slide w-full">

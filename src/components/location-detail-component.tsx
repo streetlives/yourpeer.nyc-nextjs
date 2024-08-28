@@ -245,7 +245,7 @@ export default function LocationDetailComponent({
                 <span className="text-green truncate">
                   <span>
                     <span>Validated&nbsp;</span>
-                    <span> {location.last_updated} </span>
+                    <span>{location.last_updated}</span>
                   </span>
                 </span>
               </p>
