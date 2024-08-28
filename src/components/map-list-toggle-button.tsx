@@ -8,6 +8,7 @@
 
 import { useContext } from "react";
 import { SearchContext, SearchContextType } from "./search-context";
+import { TranslatableText } from "./translatable-text";
 
 export default function MapListToggleButton() {
   const { showMapViewOnMobile, setShowMapViewOnMobile } = useContext(
@@ -30,7 +31,7 @@ export default function MapListToggleButton() {
             className="w-5 max-h-5 object-contain"
             style={{ display: "inline" }}
           />
-          <span>View list</span>
+          <TranslatableText text="View list" />
         </button>
       ) : (
         <button
@@ -41,7 +42,7 @@ export default function MapListToggleButton() {
             src="/img/icons/map-icon.svg"
             className="w-5 max-h-5 object-contain"
           />
-          <span>View map</span>
+          <TranslatableText text="View map" />
         </button>
       )}
     </div>

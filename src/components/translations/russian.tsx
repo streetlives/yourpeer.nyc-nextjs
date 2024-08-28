@@ -129,6 +129,8 @@ const translations: Record<string, string> = {
   "All popular Health locations": "Все популярные центры здравоохранения",
   "All popular Other locations":
     "Все популярные центры предострадяющие разнообразные услуги",
+  "View map": "Открыть карту",
+  "View list": "Открыть лист",
 };
 
 export default translations;
