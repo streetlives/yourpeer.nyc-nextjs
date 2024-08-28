@@ -35,7 +35,7 @@ export async function getSidePanelComponentData({
   params: SubRouteParams;
 }): Promise<SidePanelComponentData> {
   console.log(params);
-  console.log(searchParams)
+  console.log(searchParams);
   const category = parseCategoryFromRoute(params.route);
   const subCategory = getParsedSubCategory(params);
   // FIXME: the string composition in the next line is a bit ugly. I should clean up the type used in this interface
@@ -47,7 +47,7 @@ export async function getSidePanelComponentData({
       ...parsedSearchParams,
       ...parsedSearchParams[REQUIREMENT_PARAM],
       ...taxonomiesResults,
-      sortBy: searchParams.sort && 'nearby'
+      sortBy: searchParams.sort && "nearby",
     });
 
   const yourPeerLegacyLocationData = locations.map((location) =>

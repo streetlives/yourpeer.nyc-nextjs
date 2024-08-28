@@ -232,7 +232,7 @@ export default function LocationsContainer({
                       {CATEGORIES.map((serviceCategory) => {
                         const servicesWrapper = getServicesWrapper(
                           serviceCategory,
-                          location
+                          location,
                         );
                         return servicesWrapper?.services.length ? (
                           <li
@@ -241,7 +241,7 @@ export default function LocationsContainer({
                           >
                             <img
                               src={getIconPath(
-                                CATEGORY_ICON_SRC_MAP[serviceCategory]
+                                CATEGORY_ICON_SRC_MAP[serviceCategory],
                               )}
                               className="flex-shrink-0 max-h-5"
                               alt=""
