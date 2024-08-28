@@ -6,17 +6,16 @@
 
 "use client";
 
-import { usePathname, useSearchParams } from "next/navigation";
-import { getUrlToNextOrPreviousPage } from "./navigation";
+// import { usePathname, useSearchParams } from "next/navigation";
 import { ChangeEvent } from "react";
 
 export function SortDropdown() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  // const pathname = usePathname();
+  // const searchParams = useSearchParams();
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target?.value)
-    console.log('hello')
+    console.log(e.target?.value);
+    console.log("hello");
   };
 
   return (
