@@ -124,43 +124,43 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                           href="/locations"
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          All Services
+                          <TranslatableText text="All Services" />
                         </Link>
                         <Link
                           href={"/shelters-housing"}
                           className="text-xl text-dark hover:text-gray-800 transition inline-flex space-x-1 items-center"
                         >
-                          Shelter & Housing
+                          <TranslatableText text="Shelter & Housing" />
                         </Link>
                         <Link
                           href="/food"
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Food
+                          <TranslatableText text="Food" />
                         </Link>
                         <Link
                           href="/clothing"
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Clothing
+                          <TranslatableText text="Clothing" />
                         </Link>
                         <Link
                           href={"/personal-care"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Personal Care
+                          <TranslatableText text="Personal Care" />
                         </Link>
                         <Link
                           href={"/health-care"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Health Care
+                          <TranslatableText text="Health Care" />
                         </Link>
                         <Link
                           href={"/other-services"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Other Services
+                          <TranslatableText text="Other Services" />
                         </Link>
                       </div>
                     ) : (
@@ -173,14 +173,14 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                           className="customTranslation text-xl text-dark hover:text-gray-800 transition"
                           data-text="Home"
                         >
-                          Home
+                          <TranslatableText text="Home" />
                         </Link>
                         <button
                           className="text-xl text-dark hover:text-gray-800 transition inline-flex space-x-1 items-center"
                           id="exploreServiceButton"
                           onClick={() => setNestedNav(true)}
                         >
-                          <span>Explore services</span>
+                          <TranslatableText text="Explore services" />
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -198,31 +198,31 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                           href={"/about-us"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          About
+                          <TranslatableText text="About" />
                         </Link>
                         <Link
                           href="/donate"
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Donate
+                          <TranslatableText text="Donate" />
                         </Link>
                         <Link
                           href="/contact-us"
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Contact Us
+                          <TranslatableText text="Contact Us" />
                         </Link>
                         <Link
                           href={"/privacy-policy"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Privacy
+                          <TranslatableText text="Privacy" />
                         </Link>
                         <Link
                           href={"/terms-of-use"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Terms
+                          <TranslatableText text="Terms" />
                         </Link>
                       </div>
                     )}

@@ -4,7 +4,8 @@ const translations: Record<string, string> = {
     "Бесплатные социальные услуги, проверенные людьми, прошедшими через сложные жизненные ситуации",
   "Search through 2400+ free support services across NYC":
     "Вы найдете более 2400+ сервисов для любых нужд по всему Нью-Йорку на нашей платформе.",
-  "Explore services": "Добро пожаловать, нажмите сюда.",
+  "Explore services": "Ознакомьтесь с услугами",
+  Home: "Домашняя страница",
   "Shelter & Housing": "Приюты для бездомных и соц. жилье",
   Food: "Еда",
   Clothing: "Одежда",
@@ -31,6 +32,7 @@ const translations: Record<string, string> = {
   Terms: "Условия использования",
   Contact: "Связаться с нами",
   "Contact us": "Связаться с нами",
+  "Contact Us": "Связаться с нами",
   Privacy: "Конфиденциальность",
   Donate: "Благотворительность",
   Resources: "Категории",
@@ -117,6 +119,7 @@ const translations: Record<string, string> = {
     "Опишите проблему ниже (пожалуйста, не вводите личную информацию)",
   Send: "Отправить",
   "All service locations": "Все филиалы",
+  "All Services": "Все филиалы",
   "All popular Shelter & Housing locations":
     "Все популярные приюты для бездомных и доступное жилье",
   "All popular Food locations": "Все популярные пункты раздачи еды",
