@@ -113,7 +113,7 @@ export default function FilterPersonalCare() {
     <>
       <fieldset className="mt-6">
         <legend className="text-xs font-semibold leading-6 text-dark">
-          <TranslatableText text="Amenities"/>
+          <TranslatableText text="Amenities" />
         </legend>
         <div className="mt-2 flex w-full flex-col space-y-4 ml-1">
           <PersonalCareLabel

@@ -86,7 +86,7 @@ export default function FilterHousing() {
             null,
             commonClasses
               .concat("rounded-l-lg")
-              .concat(!shelterParam ? selectedClasses : notSelectedClasses)
+              .concat(!shelterParam ? selectedClasses : notSelectedClasses),
           )}
         >
           <input
@@ -107,8 +107,8 @@ export default function FilterHousing() {
             commonClasses.concat(
               shelterParam == SHELTER_PARAM_SINGLE_VALUE
                 ? selectedClasses
-                : notSelectedClasses
-            )
+                : notSelectedClasses,
+            ),
           )}
         >
           <input
@@ -133,8 +133,8 @@ export default function FilterHousing() {
               .concat(
                 shelterParam == SHELTER_PARAM_FAMILY_VALUE
                   ? selectedClasses
-                  : notSelectedClasses
-              )
+                  : notSelectedClasses,
+              ),
           )}
         >
           <input
@@ -149,7 +149,7 @@ export default function FilterHousing() {
             aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
             onClick={handleIsFamiliesClick}
           />
-          <TranslatableText text="Families"/>
+          <TranslatableText text="Families" />
         </label>
       </div>
     </fieldset>

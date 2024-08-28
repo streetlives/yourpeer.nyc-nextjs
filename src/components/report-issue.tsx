@@ -99,13 +99,13 @@ export function ReportIssueForm({
               {CATEGORIES.filter((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location
+                  location,
                 );
                 return servicesWrapper.services.length;
               }).map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location
+                  location,
                 );
                 return (
                   <div key={serviceCategory}>

@@ -4,17 +4,21 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-'use client';
+"use client";
 
 import { TermsOfUseRussianTranslation } from "@/components/translations/terms";
 import { LOCATION_ROUTE } from "../../../components/common";
 import { useContext } from "react";
-import { getTargetLanguage, LanguageTranslationContext, LanguageTranslationContextType } from "@/components/language-translation-context";
+import {
+  getTargetLanguage,
+  LanguageTranslationContext,
+  LanguageTranslationContextType,
+} from "@/components/language-translation-context";
 
 export function TermsPage() {
   const governingLawInternalLinkId = "governing_law_footnote";
   const { gTranslateCookie } = useContext(
-    LanguageTranslationContext
+    LanguageTranslationContext,
   ) as LanguageTranslationContextType;
 
   const targetLanguage = gTranslateCookie

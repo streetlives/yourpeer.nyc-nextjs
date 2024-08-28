@@ -60,7 +60,7 @@ export default function FilterHours() {
   return (
     <fieldset className="mt-6" id="filter_hours">
       <legend className="text-xs font-semibold leading-6 text-dark">
-        <TranslatableText text="Opening hours"/>
+        <TranslatableText text="Opening hours" />
       </legend>
       <div className="mt-2 flex w-full">
         <label
@@ -81,7 +81,7 @@ export default function FilterHours() {
             aria-describedby="openingHours-0-description-0 openingHours-0-description-1"
             onClick={handleIsNotOpenNowClick}
           />
-          <TranslatableText text="Any"/>
+          <TranslatableText text="Any" />
         </label>
         <label
           className={classNames.call(
@@ -101,7 +101,7 @@ export default function FilterHours() {
             aria-describedby="openingHours-0-description-0 openingHours-0-description-1"
             onClick={handleIsOpenNowClick}
           />
-          <TranslatableText text="Open now"/>
+          <TranslatableText text="Open now" />
         </label>
       </div>
     </fieldset>

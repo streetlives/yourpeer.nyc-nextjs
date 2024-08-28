@@ -86,7 +86,7 @@ export default function FilterFood() {
             null,
             commonClasses
               .concat("rounded-l-lg")
-              .concat(!foodParam ? selectedClasses : notSelectedClasses)
+              .concat(!foodParam ? selectedClasses : notSelectedClasses),
           )}
         >
           <input
@@ -107,8 +107,8 @@ export default function FilterFood() {
             commonClasses.concat(
               foodParam == FOOD_PARAM_SOUP_KITCHEN_VALUE
                 ? selectedClasses
-                : notSelectedClasses
-            )
+                : notSelectedClasses,
+            ),
           )}
         >
           <input
@@ -121,7 +121,7 @@ export default function FilterFood() {
             className="sr-only"
             onClick={handleIsSoupKItchenClick}
           />
-          <TranslatableText text="Soup Kitchen"/>
+          <TranslatableText text="Soup Kitchen" />
         </label>
         <label
           className={classNames.call(
@@ -131,8 +131,8 @@ export default function FilterFood() {
               .concat(
                 foodParam == FOOD_PARAM_PANTRY_VALUE
                   ? selectedClasses
-                  : notSelectedClasses
-              )
+                  : notSelectedClasses,
+              ),
           )}
         >
           <input
@@ -143,7 +143,7 @@ export default function FilterFood() {
             className="sr-only"
             onClick={handleIsPantryClick}
           />
-          <TranslatableText text="Food Pantry"/>
+          <TranslatableText text="Food Pantry" />
         </label>
       </div>
     </fieldset>

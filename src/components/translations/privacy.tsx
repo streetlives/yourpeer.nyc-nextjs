@@ -2,7 +2,7 @@ import Link from "next/link";
 import { LOCATION_ROUTE, TERMS_OF_USE_ROUTE } from "../common";
 import { TranslatableText } from "../translatable-text";
 
-export function PrivacyPolicyRussianTranslation(){
+export function PrivacyPolicyRussianTranslation() {
   return (
     <>
       <section className="bg-white pt-28 lg:pt-32 lg:py-20 notranslate">
@@ -337,7 +337,7 @@ export function PrivacyPolicyRussianTranslation(){
             </p>
             <div>
               <Link href={`/${LOCATION_ROUTE}`} className="primary-button">
-                <TranslatableText text="Explore services"/>
+                <TranslatableText text="Explore services" />
               </Link>
             </div>
           </div>

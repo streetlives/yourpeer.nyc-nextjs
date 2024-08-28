@@ -4,12 +4,16 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-'use client';
+"use client";
 
 import Link from "next/link";
 import { LOCATION_ROUTE, TERMS_OF_USE_ROUTE } from "../../../components/common";
 import { useContext } from "react";
-import { getTargetLanguage, LanguageTranslationContext, LanguageTranslationContextType } from "@/components/language-translation-context";
+import {
+  getTargetLanguage,
+  LanguageTranslationContext,
+  LanguageTranslationContextType,
+} from "@/components/language-translation-context";
 import { PrivacyPolicyRussianTranslation } from "@/components/translations/privacy";
 
 export function PrivacyPage() {

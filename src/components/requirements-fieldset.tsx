@@ -75,7 +75,7 @@ export function RequirementFieldset() {
             aria-describedby="requirementType-0-description-0 requirementType-0-description-1"
             className="w-5 h-5 text-primary !border-dark !border ring-dark focus:ring-dark"
             checked={parsedRequirementParam.includes(
-              REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE
+              REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE,
             )}
             onChange={handleNoRequirementsChange}
           />
@@ -92,7 +92,7 @@ export function RequirementFieldset() {
             aria-describedby="requirementType-0-description-0 requirementType-0-description-1"
             className="w-5 h-5 text-primary !border-dark !border ring-dark focus:ring-dark"
             checked={parsedRequirementParam.includes(
-              REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE
+              REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE,
             )}
             onChange={handleReferralLetterChange}
           />
@@ -113,7 +113,7 @@ export function RequirementFieldset() {
             aria-describedby="requirementType-0-description-0 requirementType-0-description-1"
             className="w-5 h-5 text-primary !border-dark !border ring-dark focus:ring-dark"
             checked={parsedRequirementParam.includes(
-              REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE
+              REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE,
             )}
             onChange={handleRegisteredClientChange}
           />
