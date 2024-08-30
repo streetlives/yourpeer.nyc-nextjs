@@ -1,6 +1,3 @@
-import Link from "next/link";
-import { LOCATION_ROUTE } from "../common";
-import { TranslatableText } from "../translatable-text";
 import { YouAreNotAlone } from "../you-are-not-alone";
 
 export function TermsOfUseRussianTranslation() {

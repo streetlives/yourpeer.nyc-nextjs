@@ -2,7 +2,7 @@ import Link from "next/link";
 import { TranslatableText } from "./translatable-text";
 import { LOCATION_ROUTE } from "./common";
 
-export function YouAreNotAlone(){
+export function YouAreNotAlone() {
   return (
     <section className="py-12 bg-neutral-50">
       <div className="px-5 max-w-3xl mx-auto">

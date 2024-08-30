@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { LOCATION_ROUTE, TERMS_OF_USE_ROUTE } from "../common";
-import { TranslatableText } from "../translatable-text";
+import { TERMS_OF_USE_ROUTE } from "../common";
 import { YouAreNotAlone } from "../you-are-not-alone";
 
 export function PrivacyPolicyRussianTranslation() {
@@ -186,7 +185,7 @@ export function PrivacyPolicyRussianTranslation() {
                     законодательство. Обратите внимание, что обработка Вашего
                     запроса также может занять некоторое время. Если у Вас есть
                     вопросы, свяжитесь с нами по адресу
-                  </span>{' '}
+                  </span>{" "}
                   <a href="mailto:privacy@streetlives.nyc">
                     privacy@streetlives.nyc
                   </a>
