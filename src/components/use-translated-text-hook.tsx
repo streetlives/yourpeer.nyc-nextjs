@@ -53,7 +53,7 @@ export function getTranslatedText({
     targetLanguage && translations[targetLanguage];
   if (!targetLanguageTranslations) {
     // we don't support manual translations for this language
-    return text;
+    return null;
   }
   const translation =
     (id && targetLanguageTranslations[id]) || targetLanguageTranslations[text];
