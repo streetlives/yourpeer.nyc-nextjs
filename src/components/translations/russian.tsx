@@ -85,6 +85,7 @@ const translations: Record<string, string> = {
   "Clear All": "Сбросить фильтры",
   "Opening hours": "Часы работы",
   Any: "Любые",
+  '#filter-housing-Any': 'Любой',
   "Open now": "Открыто сейчас",
   "Shelter & Housing type": "Тип приюта или жилье",
   "Single Adult": "Для одиноких совершеннолетних людей",

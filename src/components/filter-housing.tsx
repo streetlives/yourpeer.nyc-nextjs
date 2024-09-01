@@ -99,7 +99,7 @@ export default function FilterHousing() {
             aria-describedby="accommodationType-0-description-0 accommodationType-0-description-1"
             onClick={handleIsAnyClick}
           />
-          <TranslatableText text="Any" />
+          <TranslatableText id="#filter-housing-Any" text="Any" />
         </label>
         <label
           className={classNames.call(
