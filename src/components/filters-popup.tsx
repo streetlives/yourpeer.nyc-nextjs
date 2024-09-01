@@ -244,7 +244,7 @@ export default function FiltersPopup({
         </fieldset>
         <fieldset className="mt-6">
           <legend className="text-xs font-semibold leading-6 text-dark">
-            <TranslatableText text="Age" />
+            <TranslatableText text="Age" id="#filters-popup-age-label" />
           </legend>
           <div className="mt-2 flex w-full">
             <input
@@ -318,7 +318,7 @@ export default function FiltersPopup({
                 )}
                 className="primary-button block px-5"
               >
-                show {numLocationResults} results
+                Show {numLocationResults} results
               </Link>
             </td>
           </tr>
