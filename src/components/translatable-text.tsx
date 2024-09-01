@@ -2,6 +2,12 @@
 
 import classNames from "classnames";
 import { useTranslatedText } from "./use-translated-text-hook";
+import { useContext } from "react";
+import {
+  getTargetLanguage,
+  LanguageTranslationContext,
+  LanguageTranslationContextType,
+} from "./language-translation-context";
 
 export function TranslatableText({
   text,
@@ -20,9 +26,21 @@ export function TranslatableText({
     expectTranslation,
   });
 
+  const { gTranslateCookie } = useContext(
+    LanguageTranslationContext,
+  ) as LanguageTranslationContextType;
+
+  const targetLanguage = gTranslateCookie
+    ? getTargetLanguage(gTranslateCookie)
+    : null;
+
   const classnames = `${className ? `${className} ` : ""}${classNames({ notranslate: !!translation })}`;
   return (
-    <span id={id} className={classnames}>
+    <span
+      id={id}
+      className={classnames}
+      lang={translation && targetLanguage ? targetLanguage : undefined}
+    >
       {translation || text}
     </span>
   );

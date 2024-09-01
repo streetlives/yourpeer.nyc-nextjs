@@ -6,7 +6,11 @@
 
 "use client";
 
-import { getTargetLanguage, LanguageTranslationContext, LanguageTranslationContextType } from "@/components/language-translation-context";
+import {
+  getTargetLanguage,
+  LanguageTranslationContext,
+  LanguageTranslationContextType,
+} from "@/components/language-translation-context";
 import { TranslatableText } from "@/components/translatable-text";
 import { useContext } from "react";
 

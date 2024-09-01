@@ -67,7 +67,7 @@ function CategoryFilterLabel({
         "rounded",
         isActive
           ? { "bg-primary": true, "border-black": true }
-          : { "bg-white": true, "border-gray-300": true }
+          : { "bg-white": true, "border-gray-300": true },
       )}
     >
       <input type="radio" className="sr-only" />
