@@ -67,7 +67,7 @@ function CategoryFilterLabel({
         "rounded",
         isActive
           ? { "bg-primary": true, "border-black": true }
-          : { "bg-white": true, "border-gray-300": true },
+          : { "bg-white": true, "border-gray-300": true }
       )}
     >
       <input type="radio" className="sr-only" />
@@ -76,7 +76,14 @@ function CategoryFilterLabel({
         className="max-h-8 w-8 h-8 object-contain"
         alt=""
       />
-      <div className="text-center text-xs text-dark mt-3">
+      <div
+        className="text-center text-xs text-dark mt-3"
+        style={{
+          width: "100%",
+          overflowWrap: "break-word",
+          hyphens: "auto",
+        }}
+      >
         <TranslatableText text={labelText} />
       </div>
     </Link>
