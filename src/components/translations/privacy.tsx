@@ -24,7 +24,7 @@ export function PrivacyPolicyRussianTranslation() {
                 предоставлены через веб-сайт Streetlives, Inc. («Streetlives»),
                 расположенный по адресу{" "}
               </span>{" "}
-              <Link href="https://yourpeer.nyc">https://yourpeer.nyc</Link>{" "}
+              <Link href="https://yourpeer.nyc">yourpeer.nyc</Link>{" "}
               <span>
                 («Сайт»). Политика конфиденциальности включена в и на нее
                 распространяются{" "}

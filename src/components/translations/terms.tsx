@@ -20,7 +20,7 @@ export function TermsOfUseRussianTranslation() {
                 Вашему доступу и использованию веб-сайта Streetlives,
                 расположенного по адресу
               </span>{" "}
-              <a href="https://yourpeer.nyc">https://yourpeer.nyc</a>
+              <a href="https://yourpeer.nyc">yourpeer.nyc</a>
               <span>
                 («Сайт»). «Streetlives» включает Streetlives и ее должностных
                 лиц, директоров, сотрудников, консультантов, филиалы, дочерние
