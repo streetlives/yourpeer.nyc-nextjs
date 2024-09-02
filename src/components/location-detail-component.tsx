@@ -265,7 +265,7 @@ export default function LocationDetailComponent({
                     target="_blank"
                     className="inline-block absolute bottom-4 right-4 z-0 bg-white shadow-sm rounded-full px-5 py-2 text-dark font-medium text-sm"
                   >
-                    View Street View
+                    <TranslatableText text="View Street View" />
                   </a>
                 </div>
               </div>
@@ -296,7 +296,7 @@ export default function LocationDetailComponent({
                           ? locationStubs
                               .filter(
                                 (locationStub) =>
-                                  locationStub.id !== location.id,
+                                  locationStub.id !== location.id
                               )
                               .map((locationStub) => (
                                 <LocationStubMarker
@@ -314,7 +314,7 @@ export default function LocationDetailComponent({
                   target="_blank"
                   className="inline-block absolute bottom-4 right-4 z-0 bg-white shadow rounded-full px-5 py-2 text-dark font-medium text-sm"
                 >
-                  View Street View
+                  <TranslatableText text="View Street View" />
                 </a>
               </div>
             </div>
@@ -491,14 +491,14 @@ export default function LocationDetailComponent({
               {(previousCategory
                 ? [previousCategory].concat(
                     CATEGORIES.filter(
-                      (category) => category !== previousCategory,
-                    ),
+                      (category) => category !== previousCategory
+                    )
                   )
                 : CATEGORIES
               ).map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location,
+                  location
                 );
                 return servicesWrapper?.services.length ? (
                   <LocationService
