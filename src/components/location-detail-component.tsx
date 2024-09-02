@@ -28,7 +28,7 @@ import {
 import { activeMarkerIcon, defaultZoom, mapStyles } from "./map-common";
 import { useCallback, useState } from "react";
 import { ReportIssueForm } from "./report-issue";
-import QuickExitLink from "./quick-exit-link";
+import QuickExit from "./quick-exit";
 import LocationStubMarker from "./location-stub-marker";
 import { Position } from "./map";
 import { Transition } from "@headlessui/react";
@@ -210,7 +210,7 @@ export default function LocationDetailComponent({
           </h1>
         </Transition>
 
-        <QuickExitLink />
+        <QuickExit />
       </div>
       {isShowingReportIssueForm ? (
         <ReportIssueForm
