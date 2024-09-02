@@ -8,9 +8,7 @@
 
 import React, { useEffect, useState } from "react";
 import OffCanvasMenu from "./OffCanvasMenu";
-import Link from "next/link";
 import { GTranslateSelect } from "./gtranslate-select";
-import { TranslatableText } from "./translatable-text";
 import QuickExit from "./quick-exit";
 
 export default function Navbar({ background = true }) {

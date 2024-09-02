@@ -11,7 +11,6 @@ import QuickExit from "./quick-exit";
 import SearchForm from "./search-form";
 import { useState } from "react";
 import { GTranslateSelect } from "./gtranslate-select";
-import { TranslatableText } from "./translatable-text";
 
 export const LocationsNavbarResourceRoutes = () => {
   const [open, setOpen] = useState(false);
