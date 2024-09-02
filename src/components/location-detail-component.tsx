@@ -296,7 +296,7 @@ export default function LocationDetailComponent({
                           ? locationStubs
                               .filter(
                                 (locationStub) =>
-                                  locationStub.id !== location.id
+                                  locationStub.id !== location.id,
                               )
                               .map((locationStub) => (
                                 <LocationStubMarker
@@ -491,14 +491,14 @@ export default function LocationDetailComponent({
               {(previousCategory
                 ? [previousCategory].concat(
                     CATEGORIES.filter(
-                      (category) => category !== previousCategory
-                    )
+                      (category) => category !== previousCategory,
+                    ),
                   )
                 : CATEGORIES
               ).map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location
+                  location,
                 );
                 return servicesWrapper?.services.length ? (
                   <LocationService
