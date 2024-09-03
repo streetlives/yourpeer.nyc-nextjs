@@ -4,16 +4,60 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import { TranslatableText } from "./translatable-text";
+'use client';
+
+import { useContext, useEffect, useState } from "react";
+import { useTranslatedText } from "./use-translated-text-hook";
+import { getTargetLanguage, LanguageTranslationContext, LanguageTranslationContextType } from "./language-translation-context";
+
+const LAYOUT_THRESHOLD = 370;
 
 export default function QuickExit() {
+  // FIXME: there is technical debt here - it would be better to clean this up and use CSS for layout instead
+  const sourceText = "Quick Exit";
+
+  const { gTranslateCookie } = useContext(
+    LanguageTranslationContext
+  ) as LanguageTranslationContextType;
+
+  const translation = useTranslatedText({
+    text: sourceText,
+  }) as string;
+
+  const targetLanguage = gTranslateCookie
+    ? getTargetLanguage(gTranslateCookie)
+    : null;
+
+  const textToRender = translation || sourceText;
+
+  const [firstWord, secondWord] = textToRender.split(/ +/);
+
+  const [screenWidth, setScreenWidth] = useState(window && window.innerWidth);
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setScreenWidth(window.innerWidth);
+    });
+  }, []);
+
   return (
     <a
       href="https://www.google.com"
       id="quickExitLink"
       className="flex-shrink-0 inline-flex ml-auto items-center text-[10px] sm:text-xs font-medium text-black space-x-1 truncate"
     >
-      <TranslatableText text="Quick Exit" className="inline-block" />
+      <span
+        className={`inline-block ${!gTranslateCookie || targetLanguage == "en" || translation ? "notranslate" : ""}`}
+      >
+        {screenWidth >= LAYOUT_THRESHOLD ? (
+          textToRender
+        ) : (
+          <>
+            <span>{firstWord}</span>
+            <br />
+            <span>{secondWord}</span>
+          </>
+        )}
+      </span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
