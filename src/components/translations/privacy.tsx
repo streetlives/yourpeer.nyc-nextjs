@@ -318,7 +318,7 @@ export function PrivacyPolicyRussianTranslation() {
               <br />
               <span>Wilmington, DE 19808</span>
             </address>
-            <p className="text-lg text-dark">
+            <p>
               <span>Последнее обновление&nbsp;</span>
               <time dateTime="2023-08-15">15 августа 2023 г</time>
               <span>.</span>

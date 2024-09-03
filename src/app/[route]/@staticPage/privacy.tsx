@@ -35,7 +35,7 @@ export function PrivacyPage() {
             Privacy Policy
           </h1>
           <div className="text-base text-dark prose">
-            <p className="text-lg text-dark">
+            <p>
               <span>Last Updated&nbsp;</span>
               <time dateTime="2023-08-15">August 15, 2023</time>
               <span>.</span>
