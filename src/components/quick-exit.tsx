@@ -4,11 +4,15 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-'use client';
+"use client";
 
 import { useContext, useEffect, useState } from "react";
 import { useTranslatedText } from "./use-translated-text-hook";
-import { getTargetLanguage, LanguageTranslationContext, LanguageTranslationContextType } from "./language-translation-context";
+import {
+  getTargetLanguage,
+  LanguageTranslationContext,
+  LanguageTranslationContextType,
+} from "./language-translation-context";
 
 const LAYOUT_THRESHOLD = 370;
 
@@ -17,7 +21,7 @@ export default function QuickExit() {
   const sourceText = "Quick Exit";
 
   const { gTranslateCookie } = useContext(
-    LanguageTranslationContext
+    LanguageTranslationContext,
   ) as LanguageTranslationContextType;
 
   const translation = useTranslatedText({
