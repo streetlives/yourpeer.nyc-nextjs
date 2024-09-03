@@ -14,11 +14,13 @@ export function TranslatableText({
   id,
   className,
   expectTranslation = true,
+  style
 }: {
   text: string;
   id?: string;
   className?: string;
   expectTranslation?: boolean;
+  style? : Record<string, string>
 }) {
   const translation = useTranslatedText({
     text,
@@ -40,6 +42,7 @@ export function TranslatableText({
       id={id}
       className={classnames}
       lang={translation && targetLanguage ? targetLanguage : undefined}
+      style={style}
     >
       {translation || text}
     </span>

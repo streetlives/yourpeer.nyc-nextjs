@@ -111,7 +111,15 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                           href={"/shelters-housing"}
                           className="text-xl text-dark hover:text-gray-800 transition inline-flex space-x-1 items-center"
                         >
-                          <TranslatableText text="Shelter & Housing" />
+                          <TranslatableText
+                            text="Shelter & Housing"
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              flexDirection: "column",
+                              textAlign: "center",
+                            }}
+                          />
                         </Link>
                         <Link
                           href="/food"
