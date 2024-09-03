@@ -42,7 +42,7 @@ export function MobileTray({
       ) : (
         <>
           <div className="flex items-start justify-between">
-            <h3 className="text-dark text-base font-medium">{location.name}</h3>
+            <h3 className="text-dark text-base font-medium notranslate">{location.name}</h3>
             <button
               className="text-dark ml-2"
               onClick={() => setLocationSlugClickedOnMobile(undefined)}
