@@ -73,8 +73,7 @@ export function MobileTray({
               </span>
               <span className="text-success truncate">
                 {" "}
-                <span>✓ Validated&nbsp;</span>
-                <span>{location.last_updated}</span>
+                <span>✓ Validated</span> <span>{location.last_updated}</span>
               </span>
             </p>
           </div>
@@ -111,7 +110,7 @@ export function MobileTray({
               {CATEGORIES.map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location,
+                  location
                 );
                 return servicesWrapper?.services.length ? (
                   <li
