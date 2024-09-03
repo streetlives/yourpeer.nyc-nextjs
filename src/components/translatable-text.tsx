@@ -14,13 +14,13 @@ export function TranslatableText({
   id,
   className,
   expectTranslation = true,
-  style
+  style,
 }: {
   text: string;
   id?: string;
   className?: string;
   expectTranslation?: boolean;
-  style? : Record<string, string>
+  style?: Record<string, string>;
 }) {
   const translation = useTranslatedText({
     text,
