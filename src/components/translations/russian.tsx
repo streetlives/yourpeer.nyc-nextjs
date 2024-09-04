@@ -241,6 +241,26 @@ const translations: Record<string, string> = {
   "Social Work": "Социальные работники ",
   "Adult Literacy, High School Equivalency, and ESOL":
     "Уроки для совершеннолетних, подготовка к школьным экзаменам и уроки английского",
+  "Advocacy for Stroke and Brain Injury Survivors":
+    "Защита интересов людей, переживших инсульт или травму мозга",
+  "Car Crash Survivors Support Groups":
+    "Группа поддержки потерпевших автокатастроф",
+  "Cooking class for survivors of trafficking and Domestic Violence":
+    "Кулинарные уроки для потерпевших работорговли и домашнего насилия",
+  "Dating Violence Survivor Support":
+    "Защита интересов потерпевших отношенческого насилия",
+  "Drug and Addiction Recovery": "Реабилитация наркозависимых",
+  "Free Survivor Recovery": "Бесплатная реабилитация потерпевших",
+  "Gun Violence Survivor Advocacy":
+    "Реабилитация потерпевших от насилия с применением огнестрельного оружия",
+  "Holocaust Survivor Services": "Услуги для людей, переживших холокост",
+  "Outpatient Drug and Addiction Recovery":
+    "Амбулаторное лечение для наркозависимых",
+  "Outpatient Opioid Recovery":
+    "Амбулаторное лечение для людей, зависимых он опиатов",
+  "Addiction Recovery": "Реабилитация для наркозависимых",
+  "Violent Crime Survivor Advocacy":
+    "Защита интересов потерпевших от насильственных уголовных правонарушений",
 };
 
 export default translations;
