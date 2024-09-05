@@ -140,7 +140,7 @@ const translations: Record<string, string> = {
   "View Street View": "Открыть панорамный вид входной группы",
   "Age requirement:": "Возрастное ограничение:",
   "People of all ages are welcome": "Предназначено для всех возрастов",
-  "#service-component-Open": "Открыто",
+  "#service-component-Open": "Открыто 24/7",
   "Only serves people who are clients of the organization":
     "Чтобы воспользоваться данной услугой Вы должны быть членом этой организации",
 
@@ -151,6 +151,7 @@ const translations: Record<string, string> = {
   "Social Services": "Социальные услуги ",
   "Clothing Pantry": "Пункт раздачи одежды ",
   "Case Management": "Социальные работники",
+  "Case management": "Социальные работники",
   "Mental Health": "Психологи и/или психиатры",
   "Community Services": "Общественные мероприятия и услуги ",
   Lunch: "Обед",

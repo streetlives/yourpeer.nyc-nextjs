@@ -84,7 +84,7 @@ export default function Service({
     return s;
   }
 
-  function renderSchedule(schedule: YourPeerLegacyScheduleData): string {
+  function renderSchedule(schedule: YourPeerLegacyScheduleData): JSX.Element {
     const weekdays = [
       "Monday",
       "Tuesday",
@@ -118,10 +118,10 @@ export default function Service({
         .every(
           (schedule) =>
             schedule.opens_at === "00:00:00" &&
-            schedule.closes_at === "23:59:00",
+            schedule.closes_at === "23:59:00"
         )
     ) {
-      return "24/7";
+      return <TranslatableText text="Open 24/7" id="#service-component-Open" />;
     }
 
     // hour range string -> list of weekdays
@@ -173,13 +173,13 @@ export default function Service({
           .map(([startDay, endDay]) =>
             startDay === endDay
               ? day_number_to_name(startDay)
-              : `${day_number_to_name(startDay)} to ${day_number_to_name(endDay)}`,
+              : `${day_number_to_name(startDay)} to ${day_number_to_name(endDay)}`
           )
           .join(", ")}  ${k}`;
-      },
+      }
     );
 
-    return `${group_strings.join("; ")}`;
+    return <span>{`Open ${group_strings.join("; ")}`}</span>;
   }
 
   return (
@@ -251,11 +251,7 @@ export default function Service({
                             </svg>
                           </span>
                           <p className="text-dark text-sm">
-                            <TranslatableText
-                              text="Open"
-                              id="#service-component-Open"
-                            />{" "}
-                            <span>{renderSchedule(service.schedule)}</span>
+                            {renderSchedule(service.schedule)}
                           </p>
                         </li>
                       ) : undefined}
