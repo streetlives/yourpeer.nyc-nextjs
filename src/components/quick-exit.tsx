@@ -36,7 +36,9 @@ export default function QuickExit() {
 
   const [firstWord, secondWord] = textToRender.split(/ +/);
 
-  const [screenWidth, setScreenWidth] = useState(window && window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(
+    typeof window !== "undefined" && window.innerWidth,
+  );
   useEffect(() => {
     window.addEventListener("resize", () => {
       setScreenWidth(window.innerWidth);
