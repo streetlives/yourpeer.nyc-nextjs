@@ -118,7 +118,7 @@ export default function Service({
         .every(
           (schedule) =>
             schedule.opens_at === "00:00:00" &&
-            schedule.closes_at === "23:59:00"
+            schedule.closes_at === "23:59:00",
         )
     ) {
       return <TranslatableText text="Open 24/7" id="#service-component-Open" />;
@@ -173,10 +173,10 @@ export default function Service({
           .map(([startDay, endDay]) =>
             startDay === endDay
               ? day_number_to_name(startDay)
-              : `${day_number_to_name(startDay)} to ${day_number_to_name(endDay)}`
+              : `${day_number_to_name(startDay)} to ${day_number_to_name(endDay)}`,
           )
           .join(", ")}  ${k}`;
-      }
+      },
     );
 
     return <span>{`Open ${group_strings.join("; ")}`}</span>;
