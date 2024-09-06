@@ -102,8 +102,9 @@ export default function FiltersPopup({
   const { normalizedSearchParams, ageParam, search, setAgeParam } =
     useNormalizedSearchParams();
 
+  const enterAgeSourceText = "Enter Age";
   const ageTranslation = useTranslatedText({
-    text: "Enter Age",
+    text: enterAgeSourceText,
   }) as string;
 
   console.log(
@@ -251,7 +252,7 @@ export default function FiltersPopup({
               type="number"
               style={{ width: "100%", borderRadius: ".25rem" }}
               id="age_filter"
-              placeholder={ageTranslation}
+              placeholder={ageTranslation || enterAgeSourceText}
               min="0"
               max="120"
               aria-labelledby="age_filter-0-label"
