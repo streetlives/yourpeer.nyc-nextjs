@@ -267,6 +267,37 @@ const translations: Record<string, string> = {
   "Addiction Recovery": "Реабилитация для наркозависимых",
   "Violent Crime Survivor Advocacy":
     "Защита интересов потерпевших от насильственных уголовных правонарушений",
+  "Case Management and Senior Services": "Социальные работники для престарелых",
+  "Community Food Pantry": "Пункт раздачи еды",
+  "Purple Apron Food Pantry": "Пункт раздачи еды «Перпл Эпрон»",
+  "Case Management, Housing, Behavioral Health, Primary Care, Harm Reduction":
+    "Социальные работники, доступное жилье, психиатры/психологи, терапевты, снижение риска от употребления наркотиков",
+  "Louise's Food Pantry": "Пункт раздачи еды «Луизэс»",
+  "Customer-Choice Food Pantry": "Пункт раздачи еды «Кастомер чойс»",
+  "Immigration and case Management":
+    "Социальные работники и иммиграционные услуги",
+  "Recovery Meetings": "Реабилитационные группы поддержки",
+  "Case Management and Housing Assistance":
+    "Социальные работники и доступное жилье",
+  "Mobile Food Pantry": "Передвижной пункт раздачи еды",
+  "Monthly Food Pantry": "Ежемесячная раздача еды",
+  "Case Management/Service Coordination": "Соц. работники/координация ухода",
+  "case management": "Социальные работники",
+  "Community Oriented Recovery and Empowerment (CORE)":
+    "Восстановление, ориентированное на сообщество, и расширение прав и возможностей (KOP)",
+  "Help 365-Case Management": "Хэлп 365 соц. служба",
+  "Food and Clothing Pantry": "Пункт раздачи еды и одежды",
+  "Events and Case Management": "Мероприятия и соц. услуги",
+  "Halal Food Pantry": "Пункт раздачи халяльной еды",
+  "Case Management and Other Supports": "Службы поддержки и соц. услуги",
+  "Center for Recovery and Wellness": "Центр реабилитации и здоровья",
+  "Food Pantry and Soup Kitchen": "Раздача еды и бесплатная столовая",
+  "Soup Kitchen and Food Pantry": "Раздача еды и бесплатная столовая",
+  "Case Management Services (HIV/AIDS)": "Соц. услуги для людей, живущих с ВИЧ",
+  "Social Services and Case Management": "Соц. услуги",
+  "Case Management, Housing Support, and Vocational Trainings":
+    "Социальные работники, доступное жилье и профессиональная подготовка",
+  "Clothing Pantry Sign-Up": "Регистрация для раздачи одежды",
 };
 
 export default translations;

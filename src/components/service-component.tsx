@@ -77,7 +77,7 @@ export default function Service({
     } else if (ageReq["age_max"] !== null) {
       s =
         targetLanguage === "ru"
-          ? `Моложе ${ageReq["age_max"]} лет`
+          ? `Для доступа, Вам должно быть не более, чем ${ageReq["age_max"]}`
           : `'Under ${ageReq["age_max"]}'`;
     }
 
