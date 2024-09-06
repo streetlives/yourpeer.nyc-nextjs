@@ -9,6 +9,7 @@ import { Footer } from "../components/footer";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import GTranslateWrapper from "@/components/gtranslate-wrapper";
+import { TranslatableText } from "@/components/translatable-text";
 
 export const metadata: Metadata = {
   title: "New York City Services & Resources For Unhoused People | YourPeer",
@@ -31,14 +32,14 @@ export default function HomePage() {
             className="customTranslation text-grey-900 font-extrabold text-3xl md:text-5xl text-center lg:leading-tight"
             data-text="Free support services validated by your peers"
           >
-            Free support services validated by your peers
+            <TranslatableText text="Free support services validated by your peers"></TranslatableText>
           </h1>
           <p className="text-base text-grey-900 text-center my-5 sm:my-6 font-semibold">
-            Search through 2400+ free support services across NYC
+            <TranslatableText text="Search through 2400+ free support services across NYC"></TranslatableText>
           </p>
           <div className="w-full max-w-sm mx-auto flex justify-center">
             <Link href="/locations" className="primary-button ">
-              Explore services
+              <TranslatableText text="Explore services" />
             </Link>
           </div>
         </div>
@@ -64,8 +65,8 @@ export default function HomePage() {
                 className="object-contain flex-shrink-0"
                 alt=""
               />
-              <div className="text-[13px] text-dark mt-2 font-semibold">
-                Shelter & Housing
+              <div className="text-[13px] text-dark mt-2 font-semibold text-center">
+                <TranslatableText text="Shelter & Housing" />
               </div>
             </Link>
           </li>
@@ -81,8 +82,8 @@ export default function HomePage() {
                 className="object-contain flex-shrink-0"
                 alt=""
               />
-              <div className="text-[13px] text-dark mt-2 font-semibold">
-                Food
+              <div className="text-[13px] text-dark mt-2 font-semibold text-center">
+                <TranslatableText text="Food" />
               </div>
             </Link>
           </li>
@@ -98,8 +99,8 @@ export default function HomePage() {
                 className="object-contain flex-shrink-0"
                 alt=""
               />
-              <div className="text-[13px] text-dark mt-2 font-semibold">
-                Clothing
+              <div className="text-[13px] text-dark mt-2 font-semibold text-center">
+                <TranslatableText text="Clothing" />
               </div>
             </Link>
           </li>
@@ -115,8 +116,8 @@ export default function HomePage() {
                 className="object-contain flex-shrink-0"
                 alt=""
               />
-              <div className="text-[13px] text-dark mt-2 font-semibold">
-                Personal care
+              <div className="text-[13px] text-dark mt-2 font-semibold text-center">
+                <TranslatableText text="Personal Care" />
               </div>
             </Link>
           </li>
@@ -132,8 +133,8 @@ export default function HomePage() {
                 className="object-contain flex-shrink-0"
                 alt=""
               />
-              <div className="text-[13px] text-dark mt-2 font-semibold">
-                Health
+              <div className="text-[13px] text-dark mt-2 font-semibold text-center">
+                <TranslatableText text="Health" />
               </div>
             </Link>
           </li>
@@ -149,8 +150,8 @@ export default function HomePage() {
                 className="object-contain flex-shrink-0"
                 alt=""
               />
-              <div className="text-[13px] text-dark mt-2 font-semibold">
-                Other
+              <div className="text-[13px] text-dark mt-2 font-semibold text-center">
+                <TranslatableText text="Other" />
               </div>
             </Link>
           </li>
@@ -173,7 +174,7 @@ export default function HomePage() {
               </div>
               <blockquote className="mt-6 mb-3">
                 <p className="text-gray-900 font-semibold text-xl text-center">
-                  YourPeer offers hope
+                  <TranslatableText text="YourPeer offers hope" />
                 </p>
               </blockquote>
 
@@ -196,8 +197,7 @@ export default function HomePage() {
               </div>
               <blockquote className="mt-6 mb-3">
                 <p className="text-gray-900 font-semibold text-xl text-center">
-                  Usually if I need something, I ask. But this is faster,
-                  easier, better.
+                  <TranslatableText text="Usually if I need something, I ask. But this is faster, easier, better." />
                 </p>
               </blockquote>
 
@@ -220,7 +220,7 @@ export default function HomePage() {
               </div>
               <blockquote className="mt-6 mb-3">
                 <p className="text-gray-900 font-semibold text-xl text-center">
-                  I know this information is good. It’s from people like me.
+                  <TranslatableText text="I know this information is good. It’s from people like me." />
                 </p>
               </blockquote>
 
@@ -238,7 +238,7 @@ export default function HomePage() {
       <section className="py-12 bg-white">
         <div className="mx-auto max-w-5xl px-5">
           <h2 className="text-center text-3xl text-gray-700 font-bold mb-9">
-            Our Partners
+            <TranslatableText text="Our Partners" />
           </h2>
           <div className="w-full grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 justify-center place-content-center items-center gap-x-3">
             <div className="flex items-center justify-center">
@@ -507,17 +507,16 @@ export default function HomePage() {
           </div>
 
           <p className="text-sm text-gray-800 text-center mb-6 px-5 mt-8 md:mt-16">
-            Food service information provided with the help of Hunter College
-            NYC Food Policy Center.
+            <TranslatableText text="Food service information provided with the help of Hunter College NYC Food Policy Center." />
           </p>
 
           <p className="text-sm text-gray-800 text-center mb-6 px-5">
-            <span>For more information, visit</span>
+            <TranslatableText text="For more information, visit" />{" "}
             <a
               href="https://www.nycfoodpolicy.org/food/"
               className="text-blue-700 underline hover:no-underline"
             >
-              https://www.nycfoodpolicy.org/food/
+              www.nycfoodpolicy.org/food
             </a>
           </p>
         </div>
@@ -532,16 +531,14 @@ export default function HomePage() {
               alt=""
             />
             <h2 className="text-3xl text-dark mb-8 text-center font-bold">
-              You’re not alone in this journey
+              <TranslatableText text="You’re not alone in this journey" />
             </h2>
             <p className="text-center text-gray-800 text-sm px-2 mb-5">
-              People rely on social services for many reasons. We’re building
-              YourPeer so it&apos;s easier for you to find the right service.
+              <TranslatableText text="People rely on social services for many reasons. We’re building YourPeer so it's easier for you to find the right service." />
             </p>
             <div>
               <Link href="/locations" className="primary-button">
-                {" "}
-                Explore services{" "}
+                <TranslatableText text="Explore services" />
               </Link>
             </div>
           </div>

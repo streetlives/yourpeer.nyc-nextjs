@@ -12,6 +12,7 @@ import {
   YourPeerLegacyLocationData,
 } from "./common";
 import { useState } from "react";
+import { TranslatableText } from "./translatable-text";
 
 export function ReportCompletedView() {
   return (
@@ -81,7 +82,7 @@ export function ReportIssueForm({
         <div id="reportView">
           <div id="stepOne">
             <div className="text-lg font-medium">
-              Which parts of the information have an issue?
+              <TranslatableText text="Which parts of the information have an issue?" />
             </div>
             <div className="flex flex-col mt-4">
               <label className="relative flex-1 flex space-x-2 cursor-pointer">
@@ -117,11 +118,14 @@ export function ReportIssueForm({
                           type="checkbox"
                           name="issuePart"
                           className="w-5 h-5 text-primary !border-dark !border ring-dark focus:ring-dark issue"
-                        />
-                        <span className="text-xs text-dark mt-0.5">
-                          {" "}
-                          {service.name}{" "}
-                        </span>
+                        />{" "}
+                        {service.name ? (
+                          <TranslatableText
+                            className="text-xs text-dark mt-0.5"
+                            text={service.name}
+                            expectTranslation={false}
+                          />
+                        ) : undefined}{" "}
                       </label>
                     ))}
                   </div>
@@ -134,8 +138,7 @@ export function ReportIssueForm({
               htmlFor="reportContent"
               className="text-base text-dark font-medium"
             >
-              Please describe the issue below (Please don&apos;t enter any
-              private information)
+              <TranslatableText text="Please describe the issue below (Please don't enter any private information)" />
             </label>
             <div className="mt-4">
               <textarea

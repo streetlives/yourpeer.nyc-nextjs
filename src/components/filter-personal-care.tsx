@@ -19,6 +19,7 @@ import { getUrlWithNewPersonalCareServiceSubCategoryAndFilterParameterAddedOrRem
 import { ChangeEvent } from "react";
 import { RequirementFieldset } from "./requirements-fieldset";
 import { useNormalizedSearchParams } from "./use-normalized-search-params";
+import { TranslatableText } from "./translatable-text";
 
 // TODO: route should get a type enum
 export default function FilterPersonalCare() {
@@ -102,7 +103,7 @@ export default function FilterPersonalCare() {
           checked={parsedAmenities.includes(amenitiesSubCategory)}
           onChange={onChange}
         />
-        <span className="text-xs text-dark mt-0.5">{label}</span>
+        <TranslatableText text={label} className="text-xs text-dark mt-0.5" />
         {subLabel ? <p className="text-gray-600">{subLabel}</p> : undefined}
       </label>
     );
@@ -112,7 +113,7 @@ export default function FilterPersonalCare() {
     <>
       <fieldset className="mt-6">
         <legend className="text-xs font-semibold leading-6 text-dark">
-          Amenities
+          <TranslatableText text="Amenities" />
         </legend>
         <div className="mt-2 flex w-full flex-col space-y-4 ml-1">
           <PersonalCareLabel

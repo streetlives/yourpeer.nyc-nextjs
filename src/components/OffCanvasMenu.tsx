@@ -9,6 +9,8 @@
 import { useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import Link from "next/link";
+import { TranslatableText } from "./translatable-text";
+import QuickExit from "./quick-exit";
 
 interface OffCanvasMenuProps {
   open: boolean;
@@ -88,25 +90,7 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                       </a>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <a
-                        href="https://www.google.com"
-                        className="inline-flex items-center text-[13px] sm:text-xs font-medium text-black space-x-1"
-                        id="quickExitLink"
-                      >
-                        <span className="inline-block">Quick Exit</span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                        >
-                          <path
-                            d="M10.79 16.29C11.18 16.68 11.81 16.68 12.2 16.29L15.79 12.7C16.18 12.31 16.18 11.68 15.79 11.29L12.2 7.7C11.81 7.31 11.18 7.31 10.79 7.7C10.4 8.09 10.4 8.72 10.79 9.11L12.67 11H4C3.45 11 3 11.45 3 12C3 12.55 3.45 13 4 13H12.67L10.79 14.88C10.4 15.27 10.41 15.91 10.79 16.29ZM19 3H5C3.89 3 3 3.9 3 5V8C3 8.55 3.45 9 4 9C4.55 9 5 8.55 5 8V6C5 5.45 5.45 5 6 5H18C18.55 5 19 5.45 19 6V18C19 18.55 18.55 19 18 19H6C5.45 19 5 18.55 5 18V16C5 15.45 4.55 15 4 15C3.45 15 3 15.45 3 16V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z"
-                            fill="#212121"
-                          />
-                        </svg>
-                      </a>
+                      <QuickExit />
                     </div>
                   </div>
                 </div>
@@ -121,43 +105,51 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                           href="/locations"
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          All Services
+                          <TranslatableText text="All Services" />
                         </Link>
                         <Link
                           href={"/shelters-housing"}
                           className="text-xl text-dark hover:text-gray-800 transition inline-flex space-x-1 items-center"
                         >
-                          Shelter & Housing
+                          <TranslatableText
+                            text="Shelter & Housing"
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              flexDirection: "column",
+                              textAlign: "center",
+                            }}
+                          />
                         </Link>
                         <Link
                           href="/food"
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Food
+                          <TranslatableText text="Food" />
                         </Link>
                         <Link
                           href="/clothing"
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Clothing
+                          <TranslatableText text="Clothing" />
                         </Link>
                         <Link
                           href={"/personal-care"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Personal Care
+                          <TranslatableText text="Personal Care" />
                         </Link>
                         <Link
                           href={"/health-care"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Health Care
+                          <TranslatableText text="Health Care" />
                         </Link>
                         <Link
                           href={"/other-services"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Other Services
+                          <TranslatableText text="Other Services" />
                         </Link>
                       </div>
                     ) : (
@@ -170,14 +162,14 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                           className="customTranslation text-xl text-dark hover:text-gray-800 transition"
                           data-text="Home"
                         >
-                          Home
+                          <TranslatableText text="Home" />
                         </Link>
                         <button
                           className="text-xl text-dark hover:text-gray-800 transition inline-flex space-x-1 items-center"
                           id="exploreServiceButton"
                           onClick={() => setNestedNav(true)}
                         >
-                          <span>Explore services</span>
+                          <TranslatableText text="Explore services" />
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -195,31 +187,31 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                           href={"/about-us"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          About
+                          <TranslatableText text="About" />
                         </Link>
                         <Link
                           href="/donate"
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Donate
+                          <TranslatableText text="Donate" />
                         </Link>
                         <Link
                           href="/contact-us"
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Contact Us
+                          <TranslatableText text="Contact Us" />
                         </Link>
                         <Link
                           href={"/privacy-policy"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Privacy
+                          <TranslatableText text="Privacy" />
                         </Link>
                         <Link
                           href={"/terms-of-use"}
                           className="text-xl text-dark hover:text-gray-800 transition"
                         >
-                          Terms
+                          <TranslatableText text="Terms" />
                         </Link>
                       </div>
                     )}

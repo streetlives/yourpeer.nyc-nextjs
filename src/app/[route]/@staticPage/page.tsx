@@ -14,7 +14,7 @@ import {
 } from "../../../components/common";
 import { AboutUsPage } from "./about-us";
 import { ContactUsPage } from "./contact-us";
-import { DonationPage } from "./dontate";
+import { DonationPage } from "./donate";
 import { TermsPage } from "./terms";
 import { PrivacyPage } from "./privacy";
 import { notFound } from "next/navigation";

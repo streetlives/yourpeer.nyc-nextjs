@@ -12,6 +12,7 @@ import {
   getUrlWithoutFilterParameter,
 } from "./navigation";
 import { useNormalizedSearchParams } from "./use-normalized-search-params";
+import { TranslatableText } from "./translatable-text";
 
 export default function FilterHours() {
   const router = useRouter();
@@ -59,7 +60,7 @@ export default function FilterHours() {
   return (
     <fieldset className="mt-6" id="filter_hours">
       <legend className="text-xs font-semibold leading-6 text-dark">
-        Opening hours
+        <TranslatableText text="Opening hours" />
       </legend>
       <div className="mt-2 flex w-full">
         <label
@@ -80,7 +81,7 @@ export default function FilterHours() {
             aria-describedby="openingHours-0-description-0 openingHours-0-description-1"
             onClick={handleIsNotOpenNowClick}
           />
-          <span>Any</span>
+          <TranslatableText text="Any" />
         </label>
         <label
           className={classNames.call(
@@ -100,7 +101,7 @@ export default function FilterHours() {
             aria-describedby="openingHours-0-description-0 openingHours-0-description-1"
             onClick={handleIsOpenNowClick}
           />
-          <span>Open now</span>
+          <TranslatableText text="Open now" />
         </label>
       </div>
     </fieldset>

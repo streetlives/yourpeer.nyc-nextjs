@@ -4,19 +4,38 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+"use client";
+
 import Link from "next/link";
 import { LOCATION_ROUTE, TERMS_OF_USE_ROUTE } from "../../../components/common";
+import { useContext } from "react";
+import {
+  getTargetLanguage,
+  LanguageTranslationContext,
+  LanguageTranslationContextType,
+} from "@/components/language-translation-context";
+import { PrivacyPolicyRussianTranslation } from "@/components/translations/privacy";
 
 export function PrivacyPage() {
-  return (
+  const { gTranslateCookie } = useContext(
+    LanguageTranslationContext,
+  ) as LanguageTranslationContextType;
+
+  const targetLanguage = gTranslateCookie
+    ? getTargetLanguage(gTranslateCookie)
+    : null;
+
+  return targetLanguage === "ru" ? (
+    <PrivacyPolicyRussianTranslation />
+  ) : (
     <>
-      <section className="bg-white pt-28 lg:pt-32 lg:py-20 notranslate">
+      <section className="bg-white pt-28 lg:pt-32 lg:py-20">
         <div className="px-5 max-w-3xl mx-auto">
           <h1 className="text-center font-medium text-2xl lg:text-4xl mb-8">
             Privacy Policy
           </h1>
           <div className="text-base text-dark prose">
-            <p className="text-lg text-dark">
+            <p>
               <span>Last Updated&nbsp;</span>
               <time dateTime="2023-08-15">August 15, 2023</time>
               <span>.</span>

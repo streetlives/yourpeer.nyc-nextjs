@@ -28,12 +28,13 @@ import {
 import { activeMarkerIcon, defaultZoom, mapStyles } from "./map-common";
 import { useCallback, useState } from "react";
 import { ReportIssueForm } from "./report-issue";
-import QuickExitLink from "./quick-exit-link";
+import QuickExit from "./quick-exit";
 import LocationStubMarker from "./location-stub-marker";
 import { Position } from "./map";
 import { Transition } from "@headlessui/react";
 import { usePreviousRoute } from "./use-previous-route";
 import { usePreviousParamsOnClient } from "./use-previous-params-client";
+import { TranslatableText } from "./translatable-text";
 
 export function getIconPath(iconName: string): string {
   return `/img/icons/${iconName}.png`;
@@ -87,7 +88,9 @@ function LocationService({
           className="flex-shrink-0 max-h-6 w-6 h-6"
           alt=""
         />
-        <h3 className="text-dark text-lg font-medium leading-3">{name}</h3>
+        <h3 className="text-dark text-lg font-medium leading-3">
+          <TranslatableText text={name} />
+        </h3>
       </div>
       <div className="flex flex-col divide-y divide-gray-200">
         {serviceInfo.services.map((service) => (
@@ -207,7 +210,7 @@ export default function LocationDetailComponent({
           </h1>
         </Transition>
 
-        <QuickExitLink />
+        <QuickExit />
       </div>
       {isShowingReportIssueForm ? (
         <ReportIssueForm
@@ -241,8 +244,7 @@ export default function LocationDetailComponent({
                 <span className="text-green truncate">✓</span>
                 <span className="text-green truncate">
                   <span>
-                    <span>Validated&nbsp;</span>
-                    <span> {location.last_updated} </span>
+                    <span>Validated</span> <span>{location.last_updated}</span>
                   </span>
                 </span>
               </p>
@@ -262,7 +264,7 @@ export default function LocationDetailComponent({
                     target="_blank"
                     className="inline-block absolute bottom-4 right-4 z-0 bg-white shadow-sm rounded-full px-5 py-2 text-dark font-medium text-sm"
                   >
-                    View Street View
+                    <TranslatableText text="View Street View" />
                   </a>
                 </div>
               </div>
@@ -311,7 +313,7 @@ export default function LocationDetailComponent({
                   target="_blank"
                   className="inline-block absolute bottom-4 right-4 z-0 bg-white shadow rounded-full px-5 py-2 text-dark font-medium text-sm"
                 >
-                  View Street View
+                  <TranslatableText text="View Street View" />
                 </a>
               </div>
             </div>
@@ -366,7 +368,7 @@ export default function LocationDetailComponent({
                       target="_blank"
                       className="text-blue underline hover:no-underline"
                     >
-                      Get directions
+                      <TranslatableText text="Get directions" />
                     </a>
                   ) : undefined}
                 </p>
@@ -457,7 +459,7 @@ export default function LocationDetailComponent({
                     d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
                   />
                 </svg>
-                <span>Leave feedback</span>
+                <TranslatableText text="Leave feedback" />
               </a>
               <a
                 href="#"
@@ -479,7 +481,7 @@ export default function LocationDetailComponent({
                     d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
                   />
                 </svg>
-                <span>Report Issue</span>
+                <TranslatableText text="Report Issue" />
               </a>
             </div>
           </div>

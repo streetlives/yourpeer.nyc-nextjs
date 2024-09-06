@@ -17,6 +17,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { getUrlWithNewRequirementTypeFilterParameterAddedOrRemoved } from "./navigation";
 import { useNormalizedSearchParams } from "./use-normalized-search-params";
+import { TranslatableText } from "./translatable-text";
 
 export function RequirementFieldset() {
   const router = useRouter();
@@ -63,7 +64,7 @@ export function RequirementFieldset() {
   return (
     <fieldset className="mt-6">
       <legend className="text-xs font-semibold leading-6 text-dark">
-        Requirement type
+        <TranslatableText text="Requirement type" />
       </legend>
       <div className="mt-2 flex w-full flex-col space-y-4 ml-1">
         <label className="relative flex-1 flex space-x-2 cursor-pointer">
@@ -78,7 +79,10 @@ export function RequirementFieldset() {
             )}
             onChange={handleNoRequirementsChange}
           />
-          <span className="text-xs text-dark mt-0.5">No requirements</span>
+          <TranslatableText
+            text="No requirements"
+            className="text-xs text-dark mt-0.5"
+          />
         </label>
         <label className="relative flex-1 flex space-x-2 cursor-pointer">
           <input
@@ -93,10 +97,11 @@ export function RequirementFieldset() {
             onChange={handleReferralLetterChange}
           />
           <div className="text-xs text-dark mt-0.5">
-            <div>Referral letter</div>
+            <div>
+              <TranslatableText text="Referral letter" />
+            </div>
             <p className="text-gray-600">
-              You must bring a letter from another service provider stating that
-              you require this service.
+              <TranslatableText text="You must bring a letter from another service provider stating that you require this service." />
             </p>
           </div>
         </label>
@@ -113,10 +118,11 @@ export function RequirementFieldset() {
             onChange={handleRegisteredClientChange}
           />
           <div className="text-xs text-dark mt-0.5">
-            <div>Registered client only</div>
+            <div>
+              <TranslatableText text="Registered client only" />
+            </div>
             <p className="text-gray-600">
-              You must be a registered client of their organization to access
-              their services.
+              <TranslatableText text="You must be a registered client of their organization to access their services." />
             </p>
           </div>
         </label>

@@ -4,13 +4,32 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+"use client";
+
+import { TermsOfUseRussianTranslation } from "@/components/translations/terms";
 import { LOCATION_ROUTE } from "../../../components/common";
+import { useContext } from "react";
+import {
+  getTargetLanguage,
+  LanguageTranslationContext,
+  LanguageTranslationContextType,
+} from "@/components/language-translation-context";
 
 export function TermsPage() {
   const governingLawInternalLinkId = "governing_law_footnote";
-  return (
+  const { gTranslateCookie } = useContext(
+    LanguageTranslationContext,
+  ) as LanguageTranslationContextType;
+
+  const targetLanguage = gTranslateCookie
+    ? getTargetLanguage(gTranslateCookie)
+    : null;
+
+  return targetLanguage === "ru" ? (
+    <TermsOfUseRussianTranslation />
+  ) : (
     <>
-      <section className="bg-white pt-28 lg:pt-32 lg:py-20 notranslate">
+      <section className="bg-white pt-28 lg:pt-32 lg:py-20">
         <div className="px-5 max-w-3xl mx-auto">
           <h1 className="text-center font-medium text-2xl lg:text-4xl mb-8">
             Terms of Use
@@ -408,10 +427,12 @@ export function TermsPage() {
                     contact the Complaint Assistance Unit of the Division of
                     Consumer Services of the California Department of Consumer
                     Affairs in writing at 1625 N. Market Blvd., Suite S-202,
-                    Sacramento, California 95834, or by telephone at (800)
-                    952-5210 in order to resolve a complaint regarding the
-                    service or to receive further information regarding use of
-                    the service.
+                    Sacramento, California 95834, or by telephone at
+                  </span>{" "}
+                  <a href="tel:+1-800-952-5210">(800) 952-5210</a>{" "}
+                  <span>
+                    in order to resolve a complaint regarding the service or to
+                    receive further information regarding use of the service.
                   </span>
                 </p>
               </li>
