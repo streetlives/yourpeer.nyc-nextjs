@@ -298,6 +298,7 @@ const translations: Record<string, string> = {
   "Case Management, Housing Support, and Vocational Trainings":
     "Социальные работники, доступное жилье и профессиональная подготовка",
   "Clothing Pantry Sign-Up": "Регистрация для раздачи одежды",
+  "Constituent Services": "Услуги для избирателей",
 };
 
 export default translations;
