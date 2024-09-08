@@ -23,7 +23,7 @@ export default function MapListToggleButton() {
     <div className="fixed bottom-5 left-1/2 -translate-x-1/2 md:hidden z-30">
       {showMapViewOnMobile ? (
         <button
-          className="items-center justify-center text-black bg-primary rounded-full shadow-sm hover:brightness-90 hover:cursor-pointer text-sm py-2 px-4 space-x-2"
+          className="items-center justify-center text-black bg-primary rounded-full shadow-sm hover:cursor-pointer text-sm py-2 px-4 space-x-2"
           onClick={() => setMapIsVisible(false)}
         >
           <img
@@ -35,7 +35,7 @@ export default function MapListToggleButton() {
         </button>
       ) : (
         <button
-          className="inline-flex items-center justify-center text-black bg-primary rounded-full shadow-sm hover:brightness-90 hover:cursor-pointer text-sm py-2 px-4 space-x-2"
+          className="inline-flex items-center justify-center text-black bg-primary rounded-full shadow-sm hover:cursor-pointer text-sm py-2 px-4 space-x-2"
           onClick={() => setMapIsVisible(true)}
         >
           <img
