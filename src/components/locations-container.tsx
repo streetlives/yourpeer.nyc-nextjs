@@ -217,9 +217,12 @@ export default function LocationsContainer({
                             Closed
                           </p>
                           {location.info ? (
-                            <p className="text-dark font-normal text-sm">
-                              {location.info[0]}
-                            </p>
+                            <p
+                              className="text-dark font-normal text-sm"
+                              dangerouslySetInnerHTML={{
+                                __html: location.info[0],
+                              }}
+                            ></p>
                           ) : undefined}
                         </div>
                       </div>
