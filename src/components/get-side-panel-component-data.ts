@@ -2,6 +2,7 @@ import {
   Category,
   REQUIREMENT_PARAM,
   RouteParams,
+  SORT_BY_QUERY_PARAM,
   SearchParams,
   SubCategory,
   SubRouteParams,
@@ -47,7 +48,7 @@ export async function getSidePanelComponentData({
       ...parsedSearchParams,
       ...parsedSearchParams[REQUIREMENT_PARAM],
       ...taxonomiesResults,
-      sortBy: searchParams.sort && "nearby",
+      sortBy: parsedSearchParams[SORT_BY_QUERY_PARAM]
     });
 
   const yourPeerLegacyLocationData = locations.map((location) =>

@@ -6,29 +6,43 @@
 
 "use client";
 
-// import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { ChangeEvent } from "react";
+import { SORT_BY_LABELS, SORT_BY_QUERY_PARAM } from "./common";
+import { getUrlWithNewFilterParameter } from "./navigation";
 
 export function SortDropdown() {
-  // const pathname = usePathname();
-  // const searchParams = useSearchParams();
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target?.value);
-    console.log("hello");
+    router.push(
+      getUrlWithNewFilterParameter(
+        pathname,
+        searchParams,
+        SORT_BY_QUERY_PARAM,
+        e.target?.value
+      )
+    );
   };
+
+  const _sortBy = searchParams?.get(SORT_BY_QUERY_PARAM);
+  const sortBy = _sortBy ? _sortBy : undefined;
 
   return (
     <select
       name="select_sort"
       className="w-auto border-transparent cursor-pointer text-sm"
       onChange={handleChange}
+      value={sortBy}
     >
-      <option value="nearby" selected>
-        Nearby
-      </option>
-      <option value="recently-updated">Recently Updated</option>
-      <option value="most-services">Most Services</option>
+      {Object.entries(SORT_BY_LABELS).map(([k, v]) => (
+        <option key={k} value={k}>
+          {v}
+        </option>
+      ))}
     </select>
   );
 }
