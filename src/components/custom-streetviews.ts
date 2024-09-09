@@ -46,6 +46,17 @@ const customStreetViews: Record<string, string> = {
     "40.7139134,-73.9837604&heading=138&fov=75",
   "the-door-soho": "40.7242914,-74.0048353",
   "callenlorde-harlem": "40.8092049,-73.9488999&fov=75&heading=27.56",
+  "utopia-resource-center-greater-new-york-inc-longwood": "40.8257204,-73.9066956&fov=75&heading=217",
+  "new-york-legal-assistance-group-nylag-financial-district": "40.704378,-74.0092833&fov=75&heading=245",
+  "the-immigrant-defense-project-idp-midtown": "40.7523927,-73.9841574&fov=34&heading=195&pano=2zib_spaRRMUC4nQuzBm9g",
+  "morris-heights-health-center-mhhc-fordham": "40.858515,-73.9030968&fov=75&heading=29",
+  "community-counseling-and-mediation-ccm-clinton-hill": "40.6825612,-73.9666928&fov=75&heading=76",
+  "xavier-mission-chelsea": "40.737738,-73.9955903&fov=75&heading=19",
+  "community-access-inc-harlem": "40.8086959,-73.9486068&fov=68.8&heading=279&pano=6-F9iLESnScNeF1zjPVXpw",
+  "the-door-mott-haven": "40.8191353,-73.9139016&fov=75&heading=319",
+  "kings-county-family-court-downtown-brooklyn": "40.7019938,-73.8050714&fov=75&heading=343&pano=Hyc69FGf9s2axmODEP0wZQ",
+  "urban-justice-center-ujc-financial-district-40-rector-st-9th-fl": "40.7083989,-74.0148744&fov=75&heading=17&pano=9MWNrKcXa9qCGDKfVmBeBA",
+  "osborne-association-brooklyn-heights": "40.693314,-73.9916768&fov=37.6&heading=25&pano=z5BOLIiqkCg0tgO-i_ZugQ",
 };
 
 export default customStreetViews;
