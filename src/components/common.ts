@@ -6,6 +6,7 @@
 
 import assert from "assert";
 import { Error404Response } from "./streetlives-api-service";
+import { Cookies } from "next-client-cookies";
 
 export const CATEGORIES = [
   "shelters-housing",
@@ -272,6 +273,8 @@ export interface YourPeerParsedRequestParams {
   [AMENITIES_PARAM]: ParsedAmenities;
   [PAGE_PARAM]: number;
   [SORT_BY_QUERY_PARAM]: string | null;
+  [LATITUDE_COOKIE_NAME]: number | null;
+  [LONGITUDE_COOKIE_NAME]: number | null;
 }
 
 export interface ParsedRequirements {
@@ -364,10 +367,12 @@ export function parseRequest({
   pathname,
   searchParams,
   params,
+  cookies,
 }: {
   pathname?: string;
   searchParams: SearchParams;
   params: RouteParams | SubRouteParams;
+  cookies?: Cookies;
 }): YourPeerParsedRequestParams {
   console.log("parseRequest", parseRequest);
   assert.ok(pathname !== undefined || params !== undefined);
@@ -388,6 +393,8 @@ export function parseRequest({
     parsedSubCategory,
     searchParams[AMENITIES_PARAM] as string,
   );
+  const latitudeCookie = cookies && cookies.get(LATITUDE_COOKIE_NAME)
+  const longitudeCookie = cookies && cookies.get(LONGITUDE_COOKIE_NAME)
   return {
     [SEARCH_PARAM]:
       typeof searchParams[SEARCH_PARAM] === "string"
@@ -446,6 +453,10 @@ export function parseRequest({
     [PAGE_PARAM]: parsePageParam(searchParams[PAGE_PARAM]),
     [SORT_BY_QUERY_PARAM]: searchParams[SORT_BY_QUERY_PARAM]
       ? (searchParams[SORT_BY_QUERY_PARAM] as string)
+      : null,
+    [LATITUDE_COOKIE_NAME]: latitudeCookie ? parseFloat(latitudeCookie) : null,
+    [LONGITUDE_COOKIE_NAME]: longitudeCookie
+      ? parseFloat(longitudeCookie)
       : null,
   };
 }
@@ -826,8 +837,10 @@ export function mapsAreEqual(
   );
 }
 
+export const NEARBY_SORT_BY_VALUE = 'nearby'
+
 export const SORT_BY_VALUES = [
-  'nearby',
+  NEARBY_SORT_BY_VALUE,
   'recentlyUpdated',
   'mostServices'
 ]
@@ -839,3 +852,8 @@ export const SORT_BY_LABELS: Record<SortByType, string> = {
   recentlyUpdated: "Recently Updated",
   mostServices: "Most Services",
 };
+
+export const LAST_SELECTED_LOCATION_SORT_COOKIE_NAME = 'LAST_SELECTED_LOCATION_SORT_COOKIE_NAME'
+
+export const LATITUDE_COOKIE_NAME = 'latitude'
+export const LONGITUDE_COOKIE_NAME = 'longitude'

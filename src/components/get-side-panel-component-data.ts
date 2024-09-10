@@ -1,3 +1,4 @@
+import { Cookies } from "next-client-cookies";
 import {
   Category,
   REQUIREMENT_PARAM,
@@ -31,16 +32,18 @@ export interface SidePanelComponentData {
 export async function getSidePanelComponentData({
   searchParams,
   params,
+  cookies,
 }: {
   searchParams: SearchParams;
   params: SubRouteParams;
+  cookies: Cookies;
 }): Promise<SidePanelComponentData> {
   console.log(params);
   console.log(searchParams);
   const category = parseCategoryFromRoute(params.route);
   const subCategory = getParsedSubCategory(params);
   // FIXME: the string composition in the next line is a bit ugly. I should clean up the type used in this interface
-  const parsedSearchParams = parseRequest({ params, searchParams });
+  const parsedSearchParams = parseRequest({ params, searchParams, cookies });
   console.log(parsedSearchParams);
   const taxonomiesResults = await getTaxonomies(category, parsedSearchParams);
   const { locations, numberOfPages, resultCount } =
