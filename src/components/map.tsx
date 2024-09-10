@@ -227,6 +227,8 @@ function MapWrapper({
 
   // when the page first loads, get the user's current position
   useEffect(() => {
+    cookies.remove('latitude')
+    cookies.remove('longitude')
     window.navigator.geolocation.getCurrentPosition(
       (userPosition) => {
         // TODO: logGeoEvent(pos.coords);
@@ -234,6 +236,10 @@ function MapWrapper({
           lat: userPosition.coords.latitude,
           lng: userPosition.coords.longitude,
         });
+        cookies.set('latitude', userPosition.coords.latitude.toString())
+        cookies.set('longitude', userPosition.coords.longitude.toString())
+        // TODO: we want to change the selection to "nearby" 
+        // if the selection had not been previously explicitly set.
       },
       (error) => {
         console.log("unable to get user position", error);
