@@ -137,7 +137,7 @@ const translations: Record<string, string> = {
   "Enter Age": "Округлите число лет в меньшую сторону",
   "People rely on social services for many reasons. Our information specialists all have lived experiences navigating the support system and apply their knowledge collecting the information you find here.  We’re building YourPeer so it's easier for you to find the right service.":
     "Многие нуждаются в помощи из-за непредсказуемых жизненных обстоятельств. Мы публикуем о бесплатных услугах на YourPeer, чтобы немного облегчить Ваш поиск.",
-  "View Street View": "Открыть панорамный вид входной группы",
+  "Open street view": "Открыть панорамный вид входной группы",
   "Age requirement:": "Возрастное ограничение:",
   "People of all ages are welcome": "Предназначено для всех возрастов",
   "#service-component-Open": "Открыто 24/7",

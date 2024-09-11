@@ -264,7 +264,7 @@ export default function LocationDetailComponent({
                     target="_blank"
                     className="inline-block absolute bottom-4 right-4 z-0 bg-white shadow-sm rounded-full px-5 py-2 text-dark font-medium text-sm"
                   >
-                    <TranslatableText text="View Street View" />
+                    <TranslatableText text="Open street view" />
                   </a>
                 </div>
               </div>
@@ -313,7 +313,7 @@ export default function LocationDetailComponent({
                   target="_blank"
                   className="inline-block absolute bottom-4 right-4 z-0 bg-white shadow rounded-full px-5 py-2 text-dark font-medium text-sm"
                 >
-                  <TranslatableText text="View Street View" />
+                  <TranslatableText text="Open street view" />
                 </a>
               </div>
             </div>
