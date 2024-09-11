@@ -162,7 +162,7 @@ export default function LocationDetailComponent({
         setZoom(newZoom);
       }
     },
-    [mapCenter, setMapCenter, zoom, setZoom],
+    [mapCenter, setMapCenter, zoom, setZoom]
   );
 
   const handleScroll = (e: React.UIEvent<HTMLElement>): void => {
@@ -295,7 +295,7 @@ export default function LocationDetailComponent({
                           ? locationStubs
                               .filter(
                                 (locationStub) =>
-                                  locationStub.id !== location.id,
+                                  locationStub.id !== location.id
                               )
                               .map((locationStub) => (
                                 <LocationStubMarker
@@ -373,6 +373,7 @@ export default function LocationDetailComponent({
                   ) : undefined}
                 </p>
               </li>
+              <>
                 {!location.closed ? (
                   <>
                     {location.phone ? (
@@ -437,6 +438,7 @@ export default function LocationDetailComponent({
                     ) : undefined}
                   </>
                 ) : undefined}
+              </>
             </ul>
             <div className="mt-5 flex gap-4">
               <a
@@ -488,14 +490,14 @@ export default function LocationDetailComponent({
               {(previousCategory
                 ? [previousCategory].concat(
                     CATEGORIES.filter(
-                      (category) => category !== previousCategory,
-                    ),
+                      (category) => category !== previousCategory
+                    )
                   )
                 : CATEGORIES
               ).map((serviceCategory) => {
                 const servicesWrapper = getServicesWrapper(
                   serviceCategory,
-                  location,
+                  location
                 );
                 return servicesWrapper?.services.length ? (
                   <LocationService
