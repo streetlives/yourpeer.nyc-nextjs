@@ -373,7 +373,6 @@ export default function LocationDetailComponent({
                   ) : undefined}
                 </p>
               </li>
-              <span>
                 {!location.closed ? (
                   <>
                     {location.phone ? (
@@ -438,7 +437,6 @@ export default function LocationDetailComponent({
                     ) : undefined}
                   </>
                 ) : undefined}
-              </span>
             </ul>
             <div className="mt-5 flex gap-4">
               <a
