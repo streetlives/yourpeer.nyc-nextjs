@@ -14,9 +14,9 @@ import {
   useMap,
 } from "@vis.gl/react-google-maps";
 import {
-  LAST_SELECTED_LOCATION_SORT_COOKIE_NAME,
   LOCATION_ROUTE,
   NEARBY_SORT_BY_VALUE,
+  Position,
   SimplifiedLocationData,
   SORT_BY_QUERY_PARAM,
 } from "./common";
@@ -29,13 +29,13 @@ import { SearchContext, SearchContextType } from "./search-context";
 import { useCookies } from "next-client-cookies";
 import { getUrlWithNewFilterParameter } from "./navigation";
 import { useSearchParams } from "next/navigation";
+import {
+  GeoCoordinatesContext,
+  GeoCoordinatesContextType,
+} from "./geo-context";
 
 function isMobile(): boolean {
   return window.innerWidth <= 600;
-}
-export interface Position {
-  lat: number;
-  lng: number;
 }
 
 const MAX_NUM_LOCATIONS_TO_INCLUDE_IN_BOUNDS = 5;
@@ -98,6 +98,10 @@ function MapWrapper({
   const cookieZoom = cookies.get("zoom");
   const cookieMapCenter = cookies.get("mapCenter");
 
+  const { refreshUserPosition, userPosition } = useContext(
+    GeoCoordinatesContext,
+  ) as GeoCoordinatesContextType;
+
   const normalizedLocationDetailStub =
     locationStubClickedOnMobile || locationDetailStub;
   const normalizedLocationStubs =
@@ -110,7 +114,6 @@ function MapWrapper({
       : locationStubs;
 
   const router = useRouter();
-  const [userPosition, setUserPosition] = useState<Position>();
   const [zoom, setZoom] = useState<number>(
     locationSlugClickedOnMobile && cookieZoom
       ? parseInt(cookieZoom)
@@ -235,38 +238,24 @@ function MapWrapper({
     }
   }, [showMapViewOnMobile, googleMap]);
 
-  // when the page first loads, get the user's current position
+  // TODO: when the page first loads, get the user's current position
   useEffect(() => {
-    cookies.remove("latitude");
-    cookies.remove("longitude");
-    window.navigator.geolocation.getCurrentPosition(
-      (userPosition) => {
-        // TODO: logGeoEvent(pos.coords);
-        setUserPosition({
-          lat: userPosition.coords.latitude,
-          lng: userPosition.coords.longitude,
-        });
-        cookies.set("latitude", userPosition.coords.latitude.toString());
-        cookies.set("longitude", userPosition.coords.longitude.toString());
-        // TODO: we want to change the selection to "nearby"
-        // if the selection had not been previously explicitly set.
-        const sortBy = searchParams?.get(SORT_BY_QUERY_PARAM);
-        if (!sortBy) {
-          router.push(
-            getUrlWithNewFilterParameter(
-              pathname,
-              searchParams,
-              SORT_BY_QUERY_PARAM,
-              NEARBY_SORT_BY_VALUE,
-            ),
-          );
-        }
-      },
-      (error) => {
-        console.log("unable to get user position", error);
-      },
-    );
-  }, [setUserPosition]);
+    refreshUserPosition(() => {
+      // if the SORT_BY_QUERY_PARAM is not set,
+      // then by default route to nearby
+      const sortBy = searchParams?.get(SORT_BY_QUERY_PARAM);
+      if (!sortBy) {
+        router.push(
+          getUrlWithNewFilterParameter(
+            pathname,
+            searchParams,
+            SORT_BY_QUERY_PARAM,
+            NEARBY_SORT_BY_VALUE,
+          ),
+        );
+      }
+    });
+  }, []);
 
   // when we get new locationStubs AND the user's location is set,
   // then pan/zoom the map to contain 25 locations

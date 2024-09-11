@@ -857,8 +857,10 @@ export const SORT_BY_LABELS: Record<SortByType, string> = {
   mostServices: "Most Services",
 };
 
-export const LAST_SELECTED_LOCATION_SORT_COOKIE_NAME =
-  "LAST_SELECTED_LOCATION_SORT_COOKIE_NAME";
-
 export const LATITUDE_COOKIE_NAME = "latitude";
 export const LONGITUDE_COOKIE_NAME = "longitude";
+
+export interface Position {
+  lat: number;
+  lng: number;
+}
