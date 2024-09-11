@@ -8,6 +8,7 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import { getUrlToNextOrPreviousPage } from "./navigation";
+import { TranslatableText } from "./translatable-text";
 
 export function LocationsContainerPager({
   resultCount,
@@ -50,7 +51,7 @@ export function LocationsContainerPager({
               d="M15.75 19.5L8.25 12l7.5-7.5"
             />
           </svg>
-          <span>Previous</span>
+          <TranslatableText text="Previous" />
         </a>
         <div className="text-dark font-medium">
           <span> {currentPage + 1} </span>
@@ -67,7 +68,7 @@ export function LocationsContainerPager({
               : undefined
           }
         >
-          <span>Next</span>
+          <TranslatableText text="Next" />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

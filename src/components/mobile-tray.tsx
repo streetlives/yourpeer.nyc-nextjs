@@ -11,6 +11,7 @@ import {
   map_gogetta_to_yourpeer,
 } from "./streetlives-api-service";
 import { useEffect, useState } from "react";
+import { ServicesList } from "./locations-container";
 
 export function MobileTray({
   locationSlugClickedOnMobile,
@@ -41,7 +42,9 @@ export function MobileTray({
       ) : (
         <>
           <div className="flex items-start justify-between">
-            <h3 className="text-dark text-base font-medium">{location.name}</h3>
+            <h3 className="text-dark text-base font-medium notranslate">
+              {location.name}
+            </h3>
             <button
               className="text-dark ml-2"
               onClick={() => setLocationSlugClickedOnMobile(undefined)}
@@ -72,8 +75,7 @@ export function MobileTray({
               </span>
               <span className="text-success truncate">
                 {" "}
-                <span>✓ Validated&nbsp;</span>
-                <span> {location.last_updated} </span>
+                <span>✓ Validated</span> <span>{location.last_updated}</span>
               </span>
             </p>
           </div>
@@ -123,9 +125,7 @@ export function MobileTray({
                       alt=""
                     />
                     <p>
-                      {servicesWrapper.services
-                        .map((service) => service.name)
-                        .join(" • ")}
+                      <ServicesList servicesWrapper={servicesWrapper} />
                     </p>
                   </li>
                 ) : undefined;

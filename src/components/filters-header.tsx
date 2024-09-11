@@ -24,6 +24,7 @@ import {
   getUrlWithNewFilterParameter,
   getUrlWithoutFilterParameter,
 } from "./navigation";
+import { TranslatableText } from "./translatable-text";
 
 export default function FiltersHeader({
   category: currentCategory,
@@ -81,9 +82,10 @@ export default function FiltersHeader({
               className="w-4 h-4"
               alt=""
             />
-            <span className="leading-3 truncate">
-              {CATEGORY_DESCRIPTION_MAP[thisCategory]}
-            </span>
+            <TranslatableText
+              text={CATEGORY_DESCRIPTION_MAP[thisCategory]}
+              className="leading-3 truncate"
+            />
           </Link>
         ))}
         {searchParams[AGE_PARAM] ? (
@@ -111,7 +113,7 @@ export default function FiltersHeader({
           )}
         >
           <img src="/img/icons/filters.svg" className="w-4 h-4" alt="" />
-          <span className="leading-3 truncate">All Filters</span>
+          <TranslatableText text="All Filters" className="leading-3 truncate" />
         </Link>
       </div>
     </div>

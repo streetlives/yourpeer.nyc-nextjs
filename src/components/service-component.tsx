@@ -6,12 +6,18 @@
 
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   AgeEligibility,
   YourPeerLegacyScheduleData,
   YourPeerLegacyServiceData,
 } from "./common";
+import { TranslatableText } from "./translatable-text";
+import {
+  getTargetLanguage,
+  LanguageTranslationContext,
+  LanguageTranslationContextType,
+} from "./language-translation-context";
 
 const moment = require("moment-strftime");
 
@@ -29,124 +35,6 @@ function formatAgeMaxSuffix(age_max: number): string {
   }
 }
 
-function renderAgeEligibility(ageReq: AgeEligibility) {
-  let s = "";
-  if (ageReq.age_min !== null && ageReq.age_max !== null) {
-    const ageMaxPlusOne = ageReq["age_max"] + 1;
-    s = `${ageReq["age_min"]}-${
-      ageReq["age_max"]
-    } (until your ${ageMaxPlusOne}${formatAgeMaxSuffix(
-      ageMaxPlusOne,
-    )} birthday)`;
-  } else if (ageReq.age_min !== null) {
-    s = `${ageReq["age_min"]}+`;
-  } else if (ageReq["age_max"] !== null) {
-    s = `'Under ${ageReq["age_max"]}'`;
-  }
-
-  if (ageReq["population_served"] !== null) {
-    s += ` (${ageReq["population_served"]})`;
-  }
-  return s;
-}
-
-function renderSchedule(schedule: YourPeerLegacyScheduleData): string {
-  const weekdays = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-
-  function day_number_to_name(weekday: number): string {
-    return weekdays[weekday - 1];
-  }
-
-  function format_hour(time: string): string {
-    if (time === "23:59:00" || time === "00:00:00") {
-      return "midnight";
-    }
-    return moment(time, "hh:mm:ss").strftime("%-I %p");
-  }
-
-  function format_hours(opens: string, closes: string): string {
-    return `${format_hour(opens)} to ${format_hour(closes)}`;
-  }
-
-  if (
-    Object.keys(schedule).length === 7 &&
-    Object.values(schedule).length === 7 &&
-    Object.values(schedule)
-      .flatMap((s) => s)
-      .every(
-        (schedule) =>
-          schedule.opens_at === "00:00:00" && schedule.closes_at === "23:59:00",
-      )
-  ) {
-    return "Open 24/7";
-  }
-
-  // hour range string -> list of weekdays
-  const days_grouped_by_hours: Record<string, number[]> = {};
-  Object.entries(schedule).forEach(([weekday, hours]) => {
-    hours.forEach((hour) => {
-      const formattedHours = format_hours(hour.opens_at, hour.closes_at);
-      if (!days_grouped_by_hours[formattedHours]) {
-        days_grouped_by_hours[formattedHours] = [];
-      }
-      days_grouped_by_hours[formattedHours].push(parseInt(weekday, 10));
-    });
-  });
-
-  const group_strings: string[] = Object.entries(days_grouped_by_hours).map(
-    ([k, v]) => {
-      const weekdays = v.sort();
-      let weekdayStartEndGroups: [number, number][] = [];
-      let endDayIndex = 0;
-      let startDay = weekdays[endDayIndex];
-      const lastDay = weekdays[weekdays.length - 1];
-      if (weekdays.length === 1) {
-        weekdayStartEndGroups.push([startDay, lastDay]);
-      } else {
-        let possibleEndDay = startDay;
-        for (
-          let endDayIndex = 1;
-          endDayIndex < weekdays.length;
-          endDayIndex++
-        ) {
-          if (weekdays[endDayIndex] === possibleEndDay + 1) {
-            possibleEndDay = weekdays[endDayIndex];
-          } else {
-            // otherwise, end this group and start the next group
-            weekdayStartEndGroups.push([startDay, possibleEndDay]);
-            startDay = weekdays[endDayIndex];
-            possibleEndDay = startDay;
-          }
-        }
-        if (
-          !weekdayStartEndGroups.length ||
-          weekdayStartEndGroups[weekdayStartEndGroups.length - 1][0] !==
-            startDay
-        ) {
-          weekdayStartEndGroups.push([startDay, possibleEndDay]);
-        }
-      }
-      return `${weekdayStartEndGroups
-        .map(([startDay, endDay]) =>
-          startDay === endDay
-            ? day_number_to_name(startDay)
-            : `${day_number_to_name(startDay)} to ${day_number_to_name(endDay)}`,
-        )
-        .join(", ")}  ${k}`;
-    },
-  );
-
-  return `Open ${group_strings.join("; ")}`;
-}
-
 export default function Service({
   service,
   startExpanded,
@@ -154,6 +42,14 @@ export default function Service({
   service: YourPeerLegacyServiceData;
   startExpanded: boolean;
 }) {
+  const { gTranslateCookie } = useContext(
+    LanguageTranslationContext,
+  ) as LanguageTranslationContextType;
+
+  const targetLanguage = gTranslateCookie
+    ? getTargetLanguage(gTranslateCookie)
+    : null;
+
   const [isExpanded, setIsExpanded] = useState<boolean>(startExpanded);
   //console.log('isExpanded', isExpanded)
   const hasSomethingToShow =
@@ -164,6 +60,128 @@ export default function Service({
       setIsExpanded(!isExpanded);
     }
   }
+
+  function renderAgeEligibility(ageReq: AgeEligibility) {
+    let s = "";
+    if (ageReq.age_min !== null && ageReq.age_max !== null) {
+      const ageMaxPlusOne = ageReq["age_max"] + 1;
+      s = `${ageReq["age_min"]}-${ageReq["age_max"]} ${
+        targetLanguage === "ru"
+          ? `(до того как Вам исполнится ${ageMaxPlusOne})`
+          : `(until your ${ageMaxPlusOne}${formatAgeMaxSuffix(
+              ageMaxPlusOne,
+            )} birthday)`
+      }`;
+    } else if (ageReq.age_min !== null) {
+      s = `${ageReq["age_min"]}+`;
+    } else if (ageReq["age_max"] !== null) {
+      s =
+        targetLanguage === "ru"
+          ? `Для доступа, Вам должно быть не более, чем ${ageReq["age_max"]}`
+          : `'Under ${ageReq["age_max"]}'`;
+    }
+
+    return s;
+  }
+
+  function renderSchedule(schedule: YourPeerLegacyScheduleData): JSX.Element {
+    const weekdays = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ];
+
+    function day_number_to_name(weekday: number): string {
+      return weekdays[weekday - 1];
+    }
+
+    function format_hour(time: string): string {
+      if (time === "23:59:00" || time === "00:00:00") {
+        return "midnight";
+      }
+      return moment(time, "hh:mm:ss").strftime("%-I %p");
+    }
+
+    function format_hours(opens: string, closes: string): string {
+      return `${format_hour(opens)} to ${format_hour(closes)}`;
+    }
+
+    if (
+      Object.keys(schedule).length === 7 &&
+      Object.values(schedule).length === 7 &&
+      Object.values(schedule)
+        .flatMap((s) => s)
+        .every(
+          (schedule) =>
+            schedule.opens_at === "00:00:00" &&
+            schedule.closes_at === "23:59:00",
+        )
+    ) {
+      return <TranslatableText text="Open 24/7" id="#service-component-Open" />;
+    }
+
+    // hour range string -> list of weekdays
+    const days_grouped_by_hours: Record<string, number[]> = {};
+    Object.entries(schedule).forEach(([weekday, hours]) => {
+      hours.forEach((hour) => {
+        const formattedHours = format_hours(hour.opens_at, hour.closes_at);
+        if (!days_grouped_by_hours[formattedHours]) {
+          days_grouped_by_hours[formattedHours] = [];
+        }
+        days_grouped_by_hours[formattedHours].push(parseInt(weekday, 10));
+      });
+    });
+
+    const group_strings: string[] = Object.entries(days_grouped_by_hours).map(
+      ([k, v]) => {
+        const weekdays = v.sort();
+        let weekdayStartEndGroups: [number, number][] = [];
+        let endDayIndex = 0;
+        let startDay = weekdays[endDayIndex];
+        const lastDay = weekdays[weekdays.length - 1];
+        if (weekdays.length === 1) {
+          weekdayStartEndGroups.push([startDay, lastDay]);
+        } else {
+          let possibleEndDay = startDay;
+          for (
+            let endDayIndex = 1;
+            endDayIndex < weekdays.length;
+            endDayIndex++
+          ) {
+            if (weekdays[endDayIndex] === possibleEndDay + 1) {
+              possibleEndDay = weekdays[endDayIndex];
+            } else {
+              // otherwise, end this group and start the next group
+              weekdayStartEndGroups.push([startDay, possibleEndDay]);
+              startDay = weekdays[endDayIndex];
+              possibleEndDay = startDay;
+            }
+          }
+          if (
+            !weekdayStartEndGroups.length ||
+            weekdayStartEndGroups[weekdayStartEndGroups.length - 1][0] !==
+              startDay
+          ) {
+            weekdayStartEndGroups.push([startDay, possibleEndDay]);
+          }
+        }
+        return `${weekdayStartEndGroups
+          .map(([startDay, endDay]) =>
+            startDay === endDay
+              ? day_number_to_name(startDay)
+              : `${day_number_to_name(startDay)} to ${day_number_to_name(endDay)}`,
+          )
+          .join(", ")}  ${k}`;
+      },
+    );
+
+    return <span>{`Open ${group_strings.join("; ")}`}</span>;
+  }
+
   return (
     <div
       key={service.id}
@@ -188,7 +206,9 @@ export default function Service({
           id="collapsible"
           onClick={toggleIsExpanded}
         >
-          <span> {service.name} </span>
+          {service.name ? (
+            <TranslatableText text={service.name} expectTranslation={false} />
+          ) : undefined}
           {service.closed ? (
             <span className="text-danger">(Suspended)</span>
           ) : undefined}
@@ -283,8 +303,7 @@ export default function Service({
                           {service.membership ? (
                             <p className="text-dark text-sm">
                               {" "}
-                              Only serves people who are clients of the
-                              organization{" "}
+                              <TranslatableText text="Only serves people who are clients of the organization" />
                             </p>
                           ) : undefined}
                           <span>
@@ -311,11 +330,11 @@ export default function Service({
                           (service.age?.length &&
                             service.age?.every((age) => age.all_ages)) ? (
                             <p className="text-dark text-sm">
-                              People of all ages are welcome
+                              <TranslatableText text="People of all ages are welcome" />
                             </p>
                           ) : service.age.length === 1 ? (
                             <p className="text-dark text-sm">
-                              Age requirement:{" "}
+                              <TranslatableText text="Age requirement:" />{" "}
                               {renderAgeEligibility(service.age[0])}
                             </p>
                           ) : service.age.length > 1 ? (
@@ -330,7 +349,21 @@ export default function Service({
                                     className="flex items-start space-x-2"
                                   >
                                     <p className="text-dark text-sm">
-                                      {renderAgeEligibility(ageReq)}
+                                      <span
+                                        className={
+                                          !targetLanguage ||
+                                          targetLanguage === "en" ||
+                                          targetLanguage === "ru"
+                                            ? "notranslate"
+                                            : ""
+                                        }
+                                        lang={targetLanguage || undefined}
+                                      >
+                                        {renderAgeEligibility(ageReq)}
+                                      </span>{" "}
+                                      {ageReq["population_served"] ? (
+                                        <span>{`(${ageReq["population_served"]})`}</span>
+                                      ) : undefined}
                                     </p>
                                   </li>
                                 ))}

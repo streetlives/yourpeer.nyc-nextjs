@@ -4,6 +4,8 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+"use client";
+
 import Link from "next/link";
 import {
   CATEGORIES,
@@ -15,11 +17,14 @@ import {
   getServicesWrapper,
   SearchParams,
   YourPeerLegacyLocationData,
+  YourPeerLegacyServiceDataWrapper,
 } from "./common";
 import { LocationsContainerPager } from "./locations-container-pager";
 import classNames from "classnames";
 import { getUrlWithNewCategory } from "./navigation";
 import { SortDropdown } from "./sort-dropdown";
+import { TranslatableText } from "./translatable-text";
+import { useGTranslateCookie } from "./use-translated-text-hook";
 
 function NoLocationsFound({ searchParams }: { searchParams: SearchParams }) {
   return (
@@ -77,6 +82,23 @@ function NoLocationsFound({ searchParams }: { searchParams: SearchParams }) {
   );
 }
 
+export function ServicesList({
+  servicesWrapper,
+}: {
+  servicesWrapper: YourPeerLegacyServiceDataWrapper;
+}) {
+  const serviceNames = servicesWrapper?.services
+    .map(({ name }) => name)
+    .filter((name) => name !== null);
+
+  return serviceNames.map((name, i) => (
+    <>
+      <TranslatableText key={name} text={name} expectTranslation={false} />
+      {i < serviceNames.length - 1 ? <span> • </span> : undefined}
+    </>
+  ));
+}
+
 export default function LocationsContainer({
   searchParams,
   category,
@@ -92,6 +114,8 @@ export default function LocationsContainer({
   numberOfPages: number;
   currentPage: number;
 }) {
+  const gTranslateCookie = useGTranslateCookie();
+
   const classnames = classNames([
     "md:flex",
     "flex-col",
@@ -111,21 +135,24 @@ export default function LocationsContainer({
       <div className="flex-1 flex flex-col">
         <div className="text-sm px-6 py-4 flex items-center border-b border-dotted border-neutral-200 justify-between">
           <h1>
-            <span>
-              {category === "shelters-housing"
-                ? "All popular Shelter & Housing locations"
-                : category === "food"
-                  ? "All popular Food locations"
-                  : category === "clothing"
-                    ? "All popular Clothing locations"
-                    : category === "personal-care"
-                      ? "All popular Personal care locations"
-                      : category === "health-care"
-                        ? "All popular Health locations"
-                        : category === "other"
-                          ? "All popular Other locations"
-                          : "All service locations"}
-            </span>
+            <TranslatableText
+              text={
+                // TODO: fix these
+                category === "shelters-housing"
+                  ? "All popular Shelter & Housing locations"
+                  : category === "food"
+                    ? "All popular Food locations"
+                    : category === "clothing"
+                      ? "All popular Clothing locations"
+                      : category === "personal-care"
+                        ? "All popular Personal care locations"
+                        : category === "health-care"
+                          ? "All popular Health locations"
+                          : category === "other"
+                            ? "All popular Other locations"
+                            : "All service locations"
+              }
+            />
           </h1>
 
           <SortDropdown />
@@ -165,8 +192,8 @@ export default function LocationsContainer({
                       </span>
                       <span className="text-success truncate">
                         {" "}
-                        <span>✓ Validated&nbsp;</span>
-                        <span> {location.last_updated} </span>
+                        <span>✓ Validated</span>{" "}
+                        <span>{location.last_updated}</span>
                       </span>
                     </p>
                   </div>
@@ -222,9 +249,7 @@ export default function LocationsContainer({
                               height="16"
                             />
                             <p>
-                              {servicesWrapper?.services
-                                .map((item) => item.name)
-                                .join(" • ")}
+                              <ServicesList servicesWrapper={servicesWrapper} />
                             </p>
                           </li>
                         ) : undefined;

@@ -1,4 +1,4 @@
-export const languages = ["en", "es", "zh-CN", "bn", "fr"];
+export const languages = ["en", "es", "zh-CN", "bn", "fr", "ru"];
 
 export const lang_array_english = {
   af: "Afrikaans",

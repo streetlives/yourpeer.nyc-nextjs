@@ -4,6 +4,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import { LanguageTranslationProvider } from "@/components/language-translation-context";
 import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Viewport } from "next";
@@ -53,7 +54,9 @@ export default function RootLayout({
         `}
       </Script>
       <body>
-        <CookiesProvider>{children}</CookiesProvider>
+        <CookiesProvider>
+          <LanguageTranslationProvider>{children}</LanguageTranslationProvider>
+        </CookiesProvider>
         <GoogleAnalytics gaId={GOOGLE_ANALYTICS_MEASUREMENT_ID} />
       </body>
     </html>

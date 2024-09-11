@@ -143,7 +143,6 @@ a[href^="https://maps.google.com/maps"]{display:none !important} */
   background-color: transparent;
   border: none;
   font-size: 13px;
-  width: 100px;
   font-weight: 500;
   outline: none;
   cursor: pointer;

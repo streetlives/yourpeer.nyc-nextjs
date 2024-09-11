@@ -14,6 +14,7 @@ import {
   PRIVACY_POLICY_ROUTE,
   TERMS_OF_USE_ROUTE,
 } from "./common";
+import { TranslatableText } from "./translatable-text";
 
 export function Footer() {
   return (
@@ -23,7 +24,7 @@ export function Footer() {
           <div className="lg:flex">
             <div className="lg:flex-1">
               <h3 className="text-white font-semibold mb-5 text-left">
-                Company
+                <TranslatableText text="Company" />
               </h3>
               <div className="grid grid-cols-2 gap-y-2 gap-x-5 ">
                 <div>
@@ -31,7 +32,7 @@ export function Footer() {
                     href={`/${ABOUT_US_ROUTE}`}
                     className="text-gray-300 text-base font-normal"
                   >
-                    About
+                    <TranslatableText text="About" />
                   </Link>
                 </div>
                 <div>
@@ -39,7 +40,7 @@ export function Footer() {
                     href={`/${TERMS_OF_USE_ROUTE}`}
                     className="text-gray-300 text-base font-normal"
                   >
-                    Terms
+                    <TranslatableText text="Terms" />
                   </Link>
                 </div>
                 <div>
@@ -47,7 +48,7 @@ export function Footer() {
                     href={`/${CONTACT_US_ROUTE}`}
                     className="text-gray-300 text-base font-normal"
                   >
-                    Contact
+                    <TranslatableText text="Contact" />
                   </Link>
                 </div>
                 <div>
@@ -55,7 +56,7 @@ export function Footer() {
                     href={`/${PRIVACY_POLICY_ROUTE}`}
                     className="text-gray-300 text-base font-normal"
                   >
-                    Privacy
+                    <TranslatableText text="Privacy" />
                   </Link>
                 </div>
                 <div>
@@ -63,14 +64,14 @@ export function Footer() {
                     href={`/${DONATE_ROUTE}`}
                     className="text-gray-300 text-base font-normal"
                   >
-                    Donate
+                    <TranslatableText text="Donate" />
                   </Link>
                 </div>
               </div>
             </div>
             <div className="lg:flex-1 mt-8 lg:mt-0">
               <h3 className="text-white font-semibold mb-5 text-left">
-                Resources
+                <TranslatableText text="Resources" />
               </h3>
               <div className="flex gap-x-5">
                 <div className="flex flex-col gap-y-2 flex-1">
@@ -79,7 +80,7 @@ export function Footer() {
                       href={`/${LOCATION_ROUTE}`}
                       className="text-gray-300 text-base font-normal"
                     >
-                      All locations
+                      <TranslatableText text="All locations" />
                     </Link>
                   </div>
                   <div>
@@ -87,7 +88,7 @@ export function Footer() {
                       href={`/${CATEGORY_TO_ROUTE_MAP["shelters-housing"]}`}
                       className="text-gray-300 text-base font-normal"
                     >
-                      Shelter & Housing
+                      <TranslatableText text="Shelter & Housing" />
                     </Link>
                   </div>
                   <div>
@@ -95,7 +96,7 @@ export function Footer() {
                       href={`/${CATEGORY_TO_ROUTE_MAP["food"]}`}
                       className="text-gray-300 text-base font-normal"
                     >
-                      Food
+                      <TranslatableText text="Food" />
                     </Link>
                   </div>
                   <div>
@@ -103,7 +104,7 @@ export function Footer() {
                       href={`/${CATEGORY_TO_ROUTE_MAP["clothing"]}`}
                       className="text-gray-300 text-base font-normal"
                     >
-                      Clothing
+                      <TranslatableText text="Clothing" />
                     </Link>
                   </div>
                 </div>
@@ -113,7 +114,7 @@ export function Footer() {
                       href={`/${CATEGORY_TO_ROUTE_MAP["personal-care"]}`}
                       className="text-gray-300 text-base font-normal"
                     >
-                      Personal Care
+                      <TranslatableText text="Personal Care" />
                     </Link>
                   </div>
                   <div>
@@ -121,7 +122,7 @@ export function Footer() {
                       href={`/${CATEGORY_TO_ROUTE_MAP["personal-care"]}`}
                       className="text-gray-300 text-base font-normal"
                     >
-                      Health Care
+                      <TranslatableText text="Health Care" />
                     </Link>
                   </div>
                   <div>
@@ -129,7 +130,7 @@ export function Footer() {
                       href={`/${CATEGORY_TO_ROUTE_MAP["other"]}`}
                       className="text-gray-300 text-base font-normal"
                     >
-                      Other Services
+                      <TranslatableText text="Other Services" />
                     </Link>
                   </div>
                 </div>
@@ -137,7 +138,7 @@ export function Footer() {
             </div>
             <div className="mt-8 lg:mt-0">
               <h3 className="text-white font-semibold mb-5 text-left">
-                Social
+                <TranslatableText text="Social" />
               </h3>
               <div className="flex gap-x-5">
                 <div className="flex flex-col gap-y-2 flex-1">
@@ -145,7 +146,7 @@ export function Footer() {
                     <Link
                       href="https://www.tiktok.com/@YourPeer.NYC"
                       target="_blank"
-                      className="text-gray-300 text-base font-normal"
+                      className="text-gray-300 text-base font-normal notranslate"
                     >
                       Tiktok
                     </Link>
@@ -154,7 +155,7 @@ export function Footer() {
                     <Link
                       href="https://www.instagram.com/YourPeer.NYC"
                       target="_blank"
-                      className="text-gray-300 text-base font-normal"
+                      className="text-gray-300 text-base font-normal notranslate"
                     >
                       Instagram
                     </Link>
@@ -163,7 +164,7 @@ export function Footer() {
                     <Link
                       href="https://www.facebook.com/yourpeer.nyc"
                       target="_blank"
-                      className="text-gray-300 text-base font-normal"
+                      className="text-gray-300 text-base font-normal notranslate"
                     >
                       Facebook
                     </Link>
@@ -174,7 +175,7 @@ export function Footer() {
           </div>
 
           <div className="flex justify-center mt-14 pb-4">
-            <p className="text-center text-gray-200">
+            <p className="text-center text-gray-200 notranslate">
               &copy; Streetlives, Inc.
             </p>
           </div>
