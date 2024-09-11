@@ -51,7 +51,7 @@ export async function getSidePanelComponentData({
       ...parsedSearchParams,
       ...parsedSearchParams[REQUIREMENT_PARAM],
       ...taxonomiesResults,
-      sortBy: parsedSearchParams[SORT_BY_QUERY_PARAM]
+      sortBy: parsedSearchParams[SORT_BY_QUERY_PARAM],
     });
 
   const yourPeerLegacyLocationData = locations.map((location) =>
