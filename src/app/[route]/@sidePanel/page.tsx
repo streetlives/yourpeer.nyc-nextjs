@@ -24,14 +24,14 @@ export default async function SidePanelPage({
   searchParams: SearchParams;
   params: SubRouteParams;
 }) {
-  const cookies = getCookies()
+  const cookies = getCookies();
   return RESOURCE_ROUTES.includes(params.route) ? (
     <SidePanelComponent
       searchParams={searchParams}
       sidePanelComponentData={await getSidePanelComponentData({
         searchParams,
         params,
-        cookies
+        cookies,
       })}
     />
   ) : (

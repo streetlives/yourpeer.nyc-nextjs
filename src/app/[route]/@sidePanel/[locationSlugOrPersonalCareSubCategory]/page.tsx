@@ -32,7 +32,7 @@ export default async function LocationDetail({
   params: SubRouteParams;
   searchParams: SearchParams;
 }) {
-  const cookies = getCookies()
+  const cookies = getCookies();
   const previousParams = usePreviousParams();
   try {
     if (!isOnLocationDetailPage(params)) {

@@ -123,16 +123,16 @@ export async function fetchLocationsData<T extends SimplifiedLocationData>({
     query_url += `&openAt=${new Date().toISOString()}`;
   }
 
-  if(sortBy){
+  if (sortBy) {
     query_url += `&sortBy=${sortBy}`;
 
-    if(sortBy === NEARBY_SORT_BY_VALUE && !(latitude && longitude)){
+    if (sortBy === NEARBY_SORT_BY_VALUE && !(latitude && longitude)) {
       throw new Error(
-        `If sortBy is set to ${NEARBY_SORT_BY_VALUE}, then latitude and longitude must be defined`
+        `If sortBy is set to ${NEARBY_SORT_BY_VALUE}, then latitude and longitude must be defined`,
       );
     }
 
-    if(sortBy === NEARBY_SORT_BY_VALUE && latitude && longitude){
+    if (sortBy === NEARBY_SORT_BY_VALUE && latitude && longitude) {
       query_url += `&latitude=${latitude}&longitude=${longitude}`;
     }
   }

@@ -244,7 +244,7 @@ export const FILTERS_THAT_APPLY_TO_ALL_CATEGORIES = [
   SHOW_ADVANCED_FILTERS_PARAM,
 ];
 
-export const SORT_BY_QUERY_PARAM = 'sortBy'
+export const SORT_BY_QUERY_PARAM = "sortBy";
 
 export const URL_PARAM_NAMES = [
   SEARCH_PARAM,
@@ -254,7 +254,7 @@ export const URL_PARAM_NAMES = [
   FOOD_PARAM,
   CLOTHING_PARAM,
   SHOW_ADVANCED_FILTERS_PARAM,
-  SORT_BY_QUERY_PARAM
+  SORT_BY_QUERY_PARAM,
 ] as const;
 
 export type UrlParamName = (typeof URL_PARAM_NAMES)[number];
@@ -393,8 +393,8 @@ export function parseRequest({
     parsedSubCategory,
     searchParams[AMENITIES_PARAM] as string,
   );
-  const latitudeCookie = cookies && cookies.get(LATITUDE_COOKIE_NAME)
-  const longitudeCookie = cookies && cookies.get(LONGITUDE_COOKIE_NAME)
+  const latitudeCookie = cookies && cookies.get(LATITUDE_COOKIE_NAME);
+  const longitudeCookie = cookies && cookies.get(LONGITUDE_COOKIE_NAME);
   return {
     [SEARCH_PARAM]:
       typeof searchParams[SEARCH_PARAM] === "string"
@@ -427,27 +427,27 @@ export function parseRequest({
     [SHOW_ADVANCED_FILTERS_PARAM]: !!searchParams[SHOW_ADVANCED_FILTERS_PARAM],
     [REQUIREMENT_PARAM]: {
       noRequirement: parsedRequirements.includes(
-        REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE
+        REQUIREMENT_PARAM_NO_REQUIREMENTS_VALUE,
       ),
       referralRequired: parsedRequirements.includes(
-        REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE
+        REQUIREMENT_PARAM_REFERRAL_LETTER_VALUE,
       ),
       membershipRequired: parsedRequirements.includes(
-        REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE
+        REQUIREMENT_PARAM_REGISTERED_CLIENT_VALUE,
       ),
     },
     [AMENITIES_PARAM]: {
       [AMENITIES_PARAM_LAUNDRY_VALUE]: parsedAmenities.includes(
-        AMENITIES_PARAM_LAUNDRY_VALUE
+        AMENITIES_PARAM_LAUNDRY_VALUE,
       ),
       [AMENITIES_PARAM_RESTROOM_VALUE]: parsedAmenities.includes(
-        AMENITIES_PARAM_RESTROOM_VALUE
+        AMENITIES_PARAM_RESTROOM_VALUE,
       ),
       [AMENITIES_PARAM_SHOWER_VALUE]: parsedAmenities.includes(
-        AMENITIES_PARAM_SHOWER_VALUE
+        AMENITIES_PARAM_SHOWER_VALUE,
       ),
       [AMENITIES_PARAM_TOILETRIES_VALUE]: parsedAmenities.includes(
-        AMENITIES_PARAM_TOILETRIES_VALUE
+        AMENITIES_PARAM_TOILETRIES_VALUE,
       ),
     },
     [PAGE_PARAM]: parsePageParam(searchParams[PAGE_PARAM]),
@@ -837,13 +837,17 @@ export function mapsAreEqual(
   );
 }
 
-export const NEARBY_SORT_BY_VALUE = 'nearby'
+export const NEARBY_SORT_BY_VALUE = "nearby";
+
+export const RECENTLY_UPDATED_SORT_BY_VALUE = "recentlyUpdated";
+
+export const DEFAULT_SORT_BY_VALUE = RECENTLY_UPDATED_SORT_BY_VALUE;
 
 export const SORT_BY_VALUES = [
   NEARBY_SORT_BY_VALUE,
-  'recentlyUpdated',
-  'mostServices'
-]
+  RECENTLY_UPDATED_SORT_BY_VALUE,
+  "mostServices",
+];
 
 export type SortByType = (typeof SORT_BY_VALUES)[number];
 
@@ -853,7 +857,8 @@ export const SORT_BY_LABELS: Record<SortByType, string> = {
   mostServices: "Most Services",
 };
 
-export const LAST_SELECTED_LOCATION_SORT_COOKIE_NAME = 'LAST_SELECTED_LOCATION_SORT_COOKIE_NAME'
+export const LAST_SELECTED_LOCATION_SORT_COOKIE_NAME =
+  "LAST_SELECTED_LOCATION_SORT_COOKIE_NAME";
 
-export const LATITUDE_COOKIE_NAME = 'latitude'
-export const LONGITUDE_COOKIE_NAME = 'longitude'
+export const LATITUDE_COOKIE_NAME = "latitude";
+export const LONGITUDE_COOKIE_NAME = "longitude";
