@@ -587,15 +587,15 @@ export default function LocationDetailComponent({
                       </strong>
                     </li>
                     <li className="bg-grey-100 rounded-3xl px-4 py-3 text-sm md:text-balance text-grey-900">
-                      <span>The</span>
+                      <span>The</span>{" "}
                       <strong className="text-green-800">
                         structure and rules
                       </strong>
-                      <span>of the program.</span>
+                      <span>of the program.</span>{" "}
                       <strong className="text-green-800">Curfew</strong>
                     </li>
                     <li className="bg-grey-100 rounded-3xl px-4 py-3 text-sm md:text-balance text-grey-900">
-                      <span>They sent me to a security program and it</span>
+                      <span>They sent me to a security program and it</span>{" "}
                       <strong className="text-red-600">
                         wasn&apos;t what I expected it to be.
                       </strong>
@@ -606,7 +606,7 @@ export default function LocationDetailComponent({
                       </strong>{" "}
                       <span>skills between staff and residents.</span>{" "}
                       <strong className="text-red-600">More job</strong>{" "}
-                      <span>opportunities.</span>
+                      <span>opportunities.</span>{" "}
                       <strong className="text-red-600">
                         Bathroom conditions, AC
                       </strong>
