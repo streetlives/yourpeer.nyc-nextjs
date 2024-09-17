@@ -13,21 +13,29 @@ import {
   Marker,
   useMap,
 } from "@vis.gl/react-google-maps";
-import { LOCATION_ROUTE, SimplifiedLocationData } from "./common";
+import {
+  LOCATION_ROUTE,
+  NEARBY_SORT_BY_VALUE,
+  Position,
+  SimplifiedLocationData,
+  SORT_BY_QUERY_PARAM,
+} from "./common";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { defaultZoom, mapStyles, myLocationIcon } from "./map-common";
 import LocationStubMarker from "./location-stub-marker";
 import { MobileTray } from "./mobile-tray";
 import { SearchContext, SearchContextType } from "./search-context";
 import { useCookies } from "next-client-cookies";
+import { getUrlWithNewFilterParameter } from "./navigation";
+import { useSearchParams } from "next/navigation";
+import {
+  GeoCoordinatesContext,
+  GeoCoordinatesContextType,
+} from "./geo-context";
 
 function isMobile(): boolean {
   return window.innerWidth <= 600;
-}
-export interface Position {
-  lat: number;
-  lng: number;
 }
 
 const MAX_NUM_LOCATIONS_TO_INCLUDE_IN_BOUNDS = 5;
@@ -84,9 +92,15 @@ function MapWrapper({
   locationStubClickedOnMobile?: SimplifiedLocationData;
   setLocationSlugClickedOnMobile: (slug: string | undefined) => void;
 }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const cookies = useCookies();
   const cookieZoom = cookies.get("zoom");
   const cookieMapCenter = cookies.get("mapCenter");
+
+  const { refreshUserPosition, userPosition } = useContext(
+    GeoCoordinatesContext,
+  ) as GeoCoordinatesContextType;
 
   const normalizedLocationDetailStub =
     locationStubClickedOnMobile || locationDetailStub;
@@ -100,7 +114,6 @@ function MapWrapper({
       : locationStubs;
 
   const router = useRouter();
-  const [userPosition, setUserPosition] = useState<Position>();
   const [zoom, setZoom] = useState<number>(
     locationSlugClickedOnMobile && cookieZoom
       ? parseInt(cookieZoom)
@@ -225,21 +238,24 @@ function MapWrapper({
     }
   }, [showMapViewOnMobile, googleMap]);
 
-  // when the page first loads, get the user's current position
+  // TODO: when the page first loads, get the user's current position
   useEffect(() => {
-    window.navigator.geolocation.getCurrentPosition(
-      (userPosition) => {
-        // TODO: logGeoEvent(pos.coords);
-        setUserPosition({
-          lat: userPosition.coords.latitude,
-          lng: userPosition.coords.longitude,
-        });
-      },
-      (error) => {
-        console.log("unable to get user position", error);
-      },
-    );
-  }, [setUserPosition]);
+    refreshUserPosition(() => {
+      // if the SORT_BY_QUERY_PARAM is not set,
+      // then by default route to nearby
+      const sortBy = searchParams?.get(SORT_BY_QUERY_PARAM);
+      if (!sortBy) {
+        router.push(
+          getUrlWithNewFilterParameter(
+            pathname,
+            searchParams,
+            SORT_BY_QUERY_PARAM,
+            NEARBY_SORT_BY_VALUE,
+          ),
+        );
+      }
+    });
+  }, []);
 
   // when we get new locationStubs AND the user's location is set,
   // then pan/zoom the map to contain 25 locations

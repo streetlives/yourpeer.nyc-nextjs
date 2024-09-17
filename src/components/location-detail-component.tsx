@@ -16,6 +16,7 @@ import {
   YourPeerLegacyServiceDataWrapper,
   SimplifiedLocationData,
   ROUTE_TO_CATEGORY_MAP,
+  Position,
 } from "./common";
 import Service from "./service-component";
 import customStreetViews from "./custom-streetviews";
@@ -30,7 +31,6 @@ import { useCallback, useState } from "react";
 import { ReportIssueForm } from "./report-issue";
 import QuickExit from "./quick-exit";
 import LocationStubMarker from "./location-stub-marker";
-import { Position } from "./map";
 import { Transition } from "@headlessui/react";
 import { usePreviousRoute } from "./use-previous-route";
 import { usePreviousParamsOnClient } from "./use-previous-params-client";
@@ -342,9 +342,11 @@ export default function LocationDetailComponent({
                       Closed
                     </p>
                     {location.info?.map((info) => (
-                      <p key={info} className="text-dark font-normal text-sm">
-                        {info}
-                      </p>
+                      <p
+                        key={info}
+                        className="text-dark font-normal text-sm"
+                        dangerouslySetInnerHTML={{ __html: info }}
+                      ></p>
                     ))}
                   </div>
                 </div>

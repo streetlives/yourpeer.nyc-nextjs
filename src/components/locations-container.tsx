@@ -22,6 +22,7 @@ import {
 import { LocationsContainerPager } from "./locations-container-pager";
 import classNames from "classnames";
 import { getUrlWithNewCategory } from "./navigation";
+import { SortDropdown } from "./sort-dropdown";
 import { TranslatableText } from "./translatable-text";
 import { useGTranslateCookie } from "./use-translated-text-hook";
 
@@ -153,6 +154,8 @@ export default function LocationsContainer({
               }
             />
           </h1>
+
+          <SortDropdown />
         </div>
         {yourPeerLegacyLocationData.length ? (
           <>

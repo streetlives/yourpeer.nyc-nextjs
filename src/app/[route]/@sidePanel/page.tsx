@@ -13,6 +13,7 @@ import {
 import { notFound } from "next/navigation";
 import { SidePanelComponent } from "../../../components/side-panel-component";
 import { getSidePanelComponentData } from "@/components/get-side-panel-component-data";
+import { getCookies } from "next-client-cookies/server";
 
 export { generateMetadata } from "../../../components/metadata";
 
@@ -23,12 +24,14 @@ export default async function SidePanelPage({
   searchParams: SearchParams;
   params: SubRouteParams;
 }) {
+  const cookies = getCookies();
   return RESOURCE_ROUTES.includes(params.route) ? (
     <SidePanelComponent
       searchParams={searchParams}
       sidePanelComponentData={await getSidePanelComponentData({
         searchParams,
         params,
+        cookies,
       })}
     />
   ) : (

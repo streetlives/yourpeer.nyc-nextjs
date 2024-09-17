@@ -19,6 +19,7 @@ import { notFound } from "next/navigation";
 import { SearchProvider } from "@/components/search-context";
 import { MainComponent } from "@/components/main-component";
 import GTranslateWrapper from "@/components/gtranslate-wrapper";
+import { GeoCoordinatesProvider } from "@/components/geo-context";
 
 export default function LocationsLayout({
   mapContainer,
@@ -39,16 +40,18 @@ export default function LocationsLayout({
           <>
             <div className="h-[100dvh] w-full">
               <SearchProvider>
-                <MapListToggleButton />
-                <div className="flex flex-col w-full h-full">
-                  <div>
-                    <LocationsNavbarResourceRoutes />
+                <GeoCoordinatesProvider>
+                  <MapListToggleButton />
+                  <div className="flex flex-col w-full h-full">
+                    <div>
+                      <LocationsNavbarResourceRoutes />
+                    </div>
+                    <MainComponent
+                      mapContainer={mapContainer}
+                      sidePanel={sidePanel}
+                    />
                   </div>
-                  <MainComponent
-                    mapContainer={mapContainer}
-                    sidePanel={sidePanel}
-                  />
-                </div>
+                </GeoCoordinatesProvider>
               </SearchProvider>
             </div>
           </>

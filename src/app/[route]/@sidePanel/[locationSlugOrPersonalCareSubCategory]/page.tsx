@@ -21,6 +21,7 @@ import { usePreviousParams } from "@/components/use-previous-params";
 import { getMapContainerData } from "@/components/map-container-component";
 import { getSidePanelComponentData } from "@/components/get-side-panel-component-data";
 import { isOnLocationDetailPage } from "@/components/navigation";
+import { getCookies } from "next-client-cookies/server";
 
 export { generateMetadata } from "../../../../components/metadata";
 
@@ -31,6 +32,7 @@ export default async function LocationDetail({
   params: SubRouteParams;
   searchParams: SearchParams;
 }) {
+  const cookies = getCookies();
   const previousParams = usePreviousParams();
   try {
     if (!isOnLocationDetailPage(params)) {
@@ -42,6 +44,7 @@ export default async function LocationDetail({
           sidePanelComponentData={await getSidePanelComponentData({
             searchParams,
             params,
+            cookies,
           })}
         />
       );

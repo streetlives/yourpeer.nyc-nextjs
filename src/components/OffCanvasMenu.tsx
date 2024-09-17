@@ -7,7 +7,12 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  Transition,
+} from "@headlessui/react";
 import Link from "next/link";
 import { TranslatableText } from "./translatable-text";
 import QuickExit from "./quick-exit";
@@ -95,10 +100,10 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                   </div>
                 </div>
                 <div className="relative mt-6 flex-1 px-4 sm:px-6 flex flex-col">
-                  <div className="flex-1">
-                    {nestedNav ? (
+                  <div className="flex-1 relative">
+                    <Transition show={nestedNav}>
                       <div
-                        className="pt-16 flex flex-col items-center sm:items-start space-y-6 bg-amber-300 absolute inset-x-0 px-6 inset-y-0"
+                        className="pt-16 flex flex-col items-center sm:items-start space-y-6 bg-amber-300 absolute inset-x-0 px-6 inset-y-0 transition duration-300 ease-in data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:data-[closed]:-translate-x-full data-[leave]:duration-300 data-[leave]:data-[closed]:translate-x-full"
                         id="servicesNav"
                       >
                         <Link
@@ -152,9 +157,11 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                           <TranslatableText text="Other Services" />
                         </Link>
                       </div>
-                    ) : (
+                    </Transition>
+
+                    <Transition show={!nestedNav}>
                       <div
-                        className="pt-16 flex flex-col items-center sm:items-start space-y-6"
+                        className="pt-16 flex flex-col items-center sm:items-start space-y-6 "
                         id="main_menu"
                       >
                         <Link
@@ -214,7 +221,7 @@ const OffCanvasMenu = ({ open, onClose }: OffCanvasMenuProps) => {
                           <TranslatableText text="Terms" />
                         </Link>
                       </div>
-                    )}
+                    </Transition>
                   </div>
                   <div>
                     <div className="flex items-center justify-center sm:justify-start space-x-4 py-10">

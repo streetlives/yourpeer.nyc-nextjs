@@ -32,6 +32,7 @@ import {
   AmenitiesSubCategory,
   AMENITY_TO_TAXONOMY_NAME_MAP,
   TaxonomySubCategory,
+  NEARBY_SORT_BY_VALUE,
 } from "./common";
 import moment from "moment";
 
@@ -57,6 +58,9 @@ export async function fetchLocationsData<T extends SimplifiedLocationData>({
   location_fields_only,
   age = undefined,
   shelter = undefined,
+  sortBy = null,
+  latitude,
+  longitude,
 }: {
   page?: number;
   pageSize?: number;
@@ -70,6 +74,9 @@ export async function fetchLocationsData<T extends SimplifiedLocationData>({
   location_fields_only?: boolean;
   age?: number | null;
   shelter?: string | null;
+  sortBy?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
 }): Promise<LocationsDataResponse<T>> {
   // TODO: handle shelter type by looking up the appropriate taxonomy
   // TODO: maybe convert this function to use a url parse library, as opposed to string concatenation
@@ -116,7 +123,21 @@ export async function fetchLocationsData<T extends SimplifiedLocationData>({
     query_url += `&openAt=${new Date().toISOString()}`;
   }
 
-  console.log("query_url", query_url);
+  if (sortBy) {
+    query_url += `&sortBy=${sortBy}`;
+
+    if (sortBy === NEARBY_SORT_BY_VALUE && !(latitude && longitude)) {
+      throw new Error(
+        `If sortBy is set to ${NEARBY_SORT_BY_VALUE}, then latitude and longitude must be defined`,
+      );
+    }
+
+    if (sortBy === NEARBY_SORT_BY_VALUE && latitude && longitude) {
+      query_url += `&latitude=${latitude}&longitude=${longitude}`;
+    }
+  }
+
+  console.log(query_url);
 
   const gogetta_response = await fetch(query_url);
   if (gogetta_response.status !== 200) {
@@ -176,6 +197,7 @@ export async function getSimplifiedLocationData({
   search?: string | null;
   age?: number | null;
   shelter?: string | null;
+  sortBy?: string | null;
 }): Promise<SimplifiedLocationData[]> {
   const response: LocationsDataResponse<SimplifiedLocationData> =
     await fetchLocationsData<SimplifiedLocationData>({
@@ -205,6 +227,9 @@ export async function getFullLocationData({
   search = undefined,
   age = undefined,
   shelter = undefined,
+  sortBy,
+  latitude,
+  longitude,
 }: {
   page?: number;
   pageSize?: number;
@@ -217,6 +242,9 @@ export async function getFullLocationData({
   search?: string | null;
   age?: number | null;
   shelter?: string | null;
+  sortBy?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
 }): Promise<LocationsDataResponse<FullLocationData>> {
   return fetchLocationsData<FullLocationData>({
     page,
@@ -228,9 +256,12 @@ export async function getFullLocationData({
     membershipRequired,
     open,
     search,
+    sortBy,
     age,
     shelter,
     location_fields_only: false,
+    latitude,
+    longitude,
   });
 }
 

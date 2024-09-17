@@ -6,6 +6,7 @@
 
 import assert from "assert";
 import { Error404Response } from "./streetlives-api-service";
+import { Cookies } from "next-client-cookies";
 
 export const CATEGORIES = [
   "shelters-housing",
@@ -243,6 +244,8 @@ export const FILTERS_THAT_APPLY_TO_ALL_CATEGORIES = [
   SHOW_ADVANCED_FILTERS_PARAM,
 ];
 
+export const SORT_BY_QUERY_PARAM = "sortBy";
+
 export const URL_PARAM_NAMES = [
   SEARCH_PARAM,
   AGE_PARAM,
@@ -251,6 +254,7 @@ export const URL_PARAM_NAMES = [
   FOOD_PARAM,
   CLOTHING_PARAM,
   SHOW_ADVANCED_FILTERS_PARAM,
+  SORT_BY_QUERY_PARAM,
 ] as const;
 
 export type UrlParamName = (typeof URL_PARAM_NAMES)[number];
@@ -268,6 +272,9 @@ export interface YourPeerParsedRequestParams {
   [REQUIREMENT_PARAM]: ParsedRequirements;
   [AMENITIES_PARAM]: ParsedAmenities;
   [PAGE_PARAM]: number;
+  [SORT_BY_QUERY_PARAM]: string | null;
+  [LATITUDE_COOKIE_NAME]: number | null;
+  [LONGITUDE_COOKIE_NAME]: number | null;
 }
 
 export interface ParsedRequirements {
@@ -360,10 +367,12 @@ export function parseRequest({
   pathname,
   searchParams,
   params,
+  cookies,
 }: {
   pathname?: string;
   searchParams: SearchParams;
   params: RouteParams | SubRouteParams;
+  cookies?: Cookies;
 }): YourPeerParsedRequestParams {
   console.log("parseRequest", parseRequest);
   assert.ok(pathname !== undefined || params !== undefined);
@@ -384,6 +393,8 @@ export function parseRequest({
     parsedSubCategory,
     searchParams[AMENITIES_PARAM] as string,
   );
+  const latitudeCookie = cookies && cookies.get(LATITUDE_COOKIE_NAME);
+  const longitudeCookie = cookies && cookies.get(LONGITUDE_COOKIE_NAME);
   return {
     [SEARCH_PARAM]:
       typeof searchParams[SEARCH_PARAM] === "string"
@@ -440,6 +451,13 @@ export function parseRequest({
       ),
     },
     [PAGE_PARAM]: parsePageParam(searchParams[PAGE_PARAM]),
+    [SORT_BY_QUERY_PARAM]: searchParams[SORT_BY_QUERY_PARAM]
+      ? (searchParams[SORT_BY_QUERY_PARAM] as string)
+      : null,
+    [LATITUDE_COOKIE_NAME]: latitudeCookie ? parseFloat(latitudeCookie) : null,
+    [LONGITUDE_COOKIE_NAME]: longitudeCookie
+      ? parseFloat(longitudeCookie)
+      : null,
   };
 }
 
@@ -817,4 +835,32 @@ export function mapsAreEqual(
       ([k, v]) => right.has(k) && v === right.get(k),
     )
   );
+}
+
+export const NEARBY_SORT_BY_VALUE = "nearby";
+
+export const RECENTLY_UPDATED_SORT_BY_VALUE = "recentlyUpdated";
+
+export const DEFAULT_SORT_BY_VALUE = RECENTLY_UPDATED_SORT_BY_VALUE;
+
+export const SORT_BY_VALUES = [
+  NEARBY_SORT_BY_VALUE,
+  RECENTLY_UPDATED_SORT_BY_VALUE,
+  "mostServices",
+];
+
+export type SortByType = (typeof SORT_BY_VALUES)[number];
+
+export const SORT_BY_LABELS: Record<SortByType, string> = {
+  nearby: "Nearby",
+  recentlyUpdated: "Recently Updated",
+  mostServices: "Most Services",
+};
+
+export const LATITUDE_COOKIE_NAME = "latitude";
+export const LONGITUDE_COOKIE_NAME = "longitude";
+
+export interface Position {
+  lat: number;
+  lng: number;
 }
