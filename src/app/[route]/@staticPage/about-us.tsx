@@ -36,7 +36,7 @@ export function AboutUsPage() {
                   className="object-contain max-h-52"
                   alt=""
                 />
-                </a>
+              </a>
             </div>
           </div>
         </div>
