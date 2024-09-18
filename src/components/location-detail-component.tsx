@@ -26,7 +26,7 @@ import {
   Marker,
 } from "@vis.gl/react-google-maps";
 import { activeMarkerIcon, defaultZoom, mapStyles } from "./map-common";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { ReportIssueForm } from "./report-issue";
 import QuickExitLink from "./quick-exit-link";
 import LocationStubMarker from "./location-stub-marker";
@@ -117,6 +117,49 @@ export default function LocationDetailComponent({
 }) {
   const router = useRouter();
 
+  const [activeSection, setActiveSection] = useState<string | null>(
+    "locationDetailsInfo",
+  );
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const sections = [
+    "locationDetailsInfo",
+    "locationDetailsReviews",
+    "locationDetailsServices",
+  ];
+
+  const handleScroll = (e: React.UIEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.scrollTop > 30) {
+      setStickyTitle(true);
+    } else {
+      setStickyTitle(false);
+    }
+
+    const container = containerRef.current;
+
+    if (!container) return;
+
+    // Find the section that is currently in view
+    let currentSection: string | null = null;
+    sections.forEach((sectionId) => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const offsetTop = section.offsetTop - container.offsetTop - 120;
+        const offsetBottom = offsetTop + section.offsetHeight;
+        if (
+          container.scrollTop >= offsetTop &&
+          container.scrollTop < offsetBottom
+        ) {
+          currentSection = sectionId;
+        } else if (container.scrollTop < 600) {
+          currentSection = sections[0];
+        }
+      }
+    });
+    setActiveSection(currentSection);
+  };
+
   const streetview =
     customStreetViews[slug] || `${location.lat},${location.lng}`;
   const streetviewHref = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${streetview}`;
@@ -171,15 +214,6 @@ export default function LocationDetailComponent({
     [mapCenter, setMapCenter, zoom, setZoom],
   );
 
-  const handleScroll = (e: React.UIEvent<HTMLElement>): void => {
-    const target = e.target as HTMLElement;
-    if (target.scrollTop > 30) {
-      setStickyTitle(true);
-    } else {
-      setStickyTitle(false);
-    }
-  };
-
   const goBack = () => {
     if (
       isShowingReportIssueForm ||
@@ -197,6 +231,7 @@ export default function LocationDetailComponent({
   return (
     <div
       className="details-screen bg-white md:flex z-50 sm:z-0 fixed md:absolute inset-0 w-full h-full overflow-y-auto scrollbar-hide flex flex-col"
+      ref={containerRef}
       onScroll={handleScroll}
     >
       <div className="flex-shrink-0 h-14 px-4 gap-x-2 flex justify-between md:justify-start items-center bg-white sticky z-20 top-0 left-0 w-full right-0">
@@ -261,7 +296,7 @@ export default function LocationDetailComponent({
       ) : isShowingReviewForm ? (
         <ReviewForm />
       ) : (
-        <>
+        <div>
           <div id="locationDetailsInfo" className="px-4 pb-4 shadow">
             <h1
               className="text-dark text-lg sm:text-xl font-medium mt-3"
@@ -295,26 +330,28 @@ export default function LocationDetailComponent({
             </div>
           </div>
 
+          {/* navigation */}
           <div className="flex bg-white shadow-lg sticky top-14 z-10">
             <a
               href="#locationDetailsInfo"
-              className="border-blue text-blue text-sm uppercase py-3 px-5 flex-1 border-b-[3px]  block text-center font-medium"
+              className={` ${activeSection === "locationDetailsInfo" ? "border-blue text-blue" : "text-black/60 "} text-sm uppercase py-3 px-5 flex-1 border-b-[3px]  block text-center font-medium`}
             >
               Info
             </a>
             <a
               href="#locationDetailsReviews"
-              className="text-black/60 text-sm uppercase py-3 px-5 flex-1 border-b-[3px] border-transparent block text-center font-medium"
+              className={` ${activeSection === "locationDetailsReviews" ? "border-blue text-blue" : "text-black/60 "} text-sm uppercase py-3 px-5 flex-1 border-b-[3px]  block text-center font-medium`}
             >
               Reviews
             </a>
             <a
               href="#locationDetailsServices"
-              className="text-black/60 text-sm uppercase py-3 px-5 flex-1 border-b-[3px] border-transparent block text-center font-medium"
+              className={` ${activeSection === "locationDetailsServices" ? "border-blue text-blue" : "text-black/60 "} text-sm uppercase py-3 px-5 flex-1 border-b-[3px]  block text-center font-medium`}
             >
               Services
             </a>
           </div>
+
           <div id="locationDetailsContainer">
             {location.closed ? undefined : (
               <div>
@@ -661,7 +698,7 @@ export default function LocationDetailComponent({
               </div>
             ) : undefined}
           </div>
-        </>
+        </div>
       )}
     </div>
   );
