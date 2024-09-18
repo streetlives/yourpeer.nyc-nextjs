@@ -356,13 +356,14 @@ export function map_gogetta_to_yourpeer(
   is_location_detail: boolean,
 ): YourPeerLegacyLocationData {
   const org_name = d["Organization"]["name"];
-  let address, street, zip, state;
+  let address, street, zip, state, neighborhood = null;
   if (is_location_detail) {
     let locationDetailData = d as LocationDetailData;
     address = locationDetailData.address;
     street = address.street;
     zip = address.postalCode;
     state = address.state;
+    neighborhood = locationDetailData.neighborhood
   } else {
     let fullLocationData = d as FullLocationData;
     address = fullLocationData.PhysicalAddresses[0];
@@ -382,7 +383,7 @@ export function map_gogetta_to_yourpeer(
     zip,
     lat: d["position"]["coordinates"][1],
     lng: d["position"]["coordinates"][0],
-    area: address.neighborhood,
+    area: neighborhood,
     info: d.EventRelatedInfos.map((info) => info.information),
     slug: `/locations/${d["slug"]}`,
     last_updated: moment(updated_at).fromNow(),

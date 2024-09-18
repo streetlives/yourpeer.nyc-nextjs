@@ -646,7 +646,6 @@ export interface FullLocationData
     state_province: string | null;
     postal_code: string | null;
     country: string | null;
-    neighborhood: string | null;
     createdAt: Date;
     updatedAt: Date;
     location_suggestion_id: string | null;
@@ -661,6 +660,7 @@ export interface LocationDetailData
   metadata: any; //TODO
   EventRelatedInfos: any[]; // TODO
   additionalInfo: string | null;
+  neighborhood: string | null;
   address: {
     street: string | null;
     city: string | null;
@@ -668,7 +668,6 @@ export interface LocationDetailData
     state: string | null;
     postalCode: string | null;
     country: string | null;
-    neighborhood: string | null;
   };
 }
 
