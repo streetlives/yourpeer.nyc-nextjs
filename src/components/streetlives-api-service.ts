@@ -356,14 +356,18 @@ export function map_gogetta_to_yourpeer(
   is_location_detail: boolean,
 ): YourPeerLegacyLocationData {
   const org_name = d["Organization"]["name"];
-  let address, street, zip, state, neighborhood = null;
+  let address,
+    street,
+    zip,
+    state,
+    neighborhood = null;
   if (is_location_detail) {
     let locationDetailData = d as LocationDetailData;
     address = locationDetailData.address;
     street = address.street;
     zip = address.postalCode;
     state = address.state;
-    neighborhood = locationDetailData.neighborhood
+    neighborhood = locationDetailData.neighborhood;
   } else {
     let fullLocationData = d as FullLocationData;
     address = fullLocationData.PhysicalAddresses[0];
