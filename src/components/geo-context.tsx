@@ -6,6 +6,8 @@ import { useCookies } from "next-client-cookies";
 import React, { createContext, useState } from "react";
 import { Position } from "./common";
 
+const NEXT_PUBLIC_GO_GETTA_PROD_URL = process.env.NEXT_PUBLIC_GO_GETTA_PROD_URL;
+
 export type GeoCoordinates = {
   latitude: number;
   longitude: number;
@@ -37,7 +39,7 @@ function getFirstAddressComponent(
 }
 
 function logGeoEvent(coords: Position): void {
-  fetch(`/geocode/analytics/all?latitude=${coords.lat}&longitude=${coords.lng}`)
+  fetch(`${NEXT_PUBLIC_GO_GETTA_PROD_URL}/geocode/analytics/all?latitude=${coords.lat}&longitude=${coords.lng}`)
     .then((response) => response.json())
     .then((geoAnalytics) => {
       // convert lat/lng to custom event
