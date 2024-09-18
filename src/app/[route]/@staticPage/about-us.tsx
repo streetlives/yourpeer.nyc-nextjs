@@ -30,11 +30,13 @@ export function AboutUsPage() {
             </p>
 
             <div className="flex justify-center">
-              <img
-                src="/img/about-logo.png"
-                className="object-contain max-h-52"
-                alt=""
-              />
+              <a href="https://www.streetlives.nyc" target="_blank">
+                <img
+                  src="/img/about-logo.png"
+                  className="object-contain max-h-52"
+                  alt=""
+                />
+              </a>
             </div>
           </div>
         </div>
