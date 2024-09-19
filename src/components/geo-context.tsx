@@ -39,7 +39,9 @@ function getFirstAddressComponent(
 }
 
 function logGeoEvent(coords: Position): void {
-  fetch(`${NEXT_PUBLIC_GO_GETTA_PROD_URL}/geocode/analytics/all?latitude=${coords.lat}&longitude=${coords.lng}`)
+  fetch(
+    `${NEXT_PUBLIC_GO_GETTA_PROD_URL}/geocode/analytics/all?latitude=${coords.lat}&longitude=${coords.lng}`,
+  )
     .then((response) => response.json())
     .then((geoAnalytics) => {
       // convert lat/lng to custom event
