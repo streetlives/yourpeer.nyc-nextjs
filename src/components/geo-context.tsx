@@ -6,6 +6,8 @@ import { useCookies } from "next-client-cookies";
 import React, { createContext, useState } from "react";
 import { Position } from "./common";
 
+const NEXT_PUBLIC_GO_GETTA_PROD_URL = process.env.NEXT_PUBLIC_GO_GETTA_PROD_URL;
+
 export type GeoCoordinates = {
   latitude: number;
   longitude: number;
@@ -22,6 +24,59 @@ export type GeoCoordinatesContextType = {
   ) => void;
 };
 
+function getFirstAddressComponent(
+  results: google.maps.GeocoderResult[] | null,
+  addressComponentType: string,
+): string | undefined {
+  return (results || [])
+    .map((r) =>
+      r.address_components
+        .filter((ac) => ac.types.includes(addressComponentType))
+        .map((ac) => ac.long_name),
+    )
+    .reduce((a, b) => a.concat(b), [])
+    .pop();
+}
+
+function logGeoEvent(coords: Position): void {
+  fetch(
+    `${NEXT_PUBLIC_GO_GETTA_PROD_URL}/geocode/analytics/all?latitude=${coords.lat}&longitude=${coords.lng}`,
+  )
+    .then((response) => response.json())
+    .then((geoAnalytics) => {
+      // convert lat/lng to custom event
+      const geocoder = new google.maps.Geocoder();
+      const location = new google.maps.LatLng(coords.lat, coords.lng);
+      // lookup neighborhood and borough from lat/lng
+      // we need to get neighborhood and borough
+      geocoder.geocode({ location }, (results, status) => {
+        if (status == "OK") {
+          // get the neighborhood
+          const googleNeighborhood = getFirstAddressComponent(
+            results,
+            "neighborhood",
+          );
+          const googleBorough = getFirstAddressComponent(
+            results,
+            "sublocality",
+          );
+          const zipCode = getFirstAddressComponent(results, "postal_code");
+          window["gtag"]("event", "geolocation", {
+            googleNeighborhood,
+            googleBorough,
+            neighborhood: geoAnalytics.neighborhood,
+            borough: geoAnalytics.borough,
+            zipCode,
+            schoolDistrict: geoAnalytics.districts.school,
+            congressionalDistrict: geoAnalytics.districts.congressional,
+            communityDistrict: geoAnalytics.districts.community,
+            pathname: window.location.pathname,
+          });
+        }
+      });
+    });
+}
+
 export const GeoCoordinatesProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
@@ -35,11 +90,12 @@ export const GeoCoordinatesProvider: React.FC<{
     cookies.remove("longitude");
     window.navigator.geolocation.getCurrentPosition(
       (userPosition) => {
-        // TODO: logGeoEvent(pos.coords);
-        setUserPosition({
+        const position: Position = {
           lat: userPosition.coords.latitude,
           lng: userPosition.coords.longitude,
-        });
+        };
+        logGeoEvent(position);
+        setUserPosition(position);
         cookies.set("latitude", userPosition.coords.latitude.toString());
         cookies.set("longitude", userPosition.coords.longitude.toString());
         // TODO: we want to change the selection to "nearby"
