@@ -121,14 +121,14 @@ const translations: Record<string, string> = {
   Send: "Отправить",
   "All service locations": "Все филиалы",
   "All Services": "Все филиалы",
-  "All popular Shelter & Housing locations":
+  "All Shelter & Housing locations":
     "Все популярные приюты для бездомных и доступное жилье",
-  "All popular Food locations": "Все популярные пункты раздачи еды",
-  "All popular Clothing locations": "Все популярные пункты раздачи одежды",
-  "All popular Personal care locations":
+  "All Food locations": "Все популярные пункты раздачи еды",
+  "All Clothing locations": "Все популярные пункты раздачи одежды",
+  "All Personal care locations":
     "Все популярные пункты раздачи принадлежностей для личной гигиены",
-  "All popular Health locations": "Все популярные центры здравоохранения",
-  "All popular Other locations":
+  "All Health locations": "Все популярные центры здравоохранения",
+  "All Other locations":
     "Все популярные центры, предоставляющие разнообразные услуги",
   "View map": "Открыть карту",
   "View list": "Открыть лист",
