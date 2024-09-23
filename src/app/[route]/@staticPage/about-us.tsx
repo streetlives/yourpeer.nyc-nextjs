@@ -27,10 +27,14 @@ export function AboutUsPage() {
             </p>
             <p className="text-dark text-center">
               <TranslatableText text="We build technology in collaboration with unhoused people, people with lived experience of homelessness, New York social service providers, government, funders, and other system stakeholders in a whole-of-community partnership." />
-
-              For more information please
-              <a href="https://www.streetlives.nyc" target="_blank" className="text-blue underline">
-                {' '} visit our website.
+              <span>For more information please</span>
+              <a
+                href="https://www.streetlives.nyc"
+                target="_blank"
+                className="text-blue underline"
+              >
+                {" "}
+                visit our website.
               </a>
             </p>
 
