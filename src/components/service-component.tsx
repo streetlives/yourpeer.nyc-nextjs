@@ -103,7 +103,10 @@ export default function Service({
       if (time === "23:59:00" || time === "00:00:00") {
         return "midnight";
       }
-      return moment(time, "hh:mm:ss").strftime("%-I %p");
+      const minutes = parseInt(time.split(":")[1]);
+      return moment(time, "hh:mm:ss").strftime(
+        `%-I${minutes > 0 ? ":%M" : ""} %p`,
+      );
     }
 
     function format_hours(opens: string, closes: string): string {
