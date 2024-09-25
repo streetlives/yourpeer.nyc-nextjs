@@ -13,6 +13,8 @@ import {
 import LocationsMap from "../../../components/map";
 
 import { getMapContainerData } from "../../../components/map-container-component";
+import { cookies } from "next/headers";
+import { redirectIfNearbyAndIfLatitudeAndLongitudeIsNotSet } from "@/components/navigation";
 
 export default async function MapContainerPage({
   searchParams,
@@ -21,6 +23,11 @@ export default async function MapContainerPage({
   searchParams: SearchParams;
   params: RouteParams;
 }) {
+  redirectIfNearbyAndIfLatitudeAndLongitudeIsNotSet({
+    searchParams,
+    params,
+    cookies: cookies(),
+  });
   return RESOURCE_ROUTES.includes(params.route) ? (
     <LocationsMap
       locationStubs={await getMapContainerData({

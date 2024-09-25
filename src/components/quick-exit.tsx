@@ -6,13 +6,14 @@
 
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { useTranslatedText } from "./use-translated-text-hook";
 import {
   getTargetLanguage,
   LanguageTranslationContext,
   LanguageTranslationContextType,
 } from "./language-translation-context";
+import { useScreenWidth } from "./screen-width-hook";
 
 const LAYOUT_THRESHOLD = 370;
 
@@ -36,13 +37,7 @@ export default function QuickExit() {
 
   const [firstWord, secondWord] = textToRender.split(/ +/);
 
-  const [screenWidth, setScreenWidth] = useState<number>(0);
-  useEffect(() => {
-    setScreenWidth(window.innerWidth);
-    window.addEventListener("resize", () => {
-      setScreenWidth(window.innerWidth);
-    });
-  }, []);
+  const screenWidth = useScreenWidth();
 
   return (
     <a

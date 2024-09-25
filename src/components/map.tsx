@@ -244,7 +244,7 @@ function MapWrapper({
       // if the SORT_BY_QUERY_PARAM is not set,
       // then by default route to nearby
       const sortBy = searchParams?.get(SORT_BY_QUERY_PARAM);
-      if (!sortBy) {
+      if (!sortBy && !locationDetailStub) {
         router.push(
           getUrlWithNewFilterParameter(
             pathname,
