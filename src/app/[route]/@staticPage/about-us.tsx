@@ -76,7 +76,7 @@ export function AboutUsPage() {
                   className="text-gray-900 font-medium text-lg mb-2 text-center"
                   translate="no"
                 >
-                  <TranslatableText text="doobneek" />{" "}
+                  <TranslatableText text="Antoinette" />{" "}
                   <TranslatableText text="(they/them)" />
                 </h3>
                 <div className="text-base text-gray-800 text-center">
