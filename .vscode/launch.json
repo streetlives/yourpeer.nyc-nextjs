@@ -22,7 +22,7 @@
       "envFile": "${workspaceFolder}/.env.local"
     },
     {
-      "name": "Next.js: debug server-side (https)",
+      "name": "Next.js: debug server-side (https/remote prod)",
       "type": "node-terminal",
       "request": "launch",
       "command": "npm run dev -- --experimental-https",

@@ -213,7 +213,7 @@ export default function Service({
             <TranslatableText text={service.name} expectTranslation={false} />
           ) : undefined}
           {service.closed ? (
-            <span className="text-danger">(Suspended)</span>
+            <span className="text-danger"> (Suspended)</span>
           ) : undefined}
         </h2>
         {hasSomethingToShow && isExpanded ? (
