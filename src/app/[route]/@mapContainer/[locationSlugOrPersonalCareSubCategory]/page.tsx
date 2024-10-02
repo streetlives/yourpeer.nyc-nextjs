@@ -57,7 +57,7 @@ export default async function MapDetail({
           locationStubs={
             previousParams
               ? await getMapContainerData(previousParams)
-              : undefined
+              : [location]
           }
           locationDetailStub={location}
         />

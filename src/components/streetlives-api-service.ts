@@ -293,6 +293,9 @@ function filter_services_by_name(
           }
         }
       }
+      const schedules = service?.HolidaySchedules?.filter(
+        (x) => x.opens_at && x.closes_at,
+      );
       services.push({
         id: service.id,
         name: service["name"],
@@ -302,7 +305,7 @@ function filter_services_by_name(
         info: service?.EventRelatedInfos?.map((x) => x.information).filter(
           (information) => information !== null,
         ),
-        closed: !!service?.HolidaySchedules?.filter((x) => x.closed).length,
+        closed: !schedules.length || schedules.every((x) => x.closed),
         schedule: Object.fromEntries(
           Object.entries(
             _.groupBy(
