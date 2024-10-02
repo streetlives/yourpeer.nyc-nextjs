@@ -51,6 +51,7 @@ with open(SOURCE) as f:
             },
             'gogetta_url': row['gogetta_link (service)'],
             'updated_by': row['updated_by'],
+            'Updated': row['Updated'],
         }
         for row in csv.DictReader(f)
     ]
@@ -61,7 +62,9 @@ for row in ungrouped_rows:
     gogetta_url = row['gogetta_url']
     eligible_values = row['eligible_values']
     updated_by = row['updated_by']
+    updated = row['Updated']
     if updated_by and \
+        updated == 'TRUE' and \
         (eligible_values['age_max'] or \
             eligible_values['age_min'] or \
             eligible_values['all_ages']):
@@ -85,7 +88,7 @@ def validate_service_id(service_id):
 with open('out.csv', 'w') as f:
 
     writer = csv.DictWriter(f, 
-        fieldnames=['status', 'op', 'gogetta_url', 'eligible_values'])
+        fieldnames=['status', 'op', 'gogetta_url', 'eligible_values', 'updated_by'])
     writer.writeheader()
 
     for i, [gogetta_url, row] in enumerate(grouped_rows.items()): 
@@ -110,11 +113,10 @@ with open('out.csv', 'w') as f:
             service_id,
         ))
         existing_row = cur.fetchone()
-        # TODO: check that the row has a creator
         if existing_row:
             # update only if changed
             existing_row_id, existing_row_eligible_values = existing_row
-            if  != eligible_values:
+            if existing_row_eligible_values == eligible_values:
                 # nothing to do
                 op = 'SKIP'
             else:
@@ -169,7 +171,7 @@ with open('out.csv', 'w') as f:
         else:
             op = 'INSERT'
             # TODO: add a row to metadata table
-            (new_row_id,) = cur.execute('''
+            cur.execute('''
                 insert into eligibility
                     (
                         id,
@@ -194,6 +196,7 @@ with open('out.csv', 'w') as f:
                 age_parameter_id,
                 service_id,
             ))
+            new_row_id = cur.fetchone()[0]
             for field_name, replacement_value in (
                 ('eligible_values', json.dumps(eligible_values)),
                 ('parameter_id', age_parameter_id),
