@@ -55,7 +55,9 @@ export async function generateMetadata({
           let locationDetailsResponse = await fetchLocationsDetailData(
             (params as SubRouteParams).locationSlugOrPersonalCareSubCategory,
           );
-          title = attachSuffix(`${locationDetailsResponse.Organization.name} ${locationDetailsResponse.neighborhood}`);
+          title = attachSuffix(
+            `${locationDetailsResponse.Organization.name} ${locationDetailsResponse.neighborhood}`,
+          );
           description = locationDetailsResponse.Organization.name
             ? attachSuffix(locationDetailsResponse.Organization.name)
             : "";
