@@ -85,7 +85,6 @@ export default function Service({
   }
 
   function renderSchedule(schedule: YourPeerLegacyScheduleData): JSX.Element {
-
     const weekdays = [
       "Monday",
       "Tuesday",
@@ -127,8 +126,7 @@ export default function Service({
     ) {
       return <TranslatableText text="Open 24/7" id="#service-component-Open" />;
     }
-    
-    
+
     // hour range string -> list of weekdays
     const days_grouped_by_hours: Record<string, number[]> = {};
     Object.entries(schedule).forEach(([weekday, hours]) => {
