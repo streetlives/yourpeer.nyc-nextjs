@@ -8,7 +8,7 @@ const customStreetViews: Record<string, string> = {
   "translatinx-network-hells-kitchen":
     "40.7453799,-73.9927467&fov=100&heading=43&pano=jlbFtqGBI2T9IaqNzaVNIg",
   "safe-horizon-streetwork-project-harlem":
-    "40.8092049,-73.9488999&fov=75&heading=27.56",
+    "40.8092233,-73.9489415&fov=75&heading=23&pano=1q_4cNgUdlutTKy1krIbMQ",
   "hebrew-immigrant-aid-society-hias-manhattan":
     "40.7505814,-73.9828556&fov=90&heading=120&pano=SUvsumL8fZZm3TtiQCKT5w",
   "onpoint-nyc-fka-new-york-harm-reduction-educators-nyhre-new-york":
@@ -46,6 +46,32 @@ const customStreetViews: Record<string, string> = {
     "40.7139134,-73.9837604&heading=138&fov=75",
   "the-door-soho": "40.7242914,-74.0048353&heading=218",
   "callenlorde-harlem": "40.8092049,-73.9488999&fov=75&heading=27.56",
+  "utopia-resource-center-greater-new-york-inc-longwood":
+    "40.8257204,-73.9066956&fov=75&heading=217",
+  "new-york-legal-assistance-group-nylag-financial-district":
+    "40.704378,-74.0092833&fov=75&heading=245",
+  "the-immigrant-defense-project-idp-midtown":
+    "40.7523927,-73.9841574&fov=34&heading=195&pano=2zib_spaRRMUC4nQuzBm9g",
+  "morris-heights-health-center-mhhc-fordham":
+    "40.858515,-73.9030968&fov=75&heading=29",
+  "community-counseling-and-mediation-ccm-clinton-hill":
+    "40.6825612,-73.9666928&fov=75&heading=76",
+  "xavier-mission-chelsea": "40.737738,-73.9955903&fov=75&heading=19",
+  "community-access-inc-harlem":
+    "40.8086959,-73.9486068&fov=68.8&heading=279&pano=6-F9iLESnScNeF1zjPVXpw",
+  "the-door-mott-haven": "40.8191353,-73.9139016&fov=75&heading=319",
+  "kings-county-family-court-downtown-brooklyn":
+    "40.7019938,-73.8050714&fov=75&heading=343&pano=Hyc69FGf9s2axmODEP0wZQ",
+  "urban-justice-center-ujc-financial-district-40-rector-st-9th-fl":
+    "40.7083989,-74.0148744&fov=75&heading=17&pano=9MWNrKcXa9qCGDKfVmBeBA",
+  "osborne-association-brooklyn-heights":
+    "40.693314,-73.9916768&fov=37.6&heading=25&pano=z5BOLIiqkCg0tgO-i_ZugQ",
+  "st-johns-bread-and-life-bedford-stuyvesant":
+    "40.6901949,-73.9290192&fov=37.6&heading=352&pano=q51uqSJypWsjIP_zsBxVAA",
+  "services-and-advocacy-for-lgbtqia2s-elders-sage-chelsea-305-7th-avenue-15th-floor":
+    "40.7468278,-73.9936864&fov=75&heading=104",
+  "st-joes-soup-kitchen-greenwich-village":
+    "40.7345397,-73.9950773&fov=75&heading=2.53",
 };
 
 export default customStreetViews;

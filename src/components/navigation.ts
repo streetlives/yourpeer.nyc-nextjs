@@ -4,7 +4,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import { ReadonlyURLSearchParams } from "next/navigation";
+import { ReadonlyURLSearchParams, redirect } from "next/navigation";
 import {
   AMENITIES_PARAM,
   AMENITIES_PARAM_SUBCATEGORY_AND_CANONICAL_ORDERING,
@@ -15,7 +15,10 @@ import {
   FoodValues,
   getParsedAmenities,
   getParsedSubCategory,
+  LATITUDE_COOKIE_NAME,
   LOCATION_ROUTE,
+  LONGITUDE_COOKIE_NAME,
+  NEARBY_SORT_BY_VALUE,
   PAGE_PARAM,
   parsePageParam,
   parsePathnameToCategoryAndSubCategory,
@@ -27,9 +30,11 @@ import {
   RouteParams,
   SearchParams,
   ShelterValues,
+  SORT_BY_QUERY_PARAM,
   SubRouteParams,
   UrlParamName,
 } from "./common";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
 function removeExtraneousSearchParams(
   pathname: string | null,
@@ -387,4 +392,23 @@ export function isOnLocationDetailPage(params: SubRouteParams): boolean {
 
 export function paramsToPathname(params: RouteParams): string {
   return `/${params.route}${params.locationSlugOrPersonalCareSubCategory ? `/${params.locationSlugOrPersonalCareSubCategory}` : ""}`;
+}
+
+export function redirectIfNearbyAndIfLatitudeAndLongitudeIsNotSet({
+  searchParams,
+  params,
+  cookies,
+}: {
+  searchParams: SearchParams;
+  params: RouteParams | SubRouteParams;
+  cookies: ReadonlyRequestCookies;
+}) {
+  if (
+    searchParams[SORT_BY_QUERY_PARAM] === NEARBY_SORT_BY_VALUE &&
+    !(cookies.get(LATITUDE_COOKIE_NAME) && cookies.get(LONGITUDE_COOKIE_NAME))
+  ) {
+    return redirect(
+      `/${params.route}${params.locationSlugOrPersonalCareSubCategory ? `/${params.locationSlugOrPersonalCareSubCategory}` : ""}`,
+    );
+  }
 }
