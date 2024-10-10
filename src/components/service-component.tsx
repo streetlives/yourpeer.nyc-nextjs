@@ -185,8 +185,6 @@ export default function Service({
     return <span>{`Open ${group_strings.join("; ")}`}</span>;
   }
 
-  // return <TranslatableText text="Open 24/7" id="#service-component-Open" />;
-
   return (
     <div
       key={service.id}
