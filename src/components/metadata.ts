@@ -56,7 +56,7 @@ export async function generateMetadata({
             (params as SubRouteParams).locationSlugOrPersonalCareSubCategory,
           );
           title = attachSuffix(
-            `${locationDetailsResponse.Organization.name} ${locationDetailsResponse.neighborhood}`,
+            `${locationDetailsResponse.Organization.name} ${locationDetailsResponse.neighborhood ? `in ${locationDetailsResponse.neighborhood}` : ""}`,
           );
           description = locationDetailsResponse.Organization.name
             ? attachSuffix(locationDetailsResponse.Organization.name)
