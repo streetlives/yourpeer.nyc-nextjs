@@ -44,7 +44,7 @@ const customStreetViews: Record<string, string> = {
   "xavier-mission-chelsea-west": "40.7377792,-73.995688&heading=52&fov=47",
   "betances-health-center-lower-east-side":
     "40.7139134,-73.9837604&heading=138&fov=75",
-  "the-door-soho": "40.7242914,-74.0048353",
+  "the-door-soho": "40.7242914,-74.0048353&heading=218",
   "callenlorde-harlem": "40.8092049,-73.9488999&fov=75&heading=27.56",
   "utopia-resource-center-greater-new-york-inc-longwood":
     "40.8257204,-73.9066956&fov=75&heading=217",

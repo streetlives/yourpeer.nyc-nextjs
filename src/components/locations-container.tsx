@@ -139,17 +139,17 @@ export default function LocationsContainer({
               text={
                 // TODO: fix these
                 category === "shelters-housing"
-                  ? "All popular Shelter & Housing locations"
+                  ? "All Shelter & Housing locations"
                   : category === "food"
-                    ? "All popular Food locations"
+                    ? "All Food locations"
                     : category === "clothing"
-                      ? "All popular Clothing locations"
+                      ? "All Clothing locations"
                       : category === "personal-care"
-                        ? "All popular Personal care locations"
+                        ? "All Personal care locations"
                         : category === "health-care"
-                          ? "All popular Health locations"
+                          ? "All Health locations"
                           : category === "other"
-                            ? "All popular Other locations"
+                            ? "All Other locations"
                             : "All service locations"
               }
             />
