@@ -174,6 +174,10 @@ export default function SearchForm() {
 
   function doSetSearch(e: ChangeEvent) {
     setSearch((e.target as HTMLFormElement).value);
+
+    if ((e.target as HTMLFormElement).value === "") {
+      clearSearch();
+    }
   }
 
   function handleFocus(e: React.FocusEvent<HTMLInputElement>) {
