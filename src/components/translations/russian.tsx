@@ -59,7 +59,7 @@ const translations: Record<string, string> = {
     "Наша информация проверяется нашими публицистами",
   "YourPeer's social service information is validated by our information specialists who all have lived experiences navigating the support system. They work hard to collect social services' information and keep them up-to-date.":
     "Информация о социальных службах, которую Вы найдете на YourPeer, проверяется нашими специалистами по информационным технологиям с большим опытом работы с системой социальных услуг. Они усердно работают над сбором информации о социальных службах и ее обновлением",
-  doobneek: "doobneek или дубни́к",
+  Antoinette: "Antoinette или Антуанетт",
   Kiesha: "Kiesha или Каи́ша",
   Gavilán: "Gavilán или Гавила́н",
   Anthony: "Anthony или Э́нтони",
@@ -137,7 +137,7 @@ const translations: Record<string, string> = {
   "Enter Age": "Округлите число лет в меньшую сторону",
   "People rely on social services for many reasons. Our information specialists all have lived experiences navigating the support system and apply their knowledge collecting the information you find here.  We’re building YourPeer so it's easier for you to find the right service.":
     "Многие нуждаются в помощи из-за непредсказуемых жизненных обстоятельств. Мы публикуем о бесплатных услугах на YourPeer, чтобы немного облегчить Ваш поиск.",
-  "Open street view": "Открыть панорамный вид входной группы",
+  "Open Street View": "Открыть панорамный вид входной группы",
   "Age requirement:": "Возрастное ограничение:",
   "People of all ages are welcome": "Предназначено для всех возрастов",
   "#service-component-Open": "Открыто 24/7",

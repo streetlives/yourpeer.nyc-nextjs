@@ -35,6 +35,7 @@ import { Transition } from "@headlessui/react";
 import { usePreviousRoute } from "./use-previous-route";
 import { usePreviousParamsOnClient } from "./use-previous-params-client";
 import { TranslatableText } from "./translatable-text";
+import { SMALL_SCREEN_WIDTH, useScreenWidth } from "./screen-width-hook";
 
 export function getIconPath(iconName: string): string {
   return `/img/icons/${iconName}.png`;
@@ -126,6 +127,7 @@ export default function LocationDetailComponent({
   const previousCategory =
     ROUTE_TO_CATEGORY_MAP[previousParams?.params.route as string];
   const previousRoute = usePreviousRoute();
+  const screenWidth = useScreenWidth();
   const [stickyTitle, setStickyTitle] = useState<boolean>(false);
 
   const [zoom, setZoom] = useState<number>(defaultZoom);
@@ -209,8 +211,7 @@ export default function LocationDetailComponent({
             {location.name}
           </h1>
         </Transition>
-
-        <QuickExit />
+        {screenWidth <= SMALL_SCREEN_WIDTH ? <QuickExit /> : undefined}
       </div>
       {isShowingReportIssueForm ? (
         <ReportIssueForm
@@ -264,7 +265,7 @@ export default function LocationDetailComponent({
                     target="_blank"
                     className="inline-block absolute bottom-4 right-4 z-0 bg-white shadow-sm rounded-full px-5 py-2 text-dark font-medium text-sm"
                   >
-                    <TranslatableText text="Open street view" />
+                    <TranslatableText text="Open Street View" />
                   </a>
                 </div>
               </div>
@@ -313,7 +314,7 @@ export default function LocationDetailComponent({
                   target="_blank"
                   className="inline-block absolute bottom-4 right-4 z-0 bg-white shadow rounded-full px-5 py-2 text-dark font-medium text-sm"
                 >
-                  <TranslatableText text="Open street view" />
+                  <TranslatableText text="Open Street View" />
                 </a>
               </div>
             </div>

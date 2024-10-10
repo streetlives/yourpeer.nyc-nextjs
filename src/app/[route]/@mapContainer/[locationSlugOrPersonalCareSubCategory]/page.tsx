@@ -17,7 +17,11 @@ import {
 } from "../../../../components/streetlives-api-service";
 import { getMapContainerData } from "../../../../components/map-container-component";
 import { usePreviousParams } from "@/components/use-previous-params";
-import { isOnLocationDetailPage } from "@/components/navigation";
+import {
+  isOnLocationDetailPage,
+  redirectIfNearbyAndIfLatitudeAndLongitudeIsNotSet,
+} from "@/components/navigation";
+import { cookies } from "next/headers";
 
 export default async function MapDetail({
   searchParams,
@@ -26,12 +30,16 @@ export default async function MapDetail({
   searchParams: SearchParams;
   params: SubRouteParams;
 }) {
-  console.log();
   const previousParams = usePreviousParams();
   try {
     if (!isOnLocationDetailPage(params)) {
       // validate
       getParsedSubCategory(params);
+      redirectIfNearbyAndIfLatitudeAndLongitudeIsNotSet({
+        searchParams,
+        params,
+        cookies: cookies(),
+      });
       return (
         <LocationsMap
           locationStubs={await getMapContainerData({
@@ -49,7 +57,7 @@ export default async function MapDetail({
           locationStubs={
             previousParams
               ? await getMapContainerData(previousParams)
-              : undefined
+              : [location]
           }
           locationDetailStub={location}
         />

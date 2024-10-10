@@ -20,8 +20,12 @@ import LocationDetailComponent from "../../../../components/location-detail-comp
 import { usePreviousParams } from "@/components/use-previous-params";
 import { getMapContainerData } from "@/components/map-container-component";
 import { getSidePanelComponentData } from "@/components/get-side-panel-component-data";
-import { isOnLocationDetailPage } from "@/components/navigation";
+import {
+  isOnLocationDetailPage,
+  redirectIfNearbyAndIfLatitudeAndLongitudeIsNotSet,
+} from "@/components/navigation";
 import { getCookies } from "next-client-cookies/server";
+import { cookies } from "next/headers";
 
 export { generateMetadata } from "../../../../components/metadata";
 
@@ -38,13 +42,18 @@ export default async function LocationDetail({
     if (!isOnLocationDetailPage(params)) {
       // validate
       getParsedSubCategory(params);
+      redirectIfNearbyAndIfLatitudeAndLongitudeIsNotSet({
+        searchParams,
+        params,
+        cookies: cookies(),
+      });
       return (
         <SidePanelComponent
           searchParams={searchParams}
           sidePanelComponentData={await getSidePanelComponentData({
             searchParams,
             params,
-            cookies,
+            cookies: getCookies(),
           })}
         />
       );

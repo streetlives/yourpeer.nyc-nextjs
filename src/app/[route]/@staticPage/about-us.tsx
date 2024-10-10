@@ -26,7 +26,16 @@ export function AboutUsPage() {
               <TranslatableText text="YourPeer is a Streetlives product. Streetlives is a US nonprofit based in New York City." />
             </p>
             <p className="text-dark text-center">
-              <TranslatableText text="We build technology in collaboration with unhoused people, people with lived experience of homelessness, New York social service providers, government, funders, and other system stakeholders in a whole-of-community partnership." />
+              <TranslatableText text="We build technology in collaboration with unhoused people, people with lived experience of homelessness, New York social service providers, government, funders, and other system stakeholders in a whole-of-community partnership." />{" "}
+              <span>For more information please</span>{" "}
+              <a
+                href="https://www.streetlives.nyc"
+                target="_blank"
+                className="text-blue underline"
+              >
+                visit our website
+              </a>
+              <span>.</span>
             </p>
 
             <div className="flex justify-center">
@@ -76,7 +85,7 @@ export function AboutUsPage() {
                   className="text-gray-900 font-medium text-lg mb-2 text-center"
                   translate="no"
                 >
-                  <TranslatableText text="doobneek" />{" "}
+                  <TranslatableText text="Antoinette" />{" "}
                   <TranslatableText text="(they/them)" />
                 </h3>
                 <div className="text-base text-gray-800 text-center">
